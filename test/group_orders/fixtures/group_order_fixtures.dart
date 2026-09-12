@@ -93,11 +93,7 @@ class GroupOrders {
     DateTime? cashRequestedAt,
   }) {
     final resolved = fulfillment == GroupFulfillmentStatus.delivered
-        ? items
-            .map((i) => i.isSent && !i.isVoided && i.deliveredAt == null
-                ? i.copyWith(deliveredAt: _t0)
-                : i)
-            .toList()
+        ? items.map((i) => i.isSent && !i.isVoided && i.deliveredAt == null ? i.copyWith(deliveredAt: _t0) : i).toList()
         : items;
 
     final billable = resolved.where((i) => i.isSent && !i.isVoided);
@@ -144,9 +140,7 @@ class GroupOrders {
     );
 
     final resolved = fulfillment == GroupFulfillmentStatus.delivered
-        ? base
-            .map((i) => !i.isVoided && i.deliveredAt == null ? i.copyWith(deliveredAt: _t0) : i)
-            .toList()
+        ? base.map((i) => !i.isVoided && i.deliveredAt == null ? i.copyWith(deliveredAt: _t0) : i).toList()
         : base;
 
     final total = _sum(resolved.where((i) => !i.isVoided));
@@ -181,6 +175,5 @@ class GroupOrders {
     );
   }
 
-  static double _sum(Iterable<GroupOrderItemDM> items) =>
-      items.fold<double>(0, (acc, i) => acc + i.lineTotal);
+  static double _sum(Iterable<GroupOrderItemDM> items) => items.fold<double>(0, (acc, i) => acc + i.lineTotal);
 }

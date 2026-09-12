@@ -28,8 +28,7 @@ mixin _$ReviewCreateDTO {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ReviewCreateDTOCopyWith<ReviewCreateDTO> get copyWith =>
-      _$ReviewCreateDTOCopyWithImpl<ReviewCreateDTO>(
-          this as ReviewCreateDTO, _$identity);
+      _$ReviewCreateDTOCopyWithImpl<ReviewCreateDTO>(this as ReviewCreateDTO, _$identity);
 
   /// Serializes this ReviewCreateDTO to a JSON map.
   Map<String, dynamic> toJson();
@@ -39,20 +38,16 @@ mixin _$ReviewCreateDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ReviewCreateDTO &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
             (identical(other.rating, rating) || other.rating == rating) &&
-            (identical(other.reviewType, reviewType) ||
-                other.reviewType == reviewType) &&
+            (identical(other.reviewType, reviewType) || other.reviewType == reviewType) &&
             (identical(other.comment, comment) || other.comment == comment) &&
-            (identical(other.businessVisitedAt, businessVisitedAt) ||
-                other.businessVisitedAt == businessVisitedAt));
+            (identical(other.businessVisitedAt, businessVisitedAt) || other.businessVisitedAt == businessVisitedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, businessUuid, rating, reviewType,
-      comment, businessVisitedAt);
+  int get hashCode => Object.hash(runtimeType, businessUuid, rating, reviewType, comment, businessVisitedAt);
 
   @override
   String toString() {
@@ -62,8 +57,7 @@ mixin _$ReviewCreateDTO {
 
 /// @nodoc
 abstract mixin class $ReviewCreateDTOCopyWith<$Res> {
-  factory $ReviewCreateDTOCopyWith(
-          ReviewCreateDTO value, $Res Function(ReviewCreateDTO) _then) =
+  factory $ReviewCreateDTOCopyWith(ReviewCreateDTO value, $Res Function(ReviewCreateDTO) _then) =
       _$ReviewCreateDTOCopyWithImpl;
   @useResult
   $Res call(
@@ -75,8 +69,7 @@ abstract mixin class $ReviewCreateDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReviewCreateDTOCopyWithImpl<$Res>
-    implements $ReviewCreateDTOCopyWith<$Res> {
+class _$ReviewCreateDTOCopyWithImpl<$Res> implements $ReviewCreateDTOCopyWith<$Res> {
   _$ReviewCreateDTOCopyWithImpl(this._self, this._then);
 
   final ReviewCreateDTO _self;
@@ -223,8 +216,7 @@ extension ReviewCreateDTOPatterns on ReviewCreateDTO {
     final _that = this;
     switch (_that) {
       case _ReviewCreateDTO() when $default != null:
-        return $default(_that.businessUuid, _that.rating, _that.reviewType,
-            _that.comment, _that.businessVisitedAt);
+        return $default(_that.businessUuid, _that.rating, _that.reviewType, _that.comment, _that.businessVisitedAt);
       case _:
         return orElse();
     }
@@ -256,8 +248,7 @@ extension ReviewCreateDTOPatterns on ReviewCreateDTO {
     final _that = this;
     switch (_that) {
       case _ReviewCreateDTO():
-        return $default(_that.businessUuid, _that.rating, _that.reviewType,
-            _that.comment, _that.businessVisitedAt);
+        return $default(_that.businessUuid, _that.rating, _that.reviewType, _that.comment, _that.businessVisitedAt);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -288,8 +279,7 @@ extension ReviewCreateDTOPatterns on ReviewCreateDTO {
     final _that = this;
     switch (_that) {
       case _ReviewCreateDTO() when $default != null:
-        return $default(_that.businessUuid, _that.rating, _that.reviewType,
-            _that.comment, _that.businessVisitedAt);
+        return $default(_that.businessUuid, _that.rating, _that.reviewType, _that.comment, _that.businessVisitedAt);
       case _:
         return null;
     }
@@ -305,8 +295,7 @@ class _ReviewCreateDTO implements ReviewCreateDTO {
       @JsonKey(name: 'review_type') this.reviewType,
       this.comment,
       @JsonKey(name: 'business_visited_at') this.businessVisitedAt});
-  factory _ReviewCreateDTO.fromJson(Map<String, dynamic> json) =>
-      _$ReviewCreateDTOFromJson(json);
+  factory _ReviewCreateDTO.fromJson(Map<String, dynamic> json) => _$ReviewCreateDTOFromJson(json);
 
   @override
   @JsonKey(name: 'business_uuid')
@@ -342,20 +331,16 @@ class _ReviewCreateDTO implements ReviewCreateDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ReviewCreateDTO &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
             (identical(other.rating, rating) || other.rating == rating) &&
-            (identical(other.reviewType, reviewType) ||
-                other.reviewType == reviewType) &&
+            (identical(other.reviewType, reviewType) || other.reviewType == reviewType) &&
             (identical(other.comment, comment) || other.comment == comment) &&
-            (identical(other.businessVisitedAt, businessVisitedAt) ||
-                other.businessVisitedAt == businessVisitedAt));
+            (identical(other.businessVisitedAt, businessVisitedAt) || other.businessVisitedAt == businessVisitedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, businessUuid, rating, reviewType,
-      comment, businessVisitedAt);
+  int get hashCode => Object.hash(runtimeType, businessUuid, rating, reviewType, comment, businessVisitedAt);
 
   @override
   String toString() {
@@ -364,10 +349,8 @@ class _ReviewCreateDTO implements ReviewCreateDTO {
 }
 
 /// @nodoc
-abstract mixin class _$ReviewCreateDTOCopyWith<$Res>
-    implements $ReviewCreateDTOCopyWith<$Res> {
-  factory _$ReviewCreateDTOCopyWith(
-          _ReviewCreateDTO value, $Res Function(_ReviewCreateDTO) _then) =
+abstract mixin class _$ReviewCreateDTOCopyWith<$Res> implements $ReviewCreateDTOCopyWith<$Res> {
+  factory _$ReviewCreateDTOCopyWith(_ReviewCreateDTO value, $Res Function(_ReviewCreateDTO) _then) =
       __$ReviewCreateDTOCopyWithImpl;
   @override
   @useResult
@@ -380,8 +363,7 @@ abstract mixin class _$ReviewCreateDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ReviewCreateDTOCopyWithImpl<$Res>
-    implements _$ReviewCreateDTOCopyWith<$Res> {
+class __$ReviewCreateDTOCopyWithImpl<$Res> implements _$ReviewCreateDTOCopyWith<$Res> {
   __$ReviewCreateDTOCopyWithImpl(this._self, this._then);
 
   final _ReviewCreateDTO _self;

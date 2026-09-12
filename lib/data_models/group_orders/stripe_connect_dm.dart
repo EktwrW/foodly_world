@@ -20,12 +20,12 @@ abstract class StripeConnectStatusDM with _$StripeConnectStatusDM {
     @JsonKey(name: 'group_payment_mode') String? groupPaymentMode,
     // Mínimo para pagar en la app, en CÉNTIMOS. null = sin mínimo.
     @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor,
+
     /// F4c: ¿el negocio sirve EN MESA? Abre el selector con el valor real.
     @JsonKey(name: 'table_service') @Default(false) bool tableService,
   }) = _StripeConnectStatusDM;
 
-  factory StripeConnectStatusDM.fromJson(Map<String, dynamic> json) =>
-      _$StripeConnectStatusDMFromJson(json);
+  factory StripeConnectStatusDM.fromJson(Map<String, dynamic> json) => _$StripeConnectStatusDMFromJson(json);
 }
 
 /// Respuesta del onboarding: la URL del AccountLink de Stripe (hosted).
@@ -37,6 +37,5 @@ abstract class StripeOnboardResponseDM with _$StripeOnboardResponseDM {
     @JsonKey(name: 'charges_enabled') @Default(false) bool chargesEnabled,
   }) = _StripeOnboardResponseDM;
 
-  factory StripeOnboardResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$StripeOnboardResponseDMFromJson(json);
+  factory StripeOnboardResponseDM.fromJson(Map<String, dynamic> json) => _$StripeOnboardResponseDMFromJson(json);
 }

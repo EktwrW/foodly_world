@@ -36,17 +36,13 @@ import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 ///
 /// La key y el cluster son PÚBLICOS (mismo criterio que firebase_options).
 class GroupOrderRealtimeService with WidgetsBindingObserver {
-  GroupOrderRealtimeService({required AuthSessionService authSession})
-      : _authSession = authSession;
+  GroupOrderRealtimeService({required AuthSessionService authSession}) : _authSession = authSession;
 
-  static const String _pusherKey =
-      String.fromEnvironment('PUSHER_KEY', defaultValue: 'ce919f2ae5c3eb4188a7');
-  static const String _pusherCluster =
-      String.fromEnvironment('PUSHER_CLUSTER', defaultValue: 'eu');
+  static const String _pusherKey = String.fromEnvironment('PUSHER_KEY', defaultValue: 'ce919f2ae5c3eb4188a7');
+  static const String _pusherCluster = String.fromEnvironment('PUSHER_CLUSTER', defaultValue: 'eu');
 
   /// Mismo DOMAIN que usa el resto de la app (launch config / build APK).
-  static const String _domain =
-      String.fromEnvironment('DOMAIN', defaultValue: 'https://api.foodly.solutions');
+  static const String _domain = String.fromEnvironment('DOMAIN', defaultValue: 'https://api.foodly.solutions');
 
   static const Duration _pollInterval = Duration(seconds: 10);
   static const Duration _retryInterval = Duration(seconds: 60);

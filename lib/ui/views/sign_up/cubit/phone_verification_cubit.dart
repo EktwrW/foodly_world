@@ -5,7 +5,9 @@ import 'package:foodly_world/ui/views/sign_up/cubit/phone_verification_state.dar
 class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
   final FirebaseAuth _auth;
 
-  PhoneVerificationCubit() : _auth = FirebaseAuth.instance, super(const PhoneVerInitial());
+  PhoneVerificationCubit()
+      : _auth = FirebaseAuth.instance,
+        super(const PhoneVerInitial());
 
   Future<void> sendCode(String phoneNumber) async {
     emit(const PhoneVerSendingCode());

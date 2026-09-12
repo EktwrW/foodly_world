@@ -9,9 +9,7 @@ part of 'item_dm.dart';
 _ItemDM _$ItemDMFromJson(Map<String, dynamic> json) => _ItemDM(
       name: json['name'] as String,
       description: json['description'] as String? ?? '',
-      versions: (json['versions'] as List<dynamic>)
-          .map((e) => $enumDecode(_$VersionEnumMap, e))
-          .toList(),
+      versions: (json['versions'] as List<dynamic>).map((e) => $enumDecode(_$VersionEnumMap, e)).toList(),
       prices: Prices.fromJson(json['prices'] as Map<String, dynamic>),
       id: (json['id'] as num?)?.toInt(),
       uuid: json['uuid'] as String,
@@ -44,20 +42,15 @@ Map<String, dynamic> _$ItemDMToJson(_ItemDM instance) => <String, dynamic>{
       'uuid': instance.uuid,
       if (instance.menuUuid case final value?) 'menu_uuid': value,
       if (instance.businessUuid case final value?) 'business_uuid': value,
-      if (instance.foodPhotos?.map((e) => e.toJson()).toList()
-          case final value?)
+      if (instance.foodPhotos?.map((e) => e.toJson()).toList() case final value?)
         'business_food_reference_photos': value,
-      if (instance.drinkPhotos?.map((e) => e.toJson()).toList()
-          case final value?)
+      if (instance.drinkPhotos?.map((e) => e.toJson()).toList() case final value?)
         'business_drink_reference_photos': value,
-      if (instance.comboPhotos?.map((e) => e.toJson()).toList()
-          case final value?)
+      if (instance.comboPhotos?.map((e) => e.toJson()).toList() case final value?)
         'business_combos_reference_photos': value,
       'favorites_count': instance.favoritesCount,
-      if (instance.foodCategoryId case final value?)
-        'business_food_category_id': value,
-      if (instance.drinkCategoryId case final value?)
-        'business_drink_category_id': value,
+      if (instance.foodCategoryId case final value?) 'business_food_category_id': value,
+      if (instance.drinkCategoryId case final value?) 'business_drink_category_id': value,
       if (instance.comboCategoryId case final value?) 'business_menu_id': value,
       'available': instance.available,
       'followers_length': instance.followersLength,

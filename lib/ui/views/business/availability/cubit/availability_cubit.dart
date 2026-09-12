@@ -178,9 +178,7 @@ class AvailabilityCubit extends Cubit<AvailabilityState> {
         if (response.availability != null) {
           final updated = response.availability!;
           _vm = _vm.copyWith(
-            entries: _vm.entries
-                .map((e) => e.availabilityUuid == uuid ? updated : e)
-                .toList(growable: false),
+            entries: _vm.entries.map((e) => e.availabilityUuid == uuid ? updated : e).toList(growable: false),
             isSaving: false,
           );
         } else {
@@ -211,9 +209,7 @@ class AvailabilityCubit extends Cubit<AvailabilityState> {
     return result.when(
       success: (response) {
         _vm = _vm.copyWith(
-          entries: _vm.entries
-              .where((e) => e.availabilityUuid != uuid)
-              .toList(growable: false),
+          entries: _vm.entries.where((e) => e.availabilityUuid != uuid).toList(growable: false),
           isDeleting: false,
         );
         emit(AvailabilityState.deleted(_vm, response.message));

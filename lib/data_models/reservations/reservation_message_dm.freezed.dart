@@ -22,9 +22,8 @@ mixin _$ReservationMessagesResponseDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $ReservationMessagesResponseDMCopyWith<ReservationMessagesResponseDM>
-      get copyWith => _$ReservationMessagesResponseDMCopyWithImpl<
-              ReservationMessagesResponseDM>(
+  $ReservationMessagesResponseDMCopyWith<ReservationMessagesResponseDM> get copyWith =>
+      _$ReservationMessagesResponseDMCopyWithImpl<ReservationMessagesResponseDM>(
           this as ReservationMessagesResponseDM, _$identity);
 
   /// Serializes this ReservationMessagesResponseDM to a JSON map.
@@ -36,14 +35,12 @@ mixin _$ReservationMessagesResponseDM {
         (other.runtimeType == runtimeType &&
             other is ReservationMessagesResponseDM &&
             const DeepCollectionEquality().equals(other.messages, messages) &&
-            (identical(other.serverNow, serverNow) ||
-                other.serverNow == serverNow));
+            (identical(other.serverNow, serverNow) || other.serverNow == serverNow));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(messages), serverNow);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(messages), serverNow);
 
   @override
   String toString() {
@@ -54,18 +51,14 @@ mixin _$ReservationMessagesResponseDM {
 /// @nodoc
 abstract mixin class $ReservationMessagesResponseDMCopyWith<$Res> {
   factory $ReservationMessagesResponseDMCopyWith(
-          ReservationMessagesResponseDM value,
-          $Res Function(ReservationMessagesResponseDM) _then) =
+          ReservationMessagesResponseDM value, $Res Function(ReservationMessagesResponseDM) _then) =
       _$ReservationMessagesResponseDMCopyWithImpl;
   @useResult
-  $Res call(
-      {List<ReservationMessageDM> messages,
-      @JsonKey(name: 'server_now') DateTime? serverNow});
+  $Res call({List<ReservationMessageDM> messages, @JsonKey(name: 'server_now') DateTime? serverNow});
 }
 
 /// @nodoc
-class _$ReservationMessagesResponseDMCopyWithImpl<$Res>
-    implements $ReservationMessagesResponseDMCopyWith<$Res> {
+class _$ReservationMessagesResponseDMCopyWithImpl<$Res> implements $ReservationMessagesResponseDMCopyWith<$Res> {
   _$ReservationMessagesResponseDMCopyWithImpl(this._self, this._then);
 
   final ReservationMessagesResponseDM _self;
@@ -93,8 +86,7 @@ class _$ReservationMessagesResponseDMCopyWithImpl<$Res>
 }
 
 /// Adds pattern-matching-related methods to [ReservationMessagesResponseDM].
-extension ReservationMessagesResponseDMPatterns
-    on ReservationMessagesResponseDM {
+extension ReservationMessagesResponseDMPatterns on ReservationMessagesResponseDM {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -186,9 +178,7 @@ extension ReservationMessagesResponseDMPatterns
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(List<ReservationMessageDM> messages,
-            @JsonKey(name: 'server_now') DateTime? serverNow)?
-        $default, {
+    TResult Function(List<ReservationMessageDM> messages, @JsonKey(name: 'server_now') DateTime? serverNow)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -215,9 +205,7 @@ extension ReservationMessagesResponseDMPatterns
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(List<ReservationMessageDM> messages,
-            @JsonKey(name: 'server_now') DateTime? serverNow)
-        $default,
+    TResult Function(List<ReservationMessageDM> messages, @JsonKey(name: 'server_now') DateTime? serverNow) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -242,9 +230,7 @@ extension ReservationMessagesResponseDMPatterns
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(List<ReservationMessageDM> messages,
-            @JsonKey(name: 'server_now') DateTime? serverNow)?
-        $default,
+    TResult? Function(List<ReservationMessageDM> messages, @JsonKey(name: 'server_now') DateTime? serverNow)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -260,8 +246,7 @@ extension ReservationMessagesResponseDMPatterns
 @JsonSerializable()
 class _ReservationMessagesResponseDM implements ReservationMessagesResponseDM {
   const _ReservationMessagesResponseDM(
-      {final List<ReservationMessageDM> messages = const [],
-      @JsonKey(name: 'server_now') this.serverNow})
+      {final List<ReservationMessageDM> messages = const [], @JsonKey(name: 'server_now') this.serverNow})
       : _messages = messages;
   factory _ReservationMessagesResponseDM.fromJson(Map<String, dynamic> json) =>
       _$ReservationMessagesResponseDMFromJson(json);
@@ -284,9 +269,8 @@ class _ReservationMessagesResponseDM implements ReservationMessagesResponseDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ReservationMessagesResponseDMCopyWith<_ReservationMessagesResponseDM>
-      get copyWith => __$ReservationMessagesResponseDMCopyWithImpl<
-          _ReservationMessagesResponseDM>(this, _$identity);
+  _$ReservationMessagesResponseDMCopyWith<_ReservationMessagesResponseDM> get copyWith =>
+      __$ReservationMessagesResponseDMCopyWithImpl<_ReservationMessagesResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -301,14 +285,12 @@ class _ReservationMessagesResponseDM implements ReservationMessagesResponseDM {
         (other.runtimeType == runtimeType &&
             other is _ReservationMessagesResponseDM &&
             const DeepCollectionEquality().equals(other._messages, _messages) &&
-            (identical(other.serverNow, serverNow) ||
-                other.serverNow == serverNow));
+            (identical(other.serverNow, serverNow) || other.serverNow == serverNow));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_messages), serverNow);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_messages), serverNow);
 
   @override
   String toString() {
@@ -320,19 +302,15 @@ class _ReservationMessagesResponseDM implements ReservationMessagesResponseDM {
 abstract mixin class _$ReservationMessagesResponseDMCopyWith<$Res>
     implements $ReservationMessagesResponseDMCopyWith<$Res> {
   factory _$ReservationMessagesResponseDMCopyWith(
-          _ReservationMessagesResponseDM value,
-          $Res Function(_ReservationMessagesResponseDM) _then) =
+          _ReservationMessagesResponseDM value, $Res Function(_ReservationMessagesResponseDM) _then) =
       __$ReservationMessagesResponseDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {List<ReservationMessageDM> messages,
-      @JsonKey(name: 'server_now') DateTime? serverNow});
+  $Res call({List<ReservationMessageDM> messages, @JsonKey(name: 'server_now') DateTime? serverNow});
 }
 
 /// @nodoc
-class __$ReservationMessagesResponseDMCopyWithImpl<$Res>
-    implements _$ReservationMessagesResponseDMCopyWith<$Res> {
+class __$ReservationMessagesResponseDMCopyWithImpl<$Res> implements _$ReservationMessagesResponseDMCopyWith<$Res> {
   __$ReservationMessagesResponseDMCopyWithImpl(this._self, this._then);
 
   final _ReservationMessagesResponseDM _self;
@@ -369,10 +347,8 @@ mixin _$ReservationMessageCreateResponseDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $ReservationMessageCreateResponseDMCopyWith<
-          ReservationMessageCreateResponseDM>
-      get copyWith => _$ReservationMessageCreateResponseDMCopyWithImpl<
-              ReservationMessageCreateResponseDM>(
+  $ReservationMessageCreateResponseDMCopyWith<ReservationMessageCreateResponseDM> get copyWith =>
+      _$ReservationMessageCreateResponseDMCopyWithImpl<ReservationMessageCreateResponseDM>(
           this as ReservationMessageCreateResponseDM, _$identity);
 
   /// Serializes this ReservationMessageCreateResponseDM to a JSON map.
@@ -401,8 +377,7 @@ mixin _$ReservationMessageCreateResponseDM {
 /// @nodoc
 abstract mixin class $ReservationMessageCreateResponseDMCopyWith<$Res> {
   factory $ReservationMessageCreateResponseDMCopyWith(
-          ReservationMessageCreateResponseDM value,
-          $Res Function(ReservationMessageCreateResponseDM) _then) =
+          ReservationMessageCreateResponseDM value, $Res Function(ReservationMessageCreateResponseDM) _then) =
       _$ReservationMessageCreateResponseDMCopyWithImpl;
   @useResult
   $Res call({bool success, String message, ReservationMessageDM? data});
@@ -459,8 +434,7 @@ class _$ReservationMessageCreateResponseDMCopyWithImpl<$Res>
 }
 
 /// Adds pattern-matching-related methods to [ReservationMessageCreateResponseDM].
-extension ReservationMessageCreateResponseDMPatterns
-    on ReservationMessageCreateResponseDM {
+extension ReservationMessageCreateResponseDMPatterns on ReservationMessageCreateResponseDM {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -552,8 +526,7 @@ extension ReservationMessageCreateResponseDMPatterns
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(bool success, String message, ReservationMessageDM? data)?
-        $default, {
+    TResult Function(bool success, String message, ReservationMessageDM? data)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -580,8 +553,7 @@ extension ReservationMessageCreateResponseDMPatterns
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(bool success, String message, ReservationMessageDM? data)
-        $default,
+    TResult Function(bool success, String message, ReservationMessageDM? data) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -606,8 +578,7 @@ extension ReservationMessageCreateResponseDMPatterns
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(bool success, String message, ReservationMessageDM? data)?
-        $default,
+    TResult? Function(bool success, String message, ReservationMessageDM? data)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -621,12 +592,9 @@ extension ReservationMessageCreateResponseDMPatterns
 
 /// @nodoc
 @JsonSerializable()
-class _ReservationMessageCreateResponseDM
-    implements ReservationMessageCreateResponseDM {
-  const _ReservationMessageCreateResponseDM(
-      {this.success = false, this.message = '', this.data});
-  factory _ReservationMessageCreateResponseDM.fromJson(
-          Map<String, dynamic> json) =>
+class _ReservationMessageCreateResponseDM implements ReservationMessageCreateResponseDM {
+  const _ReservationMessageCreateResponseDM({this.success = false, this.message = '', this.data});
+  factory _ReservationMessageCreateResponseDM.fromJson(Map<String, dynamic> json) =>
       _$ReservationMessageCreateResponseDMFromJson(json);
 
   @override
@@ -643,10 +611,8 @@ class _ReservationMessageCreateResponseDM
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ReservationMessageCreateResponseDMCopyWith<
-          _ReservationMessageCreateResponseDM>
-      get copyWith => __$ReservationMessageCreateResponseDMCopyWithImpl<
-          _ReservationMessageCreateResponseDM>(this, _$identity);
+  _$ReservationMessageCreateResponseDMCopyWith<_ReservationMessageCreateResponseDM> get copyWith =>
+      __$ReservationMessageCreateResponseDMCopyWithImpl<_ReservationMessageCreateResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -679,8 +645,7 @@ class _ReservationMessageCreateResponseDM
 abstract mixin class _$ReservationMessageCreateResponseDMCopyWith<$Res>
     implements $ReservationMessageCreateResponseDMCopyWith<$Res> {
   factory _$ReservationMessageCreateResponseDMCopyWith(
-          _ReservationMessageCreateResponseDM value,
-          $Res Function(_ReservationMessageCreateResponseDM) _then) =
+          _ReservationMessageCreateResponseDM value, $Res Function(_ReservationMessageCreateResponseDM) _then) =
       __$ReservationMessageCreateResponseDMCopyWithImpl;
   @override
   @useResult
@@ -757,8 +722,7 @@ mixin _$ReservationMessageDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ReservationMessageDMCopyWith<ReservationMessageDM> get copyWith =>
-      _$ReservationMessageDMCopyWithImpl<ReservationMessageDM>(
-          this as ReservationMessageDM, _$identity);
+      _$ReservationMessageDMCopyWithImpl<ReservationMessageDM>(this as ReservationMessageDM, _$identity);
 
   /// Serializes this ReservationMessageDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -768,23 +732,17 @@ mixin _$ReservationMessageDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ReservationMessageDM &&
-            (identical(other.messageUuid, messageUuid) ||
-                other.messageUuid == messageUuid) &&
-            (identical(other.authorType, authorType) ||
-                other.authorType == authorType) &&
-            (identical(other.authorName, authorName) ||
-                other.authorName == authorName) &&
-            (identical(other.authorPhoto, authorPhoto) ||
-                other.authorPhoto == authorPhoto) &&
+            (identical(other.messageUuid, messageUuid) || other.messageUuid == messageUuid) &&
+            (identical(other.authorType, authorType) || other.authorType == authorType) &&
+            (identical(other.authorName, authorName) || other.authorName == authorName) &&
+            (identical(other.authorPhoto, authorPhoto) || other.authorPhoto == authorPhoto) &&
             (identical(other.body, body) || other.body == body) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, messageUuid, authorType,
-      authorName, authorPhoto, body, createdAt);
+  int get hashCode => Object.hash(runtimeType, messageUuid, authorType, authorName, authorPhoto, body, createdAt);
 
   @override
   String toString() {
@@ -794,8 +752,7 @@ mixin _$ReservationMessageDM {
 
 /// @nodoc
 abstract mixin class $ReservationMessageDMCopyWith<$Res> {
-  factory $ReservationMessageDMCopyWith(ReservationMessageDM value,
-          $Res Function(ReservationMessageDM) _then) =
+  factory $ReservationMessageDMCopyWith(ReservationMessageDM value, $Res Function(ReservationMessageDM) _then) =
       _$ReservationMessageDMCopyWithImpl;
   @useResult
   $Res call(
@@ -808,8 +765,7 @@ abstract mixin class $ReservationMessageDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReservationMessageDMCopyWithImpl<$Res>
-    implements $ReservationMessageDMCopyWith<$Res> {
+class _$ReservationMessageDMCopyWithImpl<$Res> implements $ReservationMessageDMCopyWith<$Res> {
   _$ReservationMessageDMCopyWithImpl(this._self, this._then);
 
   final ReservationMessageDM _self;
@@ -962,8 +918,8 @@ extension ReservationMessageDMPatterns on ReservationMessageDM {
     final _that = this;
     switch (_that) {
       case _ReservationMessageDM() when $default != null:
-        return $default(_that.messageUuid, _that.authorType, _that.authorName,
-            _that.authorPhoto, _that.body, _that.createdAt);
+        return $default(
+            _that.messageUuid, _that.authorType, _that.authorName, _that.authorPhoto, _that.body, _that.createdAt);
       case _:
         return orElse();
     }
@@ -996,8 +952,8 @@ extension ReservationMessageDMPatterns on ReservationMessageDM {
     final _that = this;
     switch (_that) {
       case _ReservationMessageDM():
-        return $default(_that.messageUuid, _that.authorType, _that.authorName,
-            _that.authorPhoto, _that.body, _that.createdAt);
+        return $default(
+            _that.messageUuid, _that.authorType, _that.authorName, _that.authorPhoto, _that.body, _that.createdAt);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -1029,8 +985,8 @@ extension ReservationMessageDMPatterns on ReservationMessageDM {
     final _that = this;
     switch (_that) {
       case _ReservationMessageDM() when $default != null:
-        return $default(_that.messageUuid, _that.authorType, _that.authorName,
-            _that.authorPhoto, _that.body, _that.createdAt);
+        return $default(
+            _that.messageUuid, _that.authorType, _that.authorName, _that.authorPhoto, _that.body, _that.createdAt);
       case _:
         return null;
     }
@@ -1042,15 +998,13 @@ extension ReservationMessageDMPatterns on ReservationMessageDM {
 class _ReservationMessageDM extends ReservationMessageDM {
   const _ReservationMessageDM(
       {@JsonKey(name: 'message_uuid') this.messageUuid,
-      @JsonKey(name: 'author_type')
-      this.authorType = MessageAuthorType.customer,
+      @JsonKey(name: 'author_type') this.authorType = MessageAuthorType.customer,
       @JsonKey(name: 'author_name') this.authorName,
       @JsonKey(name: 'author_photo') this.authorPhoto,
       this.body = '',
       @JsonKey(name: 'created_at') this.createdAt})
       : super._();
-  factory _ReservationMessageDM.fromJson(Map<String, dynamic> json) =>
-      _$ReservationMessageDMFromJson(json);
+  factory _ReservationMessageDM.fromJson(Map<String, dynamic> json) => _$ReservationMessageDMFromJson(json);
 
   @override
   @JsonKey(name: 'message_uuid')
@@ -1077,8 +1031,7 @@ class _ReservationMessageDM extends ReservationMessageDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$ReservationMessageDMCopyWith<_ReservationMessageDM> get copyWith =>
-      __$ReservationMessageDMCopyWithImpl<_ReservationMessageDM>(
-          this, _$identity);
+      __$ReservationMessageDMCopyWithImpl<_ReservationMessageDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1092,23 +1045,17 @@ class _ReservationMessageDM extends ReservationMessageDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ReservationMessageDM &&
-            (identical(other.messageUuid, messageUuid) ||
-                other.messageUuid == messageUuid) &&
-            (identical(other.authorType, authorType) ||
-                other.authorType == authorType) &&
-            (identical(other.authorName, authorName) ||
-                other.authorName == authorName) &&
-            (identical(other.authorPhoto, authorPhoto) ||
-                other.authorPhoto == authorPhoto) &&
+            (identical(other.messageUuid, messageUuid) || other.messageUuid == messageUuid) &&
+            (identical(other.authorType, authorType) || other.authorType == authorType) &&
+            (identical(other.authorName, authorName) || other.authorName == authorName) &&
+            (identical(other.authorPhoto, authorPhoto) || other.authorPhoto == authorPhoto) &&
             (identical(other.body, body) || other.body == body) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, messageUuid, authorType,
-      authorName, authorPhoto, body, createdAt);
+  int get hashCode => Object.hash(runtimeType, messageUuid, authorType, authorName, authorPhoto, body, createdAt);
 
   @override
   String toString() {
@@ -1117,10 +1064,8 @@ class _ReservationMessageDM extends ReservationMessageDM {
 }
 
 /// @nodoc
-abstract mixin class _$ReservationMessageDMCopyWith<$Res>
-    implements $ReservationMessageDMCopyWith<$Res> {
-  factory _$ReservationMessageDMCopyWith(_ReservationMessageDM value,
-          $Res Function(_ReservationMessageDM) _then) =
+abstract mixin class _$ReservationMessageDMCopyWith<$Res> implements $ReservationMessageDMCopyWith<$Res> {
+  factory _$ReservationMessageDMCopyWith(_ReservationMessageDM value, $Res Function(_ReservationMessageDM) _then) =
       __$ReservationMessageDMCopyWithImpl;
   @override
   @useResult
@@ -1134,8 +1079,7 @@ abstract mixin class _$ReservationMessageDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ReservationMessageDMCopyWithImpl<$Res>
-    implements _$ReservationMessageDMCopyWith<$Res> {
+class __$ReservationMessageDMCopyWithImpl<$Res> implements _$ReservationMessageDMCopyWith<$Res> {
   __$ReservationMessageDMCopyWithImpl(this._self, this._then);
 
   final _ReservationMessageDM _self;

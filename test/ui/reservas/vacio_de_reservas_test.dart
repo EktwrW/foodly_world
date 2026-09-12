@@ -146,7 +146,8 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(cubit.state.vm.statusFilter, isNull);
-      expect(vacio(tester).intent, FoodlyEmptyIntent.nuevo, reason: 'quitado el filtro, vuelve a ser un vacio de novato');
+      expect(vacio(tester).intent, FoodlyEmptyIntent.nuevo,
+          reason: 'quitado el filtro, vuelve a ser un vacio de novato');
     });
 
     testWidgets('solo con el segmentado de tipo dice filtro pero NO pinta boton', (tester) async {

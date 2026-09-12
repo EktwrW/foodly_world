@@ -6,41 +6,32 @@ part of 'ai_promo_generation_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_AiPromoImageOption _$AiPromoImageOptionFromJson(Map<String, dynamic> json) =>
-    _AiPromoImageOption(
+_AiPromoImageOption _$AiPromoImageOptionFromJson(Map<String, dynamic> json) => _AiPromoImageOption(
       look: json['look'] as String? ?? '',
       imageBase64: json['image_base64'] as String? ?? '',
     );
 
-Map<String, dynamic> _$AiPromoImageOptionToJson(_AiPromoImageOption instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AiPromoImageOptionToJson(_AiPromoImageOption instance) => <String, dynamic>{
       'look': instance.look,
       'image_base64': instance.imageBase64,
     };
 
-_AiPromoGenerationResponse _$AiPromoGenerationResponseFromJson(
-        Map<String, dynamic> json) =>
-    _AiPromoGenerationResponse(
+_AiPromoGenerationResponse _$AiPromoGenerationResponseFromJson(Map<String, dynamic> json) => _AiPromoGenerationResponse(
       granted: json['granted'] as bool? ?? false,
       title: json['title'] as String? ?? '',
       subtitle: json['subtitle'] as String? ?? '',
       description: json['description'] as String? ?? '',
       images: (json['images'] as List<dynamic>?)
-              ?.map(
-                  (e) => AiPromoImageOption.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => AiPromoImageOption.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      aiPromoMonthlyLimit:
-          (json['ai_promo_monthly_limit'] as num?)?.toInt() ?? 3,
-      aiPromosUsedThisMonth:
-          (json['ai_promos_used_this_month'] as num?)?.toInt() ?? 0,
+      aiPromoMonthlyLimit: (json['ai_promo_monthly_limit'] as num?)?.toInt() ?? 3,
+      aiPromosUsedThisMonth: (json['ai_promos_used_this_month'] as num?)?.toInt() ?? 0,
       remaining: (json['remaining'] as num?)?.toInt() ?? 0,
       message: json['message'] as String?,
     );
 
-Map<String, dynamic> _$AiPromoGenerationResponseToJson(
-        _AiPromoGenerationResponse instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AiPromoGenerationResponseToJson(_AiPromoGenerationResponse instance) => <String, dynamic>{
       'granted': instance.granted,
       'title': instance.title,
       'subtitle': instance.subtitle,

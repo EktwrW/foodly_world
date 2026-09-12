@@ -29,32 +29,27 @@ mixin _$LocationDetailsDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $LocationDetailsDMCopyWith<LocationDetailsDM> get copyWith =>
-      _$LocationDetailsDMCopyWithImpl<LocationDetailsDM>(
-          this as LocationDetailsDM, _$identity);
+      _$LocationDetailsDMCopyWithImpl<LocationDetailsDM>(this as LocationDetailsDM, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is LocationDetailsDM &&
-            (identical(other.countryCode, countryCode) ||
-                other.countryCode == countryCode) &&
-            (identical(other.position, position) ||
-                other.position == position) &&
+            (identical(other.countryCode, countryCode) || other.countryCode == countryCode) &&
+            (identical(other.position, position) || other.position == position) &&
             (identical(other.country, country) || other.country == country) &&
             (identical(other.state, state) || other.state == state) &&
             (identical(other.city, city) || other.city == city) &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.zipCode, zipCode) || other.zipCode == zipCode) &&
-            (identical(other.serviceEnabled, serviceEnabled) ||
-                other.serviceEnabled == serviceEnabled) &&
-            (identical(other.permission, permission) ||
-                other.permission == permission));
+            (identical(other.serviceEnabled, serviceEnabled) || other.serviceEnabled == serviceEnabled) &&
+            (identical(other.permission, permission) || other.permission == permission));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, countryCode, position, country,
-      state, city, address, zipCode, serviceEnabled, permission);
+  int get hashCode => Object.hash(
+      runtimeType, countryCode, position, country, state, city, address, zipCode, serviceEnabled, permission);
 
   @override
   String toString() {
@@ -64,8 +59,7 @@ mixin _$LocationDetailsDM {
 
 /// @nodoc
 abstract mixin class $LocationDetailsDMCopyWith<$Res> {
-  factory $LocationDetailsDMCopyWith(
-          LocationDetailsDM value, $Res Function(LocationDetailsDM) _then) =
+  factory $LocationDetailsDMCopyWith(LocationDetailsDM value, $Res Function(LocationDetailsDM) _then) =
       _$LocationDetailsDMCopyWithImpl;
   @useResult
   $Res call(
@@ -81,8 +75,7 @@ abstract mixin class $LocationDetailsDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LocationDetailsDMCopyWithImpl<$Res>
-    implements $LocationDetailsDMCopyWith<$Res> {
+class _$LocationDetailsDMCopyWithImpl<$Res> implements $LocationDetailsDMCopyWith<$Res> {
   _$LocationDetailsDMCopyWithImpl(this._self, this._then);
 
   final LocationDetailsDM _self;
@@ -237,32 +230,16 @@ extension LocationDetailsDMPatterns on LocationDetailsDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            String? countryCode,
-            Position? position,
-            String? country,
-            String? state,
-            String? city,
-            String? address,
-            String? zipCode,
-            bool serviceEnabled,
-            LocationPermission permission)?
+    TResult Function(String? countryCode, Position? position, String? country, String? state, String? city,
+            String? address, String? zipCode, bool serviceEnabled, LocationPermission permission)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _LocationDetailsDM() when $default != null:
-        return $default(
-            _that.countryCode,
-            _that.position,
-            _that.country,
-            _that.state,
-            _that.city,
-            _that.address,
-            _that.zipCode,
-            _that.serviceEnabled,
-            _that.permission);
+        return $default(_that.countryCode, _that.position, _that.country, _that.state, _that.city, _that.address,
+            _that.zipCode, _that.serviceEnabled, _that.permission);
       case _:
         return orElse();
     }
@@ -283,31 +260,15 @@ extension LocationDetailsDMPatterns on LocationDetailsDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            String? countryCode,
-            Position? position,
-            String? country,
-            String? state,
-            String? city,
-            String? address,
-            String? zipCode,
-            bool serviceEnabled,
-            LocationPermission permission)
+    TResult Function(String? countryCode, Position? position, String? country, String? state, String? city,
+            String? address, String? zipCode, bool serviceEnabled, LocationPermission permission)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _LocationDetailsDM():
-        return $default(
-            _that.countryCode,
-            _that.position,
-            _that.country,
-            _that.state,
-            _that.city,
-            _that.address,
-            _that.zipCode,
-            _that.serviceEnabled,
-            _that.permission);
+        return $default(_that.countryCode, _that.position, _that.country, _that.state, _that.city, _that.address,
+            _that.zipCode, _that.serviceEnabled, _that.permission);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -327,31 +288,15 @@ extension LocationDetailsDMPatterns on LocationDetailsDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            String? countryCode,
-            Position? position,
-            String? country,
-            String? state,
-            String? city,
-            String? address,
-            String? zipCode,
-            bool serviceEnabled,
-            LocationPermission permission)?
+    TResult? Function(String? countryCode, Position? position, String? country, String? state, String? city,
+            String? address, String? zipCode, bool serviceEnabled, LocationPermission permission)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _LocationDetailsDM() when $default != null:
-        return $default(
-            _that.countryCode,
-            _that.position,
-            _that.country,
-            _that.state,
-            _that.city,
-            _that.address,
-            _that.zipCode,
-            _that.serviceEnabled,
-            _that.permission);
+        return $default(_that.countryCode, _that.position, _that.country, _that.state, _that.city, _that.address,
+            _that.zipCode, _that.serviceEnabled, _that.permission);
       case _:
         return null;
     }
@@ -406,24 +351,20 @@ class _LocationDetailsDM implements LocationDetailsDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _LocationDetailsDM &&
-            (identical(other.countryCode, countryCode) ||
-                other.countryCode == countryCode) &&
-            (identical(other.position, position) ||
-                other.position == position) &&
+            (identical(other.countryCode, countryCode) || other.countryCode == countryCode) &&
+            (identical(other.position, position) || other.position == position) &&
             (identical(other.country, country) || other.country == country) &&
             (identical(other.state, state) || other.state == state) &&
             (identical(other.city, city) || other.city == city) &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.zipCode, zipCode) || other.zipCode == zipCode) &&
-            (identical(other.serviceEnabled, serviceEnabled) ||
-                other.serviceEnabled == serviceEnabled) &&
-            (identical(other.permission, permission) ||
-                other.permission == permission));
+            (identical(other.serviceEnabled, serviceEnabled) || other.serviceEnabled == serviceEnabled) &&
+            (identical(other.permission, permission) || other.permission == permission));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, countryCode, position, country,
-      state, city, address, zipCode, serviceEnabled, permission);
+  int get hashCode => Object.hash(
+      runtimeType, countryCode, position, country, state, city, address, zipCode, serviceEnabled, permission);
 
   @override
   String toString() {
@@ -432,10 +373,8 @@ class _LocationDetailsDM implements LocationDetailsDM {
 }
 
 /// @nodoc
-abstract mixin class _$LocationDetailsDMCopyWith<$Res>
-    implements $LocationDetailsDMCopyWith<$Res> {
-  factory _$LocationDetailsDMCopyWith(
-          _LocationDetailsDM value, $Res Function(_LocationDetailsDM) _then) =
+abstract mixin class _$LocationDetailsDMCopyWith<$Res> implements $LocationDetailsDMCopyWith<$Res> {
+  factory _$LocationDetailsDMCopyWith(_LocationDetailsDM value, $Res Function(_LocationDetailsDM) _then) =
       __$LocationDetailsDMCopyWithImpl;
   @override
   @useResult
@@ -452,8 +391,7 @@ abstract mixin class _$LocationDetailsDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$LocationDetailsDMCopyWithImpl<$Res>
-    implements _$LocationDetailsDMCopyWith<$Res> {
+class __$LocationDetailsDMCopyWithImpl<$Res> implements _$LocationDetailsDMCopyWith<$Res> {
   __$LocationDetailsDMCopyWithImpl(this._self, this._then);
 
   final _LocationDetailsDM _self;

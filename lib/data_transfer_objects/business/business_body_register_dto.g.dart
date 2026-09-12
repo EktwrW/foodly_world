@@ -6,17 +6,14 @@ part of 'business_body_register_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BusinessBodyRegisterDTO _$BusinessBodyRegisterDTOFromJson(
-        Map<String, dynamic> json) =>
-    BusinessBodyRegisterDTO(
+BusinessBodyRegisterDTO _$BusinessBodyRegisterDTOFromJson(Map<String, dynamic> json) => BusinessBodyRegisterDTO(
       businessName: json['business_name'] as String,
       businessEmail: json['business_email'] as String,
       businessPhone: json['business_phone'] as String,
       businessAddress: json['business_address'] as String,
       businessZipcode: json['business_zipcode'] as String,
       businessCity: json['business_city'] as String,
-      businessCountry:
-          $enumDecode(_$FoodlyCountriesEnumMap, json['business_country']),
+      businessCountry: $enumDecode(_$FoodlyCountriesEnumMap, json['business_country']),
       businessWebsite: json['business_website'] as String,
       businessLatitude: (json['business_latitude'] as num?)?.toDouble(),
       businessLongitude: (json['business_longitude'] as num?)?.toDouble(),
@@ -25,9 +22,7 @@ BusinessBodyRegisterDTO _$BusinessBodyRegisterDTOFromJson(
       termsAccepted: json['terms_accepted'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$BusinessBodyRegisterDTOToJson(
-        BusinessBodyRegisterDTO instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BusinessBodyRegisterDTOToJson(BusinessBodyRegisterDTO instance) => <String, dynamic>{
       'business_name': instance.businessName,
       'business_email': instance.businessEmail,
       'business_phone': instance.businessPhone,
@@ -36,10 +31,8 @@ Map<String, dynamic> _$BusinessBodyRegisterDTOToJson(
       'business_city': instance.businessCity,
       'business_country': _$FoodlyCountriesEnumMap[instance.businessCountry]!,
       'business_website': instance.businessWebsite,
-      if (instance.businessLatitude case final value?)
-        'business_latitude': value,
-      if (instance.businessLongitude case final value?)
-        'business_longitude': value,
+      if (instance.businessLatitude case final value?) 'business_latitude': value,
+      if (instance.businessLongitude case final value?) 'business_longitude': value,
       'category_id': _$FoodlyCategoriesEnumMap[instance.categoryId]!,
       if (instance.introMessage case final value?) 'intro_message': value,
       'terms_accepted': instance.termsAccepted,

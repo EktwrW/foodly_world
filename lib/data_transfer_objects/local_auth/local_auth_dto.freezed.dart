@@ -26,37 +26,25 @@ mixin _$LocalAuthDTO {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $LocalAuthDTOCopyWith<LocalAuthDTO> get copyWith =>
-      _$LocalAuthDTOCopyWithImpl<LocalAuthDTO>(
-          this as LocalAuthDTO, _$identity);
+      _$LocalAuthDTOCopyWithImpl<LocalAuthDTO>(this as LocalAuthDTO, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is LocalAuthDTO &&
-            (identical(other.deviceIsSupported, deviceIsSupported) ||
-                other.deviceIsSupported == deviceIsSupported) &&
-            (identical(other.isAuthenticating, isAuthenticating) ||
-                other.isAuthenticating == isAuthenticating) &&
+            (identical(other.deviceIsSupported, deviceIsSupported) || other.deviceIsSupported == deviceIsSupported) &&
+            (identical(other.isAuthenticating, isAuthenticating) || other.isAuthenticating == isAuthenticating) &&
             (identical(other.canCheckBiometrics, canCheckBiometrics) ||
                 other.canCheckBiometrics == canCheckBiometrics) &&
-            const DeepCollectionEquality()
-                .equals(other.availableBiometrics, availableBiometrics) &&
-            (identical(other.authenticated, authenticated) ||
-                other.authenticated == authenticated) &&
-            (identical(other.userSessionDM, userSessionDM) ||
-                other.userSessionDM == userSessionDM));
+            const DeepCollectionEquality().equals(other.availableBiometrics, availableBiometrics) &&
+            (identical(other.authenticated, authenticated) || other.authenticated == authenticated) &&
+            (identical(other.userSessionDM, userSessionDM) || other.userSessionDM == userSessionDM));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      deviceIsSupported,
-      isAuthenticating,
-      canCheckBiometrics,
-      const DeepCollectionEquality().hash(availableBiometrics),
-      authenticated,
-      userSessionDM);
+  int get hashCode => Object.hash(runtimeType, deviceIsSupported, isAuthenticating, canCheckBiometrics,
+      const DeepCollectionEquality().hash(availableBiometrics), authenticated, userSessionDM);
 
   @override
   String toString() {
@@ -66,9 +54,7 @@ mixin _$LocalAuthDTO {
 
 /// @nodoc
 abstract mixin class $LocalAuthDTOCopyWith<$Res> {
-  factory $LocalAuthDTOCopyWith(
-          LocalAuthDTO value, $Res Function(LocalAuthDTO) _then) =
-      _$LocalAuthDTOCopyWithImpl;
+  factory $LocalAuthDTOCopyWith(LocalAuthDTO value, $Res Function(LocalAuthDTO) _then) = _$LocalAuthDTOCopyWithImpl;
   @useResult
   $Res call(
       {bool deviceIsSupported,
@@ -232,26 +218,16 @@ extension LocalAuthDTOPatterns on LocalAuthDTO {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            bool deviceIsSupported,
-            bool isAuthenticating,
-            bool canCheckBiometrics,
-            List<BiometricType> availableBiometrics,
-            bool authenticated,
-            UserSessionDM userSessionDM)?
+    TResult Function(bool deviceIsSupported, bool isAuthenticating, bool canCheckBiometrics,
+            List<BiometricType> availableBiometrics, bool authenticated, UserSessionDM userSessionDM)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _LocalAuthDTO() when $default != null:
-        return $default(
-            _that.deviceIsSupported,
-            _that.isAuthenticating,
-            _that.canCheckBiometrics,
-            _that.availableBiometrics,
-            _that.authenticated,
-            _that.userSessionDM);
+        return $default(_that.deviceIsSupported, _that.isAuthenticating, _that.canCheckBiometrics,
+            _that.availableBiometrics, _that.authenticated, _that.userSessionDM);
       case _:
         return orElse();
     }
@@ -272,25 +248,15 @@ extension LocalAuthDTOPatterns on LocalAuthDTO {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            bool deviceIsSupported,
-            bool isAuthenticating,
-            bool canCheckBiometrics,
-            List<BiometricType> availableBiometrics,
-            bool authenticated,
-            UserSessionDM userSessionDM)
+    TResult Function(bool deviceIsSupported, bool isAuthenticating, bool canCheckBiometrics,
+            List<BiometricType> availableBiometrics, bool authenticated, UserSessionDM userSessionDM)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _LocalAuthDTO():
-        return $default(
-            _that.deviceIsSupported,
-            _that.isAuthenticating,
-            _that.canCheckBiometrics,
-            _that.availableBiometrics,
-            _that.authenticated,
-            _that.userSessionDM);
+        return $default(_that.deviceIsSupported, _that.isAuthenticating, _that.canCheckBiometrics,
+            _that.availableBiometrics, _that.authenticated, _that.userSessionDM);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -310,25 +276,15 @@ extension LocalAuthDTOPatterns on LocalAuthDTO {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            bool deviceIsSupported,
-            bool isAuthenticating,
-            bool canCheckBiometrics,
-            List<BiometricType> availableBiometrics,
-            bool authenticated,
-            UserSessionDM userSessionDM)?
+    TResult? Function(bool deviceIsSupported, bool isAuthenticating, bool canCheckBiometrics,
+            List<BiometricType> availableBiometrics, bool authenticated, UserSessionDM userSessionDM)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _LocalAuthDTO() when $default != null:
-        return $default(
-            _that.deviceIsSupported,
-            _that.isAuthenticating,
-            _that.canCheckBiometrics,
-            _that.availableBiometrics,
-            _that.authenticated,
-            _that.userSessionDM);
+        return $default(_that.deviceIsSupported, _that.isAuthenticating, _that.canCheckBiometrics,
+            _that.availableBiometrics, _that.authenticated, _that.userSessionDM);
       case _:
         return null;
     }
@@ -360,8 +316,7 @@ class _LocalAuthDTO implements LocalAuthDTO {
   @override
   @JsonKey()
   List<BiometricType> get availableBiometrics {
-    if (_availableBiometrics is EqualUnmodifiableListView)
-      return _availableBiometrics;
+    if (_availableBiometrics is EqualUnmodifiableListView) return _availableBiometrics;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_availableBiometrics);
   }
@@ -378,37 +333,25 @@ class _LocalAuthDTO implements LocalAuthDTO {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LocalAuthDTOCopyWith<_LocalAuthDTO> get copyWith =>
-      __$LocalAuthDTOCopyWithImpl<_LocalAuthDTO>(this, _$identity);
+  _$LocalAuthDTOCopyWith<_LocalAuthDTO> get copyWith => __$LocalAuthDTOCopyWithImpl<_LocalAuthDTO>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _LocalAuthDTO &&
-            (identical(other.deviceIsSupported, deviceIsSupported) ||
-                other.deviceIsSupported == deviceIsSupported) &&
-            (identical(other.isAuthenticating, isAuthenticating) ||
-                other.isAuthenticating == isAuthenticating) &&
+            (identical(other.deviceIsSupported, deviceIsSupported) || other.deviceIsSupported == deviceIsSupported) &&
+            (identical(other.isAuthenticating, isAuthenticating) || other.isAuthenticating == isAuthenticating) &&
             (identical(other.canCheckBiometrics, canCheckBiometrics) ||
                 other.canCheckBiometrics == canCheckBiometrics) &&
-            const DeepCollectionEquality()
-                .equals(other._availableBiometrics, _availableBiometrics) &&
-            (identical(other.authenticated, authenticated) ||
-                other.authenticated == authenticated) &&
-            (identical(other.userSessionDM, userSessionDM) ||
-                other.userSessionDM == userSessionDM));
+            const DeepCollectionEquality().equals(other._availableBiometrics, _availableBiometrics) &&
+            (identical(other.authenticated, authenticated) || other.authenticated == authenticated) &&
+            (identical(other.userSessionDM, userSessionDM) || other.userSessionDM == userSessionDM));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      deviceIsSupported,
-      isAuthenticating,
-      canCheckBiometrics,
-      const DeepCollectionEquality().hash(_availableBiometrics),
-      authenticated,
-      userSessionDM);
+  int get hashCode => Object.hash(runtimeType, deviceIsSupported, isAuthenticating, canCheckBiometrics,
+      const DeepCollectionEquality().hash(_availableBiometrics), authenticated, userSessionDM);
 
   @override
   String toString() {
@@ -417,11 +360,8 @@ class _LocalAuthDTO implements LocalAuthDTO {
 }
 
 /// @nodoc
-abstract mixin class _$LocalAuthDTOCopyWith<$Res>
-    implements $LocalAuthDTOCopyWith<$Res> {
-  factory _$LocalAuthDTOCopyWith(
-          _LocalAuthDTO value, $Res Function(_LocalAuthDTO) _then) =
-      __$LocalAuthDTOCopyWithImpl;
+abstract mixin class _$LocalAuthDTOCopyWith<$Res> implements $LocalAuthDTOCopyWith<$Res> {
+  factory _$LocalAuthDTOCopyWith(_LocalAuthDTO value, $Res Function(_LocalAuthDTO) _then) = __$LocalAuthDTOCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -437,8 +377,7 @@ abstract mixin class _$LocalAuthDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$LocalAuthDTOCopyWithImpl<$Res>
-    implements _$LocalAuthDTOCopyWith<$Res> {
+class __$LocalAuthDTOCopyWithImpl<$Res> implements _$LocalAuthDTOCopyWith<$Res> {
   __$LocalAuthDTOCopyWithImpl(this._self, this._then);
 
   final _LocalAuthDTO _self;

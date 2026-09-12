@@ -21,15 +21,12 @@ mixin _$CategoriesState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $CategoriesStateCopyWith<CategoriesState> get copyWith =>
-      _$CategoriesStateCopyWithImpl<CategoriesState>(
-          this as CategoriesState, _$identity);
+      _$CategoriesStateCopyWithImpl<CategoriesState>(this as CategoriesState, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is CategoriesState &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is CategoriesState && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -43,8 +40,7 @@ mixin _$CategoriesState {
 
 /// @nodoc
 abstract mixin class $CategoriesStateCopyWith<$Res> {
-  factory $CategoriesStateCopyWith(
-          CategoriesState value, $Res Function(CategoriesState) _then) =
+  factory $CategoriesStateCopyWith(CategoriesState value, $Res Function(CategoriesState) _then) =
       _$CategoriesStateCopyWithImpl;
   @useResult
   $Res call({CategoriesVM vm});
@@ -53,8 +49,7 @@ abstract mixin class $CategoriesStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CategoriesStateCopyWithImpl<$Res>
-    implements $CategoriesStateCopyWith<$Res> {
+class _$CategoriesStateCopyWithImpl<$Res> implements $CategoriesStateCopyWith<$Res> {
   _$CategoriesStateCopyWithImpl(this._self, this._then);
 
   final CategoriesState _self;
@@ -306,15 +301,12 @@ class _Initial implements CategoriesState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Initial &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Initial && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -327,10 +319,8 @@ class _Initial implements CategoriesState {
 }
 
 /// @nodoc
-abstract mixin class _$InitialCopyWith<$Res>
-    implements $CategoriesStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
-      __$InitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $CategoriesStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({CategoriesVM vm});
@@ -385,15 +375,12 @@ class _Loading implements CategoriesState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadingCopyWith<_Loading> get copyWith =>
-      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+  _$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loading &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loading && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -406,10 +393,8 @@ class _Loading implements CategoriesState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadingCopyWith<$Res>
-    implements $CategoriesStateCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
-      __$LoadingCopyWithImpl;
+abstract mixin class _$LoadingCopyWith<$Res> implements $CategoriesStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
   @override
   @useResult
   $Res call({CategoriesVM vm});
@@ -464,15 +449,12 @@ class _Loaded implements CategoriesState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loaded &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loaded && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -485,10 +467,8 @@ class _Loaded implements CategoriesState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res>
-    implements $CategoriesStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
-      __$LoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $CategoriesStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
   @override
   @useResult
   $Res call({CategoriesVM vm});
@@ -544,8 +524,7 @@ class _Error implements CategoriesState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -553,8 +532,7 @@ class _Error implements CategoriesState {
         (other.runtimeType == runtimeType &&
             other is _Error &&
             (identical(other.vm, vm) || other.vm == vm) &&
-            (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+            (identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
   }
 
   @override
@@ -567,10 +545,8 @@ class _Error implements CategoriesState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $CategoriesStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $CategoriesStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({CategoriesVM vm, String errorMessage});

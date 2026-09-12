@@ -105,28 +105,28 @@ class _PublicMenuCategoryPageState extends State<PublicMenuCategoryPage> with Au
 
   Widget _construirCarta() {
     return NotificationListener<ScrollNotification>(
-              onNotification: (notification) {
-                if (notification is ScrollStartNotification) widget.onScrollStart();
-                if (notification is ScrollEndNotification) widget.onScrollEnd();
-                return true;
-              },
-              child: ListView.builder(
-                controller: _scrollController,
-                key: PageStorageKey('pub_menu_cat_${widget.menuCategory.name}'),
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemCount: widget.categories!.length,
-                padding: EdgeInsets.zero,
-                itemBuilder: (context, index) {
-                  final subCategory = widget.categories![index];
-                  return _PublicSubCategoryWdg(
-                    key: _indice.claveDe(subCategory.uuid),
-                    subCategory: subCategory,
-                    menuCategory: widget.menuCategory,
-                    currency: widget.currency,
-                  );
-                },
-              ),
-            );
+      onNotification: (notification) {
+        if (notification is ScrollStartNotification) widget.onScrollStart();
+        if (notification is ScrollEndNotification) widget.onScrollEnd();
+        return true;
+      },
+      child: ListView.builder(
+        controller: _scrollController,
+        key: PageStorageKey('pub_menu_cat_${widget.menuCategory.name}'),
+        physics: const AlwaysScrollableScrollPhysics(),
+        itemCount: widget.categories!.length,
+        padding: EdgeInsets.zero,
+        itemBuilder: (context, index) {
+          final subCategory = widget.categories![index];
+          return _PublicSubCategoryWdg(
+            key: _indice.claveDe(subCategory.uuid),
+            subCategory: subCategory,
+            menuCategory: widget.menuCategory,
+            currency: widget.currency,
+          );
+        },
+      ),
+    );
   }
 }
 

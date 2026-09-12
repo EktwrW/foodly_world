@@ -23,27 +23,22 @@ mixin _$ContactVM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $ContactVMCopyWith<ContactVM> get copyWith =>
-      _$ContactVMCopyWithImpl<ContactVM>(this as ContactVM, _$identity);
+  $ContactVMCopyWith<ContactVM> get copyWith => _$ContactVMCopyWithImpl<ContactVM>(this as ContactVM, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ContactVM &&
-            (identical(other.recipient, recipient) ||
-                other.recipient == recipient) &&
-            (identical(other.attachmentPath, attachmentPath) ||
-                other.attachmentPath == attachmentPath) &&
-            (identical(other.attachmentName, attachmentName) ||
-                other.attachmentName == attachmentName) &&
+            (identical(other.recipient, recipient) || other.recipient == recipient) &&
+            (identical(other.attachmentPath, attachmentPath) || other.attachmentPath == attachmentPath) &&
+            (identical(other.attachmentName, attachmentName) || other.attachmentName == attachmentName) &&
             (identical(other.attachmentTooLarge, attachmentTooLarge) ||
                 other.attachmentTooLarge == attachmentTooLarge));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, recipient, attachmentPath,
-      attachmentName, attachmentTooLarge);
+  int get hashCode => Object.hash(runtimeType, recipient, attachmentPath, attachmentName, attachmentTooLarge);
 
   @override
   String toString() {
@@ -53,14 +48,9 @@ mixin _$ContactVM {
 
 /// @nodoc
 abstract mixin class $ContactVMCopyWith<$Res> {
-  factory $ContactVMCopyWith(ContactVM value, $Res Function(ContactVM) _then) =
-      _$ContactVMCopyWithImpl;
+  factory $ContactVMCopyWith(ContactVM value, $Res Function(ContactVM) _then) = _$ContactVMCopyWithImpl;
   @useResult
-  $Res call(
-      {ContactRecipient recipient,
-      String? attachmentPath,
-      String? attachmentName,
-      bool attachmentTooLarge});
+  $Res call({ContactRecipient recipient, String? attachmentPath, String? attachmentName, bool attachmentTooLarge});
 }
 
 /// @nodoc
@@ -194,16 +184,15 @@ extension ContactVMPatterns on ContactVM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(ContactRecipient recipient, String? attachmentPath,
-            String? attachmentName, bool attachmentTooLarge)?
+    TResult Function(
+            ContactRecipient recipient, String? attachmentPath, String? attachmentName, bool attachmentTooLarge)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _ContactVM() when $default != null:
-        return $default(_that.recipient, _that.attachmentPath,
-            _that.attachmentName, _that.attachmentTooLarge);
+        return $default(_that.recipient, _that.attachmentPath, _that.attachmentName, _that.attachmentTooLarge);
       case _:
         return orElse();
     }
@@ -224,15 +213,14 @@ extension ContactVMPatterns on ContactVM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(ContactRecipient recipient, String? attachmentPath,
-            String? attachmentName, bool attachmentTooLarge)
+    TResult Function(
+            ContactRecipient recipient, String? attachmentPath, String? attachmentName, bool attachmentTooLarge)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ContactVM():
-        return $default(_that.recipient, _that.attachmentPath,
-            _that.attachmentName, _that.attachmentTooLarge);
+        return $default(_that.recipient, _that.attachmentPath, _that.attachmentName, _that.attachmentTooLarge);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -252,15 +240,14 @@ extension ContactVMPatterns on ContactVM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(ContactRecipient recipient, String? attachmentPath,
-            String? attachmentName, bool attachmentTooLarge)?
+    TResult? Function(
+            ContactRecipient recipient, String? attachmentPath, String? attachmentName, bool attachmentTooLarge)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ContactVM() when $default != null:
-        return $default(_that.recipient, _that.attachmentPath,
-            _that.attachmentName, _that.attachmentTooLarge);
+        return $default(_that.recipient, _that.attachmentPath, _that.attachmentName, _that.attachmentTooLarge);
       case _:
         return null;
     }
@@ -292,27 +279,22 @@ class _ContactVM implements ContactVM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ContactVMCopyWith<_ContactVM> get copyWith =>
-      __$ContactVMCopyWithImpl<_ContactVM>(this, _$identity);
+  _$ContactVMCopyWith<_ContactVM> get copyWith => __$ContactVMCopyWithImpl<_ContactVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ContactVM &&
-            (identical(other.recipient, recipient) ||
-                other.recipient == recipient) &&
-            (identical(other.attachmentPath, attachmentPath) ||
-                other.attachmentPath == attachmentPath) &&
-            (identical(other.attachmentName, attachmentName) ||
-                other.attachmentName == attachmentName) &&
+            (identical(other.recipient, recipient) || other.recipient == recipient) &&
+            (identical(other.attachmentPath, attachmentPath) || other.attachmentPath == attachmentPath) &&
+            (identical(other.attachmentName, attachmentName) || other.attachmentName == attachmentName) &&
             (identical(other.attachmentTooLarge, attachmentTooLarge) ||
                 other.attachmentTooLarge == attachmentTooLarge));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, recipient, attachmentPath,
-      attachmentName, attachmentTooLarge);
+  int get hashCode => Object.hash(runtimeType, recipient, attachmentPath, attachmentName, attachmentTooLarge);
 
   @override
   String toString() {
@@ -321,18 +303,11 @@ class _ContactVM implements ContactVM {
 }
 
 /// @nodoc
-abstract mixin class _$ContactVMCopyWith<$Res>
-    implements $ContactVMCopyWith<$Res> {
-  factory _$ContactVMCopyWith(
-          _ContactVM value, $Res Function(_ContactVM) _then) =
-      __$ContactVMCopyWithImpl;
+abstract mixin class _$ContactVMCopyWith<$Res> implements $ContactVMCopyWith<$Res> {
+  factory _$ContactVMCopyWith(_ContactVM value, $Res Function(_ContactVM) _then) = __$ContactVMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {ContactRecipient recipient,
-      String? attachmentPath,
-      String? attachmentName,
-      bool attachmentTooLarge});
+  $Res call({ContactRecipient recipient, String? attachmentPath, String? attachmentName, bool attachmentTooLarge});
 }
 
 /// @nodoc

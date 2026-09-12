@@ -16,8 +16,7 @@ T _$identity<T>(T value) => value;
 mixin _$ActiveSessionsState {
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is ActiveSessionsState);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is ActiveSessionsState);
   }
 
   @override
@@ -31,8 +30,7 @@ mixin _$ActiveSessionsState {
 
 /// @nodoc
 class $ActiveSessionsStateCopyWith<$Res> {
-  $ActiveSessionsStateCopyWith(
-      ActiveSessionsState _, $Res Function(ActiveSessionsState) __);
+  $ActiveSessionsStateCopyWith(ActiveSessionsState _, $Res Function(ActiveSessionsState) __);
 }
 
 /// Adds pattern-matching-related methods to [ActiveSessionsState].
@@ -231,8 +229,7 @@ class ActiveSessionsLoading implements ActiveSessionsState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is ActiveSessionsLoading);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is ActiveSessionsLoading);
   }
 
   @override
@@ -257,8 +254,7 @@ class ActiveSessionsLoaded implements ActiveSessionsState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ActiveSessionsLoadedCopyWith<ActiveSessionsLoaded> get copyWith =>
-      _$ActiveSessionsLoadedCopyWithImpl<ActiveSessionsLoaded>(
-          this, _$identity);
+      _$ActiveSessionsLoadedCopyWithImpl<ActiveSessionsLoaded>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -266,8 +262,7 @@ class ActiveSessionsLoaded implements ActiveSessionsState {
         (other.runtimeType == runtimeType &&
             other is ActiveSessionsLoaded &&
             (identical(other.data, data) || other.data == data) &&
-            (identical(other.closingId, closingId) ||
-                other.closingId == closingId));
+            (identical(other.closingId, closingId) || other.closingId == closingId));
   }
 
   @override
@@ -280,10 +275,8 @@ class ActiveSessionsLoaded implements ActiveSessionsState {
 }
 
 /// @nodoc
-abstract mixin class $ActiveSessionsLoadedCopyWith<$Res>
-    implements $ActiveSessionsStateCopyWith<$Res> {
-  factory $ActiveSessionsLoadedCopyWith(ActiveSessionsLoaded value,
-          $Res Function(ActiveSessionsLoaded) _then) =
+abstract mixin class $ActiveSessionsLoadedCopyWith<$Res> implements $ActiveSessionsStateCopyWith<$Res> {
+  factory $ActiveSessionsLoadedCopyWith(ActiveSessionsLoaded value, $Res Function(ActiveSessionsLoaded) _then) =
       _$ActiveSessionsLoadedCopyWithImpl;
   @useResult
   $Res call({ActiveSessionsDM data, String? closingId});
@@ -292,8 +285,7 @@ abstract mixin class $ActiveSessionsLoadedCopyWith<$Res>
 }
 
 /// @nodoc
-class _$ActiveSessionsLoadedCopyWithImpl<$Res>
-    implements $ActiveSessionsLoadedCopyWith<$Res> {
+class _$ActiveSessionsLoadedCopyWithImpl<$Res> implements $ActiveSessionsLoadedCopyWith<$Res> {
   _$ActiveSessionsLoadedCopyWithImpl(this._self, this._then);
 
   final ActiveSessionsLoaded _self;
@@ -361,18 +353,15 @@ class ActiveSessionsError implements ActiveSessionsState {
 }
 
 /// @nodoc
-abstract mixin class $ActiveSessionsErrorCopyWith<$Res>
-    implements $ActiveSessionsStateCopyWith<$Res> {
-  factory $ActiveSessionsErrorCopyWith(
-          ActiveSessionsError value, $Res Function(ActiveSessionsError) _then) =
+abstract mixin class $ActiveSessionsErrorCopyWith<$Res> implements $ActiveSessionsStateCopyWith<$Res> {
+  factory $ActiveSessionsErrorCopyWith(ActiveSessionsError value, $Res Function(ActiveSessionsError) _then) =
       _$ActiveSessionsErrorCopyWithImpl;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class _$ActiveSessionsErrorCopyWithImpl<$Res>
-    implements $ActiveSessionsErrorCopyWith<$Res> {
+class _$ActiveSessionsErrorCopyWithImpl<$Res> implements $ActiveSessionsErrorCopyWith<$Res> {
   _$ActiveSessionsErrorCopyWithImpl(this._self, this._then);
 
   final ActiveSessionsError _self;

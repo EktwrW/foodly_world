@@ -20,7 +20,9 @@ class AdaptiveImage extends StatelessWidget {
     final isNetwork = imagePath.startsWith('http') || imagePath.startsWith('https');
 
     if ((isNetwork && isUrl) || kIsWeb) {
-      return CachedNetworkImage(cacheManager: FoodlyImageCache.manager, imageUrl: imagePath,
+      return CachedNetworkImage(
+        cacheManager: FoodlyImageCache.manager,
+        imageUrl: imagePath,
         fit: fit ?? BoxFit.cover,
         placeholder: (context, url) =>
             Center(heightFactor: 2.5, child: loadingWdg ?? const CircularProgressIndicator()),

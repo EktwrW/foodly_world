@@ -180,8 +180,7 @@ void main() {
     repo.liberarMine();
     await enVuelo;
 
-    expect(cubit.state, isNull,
-        reason: 'la orden del usuario anterior no puede resucitar el chip');
+    expect(cubit.state, isNull, reason: 'la orden del usuario anterior no puede resucitar el chip');
   });
 
   // ── startForBusiness y la mesa estacionada ───────────────────────────
@@ -283,8 +282,7 @@ void main() {
       await cubit.syncForBusiness('negocio-1');
       await cubit.syncAnyActive();
 
-      expect(repo.llamadasAMine, 0,
-          reason: 'con una escritura en vuelo los sync se van sin pedir nada');
+      expect(repo.llamadasAMine, 0, reason: 'con una escritura en vuelo los sync se van sin pedir nada');
 
       repo.liberarCrear();
       expect(await creando, isTrue);

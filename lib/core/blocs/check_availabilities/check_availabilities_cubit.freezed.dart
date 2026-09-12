@@ -21,8 +21,7 @@ mixin _$CheckAvailabilitiesState implements DiagnosticableTreeMixin {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is CheckAvailabilitiesState);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is CheckAvailabilitiesState);
   }
 
   @override
@@ -36,8 +35,7 @@ mixin _$CheckAvailabilitiesState implements DiagnosticableTreeMixin {
 
 /// @nodoc
 class $CheckAvailabilitiesStateCopyWith<$Res> {
-  $CheckAvailabilitiesStateCopyWith(
-      CheckAvailabilitiesState _, $Res Function(CheckAvailabilitiesState) __);
+  $CheckAvailabilitiesStateCopyWith(CheckAvailabilitiesState _, $Res Function(CheckAvailabilitiesState) __);
 }
 
 /// Adds pattern-matching-related methods to [CheckAvailabilitiesState].
@@ -272,14 +270,12 @@ class _Initial extends CheckAvailabilitiesState with DiagnosticableTreeMixin {
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(DiagnosticsProperty('type', 'CheckAvailabilitiesState.initial'));
+    properties..add(DiagnosticsProperty('type', 'CheckAvailabilitiesState.initial'));
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _Initial);
   }
 
   @override
@@ -298,14 +294,12 @@ class _Loading extends CheckAvailabilitiesState with DiagnosticableTreeMixin {
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(DiagnosticsProperty('type', 'CheckAvailabilitiesState.loading'));
+    properties..add(DiagnosticsProperty('type', 'CheckAvailabilitiesState.loading'));
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Loading);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _Loading);
   }
 
   @override
@@ -324,14 +318,12 @@ class _Available extends CheckAvailabilitiesState with DiagnosticableTreeMixin {
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(DiagnosticsProperty('type', 'CheckAvailabilitiesState.available'));
+    properties..add(DiagnosticsProperty('type', 'CheckAvailabilitiesState.available'));
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Available);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _Available);
   }
 
   @override
@@ -345,21 +337,17 @@ class _Available extends CheckAvailabilitiesState with DiagnosticableTreeMixin {
 
 /// @nodoc
 
-class _Unavailable extends CheckAvailabilitiesState
-    with DiagnosticableTreeMixin {
+class _Unavailable extends CheckAvailabilitiesState with DiagnosticableTreeMixin {
   const _Unavailable() : super._();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(
-          DiagnosticsProperty('type', 'CheckAvailabilitiesState.unavailable'));
+    properties..add(DiagnosticsProperty('type', 'CheckAvailabilitiesState.unavailable'));
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Unavailable);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _Unavailable);
   }
 
   @override
@@ -382,8 +370,7 @@ class _Error extends CheckAvailabilitiesState with DiagnosticableTreeMixin {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -410,10 +397,8 @@ class _Error extends CheckAvailabilitiesState with DiagnosticableTreeMixin {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $CheckAvailabilitiesStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $CheckAvailabilitiesStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @useResult
   $Res call({String message});
 }

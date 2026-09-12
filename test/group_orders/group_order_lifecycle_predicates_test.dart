@@ -15,10 +15,8 @@ void main() {
 
   const emptyOpen = GroupOrderDM(uuid: 'o1', participants: [host, member]);
 
-  final memberItem =
-      const GroupOrderItemDM(uuid: 'i1', participantUuid: 'm', name: 'Nachos', unitPricePreview: 5);
-  final hostItem =
-      const GroupOrderItemDM(uuid: 'i2', participantUuid: 'h', name: 'Agua', unitPricePreview: 2);
+  final memberItem = const GroupOrderItemDM(uuid: 'i1', participantUuid: 'm', name: 'Nachos', unitPricePreview: 5);
+  final hostItem = const GroupOrderItemDM(uuid: 'i2', participantUuid: 'h', name: 'Agua', unitPricePreview: 2);
 
   group('canBeDeletedBy (eliminar orden vacía — solo host)', () {
     test('host + OPEN + sin ítems → true', () {

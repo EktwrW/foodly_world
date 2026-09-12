@@ -6,14 +6,10 @@ part of 'user_recover_password_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserRecoverPasswordDTO _$UserRecoverPasswordDTOFromJson(
-        Map<String, dynamic> json) =>
-    UserRecoverPasswordDTO(
+UserRecoverPasswordDTO _$UserRecoverPasswordDTOFromJson(Map<String, dynamic> json) => UserRecoverPasswordDTO(
       email: json['email'] as String,
     );
 
-Map<String, dynamic> _$UserRecoverPasswordDTOToJson(
-        UserRecoverPasswordDTO instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$UserRecoverPasswordDTOToJson(UserRecoverPasswordDTO instance) => <String, dynamic>{
       'email': instance.email,
     };

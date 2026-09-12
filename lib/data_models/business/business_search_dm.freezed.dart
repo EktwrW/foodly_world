@@ -22,8 +22,7 @@ mixin _$BusinessSearchDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $BusinessSearchDMCopyWith<BusinessSearchDM> get copyWith =>
-      _$BusinessSearchDMCopyWithImpl<BusinessSearchDM>(
-          this as BusinessSearchDM, _$identity);
+      _$BusinessSearchDMCopyWithImpl<BusinessSearchDM>(this as BusinessSearchDM, _$identity);
 
   /// Serializes this BusinessSearchDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -38,8 +37,7 @@ mixin _$BusinessSearchDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(business));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(business));
 
   @override
   String toString() {
@@ -49,16 +47,14 @@ mixin _$BusinessSearchDM {
 
 /// @nodoc
 abstract mixin class $BusinessSearchDMCopyWith<$Res> {
-  factory $BusinessSearchDMCopyWith(
-          BusinessSearchDM value, $Res Function(BusinessSearchDM) _then) =
+  factory $BusinessSearchDMCopyWith(BusinessSearchDM value, $Res Function(BusinessSearchDM) _then) =
       _$BusinessSearchDMCopyWithImpl;
   @useResult
   $Res call({@JsonKey(name: 'business') List<BusinessDM> business});
 }
 
 /// @nodoc
-class _$BusinessSearchDMCopyWithImpl<$Res>
-    implements $BusinessSearchDMCopyWith<$Res> {
+class _$BusinessSearchDMCopyWithImpl<$Res> implements $BusinessSearchDMCopyWith<$Res> {
   _$BusinessSearchDMCopyWithImpl(this._self, this._then);
 
   final BusinessSearchDM _self;
@@ -173,8 +169,7 @@ extension BusinessSearchDMPatterns on BusinessSearchDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'business') List<BusinessDM> business)?
-        $default, {
+    TResult Function(@JsonKey(name: 'business') List<BusinessDM> business)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -201,8 +196,7 @@ extension BusinessSearchDMPatterns on BusinessSearchDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'business') List<BusinessDM> business)
-        $default,
+    TResult Function(@JsonKey(name: 'business') List<BusinessDM> business) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -227,8 +221,7 @@ extension BusinessSearchDMPatterns on BusinessSearchDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(@JsonKey(name: 'business') List<BusinessDM> business)?
-        $default,
+    TResult? Function(@JsonKey(name: 'business') List<BusinessDM> business)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -243,11 +236,8 @@ extension BusinessSearchDMPatterns on BusinessSearchDM {
 /// @nodoc
 @JsonSerializable()
 class _BusinessSearchDM implements BusinessSearchDM {
-  const _BusinessSearchDM(
-      {@JsonKey(name: 'business') required final List<BusinessDM> business})
-      : _business = business;
-  factory _BusinessSearchDM.fromJson(Map<String, dynamic> json) =>
-      _$BusinessSearchDMFromJson(json);
+  const _BusinessSearchDM({@JsonKey(name: 'business') required final List<BusinessDM> business}) : _business = business;
+  factory _BusinessSearchDM.fromJson(Map<String, dynamic> json) => _$BusinessSearchDMFromJson(json);
 
   final List<BusinessDM> _business;
   @override
@@ -283,8 +273,7 @@ class _BusinessSearchDM implements BusinessSearchDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_business));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_business));
 
   @override
   String toString() {
@@ -293,10 +282,8 @@ class _BusinessSearchDM implements BusinessSearchDM {
 }
 
 /// @nodoc
-abstract mixin class _$BusinessSearchDMCopyWith<$Res>
-    implements $BusinessSearchDMCopyWith<$Res> {
-  factory _$BusinessSearchDMCopyWith(
-          _BusinessSearchDM value, $Res Function(_BusinessSearchDM) _then) =
+abstract mixin class _$BusinessSearchDMCopyWith<$Res> implements $BusinessSearchDMCopyWith<$Res> {
+  factory _$BusinessSearchDMCopyWith(_BusinessSearchDM value, $Res Function(_BusinessSearchDM) _then) =
       __$BusinessSearchDMCopyWithImpl;
   @override
   @useResult
@@ -304,8 +291,7 @@ abstract mixin class _$BusinessSearchDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$BusinessSearchDMCopyWithImpl<$Res>
-    implements _$BusinessSearchDMCopyWith<$Res> {
+class __$BusinessSearchDMCopyWithImpl<$Res> implements _$BusinessSearchDMCopyWith<$Res> {
   __$BusinessSearchDMCopyWithImpl(this._self, this._then);
 
   final _BusinessSearchDM _self;

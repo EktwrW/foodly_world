@@ -6,21 +6,16 @@ part of 'place_autocomplete_response_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_PlaceAutocompleteResponseDM _$PlaceAutocompleteResponseDMFromJson(
-        Map<String, dynamic> json) =>
+_PlaceAutocompleteResponseDM _$PlaceAutocompleteResponseDMFromJson(Map<String, dynamic> json) =>
     _PlaceAutocompleteResponseDM(
-      status: $enumDecode(_$ProxyStatusEnumEnumMap, json['status'],
-          unknownValue: ProxyStatusEnum.unknown),
+      status: $enumDecode(_$ProxyStatusEnumEnumMap, json['status'], unknownValue: ProxyStatusEnum.unknown),
       predictions: (json['predictions'] as List<dynamic>?)
-              ?.map(
-                  (e) => PlacePredictionDM.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => PlacePredictionDM.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <PlacePredictionDM>[],
     );
 
-Map<String, dynamic> _$PlaceAutocompleteResponseDMToJson(
-        _PlaceAutocompleteResponseDM instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PlaceAutocompleteResponseDMToJson(_PlaceAutocompleteResponseDM instance) => <String, dynamic>{
       'status': _$ProxyStatusEnumEnumMap[instance.status]!,
       'predictions': instance.predictions.map((e) => e.toJson()).toList(),
     };

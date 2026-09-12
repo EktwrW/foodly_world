@@ -101,8 +101,7 @@ void main() {
       testWidgets('a ${ancho.toInt()} px', (tester) async {
         await pintar(tester, ancho, EmptyNewReleasesWidget(isError: false, onRetry: () {}));
 
-        expect(tester.takeException(), isNull,
-            reason: 'antes desbordaba 250 px a 820 y 595 a 1280');
+        expect(tester.takeException(), isNull, reason: 'antes desbordaba 250 px a 820 y 595 a 1280');
       });
     }
 

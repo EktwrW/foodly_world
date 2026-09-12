@@ -31,8 +31,7 @@ class MenuImportUploadResponseDM {
     required this.total,
   });
 
-  factory MenuImportUploadResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$MenuImportUploadResponseDMFromJson(json);
+  factory MenuImportUploadResponseDM.fromJson(Map<String, dynamic> json) => _$MenuImportUploadResponseDMFromJson(json);
   Map<String, dynamic> toJson() => _$MenuImportUploadResponseDMToJson(this);
 }
 
@@ -48,7 +47,6 @@ class MenuImportUploadedImageDM {
 
   const MenuImportUploadedImageDM({required this.path, required this.url});
 
-  factory MenuImportUploadedImageDM.fromJson(Map<String, dynamic> json) =>
-      _$MenuImportUploadedImageDMFromJson(json);
+  factory MenuImportUploadedImageDM.fromJson(Map<String, dynamic> json) => _$MenuImportUploadedImageDMFromJson(json);
   Map<String, dynamic> toJson() => _$MenuImportUploadedImageDMToJson(this);
 }

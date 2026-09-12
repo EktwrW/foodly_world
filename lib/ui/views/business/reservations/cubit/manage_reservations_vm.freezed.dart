@@ -26,36 +26,24 @@ mixin _$ManageReservationsVM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ManageReservationsVMCopyWith<ManageReservationsVM> get copyWith =>
-      _$ManageReservationsVMCopyWithImpl<ManageReservationsVM>(
-          this as ManageReservationsVM, _$identity);
+      _$ManageReservationsVMCopyWithImpl<ManageReservationsVM>(this as ManageReservationsVM, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ManageReservationsVM &&
-            const DeepCollectionEquality()
-                .equals(other.reservations, reservations) &&
+            const DeepCollectionEquality().equals(other.reservations, reservations) &&
             (identical(other.meta, meta) || other.meta == meta) &&
-            (identical(other.statusFilter, statusFilter) ||
-                other.statusFilter == statusFilter) &&
-            (identical(other.bookingTypeFilter, bookingTypeFilter) ||
-                other.bookingTypeFilter == bookingTypeFilter) &&
-            (identical(other.isLoadingMore, isLoadingMore) ||
-                other.isLoadingMore == isLoadingMore) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid));
+            (identical(other.statusFilter, statusFilter) || other.statusFilter == statusFilter) &&
+            (identical(other.bookingTypeFilter, bookingTypeFilter) || other.bookingTypeFilter == bookingTypeFilter) &&
+            (identical(other.isLoadingMore, isLoadingMore) || other.isLoadingMore == isLoadingMore) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(reservations),
-      meta,
-      statusFilter,
-      bookingTypeFilter,
-      isLoadingMore,
-      businessUuid);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(reservations), meta, statusFilter,
+      bookingTypeFilter, isLoadingMore, businessUuid);
 
   @override
   String toString() {
@@ -65,8 +53,7 @@ mixin _$ManageReservationsVM {
 
 /// @nodoc
 abstract mixin class $ManageReservationsVMCopyWith<$Res> {
-  factory $ManageReservationsVMCopyWith(ManageReservationsVM value,
-          $Res Function(ManageReservationsVM) _then) =
+  factory $ManageReservationsVMCopyWith(ManageReservationsVM value, $Res Function(ManageReservationsVM) _then) =
       _$ManageReservationsVMCopyWithImpl;
   @useResult
   $Res call(
@@ -81,8 +68,7 @@ abstract mixin class $ManageReservationsVMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ManageReservationsVMCopyWithImpl<$Res>
-    implements $ManageReservationsVMCopyWith<$Res> {
+class _$ManageReservationsVMCopyWithImpl<$Res> implements $ManageReservationsVMCopyWith<$Res> {
   _$ManageReservationsVMCopyWithImpl(this._self, this._then);
 
   final ManageReservationsVM _self;
@@ -236,21 +222,16 @@ extension ManageReservationsVMPatterns on ManageReservationsVM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            List<ReservationDM> reservations,
-            ReservationsMetaDM? meta,
-            ReservationStatus? statusFilter,
-            BookingType? bookingTypeFilter,
-            bool isLoadingMore,
-            String? businessUuid)?
+    TResult Function(List<ReservationDM> reservations, ReservationsMetaDM? meta, ReservationStatus? statusFilter,
+            BookingType? bookingTypeFilter, bool isLoadingMore, String? businessUuid)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _ManageReservationsVM() when $default != null:
-        return $default(_that.reservations, _that.meta, _that.statusFilter,
-            _that.bookingTypeFilter, _that.isLoadingMore, _that.businessUuid);
+        return $default(_that.reservations, _that.meta, _that.statusFilter, _that.bookingTypeFilter,
+            _that.isLoadingMore, _that.businessUuid);
       case _:
         return orElse();
     }
@@ -271,20 +252,15 @@ extension ManageReservationsVMPatterns on ManageReservationsVM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            List<ReservationDM> reservations,
-            ReservationsMetaDM? meta,
-            ReservationStatus? statusFilter,
-            BookingType? bookingTypeFilter,
-            bool isLoadingMore,
-            String? businessUuid)
+    TResult Function(List<ReservationDM> reservations, ReservationsMetaDM? meta, ReservationStatus? statusFilter,
+            BookingType? bookingTypeFilter, bool isLoadingMore, String? businessUuid)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ManageReservationsVM():
-        return $default(_that.reservations, _that.meta, _that.statusFilter,
-            _that.bookingTypeFilter, _that.isLoadingMore, _that.businessUuid);
+        return $default(_that.reservations, _that.meta, _that.statusFilter, _that.bookingTypeFilter,
+            _that.isLoadingMore, _that.businessUuid);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -304,20 +280,15 @@ extension ManageReservationsVMPatterns on ManageReservationsVM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            List<ReservationDM> reservations,
-            ReservationsMetaDM? meta,
-            ReservationStatus? statusFilter,
-            BookingType? bookingTypeFilter,
-            bool isLoadingMore,
-            String? businessUuid)?
+    TResult? Function(List<ReservationDM> reservations, ReservationsMetaDM? meta, ReservationStatus? statusFilter,
+            BookingType? bookingTypeFilter, bool isLoadingMore, String? businessUuid)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ManageReservationsVM() when $default != null:
-        return $default(_that.reservations, _that.meta, _that.statusFilter,
-            _that.bookingTypeFilter, _that.isLoadingMore, _that.businessUuid);
+        return $default(_that.reservations, _that.meta, _that.statusFilter, _that.bookingTypeFilter,
+            _that.isLoadingMore, _that.businessUuid);
       case _:
         return null;
     }
@@ -363,36 +334,24 @@ class _ManageReservationsVM implements ManageReservationsVM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$ManageReservationsVMCopyWith<_ManageReservationsVM> get copyWith =>
-      __$ManageReservationsVMCopyWithImpl<_ManageReservationsVM>(
-          this, _$identity);
+      __$ManageReservationsVMCopyWithImpl<_ManageReservationsVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ManageReservationsVM &&
-            const DeepCollectionEquality()
-                .equals(other._reservations, _reservations) &&
+            const DeepCollectionEquality().equals(other._reservations, _reservations) &&
             (identical(other.meta, meta) || other.meta == meta) &&
-            (identical(other.statusFilter, statusFilter) ||
-                other.statusFilter == statusFilter) &&
-            (identical(other.bookingTypeFilter, bookingTypeFilter) ||
-                other.bookingTypeFilter == bookingTypeFilter) &&
-            (identical(other.isLoadingMore, isLoadingMore) ||
-                other.isLoadingMore == isLoadingMore) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid));
+            (identical(other.statusFilter, statusFilter) || other.statusFilter == statusFilter) &&
+            (identical(other.bookingTypeFilter, bookingTypeFilter) || other.bookingTypeFilter == bookingTypeFilter) &&
+            (identical(other.isLoadingMore, isLoadingMore) || other.isLoadingMore == isLoadingMore) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_reservations),
-      meta,
-      statusFilter,
-      bookingTypeFilter,
-      isLoadingMore,
-      businessUuid);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_reservations), meta, statusFilter,
+      bookingTypeFilter, isLoadingMore, businessUuid);
 
   @override
   String toString() {
@@ -401,10 +360,8 @@ class _ManageReservationsVM implements ManageReservationsVM {
 }
 
 /// @nodoc
-abstract mixin class _$ManageReservationsVMCopyWith<$Res>
-    implements $ManageReservationsVMCopyWith<$Res> {
-  factory _$ManageReservationsVMCopyWith(_ManageReservationsVM value,
-          $Res Function(_ManageReservationsVM) _then) =
+abstract mixin class _$ManageReservationsVMCopyWith<$Res> implements $ManageReservationsVMCopyWith<$Res> {
+  factory _$ManageReservationsVMCopyWith(_ManageReservationsVM value, $Res Function(_ManageReservationsVM) _then) =
       __$ManageReservationsVMCopyWithImpl;
   @override
   @useResult
@@ -421,8 +378,7 @@ abstract mixin class _$ManageReservationsVMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ManageReservationsVMCopyWithImpl<$Res>
-    implements _$ManageReservationsVMCopyWith<$Res> {
+class __$ManageReservationsVMCopyWithImpl<$Res> implements _$ManageReservationsVMCopyWith<$Res> {
   __$ManageReservationsVMCopyWithImpl(this._self, this._then);
 
   final _ManageReservationsVM _self;

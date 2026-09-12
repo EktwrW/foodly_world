@@ -36,8 +36,7 @@ mixin _$BusinessAvailabilityDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $BusinessAvailabilityDMCopyWith<BusinessAvailabilityDM> get copyWith =>
-      _$BusinessAvailabilityDMCopyWithImpl<BusinessAvailabilityDM>(
-          this as BusinessAvailabilityDM, _$identity);
+      _$BusinessAvailabilityDMCopyWithImpl<BusinessAvailabilityDM>(this as BusinessAvailabilityDM, _$identity);
 
   /// Serializes this BusinessAvailabilityDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -47,37 +46,22 @@ mixin _$BusinessAvailabilityDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is BusinessAvailabilityDM &&
-            (identical(other.availabilityUuid, availabilityUuid) ||
-                other.availabilityUuid == availabilityUuid) &&
+            (identical(other.availabilityUuid, availabilityUuid) || other.availabilityUuid == availabilityUuid) &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.isFullDay, isFullDay) ||
-                other.isFullDay == isFullDay) &&
-            (identical(other.startTime, startTime) ||
-                other.startTime == startTime) &&
+            (identical(other.isFullDay, isFullDay) || other.isFullDay == isFullDay) &&
+            (identical(other.startTime, startTime) || other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.source, source) || other.source == source) &&
-            (identical(other.reservationUuid, reservationUuid) ||
-                other.reservationUuid == reservationUuid) &&
+            (identical(other.reservationUuid, reservationUuid) || other.reservationUuid == reservationUuid) &&
             (identical(other.reason, reason) || other.reason == reason) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      availabilityUuid,
-      date,
-      isFullDay,
-      startTime,
-      endTime,
-      type,
-      source,
-      reservationUuid,
-      reason,
-      createdAt);
+  int get hashCode => Object.hash(runtimeType, availabilityUuid, date, isFullDay, startTime, endTime, type, source,
+      reservationUuid, reason, createdAt);
 
   @override
   String toString() {
@@ -87,8 +71,7 @@ mixin _$BusinessAvailabilityDM {
 
 /// @nodoc
 abstract mixin class $BusinessAvailabilityDMCopyWith<$Res> {
-  factory $BusinessAvailabilityDMCopyWith(BusinessAvailabilityDM value,
-          $Res Function(BusinessAvailabilityDM) _then) =
+  factory $BusinessAvailabilityDMCopyWith(BusinessAvailabilityDM value, $Res Function(BusinessAvailabilityDM) _then) =
       _$BusinessAvailabilityDMCopyWithImpl;
   @useResult
   $Res call(
@@ -105,8 +88,7 @@ abstract mixin class $BusinessAvailabilityDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BusinessAvailabilityDMCopyWithImpl<$Res>
-    implements $BusinessAvailabilityDMCopyWith<$Res> {
+class _$BusinessAvailabilityDMCopyWithImpl<$Res> implements $BusinessAvailabilityDMCopyWith<$Res> {
   _$BusinessAvailabilityDMCopyWithImpl(this._self, this._then);
 
   final BusinessAvailabilityDM _self;
@@ -283,17 +265,8 @@ extension BusinessAvailabilityDMPatterns on BusinessAvailabilityDM {
     final _that = this;
     switch (_that) {
       case _BusinessAvailabilityDM() when $default != null:
-        return $default(
-            _that.availabilityUuid,
-            _that.date,
-            _that.isFullDay,
-            _that.startTime,
-            _that.endTime,
-            _that.type,
-            _that.source,
-            _that.reservationUuid,
-            _that.reason,
-            _that.createdAt);
+        return $default(_that.availabilityUuid, _that.date, _that.isFullDay, _that.startTime, _that.endTime, _that.type,
+            _that.source, _that.reservationUuid, _that.reason, _that.createdAt);
       case _:
         return orElse();
     }
@@ -330,17 +303,8 @@ extension BusinessAvailabilityDMPatterns on BusinessAvailabilityDM {
     final _that = this;
     switch (_that) {
       case _BusinessAvailabilityDM():
-        return $default(
-            _that.availabilityUuid,
-            _that.date,
-            _that.isFullDay,
-            _that.startTime,
-            _that.endTime,
-            _that.type,
-            _that.source,
-            _that.reservationUuid,
-            _that.reason,
-            _that.createdAt);
+        return $default(_that.availabilityUuid, _that.date, _that.isFullDay, _that.startTime, _that.endTime, _that.type,
+            _that.source, _that.reservationUuid, _that.reason, _that.createdAt);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -376,17 +340,8 @@ extension BusinessAvailabilityDMPatterns on BusinessAvailabilityDM {
     final _that = this;
     switch (_that) {
       case _BusinessAvailabilityDM() when $default != null:
-        return $default(
-            _that.availabilityUuid,
-            _that.date,
-            _that.isFullDay,
-            _that.startTime,
-            _that.endTime,
-            _that.type,
-            _that.source,
-            _that.reservationUuid,
-            _that.reason,
-            _that.createdAt);
+        return $default(_that.availabilityUuid, _that.date, _that.isFullDay, _that.startTime, _that.endTime, _that.type,
+            _that.source, _that.reservationUuid, _that.reason, _that.createdAt);
       case _:
         return null;
     }
@@ -408,8 +363,7 @@ class _BusinessAvailabilityDM extends BusinessAvailabilityDM {
       this.reason,
       @JsonKey(name: 'created_at') this.createdAt})
       : super._();
-  factory _BusinessAvailabilityDM.fromJson(Map<String, dynamic> json) =>
-      _$BusinessAvailabilityDMFromJson(json);
+  factory _BusinessAvailabilityDM.fromJson(Map<String, dynamic> json) => _$BusinessAvailabilityDMFromJson(json);
 
   @override
   @JsonKey(name: 'availability_uuid')
@@ -446,8 +400,7 @@ class _BusinessAvailabilityDM extends BusinessAvailabilityDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$BusinessAvailabilityDMCopyWith<_BusinessAvailabilityDM> get copyWith =>
-      __$BusinessAvailabilityDMCopyWithImpl<_BusinessAvailabilityDM>(
-          this, _$identity);
+      __$BusinessAvailabilityDMCopyWithImpl<_BusinessAvailabilityDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -461,37 +414,22 @@ class _BusinessAvailabilityDM extends BusinessAvailabilityDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _BusinessAvailabilityDM &&
-            (identical(other.availabilityUuid, availabilityUuid) ||
-                other.availabilityUuid == availabilityUuid) &&
+            (identical(other.availabilityUuid, availabilityUuid) || other.availabilityUuid == availabilityUuid) &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.isFullDay, isFullDay) ||
-                other.isFullDay == isFullDay) &&
-            (identical(other.startTime, startTime) ||
-                other.startTime == startTime) &&
+            (identical(other.isFullDay, isFullDay) || other.isFullDay == isFullDay) &&
+            (identical(other.startTime, startTime) || other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.source, source) || other.source == source) &&
-            (identical(other.reservationUuid, reservationUuid) ||
-                other.reservationUuid == reservationUuid) &&
+            (identical(other.reservationUuid, reservationUuid) || other.reservationUuid == reservationUuid) &&
             (identical(other.reason, reason) || other.reason == reason) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      availabilityUuid,
-      date,
-      isFullDay,
-      startTime,
-      endTime,
-      type,
-      source,
-      reservationUuid,
-      reason,
-      createdAt);
+  int get hashCode => Object.hash(runtimeType, availabilityUuid, date, isFullDay, startTime, endTime, type, source,
+      reservationUuid, reason, createdAt);
 
   @override
   String toString() {
@@ -500,10 +438,9 @@ class _BusinessAvailabilityDM extends BusinessAvailabilityDM {
 }
 
 /// @nodoc
-abstract mixin class _$BusinessAvailabilityDMCopyWith<$Res>
-    implements $BusinessAvailabilityDMCopyWith<$Res> {
-  factory _$BusinessAvailabilityDMCopyWith(_BusinessAvailabilityDM value,
-          $Res Function(_BusinessAvailabilityDM) _then) =
+abstract mixin class _$BusinessAvailabilityDMCopyWith<$Res> implements $BusinessAvailabilityDMCopyWith<$Res> {
+  factory _$BusinessAvailabilityDMCopyWith(
+          _BusinessAvailabilityDM value, $Res Function(_BusinessAvailabilityDM) _then) =
       __$BusinessAvailabilityDMCopyWithImpl;
   @override
   @useResult
@@ -521,8 +458,7 @@ abstract mixin class _$BusinessAvailabilityDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$BusinessAvailabilityDMCopyWithImpl<$Res>
-    implements _$BusinessAvailabilityDMCopyWith<$Res> {
+class __$BusinessAvailabilityDMCopyWithImpl<$Res> implements _$BusinessAvailabilityDMCopyWith<$Res> {
   __$BusinessAvailabilityDMCopyWithImpl(this._self, this._then);
 
   final _BusinessAvailabilityDM _self;
@@ -599,9 +535,8 @@ mixin _$BusinessAvailabilityResponseDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $BusinessAvailabilityResponseDMCopyWith<BusinessAvailabilityResponseDM>
-      get copyWith => _$BusinessAvailabilityResponseDMCopyWithImpl<
-              BusinessAvailabilityResponseDM>(
+  $BusinessAvailabilityResponseDMCopyWith<BusinessAvailabilityResponseDM> get copyWith =>
+      _$BusinessAvailabilityResponseDMCopyWithImpl<BusinessAvailabilityResponseDM>(
           this as BusinessAvailabilityResponseDM, _$identity);
 
   /// Serializes this BusinessAvailabilityResponseDM to a JSON map.
@@ -614,14 +549,12 @@ mixin _$BusinessAvailabilityResponseDM {
             other is BusinessAvailabilityResponseDM &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.to, to) || other.to == to) &&
-            const DeepCollectionEquality()
-                .equals(other.availability, availability));
+            const DeepCollectionEquality().equals(other.availability, availability));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, from, to, const DeepCollectionEquality().hash(availability));
+  int get hashCode => Object.hash(runtimeType, from, to, const DeepCollectionEquality().hash(availability));
 
   @override
   String toString() {
@@ -632,17 +565,14 @@ mixin _$BusinessAvailabilityResponseDM {
 /// @nodoc
 abstract mixin class $BusinessAvailabilityResponseDMCopyWith<$Res> {
   factory $BusinessAvailabilityResponseDMCopyWith(
-          BusinessAvailabilityResponseDM value,
-          $Res Function(BusinessAvailabilityResponseDM) _then) =
+          BusinessAvailabilityResponseDM value, $Res Function(BusinessAvailabilityResponseDM) _then) =
       _$BusinessAvailabilityResponseDMCopyWithImpl;
   @useResult
-  $Res call(
-      {String? from, String? to, List<BusinessAvailabilityDM> availability});
+  $Res call({String? from, String? to, List<BusinessAvailabilityDM> availability});
 }
 
 /// @nodoc
-class _$BusinessAvailabilityResponseDMCopyWithImpl<$Res>
-    implements $BusinessAvailabilityResponseDMCopyWith<$Res> {
+class _$BusinessAvailabilityResponseDMCopyWithImpl<$Res> implements $BusinessAvailabilityResponseDMCopyWith<$Res> {
   _$BusinessAvailabilityResponseDMCopyWithImpl(this._self, this._then);
 
   final BusinessAvailabilityResponseDM _self;
@@ -675,8 +605,7 @@ class _$BusinessAvailabilityResponseDMCopyWithImpl<$Res>
 }
 
 /// Adds pattern-matching-related methods to [BusinessAvailabilityResponseDM].
-extension BusinessAvailabilityResponseDMPatterns
-    on BusinessAvailabilityResponseDM {
+extension BusinessAvailabilityResponseDMPatterns on BusinessAvailabilityResponseDM {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -768,9 +697,7 @@ extension BusinessAvailabilityResponseDMPatterns
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String? from, String? to,
-            List<BusinessAvailabilityDM> availability)?
-        $default, {
+    TResult Function(String? from, String? to, List<BusinessAvailabilityDM> availability)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -797,9 +724,7 @@ extension BusinessAvailabilityResponseDMPatterns
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            String? from, String? to, List<BusinessAvailabilityDM> availability)
-        $default,
+    TResult Function(String? from, String? to, List<BusinessAvailabilityDM> availability) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -824,9 +749,7 @@ extension BusinessAvailabilityResponseDMPatterns
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String? from, String? to,
-            List<BusinessAvailabilityDM> availability)?
-        $default,
+    TResult? Function(String? from, String? to, List<BusinessAvailabilityDM> availability)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -840,12 +763,9 @@ extension BusinessAvailabilityResponseDMPatterns
 
 /// @nodoc
 @JsonSerializable()
-class _BusinessAvailabilityResponseDM
-    implements BusinessAvailabilityResponseDM {
+class _BusinessAvailabilityResponseDM implements BusinessAvailabilityResponseDM {
   const _BusinessAvailabilityResponseDM(
-      {this.from,
-      this.to,
-      final List<BusinessAvailabilityDM> availability = const []})
+      {this.from, this.to, final List<BusinessAvailabilityDM> availability = const []})
       : _availability = availability;
   factory _BusinessAvailabilityResponseDM.fromJson(Map<String, dynamic> json) =>
       _$BusinessAvailabilityResponseDMFromJson(json);
@@ -868,9 +788,8 @@ class _BusinessAvailabilityResponseDM
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$BusinessAvailabilityResponseDMCopyWith<_BusinessAvailabilityResponseDM>
-      get copyWith => __$BusinessAvailabilityResponseDMCopyWithImpl<
-          _BusinessAvailabilityResponseDM>(this, _$identity);
+  _$BusinessAvailabilityResponseDMCopyWith<_BusinessAvailabilityResponseDM> get copyWith =>
+      __$BusinessAvailabilityResponseDMCopyWithImpl<_BusinessAvailabilityResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -886,14 +805,12 @@ class _BusinessAvailabilityResponseDM
             other is _BusinessAvailabilityResponseDM &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.to, to) || other.to == to) &&
-            const DeepCollectionEquality()
-                .equals(other._availability, _availability));
+            const DeepCollectionEquality().equals(other._availability, _availability));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, from, to,
-      const DeepCollectionEquality().hash(_availability));
+  int get hashCode => Object.hash(runtimeType, from, to, const DeepCollectionEquality().hash(_availability));
 
   @override
   String toString() {
@@ -905,18 +822,15 @@ class _BusinessAvailabilityResponseDM
 abstract mixin class _$BusinessAvailabilityResponseDMCopyWith<$Res>
     implements $BusinessAvailabilityResponseDMCopyWith<$Res> {
   factory _$BusinessAvailabilityResponseDMCopyWith(
-          _BusinessAvailabilityResponseDM value,
-          $Res Function(_BusinessAvailabilityResponseDM) _then) =
+          _BusinessAvailabilityResponseDM value, $Res Function(_BusinessAvailabilityResponseDM) _then) =
       __$BusinessAvailabilityResponseDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {String? from, String? to, List<BusinessAvailabilityDM> availability});
+  $Res call({String? from, String? to, List<BusinessAvailabilityDM> availability});
 }
 
 /// @nodoc
-class __$BusinessAvailabilityResponseDMCopyWithImpl<$Res>
-    implements _$BusinessAvailabilityResponseDMCopyWith<$Res> {
+class __$BusinessAvailabilityResponseDMCopyWithImpl<$Res> implements _$BusinessAvailabilityResponseDMCopyWith<$Res> {
   __$BusinessAvailabilityResponseDMCopyWithImpl(this._self, this._then);
 
   final _BusinessAvailabilityResponseDM _self;
@@ -957,10 +871,8 @@ mixin _$BusinessAvailabilityCreateResponseDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $BusinessAvailabilityCreateResponseDMCopyWith<
-          BusinessAvailabilityCreateResponseDM>
-      get copyWith => _$BusinessAvailabilityCreateResponseDMCopyWithImpl<
-              BusinessAvailabilityCreateResponseDM>(
+  $BusinessAvailabilityCreateResponseDMCopyWith<BusinessAvailabilityCreateResponseDM> get copyWith =>
+      _$BusinessAvailabilityCreateResponseDMCopyWithImpl<BusinessAvailabilityCreateResponseDM>(
           this as BusinessAvailabilityCreateResponseDM, _$identity);
 
   /// Serializes this BusinessAvailabilityCreateResponseDM to a JSON map.
@@ -972,8 +884,7 @@ mixin _$BusinessAvailabilityCreateResponseDM {
         (other.runtimeType == runtimeType &&
             other is BusinessAvailabilityCreateResponseDM &&
             (identical(other.success, success) || other.success == success) &&
-            (identical(other.availability, availability) ||
-                other.availability == availability));
+            (identical(other.availability, availability) || other.availability == availability));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -989,8 +900,7 @@ mixin _$BusinessAvailabilityCreateResponseDM {
 /// @nodoc
 abstract mixin class $BusinessAvailabilityCreateResponseDMCopyWith<$Res> {
   factory $BusinessAvailabilityCreateResponseDMCopyWith(
-          BusinessAvailabilityCreateResponseDM value,
-          $Res Function(BusinessAvailabilityCreateResponseDM) _then) =
+          BusinessAvailabilityCreateResponseDM value, $Res Function(BusinessAvailabilityCreateResponseDM) _then) =
       _$BusinessAvailabilityCreateResponseDMCopyWithImpl;
   @useResult
   $Res call({bool success, BusinessAvailabilityDM? availability});
@@ -1042,8 +952,7 @@ class _$BusinessAvailabilityCreateResponseDMCopyWithImpl<$Res>
 }
 
 /// Adds pattern-matching-related methods to [BusinessAvailabilityCreateResponseDM].
-extension BusinessAvailabilityCreateResponseDMPatterns
-    on BusinessAvailabilityCreateResponseDM {
+extension BusinessAvailabilityCreateResponseDMPatterns on BusinessAvailabilityCreateResponseDM {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -1135,8 +1044,7 @@ extension BusinessAvailabilityCreateResponseDMPatterns
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(bool success, BusinessAvailabilityDM? availability)?
-        $default, {
+    TResult Function(bool success, BusinessAvailabilityDM? availability)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -1163,8 +1071,7 @@ extension BusinessAvailabilityCreateResponseDMPatterns
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(bool success, BusinessAvailabilityDM? availability)
-        $default,
+    TResult Function(bool success, BusinessAvailabilityDM? availability) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -1189,8 +1096,7 @@ extension BusinessAvailabilityCreateResponseDMPatterns
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(bool success, BusinessAvailabilityDM? availability)?
-        $default,
+    TResult? Function(bool success, BusinessAvailabilityDM? availability)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -1204,12 +1110,9 @@ extension BusinessAvailabilityCreateResponseDMPatterns
 
 /// @nodoc
 @JsonSerializable()
-class _BusinessAvailabilityCreateResponseDM
-    implements BusinessAvailabilityCreateResponseDM {
-  const _BusinessAvailabilityCreateResponseDM(
-      {this.success = false, this.availability});
-  factory _BusinessAvailabilityCreateResponseDM.fromJson(
-          Map<String, dynamic> json) =>
+class _BusinessAvailabilityCreateResponseDM implements BusinessAvailabilityCreateResponseDM {
+  const _BusinessAvailabilityCreateResponseDM({this.success = false, this.availability});
+  factory _BusinessAvailabilityCreateResponseDM.fromJson(Map<String, dynamic> json) =>
       _$BusinessAvailabilityCreateResponseDMFromJson(json);
 
   @override
@@ -1223,10 +1126,8 @@ class _BusinessAvailabilityCreateResponseDM
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$BusinessAvailabilityCreateResponseDMCopyWith<
-          _BusinessAvailabilityCreateResponseDM>
-      get copyWith => __$BusinessAvailabilityCreateResponseDMCopyWithImpl<
-          _BusinessAvailabilityCreateResponseDM>(this, _$identity);
+  _$BusinessAvailabilityCreateResponseDMCopyWith<_BusinessAvailabilityCreateResponseDM> get copyWith =>
+      __$BusinessAvailabilityCreateResponseDMCopyWithImpl<_BusinessAvailabilityCreateResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1241,8 +1142,7 @@ class _BusinessAvailabilityCreateResponseDM
         (other.runtimeType == runtimeType &&
             other is _BusinessAvailabilityCreateResponseDM &&
             (identical(other.success, success) || other.success == success) &&
-            (identical(other.availability, availability) ||
-                other.availability == availability));
+            (identical(other.availability, availability) || other.availability == availability));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1259,8 +1159,7 @@ class _BusinessAvailabilityCreateResponseDM
 abstract mixin class _$BusinessAvailabilityCreateResponseDMCopyWith<$Res>
     implements $BusinessAvailabilityCreateResponseDMCopyWith<$Res> {
   factory _$BusinessAvailabilityCreateResponseDMCopyWith(
-          _BusinessAvailabilityCreateResponseDM value,
-          $Res Function(_BusinessAvailabilityCreateResponseDM) _then) =
+          _BusinessAvailabilityCreateResponseDM value, $Res Function(_BusinessAvailabilityCreateResponseDM) _then) =
       __$BusinessAvailabilityCreateResponseDMCopyWithImpl;
   @override
   @useResult
@@ -1323,10 +1222,8 @@ mixin _$BusinessAvailabilityBulkResponseDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $BusinessAvailabilityBulkResponseDMCopyWith<
-          BusinessAvailabilityBulkResponseDM>
-      get copyWith => _$BusinessAvailabilityBulkResponseDMCopyWithImpl<
-              BusinessAvailabilityBulkResponseDM>(
+  $BusinessAvailabilityBulkResponseDMCopyWith<BusinessAvailabilityBulkResponseDM> get copyWith =>
+      _$BusinessAvailabilityBulkResponseDMCopyWithImpl<BusinessAvailabilityBulkResponseDM>(
           this as BusinessAvailabilityBulkResponseDM, _$identity);
 
   /// Serializes this BusinessAvailabilityBulkResponseDM to a JSON map.
@@ -1339,14 +1236,12 @@ mixin _$BusinessAvailabilityBulkResponseDM {
             other is BusinessAvailabilityBulkResponseDM &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.count, count) || other.count == count) &&
-            const DeepCollectionEquality()
-                .equals(other.availability, availability));
+            const DeepCollectionEquality().equals(other.availability, availability));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, success, count,
-      const DeepCollectionEquality().hash(availability));
+  int get hashCode => Object.hash(runtimeType, success, count, const DeepCollectionEquality().hash(availability));
 
   @override
   String toString() {
@@ -1357,12 +1252,10 @@ mixin _$BusinessAvailabilityBulkResponseDM {
 /// @nodoc
 abstract mixin class $BusinessAvailabilityBulkResponseDMCopyWith<$Res> {
   factory $BusinessAvailabilityBulkResponseDMCopyWith(
-          BusinessAvailabilityBulkResponseDM value,
-          $Res Function(BusinessAvailabilityBulkResponseDM) _then) =
+          BusinessAvailabilityBulkResponseDM value, $Res Function(BusinessAvailabilityBulkResponseDM) _then) =
       _$BusinessAvailabilityBulkResponseDMCopyWithImpl;
   @useResult
-  $Res call(
-      {bool success, int count, List<BusinessAvailabilityDM> availability});
+  $Res call({bool success, int count, List<BusinessAvailabilityDM> availability});
 }
 
 /// @nodoc
@@ -1400,8 +1293,7 @@ class _$BusinessAvailabilityBulkResponseDMCopyWithImpl<$Res>
 }
 
 /// Adds pattern-matching-related methods to [BusinessAvailabilityBulkResponseDM].
-extension BusinessAvailabilityBulkResponseDMPatterns
-    on BusinessAvailabilityBulkResponseDM {
+extension BusinessAvailabilityBulkResponseDMPatterns on BusinessAvailabilityBulkResponseDM {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -1493,9 +1385,7 @@ extension BusinessAvailabilityBulkResponseDMPatterns
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            bool success, int count, List<BusinessAvailabilityDM> availability)?
-        $default, {
+    TResult Function(bool success, int count, List<BusinessAvailabilityDM> availability)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -1522,9 +1412,7 @@ extension BusinessAvailabilityBulkResponseDMPatterns
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            bool success, int count, List<BusinessAvailabilityDM> availability)
-        $default,
+    TResult Function(bool success, int count, List<BusinessAvailabilityDM> availability) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -1549,9 +1437,7 @@ extension BusinessAvailabilityBulkResponseDMPatterns
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            bool success, int count, List<BusinessAvailabilityDM> availability)?
-        $default,
+    TResult? Function(bool success, int count, List<BusinessAvailabilityDM> availability)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -1565,15 +1451,11 @@ extension BusinessAvailabilityBulkResponseDMPatterns
 
 /// @nodoc
 @JsonSerializable()
-class _BusinessAvailabilityBulkResponseDM
-    implements BusinessAvailabilityBulkResponseDM {
+class _BusinessAvailabilityBulkResponseDM implements BusinessAvailabilityBulkResponseDM {
   const _BusinessAvailabilityBulkResponseDM(
-      {this.success = false,
-      this.count = 0,
-      final List<BusinessAvailabilityDM> availability = const []})
+      {this.success = false, this.count = 0, final List<BusinessAvailabilityDM> availability = const []})
       : _availability = availability;
-  factory _BusinessAvailabilityBulkResponseDM.fromJson(
-          Map<String, dynamic> json) =>
+  factory _BusinessAvailabilityBulkResponseDM.fromJson(Map<String, dynamic> json) =>
       _$BusinessAvailabilityBulkResponseDMFromJson(json);
 
   @override
@@ -1596,10 +1478,8 @@ class _BusinessAvailabilityBulkResponseDM
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$BusinessAvailabilityBulkResponseDMCopyWith<
-          _BusinessAvailabilityBulkResponseDM>
-      get copyWith => __$BusinessAvailabilityBulkResponseDMCopyWithImpl<
-          _BusinessAvailabilityBulkResponseDM>(this, _$identity);
+  _$BusinessAvailabilityBulkResponseDMCopyWith<_BusinessAvailabilityBulkResponseDM> get copyWith =>
+      __$BusinessAvailabilityBulkResponseDMCopyWithImpl<_BusinessAvailabilityBulkResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1615,14 +1495,12 @@ class _BusinessAvailabilityBulkResponseDM
             other is _BusinessAvailabilityBulkResponseDM &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.count, count) || other.count == count) &&
-            const DeepCollectionEquality()
-                .equals(other._availability, _availability));
+            const DeepCollectionEquality().equals(other._availability, _availability));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, success, count,
-      const DeepCollectionEquality().hash(_availability));
+  int get hashCode => Object.hash(runtimeType, success, count, const DeepCollectionEquality().hash(_availability));
 
   @override
   String toString() {
@@ -1634,13 +1512,11 @@ class _BusinessAvailabilityBulkResponseDM
 abstract mixin class _$BusinessAvailabilityBulkResponseDMCopyWith<$Res>
     implements $BusinessAvailabilityBulkResponseDMCopyWith<$Res> {
   factory _$BusinessAvailabilityBulkResponseDMCopyWith(
-          _BusinessAvailabilityBulkResponseDM value,
-          $Res Function(_BusinessAvailabilityBulkResponseDM) _then) =
+          _BusinessAvailabilityBulkResponseDM value, $Res Function(_BusinessAvailabilityBulkResponseDM) _then) =
       __$BusinessAvailabilityBulkResponseDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {bool success, int count, List<BusinessAvailabilityDM> availability});
+  $Res call({bool success, int count, List<BusinessAvailabilityDM> availability});
 }
 
 /// @nodoc
@@ -1686,10 +1562,8 @@ mixin _$BusinessAvailabilityActionResponseDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $BusinessAvailabilityActionResponseDMCopyWith<
-          BusinessAvailabilityActionResponseDM>
-      get copyWith => _$BusinessAvailabilityActionResponseDMCopyWithImpl<
-              BusinessAvailabilityActionResponseDM>(
+  $BusinessAvailabilityActionResponseDMCopyWith<BusinessAvailabilityActionResponseDM> get copyWith =>
+      _$BusinessAvailabilityActionResponseDMCopyWithImpl<BusinessAvailabilityActionResponseDM>(
           this as BusinessAvailabilityActionResponseDM, _$identity);
 
   /// Serializes this BusinessAvailabilityActionResponseDM to a JSON map.
@@ -1717,8 +1591,7 @@ mixin _$BusinessAvailabilityActionResponseDM {
 /// @nodoc
 abstract mixin class $BusinessAvailabilityActionResponseDMCopyWith<$Res> {
   factory $BusinessAvailabilityActionResponseDMCopyWith(
-          BusinessAvailabilityActionResponseDM value,
-          $Res Function(BusinessAvailabilityActionResponseDM) _then) =
+          BusinessAvailabilityActionResponseDM value, $Res Function(BusinessAvailabilityActionResponseDM) _then) =
       _$BusinessAvailabilityActionResponseDMCopyWithImpl;
   @useResult
   $Res call({bool success, String message});
@@ -1754,8 +1627,7 @@ class _$BusinessAvailabilityActionResponseDMCopyWithImpl<$Res>
 }
 
 /// Adds pattern-matching-related methods to [BusinessAvailabilityActionResponseDM].
-extension BusinessAvailabilityActionResponseDMPatterns
-    on BusinessAvailabilityActionResponseDM {
+extension BusinessAvailabilityActionResponseDMPatterns on BusinessAvailabilityActionResponseDM {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -1913,12 +1785,9 @@ extension BusinessAvailabilityActionResponseDMPatterns
 
 /// @nodoc
 @JsonSerializable()
-class _BusinessAvailabilityActionResponseDM
-    implements BusinessAvailabilityActionResponseDM {
-  const _BusinessAvailabilityActionResponseDM(
-      {this.success = false, this.message = ''});
-  factory _BusinessAvailabilityActionResponseDM.fromJson(
-          Map<String, dynamic> json) =>
+class _BusinessAvailabilityActionResponseDM implements BusinessAvailabilityActionResponseDM {
+  const _BusinessAvailabilityActionResponseDM({this.success = false, this.message = ''});
+  factory _BusinessAvailabilityActionResponseDM.fromJson(Map<String, dynamic> json) =>
       _$BusinessAvailabilityActionResponseDMFromJson(json);
 
   @override
@@ -1933,10 +1802,8 @@ class _BusinessAvailabilityActionResponseDM
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$BusinessAvailabilityActionResponseDMCopyWith<
-          _BusinessAvailabilityActionResponseDM>
-      get copyWith => __$BusinessAvailabilityActionResponseDMCopyWithImpl<
-          _BusinessAvailabilityActionResponseDM>(this, _$identity);
+  _$BusinessAvailabilityActionResponseDMCopyWith<_BusinessAvailabilityActionResponseDM> get copyWith =>
+      __$BusinessAvailabilityActionResponseDMCopyWithImpl<_BusinessAvailabilityActionResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1968,8 +1835,7 @@ class _BusinessAvailabilityActionResponseDM
 abstract mixin class _$BusinessAvailabilityActionResponseDMCopyWith<$Res>
     implements $BusinessAvailabilityActionResponseDMCopyWith<$Res> {
   factory _$BusinessAvailabilityActionResponseDMCopyWith(
-          _BusinessAvailabilityActionResponseDM value,
-          $Res Function(_BusinessAvailabilityActionResponseDM) _then) =
+          _BusinessAvailabilityActionResponseDM value, $Res Function(_BusinessAvailabilityActionResponseDM) _then) =
       __$BusinessAvailabilityActionResponseDMCopyWithImpl;
   @override
   @useResult
@@ -2020,8 +1886,7 @@ mixin _$PublicAvailabilitySlotDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PublicAvailabilitySlotDMCopyWith<PublicAvailabilitySlotDM> get copyWith =>
-      _$PublicAvailabilitySlotDMCopyWithImpl<PublicAvailabilitySlotDM>(
-          this as PublicAvailabilitySlotDM, _$identity);
+      _$PublicAvailabilitySlotDMCopyWithImpl<PublicAvailabilitySlotDM>(this as PublicAvailabilitySlotDM, _$identity);
 
   /// Serializes this PublicAvailabilitySlotDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -2032,17 +1897,14 @@ mixin _$PublicAvailabilitySlotDM {
         (other.runtimeType == runtimeType &&
             other is PublicAvailabilitySlotDM &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.isFullDay, isFullDay) ||
-                other.isFullDay == isFullDay) &&
-            (identical(other.startTime, startTime) ||
-                other.startTime == startTime) &&
+            (identical(other.isFullDay, isFullDay) || other.isFullDay == isFullDay) &&
+            (identical(other.startTime, startTime) || other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, date, isFullDay, startTime, endTime);
+  int get hashCode => Object.hash(runtimeType, date, isFullDay, startTime, endTime);
 
   @override
   String toString() {
@@ -2052,8 +1914,8 @@ mixin _$PublicAvailabilitySlotDM {
 
 /// @nodoc
 abstract mixin class $PublicAvailabilitySlotDMCopyWith<$Res> {
-  factory $PublicAvailabilitySlotDMCopyWith(PublicAvailabilitySlotDM value,
-          $Res Function(PublicAvailabilitySlotDM) _then) =
+  factory $PublicAvailabilitySlotDMCopyWith(
+          PublicAvailabilitySlotDM value, $Res Function(PublicAvailabilitySlotDM) _then) =
       _$PublicAvailabilitySlotDMCopyWithImpl;
   @useResult
   $Res call(
@@ -2064,8 +1926,7 @@ abstract mixin class $PublicAvailabilitySlotDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PublicAvailabilitySlotDMCopyWithImpl<$Res>
-    implements $PublicAvailabilitySlotDMCopyWith<$Res> {
+class _$PublicAvailabilitySlotDMCopyWithImpl<$Res> implements $PublicAvailabilitySlotDMCopyWith<$Res> {
   _$PublicAvailabilitySlotDMCopyWithImpl(this._self, this._then);
 
   final PublicAvailabilitySlotDM _self;
@@ -2195,19 +2056,15 @@ extension PublicAvailabilitySlotDMPatterns on PublicAvailabilitySlotDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            DateTime? date,
-            @JsonKey(name: 'is_full_day') bool isFullDay,
-            @JsonKey(name: 'start_time') String? startTime,
-            @JsonKey(name: 'end_time') String? endTime)?
+    TResult Function(DateTime? date, @JsonKey(name: 'is_full_day') bool isFullDay,
+            @JsonKey(name: 'start_time') String? startTime, @JsonKey(name: 'end_time') String? endTime)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _PublicAvailabilitySlotDM() when $default != null:
-        return $default(
-            _that.date, _that.isFullDay, _that.startTime, _that.endTime);
+        return $default(_that.date, _that.isFullDay, _that.startTime, _that.endTime);
       case _:
         return orElse();
     }
@@ -2228,18 +2085,14 @@ extension PublicAvailabilitySlotDMPatterns on PublicAvailabilitySlotDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            DateTime? date,
-            @JsonKey(name: 'is_full_day') bool isFullDay,
-            @JsonKey(name: 'start_time') String? startTime,
-            @JsonKey(name: 'end_time') String? endTime)
+    TResult Function(DateTime? date, @JsonKey(name: 'is_full_day') bool isFullDay,
+            @JsonKey(name: 'start_time') String? startTime, @JsonKey(name: 'end_time') String? endTime)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PublicAvailabilitySlotDM():
-        return $default(
-            _that.date, _that.isFullDay, _that.startTime, _that.endTime);
+        return $default(_that.date, _that.isFullDay, _that.startTime, _that.endTime);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -2259,18 +2112,14 @@ extension PublicAvailabilitySlotDMPatterns on PublicAvailabilitySlotDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            DateTime? date,
-            @JsonKey(name: 'is_full_day') bool isFullDay,
-            @JsonKey(name: 'start_time') String? startTime,
-            @JsonKey(name: 'end_time') String? endTime)?
+    TResult? Function(DateTime? date, @JsonKey(name: 'is_full_day') bool isFullDay,
+            @JsonKey(name: 'start_time') String? startTime, @JsonKey(name: 'end_time') String? endTime)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PublicAvailabilitySlotDM() when $default != null:
-        return $default(
-            _that.date, _that.isFullDay, _that.startTime, _that.endTime);
+        return $default(_that.date, _that.isFullDay, _that.startTime, _that.endTime);
       case _:
         return null;
     }
@@ -2286,8 +2135,7 @@ class _PublicAvailabilitySlotDM extends PublicAvailabilitySlotDM {
       @JsonKey(name: 'start_time') this.startTime,
       @JsonKey(name: 'end_time') this.endTime})
       : super._();
-  factory _PublicAvailabilitySlotDM.fromJson(Map<String, dynamic> json) =>
-      _$PublicAvailabilitySlotDMFromJson(json);
+  factory _PublicAvailabilitySlotDM.fromJson(Map<String, dynamic> json) => _$PublicAvailabilitySlotDMFromJson(json);
 
   @override
   final DateTime? date;
@@ -2307,8 +2155,7 @@ class _PublicAvailabilitySlotDM extends PublicAvailabilitySlotDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$PublicAvailabilitySlotDMCopyWith<_PublicAvailabilitySlotDM> get copyWith =>
-      __$PublicAvailabilitySlotDMCopyWithImpl<_PublicAvailabilitySlotDM>(
-          this, _$identity);
+      __$PublicAvailabilitySlotDMCopyWithImpl<_PublicAvailabilitySlotDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -2323,17 +2170,14 @@ class _PublicAvailabilitySlotDM extends PublicAvailabilitySlotDM {
         (other.runtimeType == runtimeType &&
             other is _PublicAvailabilitySlotDM &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.isFullDay, isFullDay) ||
-                other.isFullDay == isFullDay) &&
-            (identical(other.startTime, startTime) ||
-                other.startTime == startTime) &&
+            (identical(other.isFullDay, isFullDay) || other.isFullDay == isFullDay) &&
+            (identical(other.startTime, startTime) || other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, date, isFullDay, startTime, endTime);
+  int get hashCode => Object.hash(runtimeType, date, isFullDay, startTime, endTime);
 
   @override
   String toString() {
@@ -2342,10 +2186,9 @@ class _PublicAvailabilitySlotDM extends PublicAvailabilitySlotDM {
 }
 
 /// @nodoc
-abstract mixin class _$PublicAvailabilitySlotDMCopyWith<$Res>
-    implements $PublicAvailabilitySlotDMCopyWith<$Res> {
-  factory _$PublicAvailabilitySlotDMCopyWith(_PublicAvailabilitySlotDM value,
-          $Res Function(_PublicAvailabilitySlotDM) _then) =
+abstract mixin class _$PublicAvailabilitySlotDMCopyWith<$Res> implements $PublicAvailabilitySlotDMCopyWith<$Res> {
+  factory _$PublicAvailabilitySlotDMCopyWith(
+          _PublicAvailabilitySlotDM value, $Res Function(_PublicAvailabilitySlotDM) _then) =
       __$PublicAvailabilitySlotDMCopyWithImpl;
   @override
   @useResult
@@ -2357,8 +2200,7 @@ abstract mixin class _$PublicAvailabilitySlotDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PublicAvailabilitySlotDMCopyWithImpl<$Res>
-    implements _$PublicAvailabilitySlotDMCopyWith<$Res> {
+class __$PublicAvailabilitySlotDMCopyWithImpl<$Res> implements _$PublicAvailabilitySlotDMCopyWith<$Res> {
   __$PublicAvailabilitySlotDMCopyWithImpl(this._self, this._then);
 
   final _PublicAvailabilitySlotDM _self;
@@ -2405,10 +2247,8 @@ mixin _$PublicBusinessAvailabilityResponseDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $PublicBusinessAvailabilityResponseDMCopyWith<
-          PublicBusinessAvailabilityResponseDM>
-      get copyWith => _$PublicBusinessAvailabilityResponseDMCopyWithImpl<
-              PublicBusinessAvailabilityResponseDM>(
+  $PublicBusinessAvailabilityResponseDMCopyWith<PublicBusinessAvailabilityResponseDM> get copyWith =>
+      _$PublicBusinessAvailabilityResponseDMCopyWithImpl<PublicBusinessAvailabilityResponseDM>(
           this as PublicBusinessAvailabilityResponseDM, _$identity);
 
   /// Serializes this PublicBusinessAvailabilityResponseDM to a JSON map.
@@ -2421,14 +2261,12 @@ mixin _$PublicBusinessAvailabilityResponseDM {
             other is PublicBusinessAvailabilityResponseDM &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.to, to) || other.to == to) &&
-            const DeepCollectionEquality()
-                .equals(other.availability, availability));
+            const DeepCollectionEquality().equals(other.availability, availability));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, from, to, const DeepCollectionEquality().hash(availability));
+  int get hashCode => Object.hash(runtimeType, from, to, const DeepCollectionEquality().hash(availability));
 
   @override
   String toString() {
@@ -2439,12 +2277,10 @@ mixin _$PublicBusinessAvailabilityResponseDM {
 /// @nodoc
 abstract mixin class $PublicBusinessAvailabilityResponseDMCopyWith<$Res> {
   factory $PublicBusinessAvailabilityResponseDMCopyWith(
-          PublicBusinessAvailabilityResponseDM value,
-          $Res Function(PublicBusinessAvailabilityResponseDM) _then) =
+          PublicBusinessAvailabilityResponseDM value, $Res Function(PublicBusinessAvailabilityResponseDM) _then) =
       _$PublicBusinessAvailabilityResponseDMCopyWithImpl;
   @useResult
-  $Res call(
-      {String? from, String? to, List<PublicAvailabilitySlotDM> availability});
+  $Res call({String? from, String? to, List<PublicAvailabilitySlotDM> availability});
 }
 
 /// @nodoc
@@ -2482,8 +2318,7 @@ class _$PublicBusinessAvailabilityResponseDMCopyWithImpl<$Res>
 }
 
 /// Adds pattern-matching-related methods to [PublicBusinessAvailabilityResponseDM].
-extension PublicBusinessAvailabilityResponseDMPatterns
-    on PublicBusinessAvailabilityResponseDM {
+extension PublicBusinessAvailabilityResponseDMPatterns on PublicBusinessAvailabilityResponseDM {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -2575,9 +2410,7 @@ extension PublicBusinessAvailabilityResponseDMPatterns
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String? from, String? to,
-            List<PublicAvailabilitySlotDM> availability)?
-        $default, {
+    TResult Function(String? from, String? to, List<PublicAvailabilitySlotDM> availability)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -2604,9 +2437,7 @@ extension PublicBusinessAvailabilityResponseDMPatterns
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String? from, String? to,
-            List<PublicAvailabilitySlotDM> availability)
-        $default,
+    TResult Function(String? from, String? to, List<PublicAvailabilitySlotDM> availability) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -2631,9 +2462,7 @@ extension PublicBusinessAvailabilityResponseDMPatterns
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String? from, String? to,
-            List<PublicAvailabilitySlotDM> availability)?
-        $default,
+    TResult? Function(String? from, String? to, List<PublicAvailabilitySlotDM> availability)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -2647,15 +2476,11 @@ extension PublicBusinessAvailabilityResponseDMPatterns
 
 /// @nodoc
 @JsonSerializable()
-class _PublicBusinessAvailabilityResponseDM
-    implements PublicBusinessAvailabilityResponseDM {
+class _PublicBusinessAvailabilityResponseDM implements PublicBusinessAvailabilityResponseDM {
   const _PublicBusinessAvailabilityResponseDM(
-      {this.from,
-      this.to,
-      final List<PublicAvailabilitySlotDM> availability = const []})
+      {this.from, this.to, final List<PublicAvailabilitySlotDM> availability = const []})
       : _availability = availability;
-  factory _PublicBusinessAvailabilityResponseDM.fromJson(
-          Map<String, dynamic> json) =>
+  factory _PublicBusinessAvailabilityResponseDM.fromJson(Map<String, dynamic> json) =>
       _$PublicBusinessAvailabilityResponseDMFromJson(json);
 
   @override
@@ -2676,10 +2501,8 @@ class _PublicBusinessAvailabilityResponseDM
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PublicBusinessAvailabilityResponseDMCopyWith<
-          _PublicBusinessAvailabilityResponseDM>
-      get copyWith => __$PublicBusinessAvailabilityResponseDMCopyWithImpl<
-          _PublicBusinessAvailabilityResponseDM>(this, _$identity);
+  _$PublicBusinessAvailabilityResponseDMCopyWith<_PublicBusinessAvailabilityResponseDM> get copyWith =>
+      __$PublicBusinessAvailabilityResponseDMCopyWithImpl<_PublicBusinessAvailabilityResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -2695,14 +2518,12 @@ class _PublicBusinessAvailabilityResponseDM
             other is _PublicBusinessAvailabilityResponseDM &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.to, to) || other.to == to) &&
-            const DeepCollectionEquality()
-                .equals(other._availability, _availability));
+            const DeepCollectionEquality().equals(other._availability, _availability));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, from, to,
-      const DeepCollectionEquality().hash(_availability));
+  int get hashCode => Object.hash(runtimeType, from, to, const DeepCollectionEquality().hash(_availability));
 
   @override
   String toString() {
@@ -2714,13 +2535,11 @@ class _PublicBusinessAvailabilityResponseDM
 abstract mixin class _$PublicBusinessAvailabilityResponseDMCopyWith<$Res>
     implements $PublicBusinessAvailabilityResponseDMCopyWith<$Res> {
   factory _$PublicBusinessAvailabilityResponseDMCopyWith(
-          _PublicBusinessAvailabilityResponseDM value,
-          $Res Function(_PublicBusinessAvailabilityResponseDM) _then) =
+          _PublicBusinessAvailabilityResponseDM value, $Res Function(_PublicBusinessAvailabilityResponseDM) _then) =
       __$PublicBusinessAvailabilityResponseDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {String? from, String? to, List<PublicAvailabilitySlotDM> availability});
+  $Res call({String? from, String? to, List<PublicAvailabilitySlotDM> availability});
 }
 
 /// @nodoc
@@ -2771,9 +2590,8 @@ mixin _$BusinessAvailabilityBulkEntryDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $BusinessAvailabilityBulkEntryDMCopyWith<BusinessAvailabilityBulkEntryDM>
-      get copyWith => _$BusinessAvailabilityBulkEntryDMCopyWithImpl<
-              BusinessAvailabilityBulkEntryDM>(
+  $BusinessAvailabilityBulkEntryDMCopyWith<BusinessAvailabilityBulkEntryDM> get copyWith =>
+      _$BusinessAvailabilityBulkEntryDMCopyWithImpl<BusinessAvailabilityBulkEntryDM>(
           this as BusinessAvailabilityBulkEntryDM, _$identity);
 
   /// Serializes this BusinessAvailabilityBulkEntryDM to a JSON map.
@@ -2785,17 +2603,14 @@ mixin _$BusinessAvailabilityBulkEntryDM {
         (other.runtimeType == runtimeType &&
             other is BusinessAvailabilityBulkEntryDM &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.isFullDay, isFullDay) ||
-                other.isFullDay == isFullDay) &&
-            (identical(other.startTime, startTime) ||
-                other.startTime == startTime) &&
+            (identical(other.isFullDay, isFullDay) || other.isFullDay == isFullDay) &&
+            (identical(other.startTime, startTime) || other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, date, isFullDay, startTime, endTime);
+  int get hashCode => Object.hash(runtimeType, date, isFullDay, startTime, endTime);
 
   @override
   String toString() {
@@ -2806,8 +2621,7 @@ mixin _$BusinessAvailabilityBulkEntryDM {
 /// @nodoc
 abstract mixin class $BusinessAvailabilityBulkEntryDMCopyWith<$Res> {
   factory $BusinessAvailabilityBulkEntryDMCopyWith(
-          BusinessAvailabilityBulkEntryDM value,
-          $Res Function(BusinessAvailabilityBulkEntryDM) _then) =
+          BusinessAvailabilityBulkEntryDM value, $Res Function(BusinessAvailabilityBulkEntryDM) _then) =
       _$BusinessAvailabilityBulkEntryDMCopyWithImpl;
   @useResult
   $Res call(
@@ -2818,8 +2632,7 @@ abstract mixin class $BusinessAvailabilityBulkEntryDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BusinessAvailabilityBulkEntryDMCopyWithImpl<$Res>
-    implements $BusinessAvailabilityBulkEntryDMCopyWith<$Res> {
+class _$BusinessAvailabilityBulkEntryDMCopyWithImpl<$Res> implements $BusinessAvailabilityBulkEntryDMCopyWith<$Res> {
   _$BusinessAvailabilityBulkEntryDMCopyWithImpl(this._self, this._then);
 
   final BusinessAvailabilityBulkEntryDM _self;
@@ -2857,8 +2670,7 @@ class _$BusinessAvailabilityBulkEntryDMCopyWithImpl<$Res>
 }
 
 /// Adds pattern-matching-related methods to [BusinessAvailabilityBulkEntryDM].
-extension BusinessAvailabilityBulkEntryDMPatterns
-    on BusinessAvailabilityBulkEntryDM {
+extension BusinessAvailabilityBulkEntryDMPatterns on BusinessAvailabilityBulkEntryDM {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -2950,19 +2762,15 @@ extension BusinessAvailabilityBulkEntryDMPatterns
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            String date,
-            @JsonKey(name: 'is_full_day') bool isFullDay,
-            @JsonKey(name: 'start_time') String? startTime,
-            @JsonKey(name: 'end_time') String? endTime)?
+    TResult Function(String date, @JsonKey(name: 'is_full_day') bool isFullDay,
+            @JsonKey(name: 'start_time') String? startTime, @JsonKey(name: 'end_time') String? endTime)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _BusinessAvailabilityBulkEntryDM() when $default != null:
-        return $default(
-            _that.date, _that.isFullDay, _that.startTime, _that.endTime);
+        return $default(_that.date, _that.isFullDay, _that.startTime, _that.endTime);
       case _:
         return orElse();
     }
@@ -2983,18 +2791,14 @@ extension BusinessAvailabilityBulkEntryDMPatterns
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            String date,
-            @JsonKey(name: 'is_full_day') bool isFullDay,
-            @JsonKey(name: 'start_time') String? startTime,
-            @JsonKey(name: 'end_time') String? endTime)
+    TResult Function(String date, @JsonKey(name: 'is_full_day') bool isFullDay,
+            @JsonKey(name: 'start_time') String? startTime, @JsonKey(name: 'end_time') String? endTime)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _BusinessAvailabilityBulkEntryDM():
-        return $default(
-            _that.date, _that.isFullDay, _that.startTime, _that.endTime);
+        return $default(_that.date, _that.isFullDay, _that.startTime, _that.endTime);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -3014,18 +2818,14 @@ extension BusinessAvailabilityBulkEntryDMPatterns
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            String date,
-            @JsonKey(name: 'is_full_day') bool isFullDay,
-            @JsonKey(name: 'start_time') String? startTime,
-            @JsonKey(name: 'end_time') String? endTime)?
+    TResult? Function(String date, @JsonKey(name: 'is_full_day') bool isFullDay,
+            @JsonKey(name: 'start_time') String? startTime, @JsonKey(name: 'end_time') String? endTime)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _BusinessAvailabilityBulkEntryDM() when $default != null:
-        return $default(
-            _that.date, _that.isFullDay, _that.startTime, _that.endTime);
+        return $default(_that.date, _that.isFullDay, _that.startTime, _that.endTime);
       case _:
         return null;
     }
@@ -3034,15 +2834,13 @@ extension BusinessAvailabilityBulkEntryDMPatterns
 
 /// @nodoc
 @JsonSerializable()
-class _BusinessAvailabilityBulkEntryDM
-    implements BusinessAvailabilityBulkEntryDM {
+class _BusinessAvailabilityBulkEntryDM implements BusinessAvailabilityBulkEntryDM {
   const _BusinessAvailabilityBulkEntryDM(
       {required this.date,
       @JsonKey(name: 'is_full_day') required this.isFullDay,
       @JsonKey(name: 'start_time') this.startTime,
       @JsonKey(name: 'end_time') this.endTime});
-  factory _BusinessAvailabilityBulkEntryDM.fromJson(
-          Map<String, dynamic> json) =>
+  factory _BusinessAvailabilityBulkEntryDM.fromJson(Map<String, dynamic> json) =>
       _$BusinessAvailabilityBulkEntryDMFromJson(json);
 
   @override
@@ -3062,9 +2860,8 @@ class _BusinessAvailabilityBulkEntryDM
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$BusinessAvailabilityBulkEntryDMCopyWith<_BusinessAvailabilityBulkEntryDM>
-      get copyWith => __$BusinessAvailabilityBulkEntryDMCopyWithImpl<
-          _BusinessAvailabilityBulkEntryDM>(this, _$identity);
+  _$BusinessAvailabilityBulkEntryDMCopyWith<_BusinessAvailabilityBulkEntryDM> get copyWith =>
+      __$BusinessAvailabilityBulkEntryDMCopyWithImpl<_BusinessAvailabilityBulkEntryDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -3079,17 +2876,14 @@ class _BusinessAvailabilityBulkEntryDM
         (other.runtimeType == runtimeType &&
             other is _BusinessAvailabilityBulkEntryDM &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.isFullDay, isFullDay) ||
-                other.isFullDay == isFullDay) &&
-            (identical(other.startTime, startTime) ||
-                other.startTime == startTime) &&
+            (identical(other.isFullDay, isFullDay) || other.isFullDay == isFullDay) &&
+            (identical(other.startTime, startTime) || other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, date, isFullDay, startTime, endTime);
+  int get hashCode => Object.hash(runtimeType, date, isFullDay, startTime, endTime);
 
   @override
   String toString() {
@@ -3101,8 +2895,7 @@ class _BusinessAvailabilityBulkEntryDM
 abstract mixin class _$BusinessAvailabilityBulkEntryDMCopyWith<$Res>
     implements $BusinessAvailabilityBulkEntryDMCopyWith<$Res> {
   factory _$BusinessAvailabilityBulkEntryDMCopyWith(
-          _BusinessAvailabilityBulkEntryDM value,
-          $Res Function(_BusinessAvailabilityBulkEntryDM) _then) =
+          _BusinessAvailabilityBulkEntryDM value, $Res Function(_BusinessAvailabilityBulkEntryDM) _then) =
       __$BusinessAvailabilityBulkEntryDMCopyWithImpl;
   @override
   @useResult
@@ -3114,8 +2907,7 @@ abstract mixin class _$BusinessAvailabilityBulkEntryDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$BusinessAvailabilityBulkEntryDMCopyWithImpl<$Res>
-    implements _$BusinessAvailabilityBulkEntryDMCopyWith<$Res> {
+class __$BusinessAvailabilityBulkEntryDMCopyWithImpl<$Res> implements _$BusinessAvailabilityBulkEntryDMCopyWith<$Res> {
   __$BusinessAvailabilityBulkEntryDMCopyWithImpl(this._self, this._then);
 
   final _BusinessAvailabilityBulkEntryDM _self;

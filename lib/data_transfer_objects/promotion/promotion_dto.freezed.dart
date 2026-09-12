@@ -37,8 +37,7 @@ mixin _$PromotionDTO {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PromotionDTOCopyWith<PromotionDTO> get copyWith =>
-      _$PromotionDTOCopyWithImpl<PromotionDTO>(
-          this as PromotionDTO, _$identity);
+      _$PromotionDTOCopyWithImpl<PromotionDTO>(this as PromotionDTO, _$identity);
 
   /// Serializes this PromotionDTO to a JSON map.
   Map<String, dynamic> toJson();
@@ -48,42 +47,23 @@ mixin _$PromotionDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is PromotionDTO &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.subTitle, subTitle) ||
-                other.subTitle == subTitle) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.startDate, startDate) ||
-                other.startDate == startDate) &&
-            (identical(other.expireDate, expireDate) ||
-                other.expireDate == expireDate) &&
+            (identical(other.subTitle, subTitle) || other.subTitle == subTitle) &&
+            (identical(other.description, description) || other.description == description) &&
+            (identical(other.startDate, startDate) || other.startDate == startDate) &&
+            (identical(other.expireDate, expireDate) || other.expireDate == expireDate) &&
             const DeepCollectionEquality().equals(other.versions, versions) &&
             (identical(other.prices, prices) || other.prices == prices) &&
-            (identical(other.promoActiveDays, promoActiveDays) ||
-                other.promoActiveDays == promoActiveDays) &&
-            (identical(other.available, available) ||
-                other.available == available) &&
-            (identical(other.mediaLink, mediaLink) ||
-                other.mediaLink == mediaLink));
+            (identical(other.promoActiveDays, promoActiveDays) || other.promoActiveDays == promoActiveDays) &&
+            (identical(other.available, available) || other.available == available) &&
+            (identical(other.mediaLink, mediaLink) || other.mediaLink == mediaLink));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      businessUuid,
-      title,
-      subTitle,
-      description,
-      startDate,
-      expireDate,
-      const DeepCollectionEquality().hash(versions),
-      prices,
-      promoActiveDays,
-      available,
-      mediaLink);
+  int get hashCode => Object.hash(runtimeType, businessUuid, title, subTitle, description, startDate, expireDate,
+      const DeepCollectionEquality().hash(versions), prices, promoActiveDays, available, mediaLink);
 
   @override
   String toString() {
@@ -93,9 +73,7 @@ mixin _$PromotionDTO {
 
 /// @nodoc
 abstract mixin class $PromotionDTOCopyWith<$Res> {
-  factory $PromotionDTOCopyWith(
-          PromotionDTO value, $Res Function(PromotionDTO) _then) =
-      _$PromotionDTOCopyWithImpl;
+  factory $PromotionDTOCopyWith(PromotionDTO value, $Res Function(PromotionDTO) _then) = _$PromotionDTOCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'business_uuid') String? businessUuid,
@@ -326,18 +304,8 @@ extension PromotionDTOPatterns on PromotionDTO {
     final _that = this;
     switch (_that) {
       case _PromotionDTO() when $default != null:
-        return $default(
-            _that.businessUuid,
-            _that.title,
-            _that.subTitle,
-            _that.description,
-            _that.startDate,
-            _that.expireDate,
-            _that.versions,
-            _that.prices,
-            _that.promoActiveDays,
-            _that.available,
-            _that.mediaLink);
+        return $default(_that.businessUuid, _that.title, _that.subTitle, _that.description, _that.startDate,
+            _that.expireDate, _that.versions, _that.prices, _that.promoActiveDays, _that.available, _that.mediaLink);
       case _:
         return orElse();
     }
@@ -375,18 +343,8 @@ extension PromotionDTOPatterns on PromotionDTO {
     final _that = this;
     switch (_that) {
       case _PromotionDTO():
-        return $default(
-            _that.businessUuid,
-            _that.title,
-            _that.subTitle,
-            _that.description,
-            _that.startDate,
-            _that.expireDate,
-            _that.versions,
-            _that.prices,
-            _that.promoActiveDays,
-            _that.available,
-            _that.mediaLink);
+        return $default(_that.businessUuid, _that.title, _that.subTitle, _that.description, _that.startDate,
+            _that.expireDate, _that.versions, _that.prices, _that.promoActiveDays, _that.available, _that.mediaLink);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -423,18 +381,8 @@ extension PromotionDTOPatterns on PromotionDTO {
     final _that = this;
     switch (_that) {
       case _PromotionDTO() when $default != null:
-        return $default(
-            _that.businessUuid,
-            _that.title,
-            _that.subTitle,
-            _that.description,
-            _that.startDate,
-            _that.expireDate,
-            _that.versions,
-            _that.prices,
-            _that.promoActiveDays,
-            _that.available,
-            _that.mediaLink);
+        return $default(_that.businessUuid, _that.title, _that.subTitle, _that.description, _that.startDate,
+            _that.expireDate, _that.versions, _that.prices, _that.promoActiveDays, _that.available, _that.mediaLink);
       case _:
         return null;
     }
@@ -457,8 +405,7 @@ class _PromotionDTO implements PromotionDTO {
       this.available,
       @JsonKey(name: 'media_link') this.mediaLink})
       : _versions = versions;
-  factory _PromotionDTO.fromJson(Map<String, dynamic> json) =>
-      _$PromotionDTOFromJson(json);
+  factory _PromotionDTO.fromJson(Map<String, dynamic> json) => _$PromotionDTOFromJson(json);
 
   @override
   @JsonKey(name: 'business_uuid')
@@ -501,8 +448,7 @@ class _PromotionDTO implements PromotionDTO {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PromotionDTOCopyWith<_PromotionDTO> get copyWith =>
-      __$PromotionDTOCopyWithImpl<_PromotionDTO>(this, _$identity);
+  _$PromotionDTOCopyWith<_PromotionDTO> get copyWith => __$PromotionDTOCopyWithImpl<_PromotionDTO>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -516,42 +462,23 @@ class _PromotionDTO implements PromotionDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _PromotionDTO &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.subTitle, subTitle) ||
-                other.subTitle == subTitle) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.startDate, startDate) ||
-                other.startDate == startDate) &&
-            (identical(other.expireDate, expireDate) ||
-                other.expireDate == expireDate) &&
+            (identical(other.subTitle, subTitle) || other.subTitle == subTitle) &&
+            (identical(other.description, description) || other.description == description) &&
+            (identical(other.startDate, startDate) || other.startDate == startDate) &&
+            (identical(other.expireDate, expireDate) || other.expireDate == expireDate) &&
             const DeepCollectionEquality().equals(other._versions, _versions) &&
             (identical(other.prices, prices) || other.prices == prices) &&
-            (identical(other.promoActiveDays, promoActiveDays) ||
-                other.promoActiveDays == promoActiveDays) &&
-            (identical(other.available, available) ||
-                other.available == available) &&
-            (identical(other.mediaLink, mediaLink) ||
-                other.mediaLink == mediaLink));
+            (identical(other.promoActiveDays, promoActiveDays) || other.promoActiveDays == promoActiveDays) &&
+            (identical(other.available, available) || other.available == available) &&
+            (identical(other.mediaLink, mediaLink) || other.mediaLink == mediaLink));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      businessUuid,
-      title,
-      subTitle,
-      description,
-      startDate,
-      expireDate,
-      const DeepCollectionEquality().hash(_versions),
-      prices,
-      promoActiveDays,
-      available,
-      mediaLink);
+  int get hashCode => Object.hash(runtimeType, businessUuid, title, subTitle, description, startDate, expireDate,
+      const DeepCollectionEquality().hash(_versions), prices, promoActiveDays, available, mediaLink);
 
   @override
   String toString() {
@@ -560,11 +487,8 @@ class _PromotionDTO implements PromotionDTO {
 }
 
 /// @nodoc
-abstract mixin class _$PromotionDTOCopyWith<$Res>
-    implements $PromotionDTOCopyWith<$Res> {
-  factory _$PromotionDTOCopyWith(
-          _PromotionDTO value, $Res Function(_PromotionDTO) _then) =
-      __$PromotionDTOCopyWithImpl;
+abstract mixin class _$PromotionDTOCopyWith<$Res> implements $PromotionDTOCopyWith<$Res> {
+  factory _$PromotionDTOCopyWith(_PromotionDTO value, $Res Function(_PromotionDTO) _then) = __$PromotionDTOCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -587,8 +511,7 @@ abstract mixin class _$PromotionDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PromotionDTOCopyWithImpl<$Res>
-    implements _$PromotionDTOCopyWith<$Res> {
+class __$PromotionDTOCopyWithImpl<$Res> implements _$PromotionDTOCopyWith<$Res> {
   __$PromotionDTOCopyWithImpl(this._self, this._then);
 
   final _PromotionDTO _self;

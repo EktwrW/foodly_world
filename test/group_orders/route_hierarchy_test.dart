@@ -19,7 +19,8 @@ void main() {
   });
 
   group('shouldPersistAsLastPath (restauración post-boot)', () {
-    test('nunca se restaura hacia una orden o un join (e2e r4: cold-start '
+    test(
+        'nunca se restaura hacia una orden o un join (e2e r4: cold-start '
         'dentro de una orden vieja = usuario atascado)', () {
       expect(RouteHierarchy.shouldPersistAsLastPath('/group-order/abc'), isFalse);
       expect(RouteHierarchy.shouldPersistAsLastPath('/join/ABC123'), isFalse);
@@ -36,7 +37,8 @@ void main() {
       }
     });
 
-    test('REGRESIÓN e2e r5: storage viciado por builds viejos — un LAST_PATH '
+    test(
+        'REGRESIÓN e2e r5: storage viciado por builds viejos — un LAST_PATH '
         'efímero ya guardado debe ser descartado también al LEER (el guard '
         'de restauración usa isEphemeral)', () {
       // Builds previos persistieron '/join/...' y '/group-order/...'; el
@@ -82,7 +84,8 @@ void main() {
   });
 
   group('isNavigationChildOf (guard anti ping-pong del back)', () {
-    test('BUG e2e r4: la orden grupal ES hija del menú — el back del menú '
+    test(
+        'BUG e2e r4: la orden grupal ES hija del menú — el back del menú '
         'jamás debe "volver" a la orden', () {
       expect(
         RouteHierarchy.isNavigationChildOf('/group-order/o1', '/visit-menu/m1'),
@@ -122,7 +125,8 @@ void main() {
   });
 
   group('secuencia del bug (historial simulado del back)', () {
-    test('menú→orden→back(menú)→back: el candidato del historial es la orden '
+    test(
+        'menú→orden→back(menú)→back: el candidato del historial es la orden '
         '(efímera) → se salta; el guard además la reconoce como hija', () {
       final history = [
         '/main/u1/visit-business',

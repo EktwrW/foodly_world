@@ -66,8 +66,7 @@ void main() {
                           buttonText: 'Cerrar',
                           duration: Duration(seconds: 7),
                         );
-                        ScaffoldMessenger.of(hijoContext)
-                            .showSnackBar(barra.getSnackBar(hijoContext));
+                        ScaffoldMessenger.of(hijoContext).showSnackBar(barra.getSnackBar(hijoContext));
                         vivo.value = false;
                       },
                       child: const Text('crear'),
@@ -80,8 +79,8 @@ void main() {
     );
 
     await tester.tap(find.text('crear'));
-    await tester.pump();                 // muestra y desmonta
-    await avanzar(tester, 900);          // entrada del snackbar
+    await tester.pump(); // muestra y desmonta
+    await avanzar(tester, 900); // entrada del snackbar
   }
 
   testWidgets(

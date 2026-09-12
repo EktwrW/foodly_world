@@ -11,31 +11,22 @@ _PlaceDM _$PlaceDMFromJson(Map<String, dynamic> json) => _PlaceDM(
       name: json['name'] as String?,
       formattedAddress: json['formatted_address'] as String?,
       addressComponents: (json['address_components'] as List<dynamic>?)
-              ?.map((e) =>
-                  PlaceAddressComponentDM.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => PlaceAddressComponentDM.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <PlaceAddressComponentDM>[],
-      geometry: json['geometry'] == null
-          ? null
-          : PlaceGeometryDM.fromJson(json['geometry'] as Map<String, dynamic>),
+      geometry: json['geometry'] == null ? null : PlaceGeometryDM.fromJson(json['geometry'] as Map<String, dynamic>),
       formattedPhoneNumber: json['formatted_phone_number'] as String?,
       internationalPhoneNumber: json['international_phone_number'] as String?,
-      types:
-          (json['types'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-              const <String>[],
+      types: (json['types'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const <String>[],
     );
 
 Map<String, dynamic> _$PlaceDMToJson(_PlaceDM instance) => <String, dynamic>{
       if (instance.placeId case final value?) 'place_id': value,
       if (instance.name case final value?) 'name': value,
-      if (instance.formattedAddress case final value?)
-        'formatted_address': value,
-      'address_components':
-          instance.addressComponents.map((e) => e.toJson()).toList(),
+      if (instance.formattedAddress case final value?) 'formatted_address': value,
+      'address_components': instance.addressComponents.map((e) => e.toJson()).toList(),
       if (instance.geometry?.toJson() case final value?) 'geometry': value,
-      if (instance.formattedPhoneNumber case final value?)
-        'formatted_phone_number': value,
-      if (instance.internationalPhoneNumber case final value?)
-        'international_phone_number': value,
+      if (instance.formattedPhoneNumber case final value?) 'formatted_phone_number': value,
+      if (instance.internationalPhoneNumber case final value?) 'international_phone_number': value,
       'types': instance.types,
     };

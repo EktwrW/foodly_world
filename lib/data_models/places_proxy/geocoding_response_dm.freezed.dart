@@ -23,8 +23,7 @@ mixin _$GeocodingResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $GeocodingResponseDMCopyWith<GeocodingResponseDM> get copyWith =>
-      _$GeocodingResponseDMCopyWithImpl<GeocodingResponseDM>(
-          this as GeocodingResponseDM, _$identity);
+      _$GeocodingResponseDMCopyWithImpl<GeocodingResponseDM>(this as GeocodingResponseDM, _$identity);
 
   /// Serializes this GeocodingResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -40,8 +39,7 @@ mixin _$GeocodingResponseDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, status, const DeepCollectionEquality().hash(results));
+  int get hashCode => Object.hash(runtimeType, status, const DeepCollectionEquality().hash(results));
 
   @override
   String toString() {
@@ -51,19 +49,15 @@ mixin _$GeocodingResponseDM {
 
 /// @nodoc
 abstract mixin class $GeocodingResponseDMCopyWith<$Res> {
-  factory $GeocodingResponseDMCopyWith(
-          GeocodingResponseDM value, $Res Function(GeocodingResponseDM) _then) =
+  factory $GeocodingResponseDMCopyWith(GeocodingResponseDM value, $Res Function(GeocodingResponseDM) _then) =
       _$GeocodingResponseDMCopyWithImpl;
   @useResult
   $Res call(
-      {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-      ProxyStatusEnum status,
-      List<GeocodingResultDM> results});
+      {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) ProxyStatusEnum status, List<GeocodingResultDM> results});
 }
 
 /// @nodoc
-class _$GeocodingResponseDMCopyWithImpl<$Res>
-    implements $GeocodingResponseDMCopyWith<$Res> {
+class _$GeocodingResponseDMCopyWithImpl<$Res> implements $GeocodingResponseDMCopyWith<$Res> {
   _$GeocodingResponseDMCopyWithImpl(this._self, this._then);
 
   final GeocodingResponseDM _self;
@@ -183,9 +177,7 @@ extension GeocodingResponseDMPatterns on GeocodingResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-            ProxyStatusEnum status,
+    TResult Function(@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) ProxyStatusEnum status,
             List<GeocodingResultDM> results)?
         $default, {
     required TResult orElse(),
@@ -215,9 +207,7 @@ extension GeocodingResponseDMPatterns on GeocodingResponseDM {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
-            @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-            ProxyStatusEnum status,
-            List<GeocodingResultDM> results)
+            @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) ProxyStatusEnum status, List<GeocodingResultDM> results)
         $default,
   ) {
     final _that = this;
@@ -243,9 +233,7 @@ extension GeocodingResponseDMPatterns on GeocodingResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-            ProxyStatusEnum status,
+    TResult? Function(@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) ProxyStatusEnum status,
             List<GeocodingResultDM> results)?
         $default,
   ) {
@@ -266,8 +254,7 @@ class _GeocodingResponseDM implements GeocodingResponseDM {
       {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) required this.status,
       final List<GeocodingResultDM> results = const <GeocodingResultDM>[]})
       : _results = results;
-  factory _GeocodingResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$GeocodingResponseDMFromJson(json);
+  factory _GeocodingResponseDM.fromJson(Map<String, dynamic> json) => _$GeocodingResponseDMFromJson(json);
 
   @override
   @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
@@ -287,8 +274,7 @@ class _GeocodingResponseDM implements GeocodingResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$GeocodingResponseDMCopyWith<_GeocodingResponseDM> get copyWith =>
-      __$GeocodingResponseDMCopyWithImpl<_GeocodingResponseDM>(
-          this, _$identity);
+      __$GeocodingResponseDMCopyWithImpl<_GeocodingResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -308,8 +294,7 @@ class _GeocodingResponseDM implements GeocodingResponseDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, status, const DeepCollectionEquality().hash(_results));
+  int get hashCode => Object.hash(runtimeType, status, const DeepCollectionEquality().hash(_results));
 
   @override
   String toString() {
@@ -318,22 +303,17 @@ class _GeocodingResponseDM implements GeocodingResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$GeocodingResponseDMCopyWith<$Res>
-    implements $GeocodingResponseDMCopyWith<$Res> {
-  factory _$GeocodingResponseDMCopyWith(_GeocodingResponseDM value,
-          $Res Function(_GeocodingResponseDM) _then) =
+abstract mixin class _$GeocodingResponseDMCopyWith<$Res> implements $GeocodingResponseDMCopyWith<$Res> {
+  factory _$GeocodingResponseDMCopyWith(_GeocodingResponseDM value, $Res Function(_GeocodingResponseDM) _then) =
       __$GeocodingResponseDMCopyWithImpl;
   @override
   @useResult
   $Res call(
-      {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-      ProxyStatusEnum status,
-      List<GeocodingResultDM> results});
+      {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) ProxyStatusEnum status, List<GeocodingResultDM> results});
 }
 
 /// @nodoc
-class __$GeocodingResponseDMCopyWithImpl<$Res>
-    implements _$GeocodingResponseDMCopyWith<$Res> {
+class __$GeocodingResponseDMCopyWithImpl<$Res> implements _$GeocodingResponseDMCopyWith<$Res> {
   __$GeocodingResponseDMCopyWithImpl(this._self, this._then);
 
   final _GeocodingResponseDM _self;

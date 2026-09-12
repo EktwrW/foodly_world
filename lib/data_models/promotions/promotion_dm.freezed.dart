@@ -22,8 +22,7 @@ mixin _$PromotionsResponse {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PromotionsResponseCopyWith<PromotionsResponse> get copyWith =>
-      _$PromotionsResponseCopyWithImpl<PromotionsResponse>(
-          this as PromotionsResponse, _$identity);
+      _$PromotionsResponseCopyWithImpl<PromotionsResponse>(this as PromotionsResponse, _$identity);
 
   /// Serializes this PromotionsResponse to a JSON map.
   Map<String, dynamic> toJson();
@@ -33,14 +32,12 @@ mixin _$PromotionsResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is PromotionsResponse &&
-            const DeepCollectionEquality()
-                .equals(other.promotions, promotions));
+            const DeepCollectionEquality().equals(other.promotions, promotions));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(promotions));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(promotions));
 
   @override
   String toString() {
@@ -50,17 +47,14 @@ mixin _$PromotionsResponse {
 
 /// @nodoc
 abstract mixin class $PromotionsResponseCopyWith<$Res> {
-  factory $PromotionsResponseCopyWith(
-          PromotionsResponse value, $Res Function(PromotionsResponse) _then) =
+  factory $PromotionsResponseCopyWith(PromotionsResponse value, $Res Function(PromotionsResponse) _then) =
       _$PromotionsResponseCopyWithImpl;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'business_promotions') List<PromotionDM> promotions});
+  $Res call({@JsonKey(name: 'business_promotions') List<PromotionDM> promotions});
 }
 
 /// @nodoc
-class _$PromotionsResponseCopyWithImpl<$Res>
-    implements $PromotionsResponseCopyWith<$Res> {
+class _$PromotionsResponseCopyWithImpl<$Res> implements $PromotionsResponseCopyWith<$Res> {
   _$PromotionsResponseCopyWithImpl(this._self, this._then);
 
   final PromotionsResponse _self;
@@ -175,9 +169,7 @@ extension PromotionsResponsePatterns on PromotionsResponse {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(name: 'business_promotions') List<PromotionDM> promotions)?
-        $default, {
+    TResult Function(@JsonKey(name: 'business_promotions') List<PromotionDM> promotions)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -204,9 +196,7 @@ extension PromotionsResponsePatterns on PromotionsResponse {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(name: 'business_promotions') List<PromotionDM> promotions)
-        $default,
+    TResult Function(@JsonKey(name: 'business_promotions') List<PromotionDM> promotions) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -231,9 +221,7 @@ extension PromotionsResponsePatterns on PromotionsResponse {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            @JsonKey(name: 'business_promotions') List<PromotionDM> promotions)?
-        $default,
+    TResult? Function(@JsonKey(name: 'business_promotions') List<PromotionDM> promotions)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -248,12 +236,9 @@ extension PromotionsResponsePatterns on PromotionsResponse {
 /// @nodoc
 @JsonSerializable()
 class _PromotionsResponse implements PromotionsResponse {
-  const _PromotionsResponse(
-      {@JsonKey(name: 'business_promotions')
-      required final List<PromotionDM> promotions})
+  const _PromotionsResponse({@JsonKey(name: 'business_promotions') required final List<PromotionDM> promotions})
       : _promotions = promotions;
-  factory _PromotionsResponse.fromJson(Map<String, dynamic> json) =>
-      _$PromotionsResponseFromJson(json);
+  factory _PromotionsResponse.fromJson(Map<String, dynamic> json) => _$PromotionsResponseFromJson(json);
 
   final List<PromotionDM> _promotions;
   @override
@@ -284,14 +269,12 @@ class _PromotionsResponse implements PromotionsResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _PromotionsResponse &&
-            const DeepCollectionEquality()
-                .equals(other._promotions, _promotions));
+            const DeepCollectionEquality().equals(other._promotions, _promotions));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_promotions));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_promotions));
 
   @override
   String toString() {
@@ -300,20 +283,16 @@ class _PromotionsResponse implements PromotionsResponse {
 }
 
 /// @nodoc
-abstract mixin class _$PromotionsResponseCopyWith<$Res>
-    implements $PromotionsResponseCopyWith<$Res> {
-  factory _$PromotionsResponseCopyWith(
-          _PromotionsResponse value, $Res Function(_PromotionsResponse) _then) =
+abstract mixin class _$PromotionsResponseCopyWith<$Res> implements $PromotionsResponseCopyWith<$Res> {
+  factory _$PromotionsResponseCopyWith(_PromotionsResponse value, $Res Function(_PromotionsResponse) _then) =
       __$PromotionsResponseCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: 'business_promotions') List<PromotionDM> promotions});
+  $Res call({@JsonKey(name: 'business_promotions') List<PromotionDM> promotions});
 }
 
 /// @nodoc
-class __$PromotionsResponseCopyWithImpl<$Res>
-    implements _$PromotionsResponseCopyWith<$Res> {
+class __$PromotionsResponseCopyWithImpl<$Res> implements _$PromotionsResponseCopyWith<$Res> {
   __$PromotionsResponseCopyWithImpl(this._self, this._then);
 
   final _PromotionsResponse _self;
@@ -383,32 +362,20 @@ mixin _$PromotionDM {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.subTitle, subTitle) ||
-                other.subTitle == subTitle) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.startDate, startDate) ||
-                other.startDate == startDate) &&
-            (identical(other.expireDate, expireDate) ||
-                other.expireDate == expireDate) &&
-            (identical(other.business, business) ||
-                other.business == business) &&
+            (identical(other.subTitle, subTitle) || other.subTitle == subTitle) &&
+            (identical(other.description, description) || other.description == description) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt) &&
+            (identical(other.startDate, startDate) || other.startDate == startDate) &&
+            (identical(other.expireDate, expireDate) || other.expireDate == expireDate) &&
+            (identical(other.business, business) || other.business == business) &&
             const DeepCollectionEquality().equals(other.versions, versions) &&
             (identical(other.prices, prices) || other.prices == prices) &&
-            (identical(other.favoritesCount, favoritesCount) ||
-                other.favoritesCount == favoritesCount) &&
-            (identical(other.mediaLink, mediaLink) ||
-                other.mediaLink == mediaLink) &&
-            const DeepCollectionEquality()
-                .equals(other.promoMedia, promoMedia) &&
-            (identical(other.promoDays, promoDays) ||
-                other.promoDays == promoDays) &&
-            (identical(other.followersLength, followersLength) ||
-                other.followersLength == followersLength));
+            (identical(other.favoritesCount, favoritesCount) || other.favoritesCount == favoritesCount) &&
+            (identical(other.mediaLink, mediaLink) || other.mediaLink == mediaLink) &&
+            const DeepCollectionEquality().equals(other.promoMedia, promoMedia) &&
+            (identical(other.promoDays, promoDays) || other.promoDays == promoDays) &&
+            (identical(other.followersLength, followersLength) || other.followersLength == followersLength));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -441,9 +408,7 @@ mixin _$PromotionDM {
 
 /// @nodoc
 abstract mixin class $PromotionDMCopyWith<$Res> {
-  factory $PromotionDMCopyWith(
-          PromotionDM value, $Res Function(PromotionDM) _then) =
-      _$PromotionDMCopyWithImpl;
+  factory $PromotionDMCopyWith(PromotionDM value, $Res Function(PromotionDM) _then) = _$PromotionDMCopyWithImpl;
   @useResult
   $Res call(
       {int id,
@@ -460,8 +425,7 @@ abstract mixin class $PromotionDMCopyWith<$Res> {
       Prices? prices,
       @JsonKey(name: 'favorites_count') int favoritesCount,
       @JsonKey(name: 'media_link') String? mediaLink,
-      @JsonKey(name: 'business_promo_reference_media')
-      List<PromoMediaDM> promoMedia,
+      @JsonKey(name: 'business_promo_reference_media') List<PromoMediaDM> promoMedia,
       @JsonKey(name: 'promo_active_days') PromoDaysDM promoDays,
       @JsonKey(name: 'followers_length') int followersLength});
 
@@ -719,8 +683,7 @@ extension PromotionDMPatterns on PromotionDM {
             Prices? prices,
             @JsonKey(name: 'favorites_count') int favoritesCount,
             @JsonKey(name: 'media_link') String? mediaLink,
-            @JsonKey(name: 'business_promo_reference_media')
-            List<PromoMediaDM> promoMedia,
+            @JsonKey(name: 'business_promo_reference_media') List<PromoMediaDM> promoMedia,
             @JsonKey(name: 'promo_active_days') PromoDaysDM promoDays,
             @JsonKey(name: 'followers_length') int followersLength)?
         $default, {
@@ -782,8 +745,7 @@ extension PromotionDMPatterns on PromotionDM {
             Prices? prices,
             @JsonKey(name: 'favorites_count') int favoritesCount,
             @JsonKey(name: 'media_link') String? mediaLink,
-            @JsonKey(name: 'business_promo_reference_media')
-            List<PromoMediaDM> promoMedia,
+            @JsonKey(name: 'business_promo_reference_media') List<PromoMediaDM> promoMedia,
             @JsonKey(name: 'promo_active_days') PromoDaysDM promoDays,
             @JsonKey(name: 'followers_length') int followersLength)
         $default,
@@ -843,8 +805,7 @@ extension PromotionDMPatterns on PromotionDM {
             Prices? prices,
             @JsonKey(name: 'favorites_count') int favoritesCount,
             @JsonKey(name: 'media_link') String? mediaLink,
-            @JsonKey(name: 'business_promo_reference_media')
-            List<PromoMediaDM> promoMedia,
+            @JsonKey(name: 'business_promo_reference_media') List<PromoMediaDM> promoMedia,
             @JsonKey(name: 'promo_active_days') PromoDaysDM promoDays,
             @JsonKey(name: 'followers_length') int followersLength)?
         $default,
@@ -894,15 +855,13 @@ class _PromotionDM extends PromotionDM {
       this.prices,
       @JsonKey(name: 'favorites_count') this.favoritesCount = 0,
       @JsonKey(name: 'media_link') this.mediaLink,
-      @JsonKey(name: 'business_promo_reference_media')
-      final List<PromoMediaDM> promoMedia = const [],
+      @JsonKey(name: 'business_promo_reference_media') final List<PromoMediaDM> promoMedia = const [],
       @JsonKey(name: 'promo_active_days') required this.promoDays,
       @JsonKey(name: 'followers_length') this.followersLength = 0})
       : _versions = versions,
         _promoMedia = promoMedia,
         super._();
-  factory _PromotionDM.fromJson(Map<String, dynamic> json) =>
-      _$PromotionDMFromJson(json);
+  factory _PromotionDM.fromJson(Map<String, dynamic> json) => _$PromotionDMFromJson(json);
 
   @override
   final int id;
@@ -967,8 +926,7 @@ class _PromotionDM extends PromotionDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PromotionDMCopyWith<_PromotionDM> get copyWith =>
-      __$PromotionDMCopyWithImpl<_PromotionDM>(this, _$identity);
+  _$PromotionDMCopyWith<_PromotionDM> get copyWith => __$PromotionDMCopyWithImpl<_PromotionDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -985,32 +943,20 @@ class _PromotionDM extends PromotionDM {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.subTitle, subTitle) ||
-                other.subTitle == subTitle) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.startDate, startDate) ||
-                other.startDate == startDate) &&
-            (identical(other.expireDate, expireDate) ||
-                other.expireDate == expireDate) &&
-            (identical(other.business, business) ||
-                other.business == business) &&
+            (identical(other.subTitle, subTitle) || other.subTitle == subTitle) &&
+            (identical(other.description, description) || other.description == description) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt) &&
+            (identical(other.startDate, startDate) || other.startDate == startDate) &&
+            (identical(other.expireDate, expireDate) || other.expireDate == expireDate) &&
+            (identical(other.business, business) || other.business == business) &&
             const DeepCollectionEquality().equals(other._versions, _versions) &&
             (identical(other.prices, prices) || other.prices == prices) &&
-            (identical(other.favoritesCount, favoritesCount) ||
-                other.favoritesCount == favoritesCount) &&
-            (identical(other.mediaLink, mediaLink) ||
-                other.mediaLink == mediaLink) &&
-            const DeepCollectionEquality()
-                .equals(other._promoMedia, _promoMedia) &&
-            (identical(other.promoDays, promoDays) ||
-                other.promoDays == promoDays) &&
-            (identical(other.followersLength, followersLength) ||
-                other.followersLength == followersLength));
+            (identical(other.favoritesCount, favoritesCount) || other.favoritesCount == favoritesCount) &&
+            (identical(other.mediaLink, mediaLink) || other.mediaLink == mediaLink) &&
+            const DeepCollectionEquality().equals(other._promoMedia, _promoMedia) &&
+            (identical(other.promoDays, promoDays) || other.promoDays == promoDays) &&
+            (identical(other.followersLength, followersLength) || other.followersLength == followersLength));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1042,11 +988,8 @@ class _PromotionDM extends PromotionDM {
 }
 
 /// @nodoc
-abstract mixin class _$PromotionDMCopyWith<$Res>
-    implements $PromotionDMCopyWith<$Res> {
-  factory _$PromotionDMCopyWith(
-          _PromotionDM value, $Res Function(_PromotionDM) _then) =
-      __$PromotionDMCopyWithImpl;
+abstract mixin class _$PromotionDMCopyWith<$Res> implements $PromotionDMCopyWith<$Res> {
+  factory _$PromotionDMCopyWith(_PromotionDM value, $Res Function(_PromotionDM) _then) = __$PromotionDMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -1064,8 +1007,7 @@ abstract mixin class _$PromotionDMCopyWith<$Res>
       Prices? prices,
       @JsonKey(name: 'favorites_count') int favoritesCount,
       @JsonKey(name: 'media_link') String? mediaLink,
-      @JsonKey(name: 'business_promo_reference_media')
-      List<PromoMediaDM> promoMedia,
+      @JsonKey(name: 'business_promo_reference_media') List<PromoMediaDM> promoMedia,
       @JsonKey(name: 'promo_active_days') PromoDaysDM promoDays,
       @JsonKey(name: 'followers_length') int followersLength});
 
@@ -1234,8 +1176,7 @@ mixin _$PromoMediaDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PromoMediaDMCopyWith<PromoMediaDM> get copyWith =>
-      _$PromoMediaDMCopyWithImpl<PromoMediaDM>(
-          this as PromoMediaDM, _$identity);
+      _$PromoMediaDMCopyWithImpl<PromoMediaDM>(this as PromoMediaDM, _$identity);
 
   /// Serializes this PromoMediaDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1247,18 +1188,14 @@ mixin _$PromoMediaDM {
             other is PromoMediaDM &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.mediaUrl, mediaUrl) ||
-                other.mediaUrl == mediaUrl) &&
-            (identical(other.promoItemId, promoItemId) ||
-                other.promoItemId == promoItemId) &&
-            (identical(other.mediaType, mediaType) ||
-                other.mediaType == mediaType));
+            (identical(other.mediaUrl, mediaUrl) || other.mediaUrl == mediaUrl) &&
+            (identical(other.promoItemId, promoItemId) || other.promoItemId == promoItemId) &&
+            (identical(other.mediaType, mediaType) || other.mediaType == mediaType));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, uuid, mediaUrl, promoItemId, mediaType);
+  int get hashCode => Object.hash(runtimeType, id, uuid, mediaUrl, promoItemId, mediaType);
 
   @override
   String toString() {
@@ -1268,9 +1205,7 @@ mixin _$PromoMediaDM {
 
 /// @nodoc
 abstract mixin class $PromoMediaDMCopyWith<$Res> {
-  factory $PromoMediaDMCopyWith(
-          PromoMediaDM value, $Res Function(PromoMediaDM) _then) =
-      _$PromoMediaDMCopyWithImpl;
+  factory $PromoMediaDMCopyWith(PromoMediaDM value, $Res Function(PromoMediaDM) _then) = _$PromoMediaDMCopyWithImpl;
   @useResult
   $Res call(
       {int id,
@@ -1416,20 +1351,15 @@ extension PromoMediaDMPatterns on PromoMediaDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            int id,
-            String uuid,
-            @JsonKey(name: 'business_promo_media_url') String mediaUrl,
-            @JsonKey(name: 'business_promo_item_id') int promoItemId,
-            @JsonKey(name: 'media_type') MediaType mediaType)?
+    TResult Function(int id, String uuid, @JsonKey(name: 'business_promo_media_url') String mediaUrl,
+            @JsonKey(name: 'business_promo_item_id') int promoItemId, @JsonKey(name: 'media_type') MediaType mediaType)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _PromoMediaDM() when $default != null:
-        return $default(_that.id, _that.uuid, _that.mediaUrl, _that.promoItemId,
-            _that.mediaType);
+        return $default(_that.id, _that.uuid, _that.mediaUrl, _that.promoItemId, _that.mediaType);
       case _:
         return orElse();
     }
@@ -1450,19 +1380,14 @@ extension PromoMediaDMPatterns on PromoMediaDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            int id,
-            String uuid,
-            @JsonKey(name: 'business_promo_media_url') String mediaUrl,
-            @JsonKey(name: 'business_promo_item_id') int promoItemId,
-            @JsonKey(name: 'media_type') MediaType mediaType)
+    TResult Function(int id, String uuid, @JsonKey(name: 'business_promo_media_url') String mediaUrl,
+            @JsonKey(name: 'business_promo_item_id') int promoItemId, @JsonKey(name: 'media_type') MediaType mediaType)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PromoMediaDM():
-        return $default(_that.id, _that.uuid, _that.mediaUrl, _that.promoItemId,
-            _that.mediaType);
+        return $default(_that.id, _that.uuid, _that.mediaUrl, _that.promoItemId, _that.mediaType);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -1482,19 +1407,14 @@ extension PromoMediaDMPatterns on PromoMediaDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            int id,
-            String uuid,
-            @JsonKey(name: 'business_promo_media_url') String mediaUrl,
-            @JsonKey(name: 'business_promo_item_id') int promoItemId,
-            @JsonKey(name: 'media_type') MediaType mediaType)?
+    TResult? Function(int id, String uuid, @JsonKey(name: 'business_promo_media_url') String mediaUrl,
+            @JsonKey(name: 'business_promo_item_id') int promoItemId, @JsonKey(name: 'media_type') MediaType mediaType)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PromoMediaDM() when $default != null:
-        return $default(_that.id, _that.uuid, _that.mediaUrl, _that.promoItemId,
-            _that.mediaType);
+        return $default(_that.id, _that.uuid, _that.mediaUrl, _that.promoItemId, _that.mediaType);
       case _:
         return null;
     }
@@ -1511,8 +1431,7 @@ class _PromoMediaDM extends PromoMediaDM {
       @JsonKey(name: 'business_promo_item_id') required this.promoItemId,
       @JsonKey(name: 'media_type') required this.mediaType})
       : super._();
-  factory _PromoMediaDM.fromJson(Map<String, dynamic> json) =>
-      _$PromoMediaDMFromJson(json);
+  factory _PromoMediaDM.fromJson(Map<String, dynamic> json) => _$PromoMediaDMFromJson(json);
 
   @override
   final int id;
@@ -1533,8 +1452,7 @@ class _PromoMediaDM extends PromoMediaDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PromoMediaDMCopyWith<_PromoMediaDM> get copyWith =>
-      __$PromoMediaDMCopyWithImpl<_PromoMediaDM>(this, _$identity);
+  _$PromoMediaDMCopyWith<_PromoMediaDM> get copyWith => __$PromoMediaDMCopyWithImpl<_PromoMediaDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1550,18 +1468,14 @@ class _PromoMediaDM extends PromoMediaDM {
             other is _PromoMediaDM &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.mediaUrl, mediaUrl) ||
-                other.mediaUrl == mediaUrl) &&
-            (identical(other.promoItemId, promoItemId) ||
-                other.promoItemId == promoItemId) &&
-            (identical(other.mediaType, mediaType) ||
-                other.mediaType == mediaType));
+            (identical(other.mediaUrl, mediaUrl) || other.mediaUrl == mediaUrl) &&
+            (identical(other.promoItemId, promoItemId) || other.promoItemId == promoItemId) &&
+            (identical(other.mediaType, mediaType) || other.mediaType == mediaType));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, uuid, mediaUrl, promoItemId, mediaType);
+  int get hashCode => Object.hash(runtimeType, id, uuid, mediaUrl, promoItemId, mediaType);
 
   @override
   String toString() {
@@ -1570,11 +1484,8 @@ class _PromoMediaDM extends PromoMediaDM {
 }
 
 /// @nodoc
-abstract mixin class _$PromoMediaDMCopyWith<$Res>
-    implements $PromoMediaDMCopyWith<$Res> {
-  factory _$PromoMediaDMCopyWith(
-          _PromoMediaDM value, $Res Function(_PromoMediaDM) _then) =
-      __$PromoMediaDMCopyWithImpl;
+abstract mixin class _$PromoMediaDMCopyWith<$Res> implements $PromoMediaDMCopyWith<$Res> {
+  factory _$PromoMediaDMCopyWith(_PromoMediaDM value, $Res Function(_PromoMediaDM) _then) = __$PromoMediaDMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -1586,8 +1497,7 @@ abstract mixin class _$PromoMediaDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PromoMediaDMCopyWithImpl<$Res>
-    implements _$PromoMediaDMCopyWith<$Res> {
+class __$PromoMediaDMCopyWithImpl<$Res> implements _$PromoMediaDMCopyWith<$Res> {
   __$PromoMediaDMCopyWithImpl(this._self, this._then);
 
   final _PromoMediaDM _self;
@@ -1664,19 +1574,15 @@ mixin _$PromoDaysDM {
             (identical(other.sunday, sunday) || other.sunday == sunday) &&
             (identical(other.monday, monday) || other.monday == monday) &&
             (identical(other.tuesday, tuesday) || other.tuesday == tuesday) &&
-            (identical(other.wednesday, wednesday) ||
-                other.wednesday == wednesday) &&
-            (identical(other.thursday, thursday) ||
-                other.thursday == thursday) &&
+            (identical(other.wednesday, wednesday) || other.wednesday == wednesday) &&
+            (identical(other.thursday, thursday) || other.thursday == thursday) &&
             (identical(other.friday, friday) || other.friday == friday) &&
-            (identical(other.saturday, saturday) ||
-                other.saturday == saturday));
+            (identical(other.saturday, saturday) || other.saturday == saturday));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, sunday, monday, tuesday,
-      wednesday, thursday, friday, saturday);
+  int get hashCode => Object.hash(runtimeType, sunday, monday, tuesday, wednesday, thursday, friday, saturday);
 
   @override
   String toString() {
@@ -1686,9 +1592,7 @@ mixin _$PromoDaysDM {
 
 /// @nodoc
 abstract mixin class $PromoDaysDMCopyWith<$Res> {
-  factory $PromoDaysDMCopyWith(
-          PromoDaysDM value, $Res Function(PromoDaysDM) _then) =
-      _$PromoDaysDMCopyWithImpl;
+  factory $PromoDaysDMCopyWith(PromoDaysDM value, $Res Function(PromoDaysDM) _then) = _$PromoDaysDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'day_0') bool sunday,
@@ -1860,8 +1764,8 @@ extension PromoDaysDMPatterns on PromoDaysDM {
     final _that = this;
     switch (_that) {
       case _PromoDaysDM() when $default != null:
-        return $default(_that.sunday, _that.monday, _that.tuesday,
-            _that.wednesday, _that.thursday, _that.friday, _that.saturday);
+        return $default(
+            _that.sunday, _that.monday, _that.tuesday, _that.wednesday, _that.thursday, _that.friday, _that.saturday);
       case _:
         return orElse();
     }
@@ -1895,8 +1799,8 @@ extension PromoDaysDMPatterns on PromoDaysDM {
     final _that = this;
     switch (_that) {
       case _PromoDaysDM():
-        return $default(_that.sunday, _that.monday, _that.tuesday,
-            _that.wednesday, _that.thursday, _that.friday, _that.saturday);
+        return $default(
+            _that.sunday, _that.monday, _that.tuesday, _that.wednesday, _that.thursday, _that.friday, _that.saturday);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -1929,8 +1833,8 @@ extension PromoDaysDMPatterns on PromoDaysDM {
     final _that = this;
     switch (_that) {
       case _PromoDaysDM() when $default != null:
-        return $default(_that.sunday, _that.monday, _that.tuesday,
-            _that.wednesday, _that.thursday, _that.friday, _that.saturday);
+        return $default(
+            _that.sunday, _that.monday, _that.tuesday, _that.wednesday, _that.thursday, _that.friday, _that.saturday);
       case _:
         return null;
     }
@@ -1949,8 +1853,7 @@ class _PromoDaysDM extends PromoDaysDM {
       @JsonKey(name: 'day_5') this.friday = false,
       @JsonKey(name: 'day_6') this.saturday = false})
       : super._();
-  factory _PromoDaysDM.fromJson(Map<String, dynamic> json) =>
-      _$PromoDaysDMFromJson(json);
+  factory _PromoDaysDM.fromJson(Map<String, dynamic> json) => _$PromoDaysDMFromJson(json);
 
   @override
   @JsonKey(name: 'day_0')
@@ -1979,8 +1882,7 @@ class _PromoDaysDM extends PromoDaysDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PromoDaysDMCopyWith<_PromoDaysDM> get copyWith =>
-      __$PromoDaysDMCopyWithImpl<_PromoDaysDM>(this, _$identity);
+  _$PromoDaysDMCopyWith<_PromoDaysDM> get copyWith => __$PromoDaysDMCopyWithImpl<_PromoDaysDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1997,19 +1899,15 @@ class _PromoDaysDM extends PromoDaysDM {
             (identical(other.sunday, sunday) || other.sunday == sunday) &&
             (identical(other.monday, monday) || other.monday == monday) &&
             (identical(other.tuesday, tuesday) || other.tuesday == tuesday) &&
-            (identical(other.wednesday, wednesday) ||
-                other.wednesday == wednesday) &&
-            (identical(other.thursday, thursday) ||
-                other.thursday == thursday) &&
+            (identical(other.wednesday, wednesday) || other.wednesday == wednesday) &&
+            (identical(other.thursday, thursday) || other.thursday == thursday) &&
             (identical(other.friday, friday) || other.friday == friday) &&
-            (identical(other.saturday, saturday) ||
-                other.saturday == saturday));
+            (identical(other.saturday, saturday) || other.saturday == saturday));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, sunday, monday, tuesday,
-      wednesday, thursday, friday, saturday);
+  int get hashCode => Object.hash(runtimeType, sunday, monday, tuesday, wednesday, thursday, friday, saturday);
 
   @override
   String toString() {
@@ -2018,11 +1916,8 @@ class _PromoDaysDM extends PromoDaysDM {
 }
 
 /// @nodoc
-abstract mixin class _$PromoDaysDMCopyWith<$Res>
-    implements $PromoDaysDMCopyWith<$Res> {
-  factory _$PromoDaysDMCopyWith(
-          _PromoDaysDM value, $Res Function(_PromoDaysDM) _then) =
-      __$PromoDaysDMCopyWithImpl;
+abstract mixin class _$PromoDaysDMCopyWith<$Res> implements $PromoDaysDMCopyWith<$Res> {
+  factory _$PromoDaysDMCopyWith(_PromoDaysDM value, $Res Function(_PromoDaysDM) _then) = __$PromoDaysDMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -2101,8 +1996,7 @@ mixin _$PromoGenerationResponse {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PromoGenerationResponseCopyWith<PromoGenerationResponse> get copyWith =>
-      _$PromoGenerationResponseCopyWithImpl<PromoGenerationResponse>(
-          this as PromoGenerationResponse, _$identity);
+      _$PromoGenerationResponseCopyWithImpl<PromoGenerationResponse>(this as PromoGenerationResponse, _$identity);
 
   /// Serializes this PromoGenerationResponse to a JSON map.
   Map<String, dynamic> toJson();
@@ -2113,18 +2007,15 @@ mixin _$PromoGenerationResponse {
         (other.runtimeType == runtimeType &&
             other is PromoGenerationResponse &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.subtitle, subtitle) ||
-                other.subtitle == subtitle) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            const DeepCollectionEquality()
-                .equals(other.imageBytes, imageBytes));
+            (identical(other.subtitle, subtitle) || other.subtitle == subtitle) &&
+            (identical(other.description, description) || other.description == description) &&
+            const DeepCollectionEquality().equals(other.imageBytes, imageBytes));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, title, subtitle, description,
-      const DeepCollectionEquality().hash(imageBytes));
+  int get hashCode =>
+      Object.hash(runtimeType, title, subtitle, description, const DeepCollectionEquality().hash(imageBytes));
 
   @override
   String toString() {
@@ -2134,20 +2025,15 @@ mixin _$PromoGenerationResponse {
 
 /// @nodoc
 abstract mixin class $PromoGenerationResponseCopyWith<$Res> {
-  factory $PromoGenerationResponseCopyWith(PromoGenerationResponse value,
-          $Res Function(PromoGenerationResponse) _then) =
+  factory $PromoGenerationResponseCopyWith(
+          PromoGenerationResponse value, $Res Function(PromoGenerationResponse) _then) =
       _$PromoGenerationResponseCopyWithImpl;
   @useResult
-  $Res call(
-      {String title,
-      String subtitle,
-      String description,
-      @Base64Converter() Uint8List? imageBytes});
+  $Res call({String title, String subtitle, String description, @Base64Converter() Uint8List? imageBytes});
 }
 
 /// @nodoc
-class _$PromoGenerationResponseCopyWithImpl<$Res>
-    implements $PromoGenerationResponseCopyWith<$Res> {
+class _$PromoGenerationResponseCopyWithImpl<$Res> implements $PromoGenerationResponseCopyWith<$Res> {
   _$PromoGenerationResponseCopyWithImpl(this._self, this._then);
 
   final PromoGenerationResponse _self;
@@ -2277,16 +2163,14 @@ extension PromoGenerationResponsePatterns on PromoGenerationResponse {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String title, String subtitle, String description,
-            @Base64Converter() Uint8List? imageBytes)?
+    TResult Function(String title, String subtitle, String description, @Base64Converter() Uint8List? imageBytes)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _PromoGenerationResponse() when $default != null:
-        return $default(
-            _that.title, _that.subtitle, _that.description, _that.imageBytes);
+        return $default(_that.title, _that.subtitle, _that.description, _that.imageBytes);
       case _:
         return orElse();
     }
@@ -2307,15 +2191,13 @@ extension PromoGenerationResponsePatterns on PromoGenerationResponse {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String title, String subtitle, String description,
-            @Base64Converter() Uint8List? imageBytes)
+    TResult Function(String title, String subtitle, String description, @Base64Converter() Uint8List? imageBytes)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PromoGenerationResponse():
-        return $default(
-            _that.title, _that.subtitle, _that.description, _that.imageBytes);
+        return $default(_that.title, _that.subtitle, _that.description, _that.imageBytes);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -2335,15 +2217,13 @@ extension PromoGenerationResponsePatterns on PromoGenerationResponse {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String title, String subtitle, String description,
-            @Base64Converter() Uint8List? imageBytes)?
+    TResult? Function(String title, String subtitle, String description, @Base64Converter() Uint8List? imageBytes)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PromoGenerationResponse() when $default != null:
-        return $default(
-            _that.title, _that.subtitle, _that.description, _that.imageBytes);
+        return $default(_that.title, _that.subtitle, _that.description, _that.imageBytes);
       case _:
         return null;
     }
@@ -2354,12 +2234,8 @@ extension PromoGenerationResponsePatterns on PromoGenerationResponse {
 @JsonSerializable()
 class _PromoGenerationResponse implements PromoGenerationResponse {
   const _PromoGenerationResponse(
-      {required this.title,
-      required this.subtitle,
-      required this.description,
-      @Base64Converter() this.imageBytes});
-  factory _PromoGenerationResponse.fromJson(Map<String, dynamic> json) =>
-      _$PromoGenerationResponseFromJson(json);
+      {required this.title, required this.subtitle, required this.description, @Base64Converter() this.imageBytes});
+  factory _PromoGenerationResponse.fromJson(Map<String, dynamic> json) => _$PromoGenerationResponseFromJson(json);
 
   @override
   final String title;
@@ -2377,8 +2253,7 @@ class _PromoGenerationResponse implements PromoGenerationResponse {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$PromoGenerationResponseCopyWith<_PromoGenerationResponse> get copyWith =>
-      __$PromoGenerationResponseCopyWithImpl<_PromoGenerationResponse>(
-          this, _$identity);
+      __$PromoGenerationResponseCopyWithImpl<_PromoGenerationResponse>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -2393,18 +2268,15 @@ class _PromoGenerationResponse implements PromoGenerationResponse {
         (other.runtimeType == runtimeType &&
             other is _PromoGenerationResponse &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.subtitle, subtitle) ||
-                other.subtitle == subtitle) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            const DeepCollectionEquality()
-                .equals(other.imageBytes, imageBytes));
+            (identical(other.subtitle, subtitle) || other.subtitle == subtitle) &&
+            (identical(other.description, description) || other.description == description) &&
+            const DeepCollectionEquality().equals(other.imageBytes, imageBytes));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, title, subtitle, description,
-      const DeepCollectionEquality().hash(imageBytes));
+  int get hashCode =>
+      Object.hash(runtimeType, title, subtitle, description, const DeepCollectionEquality().hash(imageBytes));
 
   @override
   String toString() {
@@ -2413,23 +2285,17 @@ class _PromoGenerationResponse implements PromoGenerationResponse {
 }
 
 /// @nodoc
-abstract mixin class _$PromoGenerationResponseCopyWith<$Res>
-    implements $PromoGenerationResponseCopyWith<$Res> {
-  factory _$PromoGenerationResponseCopyWith(_PromoGenerationResponse value,
-          $Res Function(_PromoGenerationResponse) _then) =
+abstract mixin class _$PromoGenerationResponseCopyWith<$Res> implements $PromoGenerationResponseCopyWith<$Res> {
+  factory _$PromoGenerationResponseCopyWith(
+          _PromoGenerationResponse value, $Res Function(_PromoGenerationResponse) _then) =
       __$PromoGenerationResponseCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {String title,
-      String subtitle,
-      String description,
-      @Base64Converter() Uint8List? imageBytes});
+  $Res call({String title, String subtitle, String description, @Base64Converter() Uint8List? imageBytes});
 }
 
 /// @nodoc
-class __$PromoGenerationResponseCopyWithImpl<$Res>
-    implements _$PromoGenerationResponseCopyWith<$Res> {
+class __$PromoGenerationResponseCopyWithImpl<$Res> implements _$PromoGenerationResponseCopyWith<$Res> {
   __$PromoGenerationResponseCopyWithImpl(this._self, this._then);
 
   final _PromoGenerationResponse _self;
@@ -2476,8 +2342,7 @@ mixin _$PromoMediaResponse {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PromoMediaResponseCopyWith<PromoMediaResponse> get copyWith =>
-      _$PromoMediaResponseCopyWithImpl<PromoMediaResponse>(
-          this as PromoMediaResponse, _$identity);
+      _$PromoMediaResponseCopyWithImpl<PromoMediaResponse>(this as PromoMediaResponse, _$identity);
 
   /// Serializes this PromoMediaResponse to a JSON map.
   Map<String, dynamic> toJson();
@@ -2487,14 +2352,12 @@ mixin _$PromoMediaResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is PromoMediaResponse &&
-            const DeepCollectionEquality()
-                .equals(other.promoMedia, promoMedia));
+            const DeepCollectionEquality().equals(other.promoMedia, promoMedia));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(promoMedia));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(promoMedia));
 
   @override
   String toString() {
@@ -2504,18 +2367,14 @@ mixin _$PromoMediaResponse {
 
 /// @nodoc
 abstract mixin class $PromoMediaResponseCopyWith<$Res> {
-  factory $PromoMediaResponseCopyWith(
-          PromoMediaResponse value, $Res Function(PromoMediaResponse) _then) =
+  factory $PromoMediaResponseCopyWith(PromoMediaResponse value, $Res Function(PromoMediaResponse) _then) =
       _$PromoMediaResponseCopyWithImpl;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'business_promo_reference_media')
-      List<PromoMediaDM> promoMedia});
+  $Res call({@JsonKey(name: 'business_promo_reference_media') List<PromoMediaDM> promoMedia});
 }
 
 /// @nodoc
-class _$PromoMediaResponseCopyWithImpl<$Res>
-    implements $PromoMediaResponseCopyWith<$Res> {
+class _$PromoMediaResponseCopyWithImpl<$Res> implements $PromoMediaResponseCopyWith<$Res> {
   _$PromoMediaResponseCopyWithImpl(this._self, this._then);
 
   final PromoMediaResponse _self;
@@ -2630,10 +2489,7 @@ extension PromoMediaResponsePatterns on PromoMediaResponse {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(name: 'business_promo_reference_media')
-            List<PromoMediaDM> promoMedia)?
-        $default, {
+    TResult Function(@JsonKey(name: 'business_promo_reference_media') List<PromoMediaDM> promoMedia)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -2660,10 +2516,7 @@ extension PromoMediaResponsePatterns on PromoMediaResponse {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(name: 'business_promo_reference_media')
-            List<PromoMediaDM> promoMedia)
-        $default,
+    TResult Function(@JsonKey(name: 'business_promo_reference_media') List<PromoMediaDM> promoMedia) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -2688,10 +2541,7 @@ extension PromoMediaResponsePatterns on PromoMediaResponse {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            @JsonKey(name: 'business_promo_reference_media')
-            List<PromoMediaDM> promoMedia)?
-        $default,
+    TResult? Function(@JsonKey(name: 'business_promo_reference_media') List<PromoMediaDM> promoMedia)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -2707,11 +2557,9 @@ extension PromoMediaResponsePatterns on PromoMediaResponse {
 @JsonSerializable()
 class _PromoMediaResponse implements PromoMediaResponse {
   const _PromoMediaResponse(
-      {@JsonKey(name: 'business_promo_reference_media')
-      required final List<PromoMediaDM> promoMedia})
+      {@JsonKey(name: 'business_promo_reference_media') required final List<PromoMediaDM> promoMedia})
       : _promoMedia = promoMedia;
-  factory _PromoMediaResponse.fromJson(Map<String, dynamic> json) =>
-      _$PromoMediaResponseFromJson(json);
+  factory _PromoMediaResponse.fromJson(Map<String, dynamic> json) => _$PromoMediaResponseFromJson(json);
 
   final List<PromoMediaDM> _promoMedia;
   @override
@@ -2742,14 +2590,12 @@ class _PromoMediaResponse implements PromoMediaResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _PromoMediaResponse &&
-            const DeepCollectionEquality()
-                .equals(other._promoMedia, _promoMedia));
+            const DeepCollectionEquality().equals(other._promoMedia, _promoMedia));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_promoMedia));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_promoMedia));
 
   @override
   String toString() {
@@ -2758,21 +2604,16 @@ class _PromoMediaResponse implements PromoMediaResponse {
 }
 
 /// @nodoc
-abstract mixin class _$PromoMediaResponseCopyWith<$Res>
-    implements $PromoMediaResponseCopyWith<$Res> {
-  factory _$PromoMediaResponseCopyWith(
-          _PromoMediaResponse value, $Res Function(_PromoMediaResponse) _then) =
+abstract mixin class _$PromoMediaResponseCopyWith<$Res> implements $PromoMediaResponseCopyWith<$Res> {
+  factory _$PromoMediaResponseCopyWith(_PromoMediaResponse value, $Res Function(_PromoMediaResponse) _then) =
       __$PromoMediaResponseCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: 'business_promo_reference_media')
-      List<PromoMediaDM> promoMedia});
+  $Res call({@JsonKey(name: 'business_promo_reference_media') List<PromoMediaDM> promoMedia});
 }
 
 /// @nodoc
-class __$PromoMediaResponseCopyWithImpl<$Res>
-    implements _$PromoMediaResponseCopyWith<$Res> {
+class __$PromoMediaResponseCopyWithImpl<$Res> implements _$PromoMediaResponseCopyWith<$Res> {
   __$PromoMediaResponseCopyWithImpl(this._self, this._then);
 
   final _PromoMediaResponse _self;

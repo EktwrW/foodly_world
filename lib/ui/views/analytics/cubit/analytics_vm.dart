@@ -44,7 +44,6 @@ abstract class AnalyticsVM with _$AnalyticsVM {
     /// Catering & chefs-flavour payload. Populated only when [kind] is
     /// [AnalyticsKind.service]. Mutually exclusive with [overview].
     ServiceOverviewDataDM? serviceOverview,
-
     @Default(30) int selectedDays,
   }) = _AnalyticsVM;
 }

@@ -25,8 +25,7 @@ mixin _$PlaceAddressComponentDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PlaceAddressComponentDMCopyWith<PlaceAddressComponentDM> get copyWith =>
-      _$PlaceAddressComponentDMCopyWithImpl<PlaceAddressComponentDM>(
-          this as PlaceAddressComponentDM, _$identity);
+      _$PlaceAddressComponentDMCopyWithImpl<PlaceAddressComponentDM>(this as PlaceAddressComponentDM, _$identity);
 
   /// Serializes this PlaceAddressComponentDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -36,17 +35,14 @@ mixin _$PlaceAddressComponentDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is PlaceAddressComponentDM &&
-            (identical(other.longName, longName) ||
-                other.longName == longName) &&
-            (identical(other.shortName, shortName) ||
-                other.shortName == shortName) &&
+            (identical(other.longName, longName) || other.longName == longName) &&
+            (identical(other.shortName, shortName) || other.shortName == shortName) &&
             const DeepCollectionEquality().equals(other.types, types));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, longName, shortName,
-      const DeepCollectionEquality().hash(types));
+  int get hashCode => Object.hash(runtimeType, longName, shortName, const DeepCollectionEquality().hash(types));
 
   @override
   String toString() {
@@ -56,19 +52,16 @@ mixin _$PlaceAddressComponentDM {
 
 /// @nodoc
 abstract mixin class $PlaceAddressComponentDMCopyWith<$Res> {
-  factory $PlaceAddressComponentDMCopyWith(PlaceAddressComponentDM value,
-          $Res Function(PlaceAddressComponentDM) _then) =
+  factory $PlaceAddressComponentDMCopyWith(
+          PlaceAddressComponentDM value, $Res Function(PlaceAddressComponentDM) _then) =
       _$PlaceAddressComponentDMCopyWithImpl;
   @useResult
   $Res call(
-      {@JsonKey(name: 'long_name') String longName,
-      @JsonKey(name: 'short_name') String shortName,
-      List<String> types});
+      {@JsonKey(name: 'long_name') String longName, @JsonKey(name: 'short_name') String shortName, List<String> types});
 }
 
 /// @nodoc
-class _$PlaceAddressComponentDMCopyWithImpl<$Res>
-    implements $PlaceAddressComponentDMCopyWith<$Res> {
+class _$PlaceAddressComponentDMCopyWithImpl<$Res> implements $PlaceAddressComponentDMCopyWith<$Res> {
   _$PlaceAddressComponentDMCopyWithImpl(this._self, this._then);
 
   final PlaceAddressComponentDM _self;
@@ -193,8 +186,8 @@ extension PlaceAddressComponentDMPatterns on PlaceAddressComponentDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'long_name') String longName,
-            @JsonKey(name: 'short_name') String shortName, List<String> types)?
+    TResult Function(@JsonKey(name: 'long_name') String longName, @JsonKey(name: 'short_name') String shortName,
+            List<String> types)?
         $default, {
     required TResult orElse(),
   }) {
@@ -222,8 +215,8 @@ extension PlaceAddressComponentDMPatterns on PlaceAddressComponentDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'long_name') String longName,
-            @JsonKey(name: 'short_name') String shortName, List<String> types)
+    TResult Function(@JsonKey(name: 'long_name') String longName, @JsonKey(name: 'short_name') String shortName,
+            List<String> types)
         $default,
   ) {
     final _that = this;
@@ -249,8 +242,8 @@ extension PlaceAddressComponentDMPatterns on PlaceAddressComponentDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(@JsonKey(name: 'long_name') String longName,
-            @JsonKey(name: 'short_name') String shortName, List<String> types)?
+    TResult? Function(@JsonKey(name: 'long_name') String longName, @JsonKey(name: 'short_name') String shortName,
+            List<String> types)?
         $default,
   ) {
     final _that = this;
@@ -271,8 +264,7 @@ class _PlaceAddressComponentDM implements PlaceAddressComponentDM {
       @JsonKey(name: 'short_name') required this.shortName,
       final List<String> types = const <String>[]})
       : _types = types;
-  factory _PlaceAddressComponentDM.fromJson(Map<String, dynamic> json) =>
-      _$PlaceAddressComponentDMFromJson(json);
+  factory _PlaceAddressComponentDM.fromJson(Map<String, dynamic> json) => _$PlaceAddressComponentDMFromJson(json);
 
   @override
   @JsonKey(name: 'long_name')
@@ -295,8 +287,7 @@ class _PlaceAddressComponentDM implements PlaceAddressComponentDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$PlaceAddressComponentDMCopyWith<_PlaceAddressComponentDM> get copyWith =>
-      __$PlaceAddressComponentDMCopyWithImpl<_PlaceAddressComponentDM>(
-          this, _$identity);
+      __$PlaceAddressComponentDMCopyWithImpl<_PlaceAddressComponentDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -310,17 +301,14 @@ class _PlaceAddressComponentDM implements PlaceAddressComponentDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _PlaceAddressComponentDM &&
-            (identical(other.longName, longName) ||
-                other.longName == longName) &&
-            (identical(other.shortName, shortName) ||
-                other.shortName == shortName) &&
+            (identical(other.longName, longName) || other.longName == longName) &&
+            (identical(other.shortName, shortName) || other.shortName == shortName) &&
             const DeepCollectionEquality().equals(other._types, _types));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, longName, shortName,
-      const DeepCollectionEquality().hash(_types));
+  int get hashCode => Object.hash(runtimeType, longName, shortName, const DeepCollectionEquality().hash(_types));
 
   @override
   String toString() {
@@ -329,22 +317,18 @@ class _PlaceAddressComponentDM implements PlaceAddressComponentDM {
 }
 
 /// @nodoc
-abstract mixin class _$PlaceAddressComponentDMCopyWith<$Res>
-    implements $PlaceAddressComponentDMCopyWith<$Res> {
-  factory _$PlaceAddressComponentDMCopyWith(_PlaceAddressComponentDM value,
-          $Res Function(_PlaceAddressComponentDM) _then) =
+abstract mixin class _$PlaceAddressComponentDMCopyWith<$Res> implements $PlaceAddressComponentDMCopyWith<$Res> {
+  factory _$PlaceAddressComponentDMCopyWith(
+          _PlaceAddressComponentDM value, $Res Function(_PlaceAddressComponentDM) _then) =
       __$PlaceAddressComponentDMCopyWithImpl;
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'long_name') String longName,
-      @JsonKey(name: 'short_name') String shortName,
-      List<String> types});
+      {@JsonKey(name: 'long_name') String longName, @JsonKey(name: 'short_name') String shortName, List<String> types});
 }
 
 /// @nodoc
-class __$PlaceAddressComponentDMCopyWithImpl<$Res>
-    implements _$PlaceAddressComponentDMCopyWith<$Res> {
+class __$PlaceAddressComponentDMCopyWithImpl<$Res> implements _$PlaceAddressComponentDMCopyWith<$Res> {
   __$PlaceAddressComponentDMCopyWithImpl(this._self, this._then);
 
   final _PlaceAddressComponentDM _self;

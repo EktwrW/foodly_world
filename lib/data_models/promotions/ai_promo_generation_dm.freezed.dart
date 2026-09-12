@@ -25,8 +25,7 @@ mixin _$AiPromoImageOption {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $AiPromoImageOptionCopyWith<AiPromoImageOption> get copyWith =>
-      _$AiPromoImageOptionCopyWithImpl<AiPromoImageOption>(
-          this as AiPromoImageOption, _$identity);
+      _$AiPromoImageOptionCopyWithImpl<AiPromoImageOption>(this as AiPromoImageOption, _$identity);
 
   /// Serializes this AiPromoImageOption to a JSON map.
   Map<String, dynamic> toJson();
@@ -37,8 +36,7 @@ mixin _$AiPromoImageOption {
         (other.runtimeType == runtimeType &&
             other is AiPromoImageOption &&
             (identical(other.look, look) || other.look == look) &&
-            (identical(other.imageBase64, imageBase64) ||
-                other.imageBase64 == imageBase64));
+            (identical(other.imageBase64, imageBase64) || other.imageBase64 == imageBase64));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -53,16 +51,14 @@ mixin _$AiPromoImageOption {
 
 /// @nodoc
 abstract mixin class $AiPromoImageOptionCopyWith<$Res> {
-  factory $AiPromoImageOptionCopyWith(
-          AiPromoImageOption value, $Res Function(AiPromoImageOption) _then) =
+  factory $AiPromoImageOptionCopyWith(AiPromoImageOption value, $Res Function(AiPromoImageOption) _then) =
       _$AiPromoImageOptionCopyWithImpl;
   @useResult
   $Res call({String look, @JsonKey(name: 'image_base64') String imageBase64});
 }
 
 /// @nodoc
-class _$AiPromoImageOptionCopyWithImpl<$Res>
-    implements $AiPromoImageOptionCopyWith<$Res> {
+class _$AiPromoImageOptionCopyWithImpl<$Res> implements $AiPromoImageOptionCopyWith<$Res> {
   _$AiPromoImageOptionCopyWithImpl(this._self, this._then);
 
   final AiPromoImageOption _self;
@@ -182,9 +178,7 @@ extension AiPromoImageOptionPatterns on AiPromoImageOption {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            String look, @JsonKey(name: 'image_base64') String imageBase64)?
-        $default, {
+    TResult Function(String look, @JsonKey(name: 'image_base64') String imageBase64)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -211,9 +205,7 @@ extension AiPromoImageOptionPatterns on AiPromoImageOption {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            String look, @JsonKey(name: 'image_base64') String imageBase64)
-        $default,
+    TResult Function(String look, @JsonKey(name: 'image_base64') String imageBase64) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -238,9 +230,7 @@ extension AiPromoImageOptionPatterns on AiPromoImageOption {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            String look, @JsonKey(name: 'image_base64') String imageBase64)?
-        $default,
+    TResult? Function(String look, @JsonKey(name: 'image_base64') String imageBase64)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -255,11 +245,8 @@ extension AiPromoImageOptionPatterns on AiPromoImageOption {
 /// @nodoc
 @JsonSerializable()
 class _AiPromoImageOption extends AiPromoImageOption {
-  const _AiPromoImageOption(
-      {this.look = '', @JsonKey(name: 'image_base64') this.imageBase64 = ''})
-      : super._();
-  factory _AiPromoImageOption.fromJson(Map<String, dynamic> json) =>
-      _$AiPromoImageOptionFromJson(json);
+  const _AiPromoImageOption({this.look = '', @JsonKey(name: 'image_base64') this.imageBase64 = ''}) : super._();
+  factory _AiPromoImageOption.fromJson(Map<String, dynamic> json) => _$AiPromoImageOptionFromJson(json);
 
   /// `product` | `people`. Sólo para telemetría y para el label — el FE no
   /// debería ramificar lógica sobre esto.
@@ -291,8 +278,7 @@ class _AiPromoImageOption extends AiPromoImageOption {
         (other.runtimeType == runtimeType &&
             other is _AiPromoImageOption &&
             (identical(other.look, look) || other.look == look) &&
-            (identical(other.imageBase64, imageBase64) ||
-                other.imageBase64 == imageBase64));
+            (identical(other.imageBase64, imageBase64) || other.imageBase64 == imageBase64));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -306,10 +292,8 @@ class _AiPromoImageOption extends AiPromoImageOption {
 }
 
 /// @nodoc
-abstract mixin class _$AiPromoImageOptionCopyWith<$Res>
-    implements $AiPromoImageOptionCopyWith<$Res> {
-  factory _$AiPromoImageOptionCopyWith(
-          _AiPromoImageOption value, $Res Function(_AiPromoImageOption) _then) =
+abstract mixin class _$AiPromoImageOptionCopyWith<$Res> implements $AiPromoImageOptionCopyWith<$Res> {
+  factory _$AiPromoImageOptionCopyWith(_AiPromoImageOption value, $Res Function(_AiPromoImageOption) _then) =
       __$AiPromoImageOptionCopyWithImpl;
   @override
   @useResult
@@ -317,8 +301,7 @@ abstract mixin class _$AiPromoImageOptionCopyWith<$Res>
 }
 
 /// @nodoc
-class __$AiPromoImageOptionCopyWithImpl<$Res>
-    implements _$AiPromoImageOptionCopyWith<$Res> {
+class __$AiPromoImageOptionCopyWithImpl<$Res> implements _$AiPromoImageOptionCopyWith<$Res> {
   __$AiPromoImageOptionCopyWithImpl(this._self, this._then);
 
   final _AiPromoImageOption _self;
@@ -368,8 +351,7 @@ mixin _$AiPromoGenerationResponse {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $AiPromoGenerationResponseCopyWith<AiPromoGenerationResponse> get copyWith =>
-      _$AiPromoGenerationResponseCopyWithImpl<AiPromoGenerationResponse>(
-          this as AiPromoGenerationResponse, _$identity);
+      _$AiPromoGenerationResponseCopyWithImpl<AiPromoGenerationResponse>(this as AiPromoGenerationResponse, _$identity);
 
   /// Serializes this AiPromoGenerationResponse to a JSON map.
   Map<String, dynamic> toJson();
@@ -381,33 +363,21 @@ mixin _$AiPromoGenerationResponse {
             other is AiPromoGenerationResponse &&
             (identical(other.granted, granted) || other.granted == granted) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.subtitle, subtitle) ||
-                other.subtitle == subtitle) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.subtitle, subtitle) || other.subtitle == subtitle) &&
+            (identical(other.description, description) || other.description == description) &&
             const DeepCollectionEquality().equals(other.images, images) &&
             (identical(other.aiPromoMonthlyLimit, aiPromoMonthlyLimit) ||
                 other.aiPromoMonthlyLimit == aiPromoMonthlyLimit) &&
             (identical(other.aiPromosUsedThisMonth, aiPromosUsedThisMonth) ||
                 other.aiPromosUsedThisMonth == aiPromosUsedThisMonth) &&
-            (identical(other.remaining, remaining) ||
-                other.remaining == remaining) &&
+            (identical(other.remaining, remaining) || other.remaining == remaining) &&
             (identical(other.message, message) || other.message == message));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      granted,
-      title,
-      subtitle,
-      description,
-      const DeepCollectionEquality().hash(images),
-      aiPromoMonthlyLimit,
-      aiPromosUsedThisMonth,
-      remaining,
-      message);
+  int get hashCode => Object.hash(runtimeType, granted, title, subtitle, description,
+      const DeepCollectionEquality().hash(images), aiPromoMonthlyLimit, aiPromosUsedThisMonth, remaining, message);
 
   @override
   String toString() {
@@ -417,8 +387,8 @@ mixin _$AiPromoGenerationResponse {
 
 /// @nodoc
 abstract mixin class $AiPromoGenerationResponseCopyWith<$Res> {
-  factory $AiPromoGenerationResponseCopyWith(AiPromoGenerationResponse value,
-          $Res Function(AiPromoGenerationResponse) _then) =
+  factory $AiPromoGenerationResponseCopyWith(
+          AiPromoGenerationResponse value, $Res Function(AiPromoGenerationResponse) _then) =
       _$AiPromoGenerationResponseCopyWithImpl;
   @useResult
   $Res call(
@@ -434,8 +404,7 @@ abstract mixin class $AiPromoGenerationResponseCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AiPromoGenerationResponseCopyWithImpl<$Res>
-    implements $AiPromoGenerationResponseCopyWith<$Res> {
+class _$AiPromoGenerationResponseCopyWithImpl<$Res> implements $AiPromoGenerationResponseCopyWith<$Res> {
   _$AiPromoGenerationResponseCopyWithImpl(this._self, this._then);
 
   final AiPromoGenerationResponse _self;
@@ -597,8 +566,7 @@ extension AiPromoGenerationResponsePatterns on AiPromoGenerationResponse {
             String description,
             List<AiPromoImageOption> images,
             @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
-            @JsonKey(name: 'ai_promos_used_this_month')
-            int aiPromosUsedThisMonth,
+            @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth,
             int remaining,
             String? message)?
         $default, {
@@ -607,16 +575,8 @@ extension AiPromoGenerationResponsePatterns on AiPromoGenerationResponse {
     final _that = this;
     switch (_that) {
       case _AiPromoGenerationResponse() when $default != null:
-        return $default(
-            _that.granted,
-            _that.title,
-            _that.subtitle,
-            _that.description,
-            _that.images,
-            _that.aiPromoMonthlyLimit,
-            _that.aiPromosUsedThisMonth,
-            _that.remaining,
-            _that.message);
+        return $default(_that.granted, _that.title, _that.subtitle, _that.description, _that.images,
+            _that.aiPromoMonthlyLimit, _that.aiPromosUsedThisMonth, _that.remaining, _that.message);
       case _:
         return orElse();
     }
@@ -644,8 +604,7 @@ extension AiPromoGenerationResponsePatterns on AiPromoGenerationResponse {
             String description,
             List<AiPromoImageOption> images,
             @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
-            @JsonKey(name: 'ai_promos_used_this_month')
-            int aiPromosUsedThisMonth,
+            @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth,
             int remaining,
             String? message)
         $default,
@@ -653,16 +612,8 @@ extension AiPromoGenerationResponsePatterns on AiPromoGenerationResponse {
     final _that = this;
     switch (_that) {
       case _AiPromoGenerationResponse():
-        return $default(
-            _that.granted,
-            _that.title,
-            _that.subtitle,
-            _that.description,
-            _that.images,
-            _that.aiPromoMonthlyLimit,
-            _that.aiPromosUsedThisMonth,
-            _that.remaining,
-            _that.message);
+        return $default(_that.granted, _that.title, _that.subtitle, _that.description, _that.images,
+            _that.aiPromoMonthlyLimit, _that.aiPromosUsedThisMonth, _that.remaining, _that.message);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -689,8 +640,7 @@ extension AiPromoGenerationResponsePatterns on AiPromoGenerationResponse {
             String description,
             List<AiPromoImageOption> images,
             @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
-            @JsonKey(name: 'ai_promos_used_this_month')
-            int aiPromosUsedThisMonth,
+            @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth,
             int remaining,
             String? message)?
         $default,
@@ -698,16 +648,8 @@ extension AiPromoGenerationResponsePatterns on AiPromoGenerationResponse {
     final _that = this;
     switch (_that) {
       case _AiPromoGenerationResponse() when $default != null:
-        return $default(
-            _that.granted,
-            _that.title,
-            _that.subtitle,
-            _that.description,
-            _that.images,
-            _that.aiPromoMonthlyLimit,
-            _that.aiPromosUsedThisMonth,
-            _that.remaining,
-            _that.message);
+        return $default(_that.granted, _that.title, _that.subtitle, _that.description, _that.images,
+            _that.aiPromoMonthlyLimit, _that.aiPromosUsedThisMonth, _that.remaining, _that.message);
       case _:
         return null;
     }
@@ -724,14 +666,12 @@ class _AiPromoGenerationResponse extends AiPromoGenerationResponse {
       this.description = '',
       final List<AiPromoImageOption> images = const [],
       @JsonKey(name: 'ai_promo_monthly_limit') this.aiPromoMonthlyLimit = 3,
-      @JsonKey(name: 'ai_promos_used_this_month')
-      this.aiPromosUsedThisMonth = 0,
+      @JsonKey(name: 'ai_promos_used_this_month') this.aiPromosUsedThisMonth = 0,
       this.remaining = 0,
       this.message})
       : _images = images,
         super._();
-  factory _AiPromoGenerationResponse.fromJson(Map<String, dynamic> json) =>
-      _$AiPromoGenerationResponseFromJson(json);
+  factory _AiPromoGenerationResponse.fromJson(Map<String, dynamic> json) => _$AiPromoGenerationResponseFromJson(json);
 
   @override
   @JsonKey()
@@ -779,10 +719,8 @@ class _AiPromoGenerationResponse extends AiPromoGenerationResponse {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$AiPromoGenerationResponseCopyWith<_AiPromoGenerationResponse>
-      get copyWith =>
-          __$AiPromoGenerationResponseCopyWithImpl<_AiPromoGenerationResponse>(
-              this, _$identity);
+  _$AiPromoGenerationResponseCopyWith<_AiPromoGenerationResponse> get copyWith =>
+      __$AiPromoGenerationResponseCopyWithImpl<_AiPromoGenerationResponse>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -798,33 +736,21 @@ class _AiPromoGenerationResponse extends AiPromoGenerationResponse {
             other is _AiPromoGenerationResponse &&
             (identical(other.granted, granted) || other.granted == granted) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.subtitle, subtitle) ||
-                other.subtitle == subtitle) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.subtitle, subtitle) || other.subtitle == subtitle) &&
+            (identical(other.description, description) || other.description == description) &&
             const DeepCollectionEquality().equals(other._images, _images) &&
             (identical(other.aiPromoMonthlyLimit, aiPromoMonthlyLimit) ||
                 other.aiPromoMonthlyLimit == aiPromoMonthlyLimit) &&
             (identical(other.aiPromosUsedThisMonth, aiPromosUsedThisMonth) ||
                 other.aiPromosUsedThisMonth == aiPromosUsedThisMonth) &&
-            (identical(other.remaining, remaining) ||
-                other.remaining == remaining) &&
+            (identical(other.remaining, remaining) || other.remaining == remaining) &&
             (identical(other.message, message) || other.message == message));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      granted,
-      title,
-      subtitle,
-      description,
-      const DeepCollectionEquality().hash(_images),
-      aiPromoMonthlyLimit,
-      aiPromosUsedThisMonth,
-      remaining,
-      message);
+  int get hashCode => Object.hash(runtimeType, granted, title, subtitle, description,
+      const DeepCollectionEquality().hash(_images), aiPromoMonthlyLimit, aiPromosUsedThisMonth, remaining, message);
 
   @override
   String toString() {
@@ -833,10 +759,9 @@ class _AiPromoGenerationResponse extends AiPromoGenerationResponse {
 }
 
 /// @nodoc
-abstract mixin class _$AiPromoGenerationResponseCopyWith<$Res>
-    implements $AiPromoGenerationResponseCopyWith<$Res> {
-  factory _$AiPromoGenerationResponseCopyWith(_AiPromoGenerationResponse value,
-          $Res Function(_AiPromoGenerationResponse) _then) =
+abstract mixin class _$AiPromoGenerationResponseCopyWith<$Res> implements $AiPromoGenerationResponseCopyWith<$Res> {
+  factory _$AiPromoGenerationResponseCopyWith(
+          _AiPromoGenerationResponse value, $Res Function(_AiPromoGenerationResponse) _then) =
       __$AiPromoGenerationResponseCopyWithImpl;
   @override
   @useResult
@@ -853,8 +778,7 @@ abstract mixin class _$AiPromoGenerationResponseCopyWith<$Res>
 }
 
 /// @nodoc
-class __$AiPromoGenerationResponseCopyWithImpl<$Res>
-    implements _$AiPromoGenerationResponseCopyWith<$Res> {
+class __$AiPromoGenerationResponseCopyWithImpl<$Res> implements _$AiPromoGenerationResponseCopyWith<$Res> {
   __$AiPromoGenerationResponseCopyWithImpl(this._self, this._then);
 
   final _AiPromoGenerationResponse _self;

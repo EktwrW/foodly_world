@@ -139,8 +139,7 @@ class _ParticipantExpansibleTileState extends State<ParticipantExpansibleTile> {
                 const SizedBox(width: 4),
                 RotationTransition(
                   turns: animation.drive(Tween(begin: 0.0, end: 0.5)),
-                  child: const Icon(Icons.keyboard_arrow_down_rounded,
-                      size: 22, color: FoodlyThemes.secondaryFoodly),
+                  child: const Icon(Icons.keyboard_arrow_down_rounded, size: 22, color: FoodlyThemes.secondaryFoodly),
                 ),
               ],
             ),
@@ -171,9 +170,7 @@ class _ParticipantExpansibleTileState extends State<ParticipantExpansibleTile> {
                       // de lo que el negocio recibió. En cuenta abierta el
                       // carrito sigue editable con la orden ya confirmada, así
                       // que la frontera es el ítem, no el estado de la orden.
-                      onRemove: (widget.onRemoveItem == null || item.isSent)
-                          ? null
-                          : () => widget.onRemoveItem!(item),
+                      onRemove: (widget.onRemoveItem == null || item.isSent) ? null : () => widget.onRemoveItem!(item),
                       // "Compartido" NO es un atributo de cocina, es de
                       // REPARTO: no cambia lo que el negocio prepara, cambia
                       // entre quiénes se divide. Gatearlo por `isSent` —la
@@ -183,9 +180,7 @@ class _ParticipantExpansibleTileState extends State<ParticipantExpansibleTile> {
                       // marcar justo cuando hace falta (e2e 2026-08-09). El
                       // reparto se congela al pedir la cuenta, y de eso ya se
                       // ocupa `isEditableCart` en el caller.
-                      onToggleShared: widget.onToggleSharedItem == null
-                          ? null
-                          : () => widget.onToggleSharedItem!(item),
+                      onToggleShared: widget.onToggleSharedItem == null ? null : () => widget.onToggleSharedItem!(item),
                     ),
                   ),
               // "Cubrir su parte" (F2b §A.2) — solo si el caller lo habilitó.
@@ -194,10 +189,8 @@ class _ParticipantExpansibleTileState extends State<ParticipantExpansibleTile> {
                   alignment: Alignment.centerRight,
                   child: TextButton.icon(
                     onPressed: widget.onCover,
-                    icon: const Icon(Icons.volunteer_activism_outlined,
-                        size: 16, color: FoodlyThemes.primaryFoodly),
-                    label: Text(S.current.groupOrderCoverShare,
-                        style: FoodlyTextStyles.captionPurpleBold),
+                    icon: const Icon(Icons.volunteer_activism_outlined, size: 16, color: FoodlyThemes.primaryFoodly),
+                    label: Text(S.current.groupOrderCoverShare, style: FoodlyTextStyles.captionPurpleBold),
                   ),
                 ),
             ],

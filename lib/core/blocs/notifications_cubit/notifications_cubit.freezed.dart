@@ -21,8 +21,7 @@ mixin _$NotificationsState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $NotificationsStateCopyWith<NotificationsState> get copyWith =>
-      _$NotificationsStateCopyWithImpl<NotificationsState>(
-          this as NotificationsState, _$identity);
+      _$NotificationsStateCopyWithImpl<NotificationsState>(this as NotificationsState, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -43,8 +42,7 @@ mixin _$NotificationsState {
 
 /// @nodoc
 abstract mixin class $NotificationsStateCopyWith<$Res> {
-  factory $NotificationsStateCopyWith(
-          NotificationsState value, $Res Function(NotificationsState) _then) =
+  factory $NotificationsStateCopyWith(NotificationsState value, $Res Function(NotificationsState) _then) =
       _$NotificationsStateCopyWithImpl;
   @useResult
   $Res call({NotificationsVM vm});
@@ -53,8 +51,7 @@ abstract mixin class $NotificationsStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NotificationsStateCopyWithImpl<$Res>
-    implements $NotificationsStateCopyWith<$Res> {
+class _$NotificationsStateCopyWithImpl<$Res> implements $NotificationsStateCopyWith<$Res> {
   _$NotificationsStateCopyWithImpl(this._self, this._then);
 
   final NotificationsState _self;
@@ -306,15 +303,12 @@ class _Initial implements NotificationsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Initial &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Initial && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -327,10 +321,8 @@ class _Initial implements NotificationsState {
 }
 
 /// @nodoc
-abstract mixin class _$InitialCopyWith<$Res>
-    implements $NotificationsStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
-      __$InitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $NotificationsStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({NotificationsVM vm});
@@ -385,15 +377,12 @@ class _Loading implements NotificationsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadingCopyWith<_Loading> get copyWith =>
-      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+  _$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loading &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loading && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -406,10 +395,8 @@ class _Loading implements NotificationsState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadingCopyWith<$Res>
-    implements $NotificationsStateCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
-      __$LoadingCopyWithImpl;
+abstract mixin class _$LoadingCopyWith<$Res> implements $NotificationsStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
   @override
   @useResult
   $Res call({NotificationsVM vm});
@@ -464,15 +451,12 @@ class _Loaded implements NotificationsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loaded &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loaded && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -485,10 +469,8 @@ class _Loaded implements NotificationsState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res>
-    implements $NotificationsStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
-      __$LoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $NotificationsStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
   @override
   @useResult
   $Res call({NotificationsVM vm});
@@ -544,8 +526,7 @@ class _Error implements NotificationsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -566,10 +547,8 @@ class _Error implements NotificationsState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $NotificationsStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $NotificationsStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({NotificationsVM vm, String message});

@@ -22,8 +22,7 @@ mixin _$PlaceLatLngDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PlaceLatLngDMCopyWith<PlaceLatLngDM> get copyWith =>
-      _$PlaceLatLngDMCopyWithImpl<PlaceLatLngDM>(
-          this as PlaceLatLngDM, _$identity);
+      _$PlaceLatLngDMCopyWithImpl<PlaceLatLngDM>(this as PlaceLatLngDM, _$identity);
 
   /// Serializes this PlaceLatLngDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -49,16 +48,13 @@ mixin _$PlaceLatLngDM {
 
 /// @nodoc
 abstract mixin class $PlaceLatLngDMCopyWith<$Res> {
-  factory $PlaceLatLngDMCopyWith(
-          PlaceLatLngDM value, $Res Function(PlaceLatLngDM) _then) =
-      _$PlaceLatLngDMCopyWithImpl;
+  factory $PlaceLatLngDMCopyWith(PlaceLatLngDM value, $Res Function(PlaceLatLngDM) _then) = _$PlaceLatLngDMCopyWithImpl;
   @useResult
   $Res call({double lat, double lng});
 }
 
 /// @nodoc
-class _$PlaceLatLngDMCopyWithImpl<$Res>
-    implements $PlaceLatLngDMCopyWith<$Res> {
+class _$PlaceLatLngDMCopyWithImpl<$Res> implements $PlaceLatLngDMCopyWith<$Res> {
   _$PlaceLatLngDMCopyWithImpl(this._self, this._then);
 
   final PlaceLatLngDM _self;
@@ -246,8 +242,7 @@ extension PlaceLatLngDMPatterns on PlaceLatLngDM {
 @JsonSerializable()
 class _PlaceLatLngDM implements PlaceLatLngDM {
   const _PlaceLatLngDM({this.lat = 0.0, this.lng = 0.0});
-  factory _PlaceLatLngDM.fromJson(Map<String, dynamic> json) =>
-      _$PlaceLatLngDMFromJson(json);
+  factory _PlaceLatLngDM.fromJson(Map<String, dynamic> json) => _$PlaceLatLngDMFromJson(json);
 
   @override
   @JsonKey()
@@ -291,10 +286,8 @@ class _PlaceLatLngDM implements PlaceLatLngDM {
 }
 
 /// @nodoc
-abstract mixin class _$PlaceLatLngDMCopyWith<$Res>
-    implements $PlaceLatLngDMCopyWith<$Res> {
-  factory _$PlaceLatLngDMCopyWith(
-          _PlaceLatLngDM value, $Res Function(_PlaceLatLngDM) _then) =
+abstract mixin class _$PlaceLatLngDMCopyWith<$Res> implements $PlaceLatLngDMCopyWith<$Res> {
+  factory _$PlaceLatLngDMCopyWith(_PlaceLatLngDM value, $Res Function(_PlaceLatLngDM) _then) =
       __$PlaceLatLngDMCopyWithImpl;
   @override
   @useResult
@@ -302,8 +295,7 @@ abstract mixin class _$PlaceLatLngDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PlaceLatLngDMCopyWithImpl<$Res>
-    implements _$PlaceLatLngDMCopyWith<$Res> {
+class __$PlaceLatLngDMCopyWithImpl<$Res> implements _$PlaceLatLngDMCopyWith<$Res> {
   __$PlaceLatLngDMCopyWithImpl(this._self, this._then);
 
   final _PlaceLatLngDM _self;
@@ -340,8 +332,7 @@ mixin _$PlaceBoundsDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PlaceBoundsDMCopyWith<PlaceBoundsDM> get copyWith =>
-      _$PlaceBoundsDMCopyWithImpl<PlaceBoundsDM>(
-          this as PlaceBoundsDM, _$identity);
+      _$PlaceBoundsDMCopyWithImpl<PlaceBoundsDM>(this as PlaceBoundsDM, _$identity);
 
   /// Serializes this PlaceBoundsDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -351,10 +342,8 @@ mixin _$PlaceBoundsDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is PlaceBoundsDM &&
-            (identical(other.northeast, northeast) ||
-                other.northeast == northeast) &&
-            (identical(other.southwest, southwest) ||
-                other.southwest == southwest));
+            (identical(other.northeast, northeast) || other.northeast == northeast) &&
+            (identical(other.southwest, southwest) || other.southwest == southwest));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -369,9 +358,7 @@ mixin _$PlaceBoundsDM {
 
 /// @nodoc
 abstract mixin class $PlaceBoundsDMCopyWith<$Res> {
-  factory $PlaceBoundsDMCopyWith(
-          PlaceBoundsDM value, $Res Function(PlaceBoundsDM) _then) =
-      _$PlaceBoundsDMCopyWithImpl;
+  factory $PlaceBoundsDMCopyWith(PlaceBoundsDM value, $Res Function(PlaceBoundsDM) _then) = _$PlaceBoundsDMCopyWithImpl;
   @useResult
   $Res call({PlaceLatLngDM? northeast, PlaceLatLngDM? southwest});
 
@@ -380,8 +367,7 @@ abstract mixin class $PlaceBoundsDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PlaceBoundsDMCopyWithImpl<$Res>
-    implements $PlaceBoundsDMCopyWith<$Res> {
+class _$PlaceBoundsDMCopyWithImpl<$Res> implements $PlaceBoundsDMCopyWith<$Res> {
   _$PlaceBoundsDMCopyWithImpl(this._self, this._then);
 
   final PlaceBoundsDM _self;
@@ -529,8 +515,7 @@ extension PlaceBoundsDMPatterns on PlaceBoundsDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(PlaceLatLngDM? northeast, PlaceLatLngDM? southwest)?
-        $default, {
+    TResult Function(PlaceLatLngDM? northeast, PlaceLatLngDM? southwest)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -557,8 +542,7 @@ extension PlaceBoundsDMPatterns on PlaceBoundsDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(PlaceLatLngDM? northeast, PlaceLatLngDM? southwest)
-        $default,
+    TResult Function(PlaceLatLngDM? northeast, PlaceLatLngDM? southwest) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -583,8 +567,7 @@ extension PlaceBoundsDMPatterns on PlaceBoundsDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(PlaceLatLngDM? northeast, PlaceLatLngDM? southwest)?
-        $default,
+    TResult? Function(PlaceLatLngDM? northeast, PlaceLatLngDM? southwest)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -600,8 +583,7 @@ extension PlaceBoundsDMPatterns on PlaceBoundsDM {
 @JsonSerializable()
 class _PlaceBoundsDM implements PlaceBoundsDM {
   const _PlaceBoundsDM({this.northeast, this.southwest});
-  factory _PlaceBoundsDM.fromJson(Map<String, dynamic> json) =>
-      _$PlaceBoundsDMFromJson(json);
+  factory _PlaceBoundsDM.fromJson(Map<String, dynamic> json) => _$PlaceBoundsDMFromJson(json);
 
   @override
   final PlaceLatLngDM? northeast;
@@ -628,10 +610,8 @@ class _PlaceBoundsDM implements PlaceBoundsDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _PlaceBoundsDM &&
-            (identical(other.northeast, northeast) ||
-                other.northeast == northeast) &&
-            (identical(other.southwest, southwest) ||
-                other.southwest == southwest));
+            (identical(other.northeast, northeast) || other.northeast == northeast) &&
+            (identical(other.southwest, southwest) || other.southwest == southwest));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -645,10 +625,8 @@ class _PlaceBoundsDM implements PlaceBoundsDM {
 }
 
 /// @nodoc
-abstract mixin class _$PlaceBoundsDMCopyWith<$Res>
-    implements $PlaceBoundsDMCopyWith<$Res> {
-  factory _$PlaceBoundsDMCopyWith(
-          _PlaceBoundsDM value, $Res Function(_PlaceBoundsDM) _then) =
+abstract mixin class _$PlaceBoundsDMCopyWith<$Res> implements $PlaceBoundsDMCopyWith<$Res> {
+  factory _$PlaceBoundsDMCopyWith(_PlaceBoundsDM value, $Res Function(_PlaceBoundsDM) _then) =
       __$PlaceBoundsDMCopyWithImpl;
   @override
   @useResult
@@ -661,8 +639,7 @@ abstract mixin class _$PlaceBoundsDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PlaceBoundsDMCopyWithImpl<$Res>
-    implements _$PlaceBoundsDMCopyWith<$Res> {
+class __$PlaceBoundsDMCopyWithImpl<$Res> implements _$PlaceBoundsDMCopyWith<$Res> {
   __$PlaceBoundsDMCopyWithImpl(this._self, this._then);
 
   final _PlaceBoundsDM _self;
@@ -730,8 +707,7 @@ mixin _$PlaceGeometryDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PlaceGeometryDMCopyWith<PlaceGeometryDM> get copyWith =>
-      _$PlaceGeometryDMCopyWithImpl<PlaceGeometryDM>(
-          this as PlaceGeometryDM, _$identity);
+      _$PlaceGeometryDMCopyWithImpl<PlaceGeometryDM>(this as PlaceGeometryDM, _$identity);
 
   /// Serializes this PlaceGeometryDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -741,19 +717,15 @@ mixin _$PlaceGeometryDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is PlaceGeometryDM &&
-            (identical(other.location, location) ||
-                other.location == location) &&
-            (identical(other.viewport, viewport) ||
-                other.viewport == viewport) &&
+            (identical(other.location, location) || other.location == location) &&
+            (identical(other.viewport, viewport) || other.viewport == viewport) &&
             (identical(other.bounds, bounds) || other.bounds == bounds) &&
-            (identical(other.locationType, locationType) ||
-                other.locationType == locationType));
+            (identical(other.locationType, locationType) || other.locationType == locationType));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, location, viewport, bounds, locationType);
+  int get hashCode => Object.hash(runtimeType, location, viewport, bounds, locationType);
 
   @override
   String toString() {
@@ -763,8 +735,7 @@ mixin _$PlaceGeometryDM {
 
 /// @nodoc
 abstract mixin class $PlaceGeometryDMCopyWith<$Res> {
-  factory $PlaceGeometryDMCopyWith(
-          PlaceGeometryDM value, $Res Function(PlaceGeometryDM) _then) =
+  factory $PlaceGeometryDMCopyWith(PlaceGeometryDM value, $Res Function(PlaceGeometryDM) _then) =
       _$PlaceGeometryDMCopyWithImpl;
   @useResult
   $Res call(
@@ -779,8 +750,7 @@ abstract mixin class $PlaceGeometryDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PlaceGeometryDMCopyWithImpl<$Res>
-    implements $PlaceGeometryDMCopyWith<$Res> {
+class _$PlaceGeometryDMCopyWithImpl<$Res> implements $PlaceGeometryDMCopyWith<$Res> {
   _$PlaceGeometryDMCopyWithImpl(this._self, this._then);
 
   final PlaceGeometryDM _self;
@@ -948,10 +918,7 @@ extension PlaceGeometryDMPatterns on PlaceGeometryDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            PlaceLatLngDM location,
-            PlaceBoundsDM? viewport,
-            PlaceBoundsDM? bounds,
+    TResult Function(PlaceLatLngDM location, PlaceBoundsDM? viewport, PlaceBoundsDM? bounds,
             @JsonKey(name: 'location_type') String? locationType)?
         $default, {
     required TResult orElse(),
@@ -959,8 +926,7 @@ extension PlaceGeometryDMPatterns on PlaceGeometryDM {
     final _that = this;
     switch (_that) {
       case _PlaceGeometryDM() when $default != null:
-        return $default(
-            _that.location, _that.viewport, _that.bounds, _that.locationType);
+        return $default(_that.location, _that.viewport, _that.bounds, _that.locationType);
       case _:
         return orElse();
     }
@@ -981,18 +947,14 @@ extension PlaceGeometryDMPatterns on PlaceGeometryDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            PlaceLatLngDM location,
-            PlaceBoundsDM? viewport,
-            PlaceBoundsDM? bounds,
+    TResult Function(PlaceLatLngDM location, PlaceBoundsDM? viewport, PlaceBoundsDM? bounds,
             @JsonKey(name: 'location_type') String? locationType)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PlaceGeometryDM():
-        return $default(
-            _that.location, _that.viewport, _that.bounds, _that.locationType);
+        return $default(_that.location, _that.viewport, _that.bounds, _that.locationType);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -1012,18 +974,14 @@ extension PlaceGeometryDMPatterns on PlaceGeometryDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            PlaceLatLngDM location,
-            PlaceBoundsDM? viewport,
-            PlaceBoundsDM? bounds,
+    TResult? Function(PlaceLatLngDM location, PlaceBoundsDM? viewport, PlaceBoundsDM? bounds,
             @JsonKey(name: 'location_type') String? locationType)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PlaceGeometryDM() when $default != null:
-        return $default(
-            _that.location, _that.viewport, _that.bounds, _that.locationType);
+        return $default(_that.location, _that.viewport, _that.bounds, _that.locationType);
       case _:
         return null;
     }
@@ -1034,12 +992,8 @@ extension PlaceGeometryDMPatterns on PlaceGeometryDM {
 @JsonSerializable()
 class _PlaceGeometryDM implements PlaceGeometryDM {
   const _PlaceGeometryDM(
-      {required this.location,
-      this.viewport,
-      this.bounds,
-      @JsonKey(name: 'location_type') this.locationType});
-  factory _PlaceGeometryDM.fromJson(Map<String, dynamic> json) =>
-      _$PlaceGeometryDMFromJson(json);
+      {required this.location, this.viewport, this.bounds, @JsonKey(name: 'location_type') this.locationType});
+  factory _PlaceGeometryDM.fromJson(Map<String, dynamic> json) => _$PlaceGeometryDMFromJson(json);
 
   @override
   final PlaceLatLngDM location;
@@ -1071,19 +1025,15 @@ class _PlaceGeometryDM implements PlaceGeometryDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _PlaceGeometryDM &&
-            (identical(other.location, location) ||
-                other.location == location) &&
-            (identical(other.viewport, viewport) ||
-                other.viewport == viewport) &&
+            (identical(other.location, location) || other.location == location) &&
+            (identical(other.viewport, viewport) || other.viewport == viewport) &&
             (identical(other.bounds, bounds) || other.bounds == bounds) &&
-            (identical(other.locationType, locationType) ||
-                other.locationType == locationType));
+            (identical(other.locationType, locationType) || other.locationType == locationType));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, location, viewport, bounds, locationType);
+  int get hashCode => Object.hash(runtimeType, location, viewport, bounds, locationType);
 
   @override
   String toString() {
@@ -1092,10 +1042,8 @@ class _PlaceGeometryDM implements PlaceGeometryDM {
 }
 
 /// @nodoc
-abstract mixin class _$PlaceGeometryDMCopyWith<$Res>
-    implements $PlaceGeometryDMCopyWith<$Res> {
-  factory _$PlaceGeometryDMCopyWith(
-          _PlaceGeometryDM value, $Res Function(_PlaceGeometryDM) _then) =
+abstract mixin class _$PlaceGeometryDMCopyWith<$Res> implements $PlaceGeometryDMCopyWith<$Res> {
+  factory _$PlaceGeometryDMCopyWith(_PlaceGeometryDM value, $Res Function(_PlaceGeometryDM) _then) =
       __$PlaceGeometryDMCopyWithImpl;
   @override
   @useResult
@@ -1114,8 +1062,7 @@ abstract mixin class _$PlaceGeometryDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PlaceGeometryDMCopyWithImpl<$Res>
-    implements _$PlaceGeometryDMCopyWith<$Res> {
+class __$PlaceGeometryDMCopyWithImpl<$Res> implements _$PlaceGeometryDMCopyWith<$Res> {
   __$PlaceGeometryDMCopyWithImpl(this._self, this._then);
 
   final _PlaceGeometryDM _self;

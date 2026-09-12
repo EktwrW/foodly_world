@@ -72,7 +72,9 @@ Future<void> downloadMenuQrPng(
       // El logo de Foodly es un asset local; si fallara seguimos igual.
     }
   }
-  final ui.Image? logoImage = _hasRealLogo(logoUrl) ? await resolveImage(CachedNetworkImageProvider(logoUrl!, cacheManager: FoodlyImageCache.manager)) : null;
+  final ui.Image? logoImage = _hasRealLogo(logoUrl)
+      ? await resolveImage(CachedNetworkImageProvider(logoUrl!, cacheManager: FoodlyImageCache.manager))
+      : null;
 
   final entry = OverlayEntry(
     builder: (_) => Positioned(

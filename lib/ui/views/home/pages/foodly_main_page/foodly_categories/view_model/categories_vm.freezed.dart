@@ -19,8 +19,7 @@ mixin _$CategoriesVM {
   List<BusinessDM> get nearbyBusinesses;
   double? get latitude;
   double? get longitude;
-  BusinessResultsViewMode
-      get viewMode; // **Default 10 km (2026-05-19):** subido desde 5 km original para mitigar
+  BusinessResultsViewMode get viewMode; // **Default 10 km (2026-05-19):** subido desde 5 km original para mitigar
 // la sensación de "Foodly no tiene cobertura" durante el bootstrap, donde
 // hay pocos negocios por ciudad. Con 5 km, un negocio a 7 km del usuario
 // quedaba escondido y el discovery se sentía vacío sin estarlo. El
@@ -29,10 +28,8 @@ mixin _$CategoriesVM {
 // resultados más cercanos. Cuando la densidad de negocios por ciudad
 // crezca lo suficiente, considerar volver a 5 km como default.
   double get radiusDistanceInKm;
-  bool
-      get isSwitchingRadius; // Catering & Chefs — active service_type chip (null = "All").
-  ServiceType?
-      get selectedServiceType; // Discovery ordering (distance | priceAsc | ratingDesc).
+  bool get isSwitchingRadius; // Catering & Chefs — active service_type chip (null = "All").
+  ServiceType? get selectedServiceType; // Discovery ordering (distance | priceAsc | ratingDesc).
   DiscoveryOrdering get ordering;
 
   /// Create a copy of CategoriesVM
@@ -40,34 +37,26 @@ mixin _$CategoriesVM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $CategoriesVMCopyWith<CategoriesVM> get copyWith =>
-      _$CategoriesVMCopyWithImpl<CategoriesVM>(
-          this as CategoriesVM, _$identity);
+      _$CategoriesVMCopyWithImpl<CategoriesVM>(this as CategoriesVM, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is CategoriesVM &&
-            (identical(other.currentCategory, currentCategory) ||
-                other.currentCategory == currentCategory) &&
+            (identical(other.currentCategory, currentCategory) || other.currentCategory == currentCategory) &&
             (identical(other.carouselController, carouselController) ||
                 other.carouselController == carouselController) &&
-            const DeepCollectionEquality()
-                .equals(other.nearbyBusinesses, nearbyBusinesses) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude) &&
-            (identical(other.viewMode, viewMode) ||
-                other.viewMode == viewMode) &&
+            const DeepCollectionEquality().equals(other.nearbyBusinesses, nearbyBusinesses) &&
+            (identical(other.latitude, latitude) || other.latitude == latitude) &&
+            (identical(other.longitude, longitude) || other.longitude == longitude) &&
+            (identical(other.viewMode, viewMode) || other.viewMode == viewMode) &&
             (identical(other.radiusDistanceInKm, radiusDistanceInKm) ||
                 other.radiusDistanceInKm == radiusDistanceInKm) &&
-            (identical(other.isSwitchingRadius, isSwitchingRadius) ||
-                other.isSwitchingRadius == isSwitchingRadius) &&
+            (identical(other.isSwitchingRadius, isSwitchingRadius) || other.isSwitchingRadius == isSwitchingRadius) &&
             (identical(other.selectedServiceType, selectedServiceType) ||
                 other.selectedServiceType == selectedServiceType) &&
-            (identical(other.ordering, ordering) ||
-                other.ordering == ordering));
+            (identical(other.ordering, ordering) || other.ordering == ordering));
   }
 
   @override
@@ -92,9 +81,7 @@ mixin _$CategoriesVM {
 
 /// @nodoc
 abstract mixin class $CategoriesVMCopyWith<$Res> {
-  factory $CategoriesVMCopyWith(
-          CategoriesVM value, $Res Function(CategoriesVM) _then) =
-      _$CategoriesVMCopyWithImpl;
+  factory $CategoriesVMCopyWith(CategoriesVM value, $Res Function(CategoriesVM) _then) = _$CategoriesVMCopyWithImpl;
   @useResult
   $Res call(
       {FoodlyCategories? currentCategory,
@@ -422,8 +409,7 @@ class _CategoriesVM extends CategoriesVM {
   @override
   @JsonKey()
   List<BusinessDM> get nearbyBusinesses {
-    if (_nearbyBusinesses is EqualUnmodifiableListView)
-      return _nearbyBusinesses;
+    if (_nearbyBusinesses is EqualUnmodifiableListView) return _nearbyBusinesses;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_nearbyBusinesses);
   }
@@ -462,34 +448,26 @@ class _CategoriesVM extends CategoriesVM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$CategoriesVMCopyWith<_CategoriesVM> get copyWith =>
-      __$CategoriesVMCopyWithImpl<_CategoriesVM>(this, _$identity);
+  _$CategoriesVMCopyWith<_CategoriesVM> get copyWith => __$CategoriesVMCopyWithImpl<_CategoriesVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _CategoriesVM &&
-            (identical(other.currentCategory, currentCategory) ||
-                other.currentCategory == currentCategory) &&
+            (identical(other.currentCategory, currentCategory) || other.currentCategory == currentCategory) &&
             (identical(other.carouselController, carouselController) ||
                 other.carouselController == carouselController) &&
-            const DeepCollectionEquality()
-                .equals(other._nearbyBusinesses, _nearbyBusinesses) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude) &&
-            (identical(other.viewMode, viewMode) ||
-                other.viewMode == viewMode) &&
+            const DeepCollectionEquality().equals(other._nearbyBusinesses, _nearbyBusinesses) &&
+            (identical(other.latitude, latitude) || other.latitude == latitude) &&
+            (identical(other.longitude, longitude) || other.longitude == longitude) &&
+            (identical(other.viewMode, viewMode) || other.viewMode == viewMode) &&
             (identical(other.radiusDistanceInKm, radiusDistanceInKm) ||
                 other.radiusDistanceInKm == radiusDistanceInKm) &&
-            (identical(other.isSwitchingRadius, isSwitchingRadius) ||
-                other.isSwitchingRadius == isSwitchingRadius) &&
+            (identical(other.isSwitchingRadius, isSwitchingRadius) || other.isSwitchingRadius == isSwitchingRadius) &&
             (identical(other.selectedServiceType, selectedServiceType) ||
                 other.selectedServiceType == selectedServiceType) &&
-            (identical(other.ordering, ordering) ||
-                other.ordering == ordering));
+            (identical(other.ordering, ordering) || other.ordering == ordering));
   }
 
   @override
@@ -513,11 +491,8 @@ class _CategoriesVM extends CategoriesVM {
 }
 
 /// @nodoc
-abstract mixin class _$CategoriesVMCopyWith<$Res>
-    implements $CategoriesVMCopyWith<$Res> {
-  factory _$CategoriesVMCopyWith(
-          _CategoriesVM value, $Res Function(_CategoriesVM) _then) =
-      __$CategoriesVMCopyWithImpl;
+abstract mixin class _$CategoriesVMCopyWith<$Res> implements $CategoriesVMCopyWith<$Res> {
+  factory _$CategoriesVMCopyWith(_CategoriesVM value, $Res Function(_CategoriesVM) _then) = __$CategoriesVMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -534,8 +509,7 @@ abstract mixin class _$CategoriesVMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$CategoriesVMCopyWithImpl<$Res>
-    implements _$CategoriesVMCopyWith<$Res> {
+class __$CategoriesVMCopyWithImpl<$Res> implements _$CategoriesVMCopyWith<$Res> {
   __$CategoriesVMCopyWithImpl(this._self, this._then);
 
   final _CategoriesVM _self;

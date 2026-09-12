@@ -23,6 +23,5 @@ abstract class PlaceAddressComponentDM with _$PlaceAddressComponentDM {
     @Default(<String>[]) List<String> types,
   }) = _PlaceAddressComponentDM;
 
-  factory PlaceAddressComponentDM.fromJson(Map<String, dynamic> json) =>
-      _$PlaceAddressComponentDMFromJson(json);
+  factory PlaceAddressComponentDM.fromJson(Map<String, dynamic> json) => _$PlaceAddressComponentDMFromJson(json);
 }

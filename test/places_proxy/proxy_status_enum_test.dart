@@ -77,8 +77,7 @@ void main() {
       // (mostraríamos toast de error cuando solo hay que mostrar
       // "sin resultados").
       for (final v in ProxyStatusEnum.values) {
-        final shouldBeEmpty =
-            v == ProxyStatusEnum.zeroResults || v == ProxyStatusEnum.notFound;
+        final shouldBeEmpty = v == ProxyStatusEnum.zeroResults || v == ProxyStatusEnum.notFound;
         expect(v.isEmpty, shouldBeEmpty, reason: 'Caso: $v');
       }
     });

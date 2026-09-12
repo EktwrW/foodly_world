@@ -177,7 +177,9 @@ class PostCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxHeight: 280),
-        child: CachedNetworkImage(cacheManager: FoodlyImageCache.manager, imageUrl: post.photoUrl!,
+        child: CachedNetworkImage(
+          cacheManager: FoodlyImageCache.manager,
+          imageUrl: post.photoUrl!,
           width: double.infinity,
           fit: BoxFit.cover,
           placeholder: (_, __) => Container(

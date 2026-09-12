@@ -80,7 +80,8 @@ void main() {
       return PendingGroupJoin.divertPath(uri, isLoggedIn: isLoggedIn);
     }
 
-    test('BUG e2e r4: cold-start sin sesión → login → bootstrap navega a home '
+    test(
+        'BUG e2e r4: cold-start sin sesión → login → bootstrap navega a home '
         '→ el router DESVÍA a /join (antes se quedaba en home)', () {
       // 1. App Link abre la app en /join/ABC123 sin sesión → captura, sin desvío.
       expect(redirectPass('/join/abc123', isLoggedIn: false), isNull);
@@ -111,7 +112,8 @@ void main() {
       expect(redirectPass('/visit-menu/biz-uuid', isLoggedIn: true), isNull);
     });
 
-    test('bootstrap con DOBLE navegación post-login: la primera desvía, la '
+    test(
+        'bootstrap con DOBLE navegación post-login: la primera desvía, la '
         'segunda ya no arrastra al usuario a un join fantasma', () {
       redirectPass('/join/abc123', isLoggedIn: false);
       expect(redirectPass('/home', isLoggedIn: true), '/join/ABC123');
@@ -119,7 +121,8 @@ void main() {
       expect(redirectPass('/dashboard', isLoggedIn: true), isNull);
     });
 
-    test('el usuario abandona el login (nunca se loguea): el código muere en '
+    test(
+        'el usuario abandona el login (nunca se loguea): el código muere en '
         'memoria sin efectos colaterales', () {
       redirectPass('/join/abc123', isLoggedIn: false);
       expect(redirectPass('/login', isLoggedIn: false), isNull);

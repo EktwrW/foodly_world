@@ -23,8 +23,7 @@ mixin _$MenuVM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MenuVMCopyWith<MenuVM> get copyWith =>
-      _$MenuVMCopyWithImpl<MenuVM>(this as MenuVM, _$identity);
+  $MenuVMCopyWith<MenuVM> get copyWith => _$MenuVMCopyWithImpl<MenuVM>(this as MenuVM, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -32,17 +31,13 @@ mixin _$MenuVM {
         (other.runtimeType == runtimeType &&
             other is MenuVM &&
             (identical(other.menuDM, menuDM) || other.menuDM == menuDM) &&
-            (identical(other.indexView, indexView) ||
-                other.indexView == indexView) &&
-            (identical(other.controller, controller) ||
-                other.controller == controller) &&
-            (identical(other.floatingButtonKey, floatingButtonKey) ||
-                other.floatingButtonKey == floatingButtonKey));
+            (identical(other.indexView, indexView) || other.indexView == indexView) &&
+            (identical(other.controller, controller) || other.controller == controller) &&
+            (identical(other.floatingButtonKey, floatingButtonKey) || other.floatingButtonKey == floatingButtonKey));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, menuDM, indexView, controller, floatingButtonKey);
+  int get hashCode => Object.hash(runtimeType, menuDM, indexView, controller, floatingButtonKey);
 
   @override
   String toString() {
@@ -52,8 +47,7 @@ mixin _$MenuVM {
 
 /// @nodoc
 abstract mixin class $MenuVMCopyWith<$Res> {
-  factory $MenuVMCopyWith(MenuVM value, $Res Function(MenuVM) _then) =
-      _$MenuVMCopyWithImpl;
+  factory $MenuVMCopyWith(MenuVM value, $Res Function(MenuVM) _then) = _$MenuVMCopyWithImpl;
   @useResult
   $Res call(
       {MenuDM? menuDM,
@@ -217,8 +211,7 @@ extension MenuVMPatterns on MenuVM {
     final _that = this;
     switch (_that) {
       case _MenuVM() when $default != null:
-        return $default(_that.menuDM, _that.indexView, _that.controller,
-            _that.floatingButtonKey);
+        return $default(_that.menuDM, _that.indexView, _that.controller, _that.floatingButtonKey);
       case _:
         return orElse();
     }
@@ -246,8 +239,7 @@ extension MenuVMPatterns on MenuVM {
     final _that = this;
     switch (_that) {
       case _MenuVM():
-        return $default(_that.menuDM, _that.indexView, _that.controller,
-            _that.floatingButtonKey);
+        return $default(_that.menuDM, _that.indexView, _that.controller, _that.floatingButtonKey);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -274,8 +266,7 @@ extension MenuVMPatterns on MenuVM {
     final _that = this;
     switch (_that) {
       case _MenuVM() when $default != null:
-        return $default(_that.menuDM, _that.indexView, _that.controller,
-            _that.floatingButtonKey);
+        return $default(_that.menuDM, _that.indexView, _that.controller, _that.floatingButtonKey);
       case _:
         return null;
     }
@@ -285,12 +276,7 @@ extension MenuVMPatterns on MenuVM {
 /// @nodoc
 
 class _MenuVM extends MenuVM {
-  const _MenuVM(
-      {this.menuDM,
-      this.indexView = 0,
-      this.controller,
-      this.floatingButtonKey})
-      : super._();
+  const _MenuVM({this.menuDM, this.indexView = 0, this.controller, this.floatingButtonKey}) : super._();
 
   @override
   final MenuDM? menuDM;
@@ -307,8 +293,7 @@ class _MenuVM extends MenuVM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$MenuVMCopyWith<_MenuVM> get copyWith =>
-      __$MenuVMCopyWithImpl<_MenuVM>(this, _$identity);
+  _$MenuVMCopyWith<_MenuVM> get copyWith => __$MenuVMCopyWithImpl<_MenuVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -316,17 +301,13 @@ class _MenuVM extends MenuVM {
         (other.runtimeType == runtimeType &&
             other is _MenuVM &&
             (identical(other.menuDM, menuDM) || other.menuDM == menuDM) &&
-            (identical(other.indexView, indexView) ||
-                other.indexView == indexView) &&
-            (identical(other.controller, controller) ||
-                other.controller == controller) &&
-            (identical(other.floatingButtonKey, floatingButtonKey) ||
-                other.floatingButtonKey == floatingButtonKey));
+            (identical(other.indexView, indexView) || other.indexView == indexView) &&
+            (identical(other.controller, controller) || other.controller == controller) &&
+            (identical(other.floatingButtonKey, floatingButtonKey) || other.floatingButtonKey == floatingButtonKey));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, menuDM, indexView, controller, floatingButtonKey);
+  int get hashCode => Object.hash(runtimeType, menuDM, indexView, controller, floatingButtonKey);
 
   @override
   String toString() {
@@ -336,8 +317,7 @@ class _MenuVM extends MenuVM {
 
 /// @nodoc
 abstract mixin class _$MenuVMCopyWith<$Res> implements $MenuVMCopyWith<$Res> {
-  factory _$MenuVMCopyWith(_MenuVM value, $Res Function(_MenuVM) _then) =
-      __$MenuVMCopyWithImpl;
+  factory _$MenuVMCopyWith(_MenuVM value, $Res Function(_MenuVM) _then) = __$MenuVMCopyWithImpl;
   @override
   @useResult
   $Res call(

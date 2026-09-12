@@ -46,8 +46,7 @@ void main() {
       }
       ''';
 
-      final parsed =
-          GeocodingResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      final parsed = GeocodingResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
       expect(parsed.status, ProxyStatusEnum.ok);
       expect(parsed.results, hasLength(1));
 
@@ -74,8 +73,7 @@ void main() {
 
     test('ZERO_RESULTS con results: [] (coords en el medio del océano)', () {
       const jsonStr = '{"status": "ZERO_RESULTS", "results": []}';
-      final parsed =
-          GeocodingResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      final parsed = GeocodingResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
 
       expect(parsed.status, ProxyStatusEnum.zeroResults);
       expect(parsed.results, isEmpty);
@@ -86,8 +84,7 @@ void main() {
       // Defensivo: si alguien del backend deja de devolver `results` en
       // un status no-OK, el parser no debe explotar.
       const jsonStr = '{"status": "UPSTREAM_ERROR"}';
-      final parsed =
-          GeocodingResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      final parsed = GeocodingResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
 
       expect(parsed.status, ProxyStatusEnum.upstreamError);
       expect(parsed.results, isEmpty);
@@ -126,8 +123,7 @@ void main() {
       }
       ''';
 
-      final parsed =
-          GeocodingResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      final parsed = GeocodingResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
       expect(parsed.results, hasLength(2));
       expect(parsed.results[0].placeId, 'ChIJ_santiago_chile');
       expect(parsed.results[1].placeId, 'ChIJ_santiago_spain');
@@ -155,11 +151,9 @@ void main() {
       }
       ''';
 
-      final parsed =
-          GeocodingResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      final parsed = GeocodingResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
       expect(parsed.status, ProxyStatusEnum.unknown);
-      expect(parsed.results, hasLength(1),
-          reason: 'unknown status NO debe hacer perder la lista de results');
+      expect(parsed.results, hasLength(1), reason: 'unknown status NO debe hacer perder la lista de results');
       expect(parsed.results.first.placeId, 'ChIJ_something');
     });
   });

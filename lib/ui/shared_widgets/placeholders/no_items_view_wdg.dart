@@ -35,10 +35,7 @@ class NoItemsViewWdg extends StatelessWidget {
       title: text ?? S.current.noItemsYet,
       // El asset de siempre para la intención de siempre; las otras dos usan el
       // icono que les toca, que es justo lo que las distingue.
-      icon: asset ??
-          (intent == FoodlyEmptyIntent.nuevo
-              ? const Asset(FoodlyAssets.emptyMenu, height: 44)
-              : null),
+      icon: asset ?? (intent == FoodlyEmptyIntent.nuevo ? const Asset(FoodlyAssets.emptyMenu, height: 44) : null),
     );
   }
 }

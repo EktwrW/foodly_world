@@ -21,8 +21,7 @@ mixin _$VisitBusinessState implements DiagnosticableTreeMixin {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $VisitBusinessStateCopyWith<VisitBusinessState> get copyWith =>
-      _$VisitBusinessStateCopyWithImpl<VisitBusinessState>(
-          this as VisitBusinessState, _$identity);
+      _$VisitBusinessStateCopyWithImpl<VisitBusinessState>(this as VisitBusinessState, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -50,8 +49,7 @@ mixin _$VisitBusinessState implements DiagnosticableTreeMixin {
 
 /// @nodoc
 abstract mixin class $VisitBusinessStateCopyWith<$Res> {
-  factory $VisitBusinessStateCopyWith(
-          VisitBusinessState value, $Res Function(VisitBusinessState) _then) =
+  factory $VisitBusinessStateCopyWith(VisitBusinessState value, $Res Function(VisitBusinessState) _then) =
       _$VisitBusinessStateCopyWithImpl;
   @useResult
   $Res call({VisitBusinessVM vm});
@@ -60,8 +58,7 @@ abstract mixin class $VisitBusinessStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$VisitBusinessStateCopyWithImpl<$Res>
-    implements $VisitBusinessStateCopyWith<$Res> {
+class _$VisitBusinessStateCopyWithImpl<$Res> implements $VisitBusinessStateCopyWith<$Res> {
   _$VisitBusinessStateCopyWithImpl(this._self, this._then);
 
   final VisitBusinessState _self;
@@ -313,8 +310,7 @@ class _Initial with DiagnosticableTreeMixin implements VisitBusinessState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -326,9 +322,7 @@ class _Initial with DiagnosticableTreeMixin implements VisitBusinessState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Initial &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Initial && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -341,10 +335,8 @@ class _Initial with DiagnosticableTreeMixin implements VisitBusinessState {
 }
 
 /// @nodoc
-abstract mixin class _$InitialCopyWith<$Res>
-    implements $VisitBusinessStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
-      __$InitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $VisitBusinessStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({VisitBusinessVM vm});
@@ -399,8 +391,7 @@ class _Loading with DiagnosticableTreeMixin implements VisitBusinessState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadingCopyWith<_Loading> get copyWith =>
-      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+  _$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -412,9 +403,7 @@ class _Loading with DiagnosticableTreeMixin implements VisitBusinessState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loading &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loading && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -427,10 +416,8 @@ class _Loading with DiagnosticableTreeMixin implements VisitBusinessState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadingCopyWith<$Res>
-    implements $VisitBusinessStateCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
-      __$LoadingCopyWithImpl;
+abstract mixin class _$LoadingCopyWith<$Res> implements $VisitBusinessStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
   @override
   @useResult
   $Res call({VisitBusinessVM vm});
@@ -485,8 +472,7 @@ class _Loaded with DiagnosticableTreeMixin implements VisitBusinessState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -498,9 +484,7 @@ class _Loaded with DiagnosticableTreeMixin implements VisitBusinessState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loaded &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loaded && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -513,10 +497,8 @@ class _Loaded with DiagnosticableTreeMixin implements VisitBusinessState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res>
-    implements $VisitBusinessStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
-      __$LoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $VisitBusinessStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
   @override
   @useResult
   $Res call({VisitBusinessVM vm});
@@ -572,8 +554,7 @@ class _Error with DiagnosticableTreeMixin implements VisitBusinessState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -602,10 +583,8 @@ class _Error with DiagnosticableTreeMixin implements VisitBusinessState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $VisitBusinessStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $VisitBusinessStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({String msg, VisitBusinessVM vm});

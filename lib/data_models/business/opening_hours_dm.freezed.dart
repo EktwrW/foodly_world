@@ -34,8 +34,7 @@ mixin _$BusinessDays {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $BusinessDaysCopyWith<BusinessDays> get copyWith =>
-      _$BusinessDaysCopyWithImpl<BusinessDays>(
-          this as BusinessDays, _$identity);
+      _$BusinessDaysCopyWithImpl<BusinessDays>(this as BusinessDays, _$identity);
 
   /// Serializes this BusinessDays to a JSON map.
   Map<String, dynamic> toJson();
@@ -56,8 +55,7 @@ mixin _$BusinessDays {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, day0, day1, day2, day3, day4, day5, day6);
+  int get hashCode => Object.hash(runtimeType, day0, day1, day2, day3, day4, day5, day6);
 
   @override
   String toString() {
@@ -67,9 +65,7 @@ mixin _$BusinessDays {
 
 /// @nodoc
 abstract mixin class $BusinessDaysCopyWith<$Res> {
-  factory $BusinessDaysCopyWith(
-          BusinessDays value, $Res Function(BusinessDays) _then) =
-      _$BusinessDaysCopyWithImpl;
+  factory $BusinessDaysCopyWith(BusinessDays value, $Res Function(BusinessDays) _then) = _$BusinessDaysCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'day_0') Day day0,
@@ -319,8 +315,7 @@ extension BusinessDaysPatterns on BusinessDays {
     final _that = this;
     switch (_that) {
       case _BusinessDays() when $default != null:
-        return $default(_that.day0, _that.day1, _that.day2, _that.day3,
-            _that.day4, _that.day5, _that.day6);
+        return $default(_that.day0, _that.day1, _that.day2, _that.day3, _that.day4, _that.day5, _that.day6);
       case _:
         return orElse();
     }
@@ -354,8 +349,7 @@ extension BusinessDaysPatterns on BusinessDays {
     final _that = this;
     switch (_that) {
       case _BusinessDays():
-        return $default(_that.day0, _that.day1, _that.day2, _that.day3,
-            _that.day4, _that.day5, _that.day6);
+        return $default(_that.day0, _that.day1, _that.day2, _that.day3, _that.day4, _that.day5, _that.day6);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -388,8 +382,7 @@ extension BusinessDaysPatterns on BusinessDays {
     final _that = this;
     switch (_that) {
       case _BusinessDays() when $default != null:
-        return $default(_that.day0, _that.day1, _that.day2, _that.day3,
-            _that.day4, _that.day5, _that.day6);
+        return $default(_that.day0, _that.day1, _that.day2, _that.day3, _that.day4, _that.day5, _that.day6);
       case _:
         return null;
     }
@@ -408,8 +401,7 @@ class _BusinessDays extends BusinessDays {
       @JsonKey(name: 'day_5') this.day5 = const Day(),
       @JsonKey(name: 'day_6') this.day6 = const Day()})
       : super._();
-  factory _BusinessDays.fromJson(Map<String, dynamic> json) =>
-      _$BusinessDaysFromJson(json);
+  factory _BusinessDays.fromJson(Map<String, dynamic> json) => _$BusinessDaysFromJson(json);
 
   @override
   @JsonKey(name: 'day_0')
@@ -438,8 +430,7 @@ class _BusinessDays extends BusinessDays {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$BusinessDaysCopyWith<_BusinessDays> get copyWith =>
-      __$BusinessDaysCopyWithImpl<_BusinessDays>(this, _$identity);
+  _$BusinessDaysCopyWith<_BusinessDays> get copyWith => __$BusinessDaysCopyWithImpl<_BusinessDays>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -464,8 +455,7 @@ class _BusinessDays extends BusinessDays {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, day0, day1, day2, day3, day4, day5, day6);
+  int get hashCode => Object.hash(runtimeType, day0, day1, day2, day3, day4, day5, day6);
 
   @override
   String toString() {
@@ -474,11 +464,8 @@ class _BusinessDays extends BusinessDays {
 }
 
 /// @nodoc
-abstract mixin class _$BusinessDaysCopyWith<$Res>
-    implements $BusinessDaysCopyWith<$Res> {
-  factory _$BusinessDaysCopyWith(
-          _BusinessDays value, $Res Function(_BusinessDays) _then) =
-      __$BusinessDaysCopyWithImpl;
+abstract mixin class _$BusinessDaysCopyWith<$Res> implements $BusinessDaysCopyWith<$Res> {
+  factory _$BusinessDaysCopyWith(_BusinessDays value, $Res Function(_BusinessDays) _then) = __$BusinessDaysCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -507,8 +494,7 @@ abstract mixin class _$BusinessDaysCopyWith<$Res>
 }
 
 /// @nodoc
-class __$BusinessDaysCopyWithImpl<$Res>
-    implements _$BusinessDaysCopyWith<$Res> {
+class __$BusinessDaysCopyWithImpl<$Res> implements _$BusinessDaysCopyWith<$Res> {
   __$BusinessDaysCopyWithImpl(this._self, this._then);
 
   final _BusinessDays _self;
@@ -647,8 +633,7 @@ mixin _$Day {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $DayCopyWith<Day> get copyWith =>
-      _$DayCopyWithImpl<Day>(this as Day, _$identity);
+  $DayCopyWith<Day> get copyWith => _$DayCopyWithImpl<Day>(this as Day, _$identity);
 
   /// Serializes this Day to a JSON map.
   Map<String, dynamic> toJson();
@@ -662,14 +647,12 @@ mixin _$Day {
             (identical(other.openB, openB) || other.openB == openB) &&
             (identical(other.closeA, closeA) || other.closeA == closeA) &&
             (identical(other.closeB, closeB) || other.closeB == closeB) &&
-            (identical(other.showSecondPeriod, showSecondPeriod) ||
-                other.showSecondPeriod == showSecondPeriod));
+            (identical(other.showSecondPeriod, showSecondPeriod) || other.showSecondPeriod == showSecondPeriod));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, openA, openB, closeA, closeB, showSecondPeriod);
+  int get hashCode => Object.hash(runtimeType, openA, openB, closeA, closeB, showSecondPeriod);
 
   @override
   String toString() {
@@ -686,8 +669,7 @@ abstract mixin class $DayCopyWith<$Res> {
       @JsonKey(name: 'open_b') String? openB,
       @JsonKey(name: 'close_a') String? closeA,
       @JsonKey(name: 'close_b') String? closeB,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      bool showSecondPeriod});
+      @JsonKey(includeFromJson: false, includeToJson: false) bool showSecondPeriod});
 }
 
 /// @nodoc
@@ -831,16 +813,14 @@ extension DayPatterns on Day {
             @JsonKey(name: 'open_b') String? openB,
             @JsonKey(name: 'close_a') String? closeA,
             @JsonKey(name: 'close_b') String? closeB,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            bool showSecondPeriod)?
+            @JsonKey(includeFromJson: false, includeToJson: false) bool showSecondPeriod)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _Day() when $default != null:
-        return $default(_that.openA, _that.openB, _that.closeA, _that.closeB,
-            _that.showSecondPeriod);
+        return $default(_that.openA, _that.openB, _that.closeA, _that.closeB, _that.showSecondPeriod);
       case _:
         return orElse();
     }
@@ -866,15 +846,13 @@ extension DayPatterns on Day {
             @JsonKey(name: 'open_b') String? openB,
             @JsonKey(name: 'close_a') String? closeA,
             @JsonKey(name: 'close_b') String? closeB,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            bool showSecondPeriod)
+            @JsonKey(includeFromJson: false, includeToJson: false) bool showSecondPeriod)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _Day():
-        return $default(_that.openA, _that.openB, _that.closeA, _that.closeB,
-            _that.showSecondPeriod);
+        return $default(_that.openA, _that.openB, _that.closeA, _that.closeB, _that.showSecondPeriod);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -899,15 +877,13 @@ extension DayPatterns on Day {
             @JsonKey(name: 'open_b') String? openB,
             @JsonKey(name: 'close_a') String? closeA,
             @JsonKey(name: 'close_b') String? closeB,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            bool showSecondPeriod)?
+            @JsonKey(includeFromJson: false, includeToJson: false) bool showSecondPeriod)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _Day() when $default != null:
-        return $default(_that.openA, _that.openB, _that.closeA, _that.closeB,
-            _that.showSecondPeriod);
+        return $default(_that.openA, _that.openB, _that.closeA, _that.closeB, _that.showSecondPeriod);
       case _:
         return null;
     }
@@ -922,8 +898,7 @@ class _Day extends Day {
       @JsonKey(name: 'open_b') this.openB,
       @JsonKey(name: 'close_a') this.closeA,
       @JsonKey(name: 'close_b') this.closeB,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      this.showSecondPeriod = false})
+      @JsonKey(includeFromJson: false, includeToJson: false) this.showSecondPeriod = false})
       : super._();
   factory _Day.fromJson(Map<String, dynamic> json) => _$DayFromJson(json);
 
@@ -948,8 +923,7 @@ class _Day extends Day {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$DayCopyWith<_Day> get copyWith =>
-      __$DayCopyWithImpl<_Day>(this, _$identity);
+  _$DayCopyWith<_Day> get copyWith => __$DayCopyWithImpl<_Day>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -967,14 +941,12 @@ class _Day extends Day {
             (identical(other.openB, openB) || other.openB == openB) &&
             (identical(other.closeA, closeA) || other.closeA == closeA) &&
             (identical(other.closeB, closeB) || other.closeB == closeB) &&
-            (identical(other.showSecondPeriod, showSecondPeriod) ||
-                other.showSecondPeriod == showSecondPeriod));
+            (identical(other.showSecondPeriod, showSecondPeriod) || other.showSecondPeriod == showSecondPeriod));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, openA, openB, closeA, closeB, showSecondPeriod);
+  int get hashCode => Object.hash(runtimeType, openA, openB, closeA, closeB, showSecondPeriod);
 
   @override
   String toString() {
@@ -984,8 +956,7 @@ class _Day extends Day {
 
 /// @nodoc
 abstract mixin class _$DayCopyWith<$Res> implements $DayCopyWith<$Res> {
-  factory _$DayCopyWith(_Day value, $Res Function(_Day) _then) =
-      __$DayCopyWithImpl;
+  factory _$DayCopyWith(_Day value, $Res Function(_Day) _then) = __$DayCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -993,8 +964,7 @@ abstract mixin class _$DayCopyWith<$Res> implements $DayCopyWith<$Res> {
       @JsonKey(name: 'open_b') String? openB,
       @JsonKey(name: 'close_a') String? closeA,
       @JsonKey(name: 'close_b') String? closeB,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      bool showSecondPeriod});
+      @JsonKey(includeFromJson: false, includeToJson: false) bool showSecondPeriod});
 }
 
 /// @nodoc

@@ -101,7 +101,9 @@ class VisitBusinessSliverAppBar extends StatelessWidget {
                                         ? ImageSliderFade(
                                             imageList: currentBusiness!.coverImageUrls
                                                 .map(
-                                                  (e) => CachedNetworkImage(cacheManager: FoodlyImageCache.manager, imageUrl: e,
+                                                  (e) => CachedNetworkImage(
+                                                    cacheManager: FoodlyImageCache.manager,
+                                                    imageUrl: e,
                                                     height: 209,
                                                     width: double.infinity,
                                                     fadeInDuration: Durations.medium2,

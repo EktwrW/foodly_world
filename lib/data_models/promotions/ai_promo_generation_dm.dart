@@ -70,8 +70,7 @@ abstract class AiPromoGenerationResponse with _$AiPromoGenerationResponse {
     String? message,
   }) = _AiPromoGenerationResponse;
 
-  factory AiPromoGenerationResponse.fromJson(Map<String, dynamic> json) =>
-      _$AiPromoGenerationResponseFromJson(json);
+  factory AiPromoGenerationResponse.fromJson(Map<String, dynamic> json) => _$AiPromoGenerationResponseFromJson(json);
 
   bool get quotaExhausted => !granted && remaining <= 0;
 

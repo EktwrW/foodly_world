@@ -78,8 +78,8 @@ class MenuFloatingActionButton extends StatelessWidget {
                                 // around ?? are mandatory: ?? has LOWER
                                 // precedence than `.toBold()`, otherwise bold
                                 // only wraps the '-' fallback.
-                                S.current.shareMenuMessage(
-                                    (menu?.businessName ?? '-').toBold(), 'Foodly'.toBold(), menuUrl),
+                                S.current
+                                    .shareMenuMessage((menu?.businessName ?? '-').toBold(), 'Foodly'.toBold(), menuUrl),
                                 subject: S.current.shareMenuSubject,
                               );
                             } catch (e) {

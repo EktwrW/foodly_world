@@ -27,8 +27,7 @@ mixin _$AiPromoQuotaResponse {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $AiPromoQuotaResponseCopyWith<AiPromoQuotaResponse> get copyWith =>
-      _$AiPromoQuotaResponseCopyWithImpl<AiPromoQuotaResponse>(
-          this as AiPromoQuotaResponse, _$identity);
+      _$AiPromoQuotaResponseCopyWithImpl<AiPromoQuotaResponse>(this as AiPromoQuotaResponse, _$identity);
 
   /// Serializes this AiPromoQuotaResponse to a JSON map.
   Map<String, dynamic> toJson();
@@ -43,15 +42,13 @@ mixin _$AiPromoQuotaResponse {
                 other.aiPromoMonthlyLimit == aiPromoMonthlyLimit) &&
             (identical(other.aiPromosUsedThisMonth, aiPromosUsedThisMonth) ||
                 other.aiPromosUsedThisMonth == aiPromosUsedThisMonth) &&
-            (identical(other.remaining, remaining) ||
-                other.remaining == remaining) &&
+            (identical(other.remaining, remaining) || other.remaining == remaining) &&
             (identical(other.message, message) || other.message == message));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, granted, aiPromoMonthlyLimit,
-      aiPromosUsedThisMonth, remaining, message);
+  int get hashCode => Object.hash(runtimeType, granted, aiPromoMonthlyLimit, aiPromosUsedThisMonth, remaining, message);
 
   @override
   String toString() {
@@ -61,8 +58,7 @@ mixin _$AiPromoQuotaResponse {
 
 /// @nodoc
 abstract mixin class $AiPromoQuotaResponseCopyWith<$Res> {
-  factory $AiPromoQuotaResponseCopyWith(AiPromoQuotaResponse value,
-          $Res Function(AiPromoQuotaResponse) _then) =
+  factory $AiPromoQuotaResponseCopyWith(AiPromoQuotaResponse value, $Res Function(AiPromoQuotaResponse) _then) =
       _$AiPromoQuotaResponseCopyWithImpl;
   @useResult
   $Res call(
@@ -74,8 +70,7 @@ abstract mixin class $AiPromoQuotaResponseCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AiPromoQuotaResponseCopyWithImpl<$Res>
-    implements $AiPromoQuotaResponseCopyWith<$Res> {
+class _$AiPromoQuotaResponseCopyWithImpl<$Res> implements $AiPromoQuotaResponseCopyWith<$Res> {
   _$AiPromoQuotaResponseCopyWithImpl(this._self, this._then);
 
   final AiPromoQuotaResponse _self;
@@ -210,21 +205,16 @@ extension AiPromoQuotaResponsePatterns on AiPromoQuotaResponse {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            bool granted,
-            @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
-            @JsonKey(name: 'ai_promos_used_this_month')
-            int aiPromosUsedThisMonth,
-            int remaining,
-            String? message)?
+    TResult Function(bool granted, @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
+            @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth, int remaining, String? message)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _AiPromoQuotaResponse() when $default != null:
-        return $default(_that.granted, _that.aiPromoMonthlyLimit,
-            _that.aiPromosUsedThisMonth, _that.remaining, _that.message);
+        return $default(
+            _that.granted, _that.aiPromoMonthlyLimit, _that.aiPromosUsedThisMonth, _that.remaining, _that.message);
       case _:
         return orElse();
     }
@@ -245,20 +235,15 @@ extension AiPromoQuotaResponsePatterns on AiPromoQuotaResponse {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            bool granted,
-            @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
-            @JsonKey(name: 'ai_promos_used_this_month')
-            int aiPromosUsedThisMonth,
-            int remaining,
-            String? message)
+    TResult Function(bool granted, @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
+            @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth, int remaining, String? message)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _AiPromoQuotaResponse():
-        return $default(_that.granted, _that.aiPromoMonthlyLimit,
-            _that.aiPromosUsedThisMonth, _that.remaining, _that.message);
+        return $default(
+            _that.granted, _that.aiPromoMonthlyLimit, _that.aiPromosUsedThisMonth, _that.remaining, _that.message);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -278,20 +263,15 @@ extension AiPromoQuotaResponsePatterns on AiPromoQuotaResponse {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            bool granted,
-            @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
-            @JsonKey(name: 'ai_promos_used_this_month')
-            int aiPromosUsedThisMonth,
-            int remaining,
-            String? message)?
+    TResult? Function(bool granted, @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
+            @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth, int remaining, String? message)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _AiPromoQuotaResponse() when $default != null:
-        return $default(_that.granted, _that.aiPromoMonthlyLimit,
-            _that.aiPromosUsedThisMonth, _that.remaining, _that.message);
+        return $default(
+            _that.granted, _that.aiPromoMonthlyLimit, _that.aiPromosUsedThisMonth, _that.remaining, _that.message);
       case _:
         return null;
     }
@@ -304,13 +284,11 @@ class _AiPromoQuotaResponse extends AiPromoQuotaResponse {
   const _AiPromoQuotaResponse(
       {this.granted = false,
       @JsonKey(name: 'ai_promo_monthly_limit') this.aiPromoMonthlyLimit = 3,
-      @JsonKey(name: 'ai_promos_used_this_month')
-      this.aiPromosUsedThisMonth = 0,
+      @JsonKey(name: 'ai_promos_used_this_month') this.aiPromosUsedThisMonth = 0,
       this.remaining = 0,
       this.message})
       : super._();
-  factory _AiPromoQuotaResponse.fromJson(Map<String, dynamic> json) =>
-      _$AiPromoQuotaResponseFromJson(json);
+  factory _AiPromoQuotaResponse.fromJson(Map<String, dynamic> json) => _$AiPromoQuotaResponseFromJson(json);
 
   @override
   @JsonKey()
@@ -333,8 +311,7 @@ class _AiPromoQuotaResponse extends AiPromoQuotaResponse {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$AiPromoQuotaResponseCopyWith<_AiPromoQuotaResponse> get copyWith =>
-      __$AiPromoQuotaResponseCopyWithImpl<_AiPromoQuotaResponse>(
-          this, _$identity);
+      __$AiPromoQuotaResponseCopyWithImpl<_AiPromoQuotaResponse>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -353,15 +330,13 @@ class _AiPromoQuotaResponse extends AiPromoQuotaResponse {
                 other.aiPromoMonthlyLimit == aiPromoMonthlyLimit) &&
             (identical(other.aiPromosUsedThisMonth, aiPromosUsedThisMonth) ||
                 other.aiPromosUsedThisMonth == aiPromosUsedThisMonth) &&
-            (identical(other.remaining, remaining) ||
-                other.remaining == remaining) &&
+            (identical(other.remaining, remaining) || other.remaining == remaining) &&
             (identical(other.message, message) || other.message == message));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, granted, aiPromoMonthlyLimit,
-      aiPromosUsedThisMonth, remaining, message);
+  int get hashCode => Object.hash(runtimeType, granted, aiPromoMonthlyLimit, aiPromosUsedThisMonth, remaining, message);
 
   @override
   String toString() {
@@ -370,10 +345,8 @@ class _AiPromoQuotaResponse extends AiPromoQuotaResponse {
 }
 
 /// @nodoc
-abstract mixin class _$AiPromoQuotaResponseCopyWith<$Res>
-    implements $AiPromoQuotaResponseCopyWith<$Res> {
-  factory _$AiPromoQuotaResponseCopyWith(_AiPromoQuotaResponse value,
-          $Res Function(_AiPromoQuotaResponse) _then) =
+abstract mixin class _$AiPromoQuotaResponseCopyWith<$Res> implements $AiPromoQuotaResponseCopyWith<$Res> {
+  factory _$AiPromoQuotaResponseCopyWith(_AiPromoQuotaResponse value, $Res Function(_AiPromoQuotaResponse) _then) =
       __$AiPromoQuotaResponseCopyWithImpl;
   @override
   @useResult
@@ -386,8 +359,7 @@ abstract mixin class _$AiPromoQuotaResponseCopyWith<$Res>
 }
 
 /// @nodoc
-class __$AiPromoQuotaResponseCopyWithImpl<$Res>
-    implements _$AiPromoQuotaResponseCopyWith<$Res> {
+class __$AiPromoQuotaResponseCopyWithImpl<$Res> implements _$AiPromoQuotaResponseCopyWith<$Res> {
   __$AiPromoQuotaResponseCopyWithImpl(this._self, this._then);
 
   final _AiPromoQuotaResponse _self;

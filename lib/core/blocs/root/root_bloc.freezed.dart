@@ -16,8 +16,7 @@ T _$identity<T>(T value) => value;
 mixin _$RootEvent {
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is RootEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is RootEvent);
   }
 
   @override
@@ -242,8 +241,7 @@ class _CacheAuthSession implements RootEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _CacheAuthSession &&
-            (identical(other.userSessionDM, userSessionDM) ||
-                other.userSessionDM == userSessionDM));
+            (identical(other.userSessionDM, userSessionDM) || other.userSessionDM == userSessionDM));
   }
 
   @override
@@ -256,10 +254,8 @@ class _CacheAuthSession implements RootEvent {
 }
 
 /// @nodoc
-abstract mixin class _$CacheAuthSessionCopyWith<$Res>
-    implements $RootEventCopyWith<$Res> {
-  factory _$CacheAuthSessionCopyWith(
-          _CacheAuthSession value, $Res Function(_CacheAuthSession) _then) =
+abstract mixin class _$CacheAuthSessionCopyWith<$Res> implements $RootEventCopyWith<$Res> {
+  factory _$CacheAuthSessionCopyWith(_CacheAuthSession value, $Res Function(_CacheAuthSession) _then) =
       __$CacheAuthSessionCopyWithImpl;
   @useResult
   $Res call({UserSessionDM userSessionDM});
@@ -268,8 +264,7 @@ abstract mixin class _$CacheAuthSessionCopyWith<$Res>
 }
 
 /// @nodoc
-class __$CacheAuthSessionCopyWithImpl<$Res>
-    implements _$CacheAuthSessionCopyWith<$Res> {
+class __$CacheAuthSessionCopyWithImpl<$Res> implements _$CacheAuthSessionCopyWith<$Res> {
   __$CacheAuthSessionCopyWithImpl(this._self, this._then);
 
   final _CacheAuthSession _self;
@@ -307,8 +302,7 @@ class _UserLogout implements RootEvent {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _UserLogout);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _UserLogout);
   }
 
   @override
@@ -327,8 +321,7 @@ class _ExpireSession implements RootEvent {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _ExpireSession);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _ExpireSession);
   }
 
   @override
@@ -352,8 +345,7 @@ RootState _$RootStateFromJson(Map<String, dynamic> json) {
       return _SessionExpired.fromJson(json);
 
     default:
-      throw CheckedFromJsonException(json, 'runtimeType', 'RootState',
-          'Invalid union type "${json['runtimeType']}"!');
+      throw CheckedFromJsonException(json, 'runtimeType', 'RootState', 'Invalid union type "${json['runtimeType']}"!');
   }
 }
 
@@ -364,8 +356,7 @@ mixin _$RootState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is RootState);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is RootState);
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -596,8 +587,7 @@ class _Initial extends RootState {
   const _Initial({final String? $type})
       : $type = $type ?? 'initial',
         super._();
-  factory _Initial.fromJson(Map<String, dynamic> json) =>
-      _$InitialFromJson(json);
+  factory _Initial.fromJson(Map<String, dynamic> json) => _$InitialFromJson(json);
 
   @JsonKey(name: 'runtimeType')
   final String $type;
@@ -611,8 +601,7 @@ class _Initial extends RootState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _Initial);
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -631,8 +620,7 @@ class _CachedState extends RootState {
   const _CachedState({required this.userSessionDM, final String? $type})
       : $type = $type ?? 'cachedState',
         super._();
-  factory _CachedState.fromJson(Map<String, dynamic> json) =>
-      _$CachedStateFromJson(json);
+  factory _CachedState.fromJson(Map<String, dynamic> json) => _$CachedStateFromJson(json);
 
   final UserSessionDM userSessionDM;
 
@@ -643,8 +631,7 @@ class _CachedState extends RootState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$CachedStateCopyWith<_CachedState> get copyWith =>
-      __$CachedStateCopyWithImpl<_CachedState>(this, _$identity);
+  _$CachedStateCopyWith<_CachedState> get copyWith => __$CachedStateCopyWithImpl<_CachedState>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -658,8 +645,7 @@ class _CachedState extends RootState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _CachedState &&
-            (identical(other.userSessionDM, userSessionDM) ||
-                other.userSessionDM == userSessionDM));
+            (identical(other.userSessionDM, userSessionDM) || other.userSessionDM == userSessionDM));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -673,11 +659,8 @@ class _CachedState extends RootState {
 }
 
 /// @nodoc
-abstract mixin class _$CachedStateCopyWith<$Res>
-    implements $RootStateCopyWith<$Res> {
-  factory _$CachedStateCopyWith(
-          _CachedState value, $Res Function(_CachedState) _then) =
-      __$CachedStateCopyWithImpl;
+abstract mixin class _$CachedStateCopyWith<$Res> implements $RootStateCopyWith<$Res> {
+  factory _$CachedStateCopyWith(_CachedState value, $Res Function(_CachedState) _then) = __$CachedStateCopyWithImpl;
   @useResult
   $Res call({UserSessionDM userSessionDM});
 
@@ -722,8 +705,7 @@ class _UserLoggedOut extends RootState {
   const _UserLoggedOut({final String? $type})
       : $type = $type ?? 'userLoggedOut',
         super._();
-  factory _UserLoggedOut.fromJson(Map<String, dynamic> json) =>
-      _$UserLoggedOutFromJson(json);
+  factory _UserLoggedOut.fromJson(Map<String, dynamic> json) => _$UserLoggedOutFromJson(json);
 
   @JsonKey(name: 'runtimeType')
   final String $type;
@@ -737,8 +719,7 @@ class _UserLoggedOut extends RootState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _UserLoggedOut);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _UserLoggedOut);
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -757,8 +738,7 @@ class _SessionExpired extends RootState {
   const _SessionExpired({final String? $type})
       : $type = $type ?? 'sessionExpired',
         super._();
-  factory _SessionExpired.fromJson(Map<String, dynamic> json) =>
-      _$SessionExpiredFromJson(json);
+  factory _SessionExpired.fromJson(Map<String, dynamic> json) => _$SessionExpiredFromJson(json);
 
   @JsonKey(name: 'runtimeType')
   final String $type;
@@ -772,8 +752,7 @@ class _SessionExpired extends RootState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _SessionExpired);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _SessionExpired);
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)

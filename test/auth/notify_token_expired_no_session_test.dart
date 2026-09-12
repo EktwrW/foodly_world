@@ -106,8 +106,7 @@ void main() {
                 'router (sin AppRouter en di), explota con StateError');
 
         // Post-condición: nada cambió.
-        expect(service.forceToLogin, isFalse,
-            reason: 'forceToLogin NO debe activarse si nunca hubo sesión');
+        expect(service.forceToLogin, isFalse, reason: 'forceToLogin NO debe activarse si nunca hubo sesión');
       },
     );
 
@@ -121,8 +120,7 @@ void main() {
           user: UserDM(uuid: ''),
           token: 'orphan-token',
         );
-        expect(service.isLoggedIn, isFalse,
-            reason: 'isLoggedIn exige uuid no vacío');
+        expect(service.isLoggedIn, isFalse, reason: 'isLoggedIn exige uuid no vacío');
 
         expect(() => service.notifyTokenExpired(), returnsNormally,
             reason: 'DM con uuid vacío = sesión zombie, NO modal');

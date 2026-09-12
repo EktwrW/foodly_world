@@ -82,6 +82,7 @@ abstract class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'followers_length') @Default(0) int followersLength,
     @JsonKey(name: 'intro_message') String? introMessage,
     @JsonKey(name: 'allow_reservations') @Default(false) bool allowReservations,
+
     /// Mínimo para pagar en la app, en céntimos. null = sin mínimo.
     /// Llega al comensal a propósito: la ASAE exige informarlo de forma clara
     /// ANTES de que arme la cuenta, no como un bloqueo sorpresa al pagar.

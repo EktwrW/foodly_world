@@ -49,8 +49,7 @@ void main() {
       final conTecho = await geometria(tester, entrada.value, envolver(construir()));
 
       expect(sinTecho, isNotEmpty, reason: 'la forma "$nombre" no dejó nada que medir');
-      expect(conTecho, sinTecho,
-          reason: '"$nombre" se mueve en ${entrada.key} (${entrada.value} px)');
+      expect(conTecho, sinTecho, reason: '"$nombre" se mueve en ${entrada.key} (${entrada.value} px)');
     }
   }
 
@@ -125,7 +124,10 @@ void main() {
       'SafeArea + Expanded',
       () => SafeArea(
         child: Column(
-          children: [marca('filtro'), Expanded(child: ListView(children: [marca('reserva')]))],
+          children: [
+            marca('filtro'),
+            Expanded(child: ListView(children: [marca('reserva')]))
+          ],
         ),
       ),
       (hijo) => ContentColumn.list(child: hijo),
@@ -150,8 +152,8 @@ void main() {
   /// user_profile y sign_up_user: la portada del `SliverAppBar` tiene que
   /// seguir a sangre, así que solo se acota el contenido.
   testWidgets('dentro de un sliver (user_profile, sign_up_user)', (tester) async {
-    Widget contenido() => Column(children: [marca('seccion1'), marca('seccion2')])
-        .paddingOnly(right: 18, left: 18, top: 36, bottom: 60);
+    Widget contenido() =>
+        Column(children: [marca('seccion1'), marca('seccion2')]).paddingOnly(right: 18, left: 18, top: 36, bottom: 60);
 
     Widget scroll(Widget dentroDelSliver) => CustomScrollView(
           slivers: [SliverToBoxAdapter(child: dentroDelSliver)],
@@ -219,8 +221,7 @@ void main() {
 
     for (final entrada in anchosDeTelefono.entries) {
       final sinTecho = await geometria(tester, entrada.value, cuerpo(entrada.value));
-      final conTecho =
-          await geometria(tester, entrada.value, ContentColumn.list(child: cuerpo(entrada.value)));
+      final conTecho = await geometria(tester, entrada.value, ContentColumn.list(child: cuerpo(entrada.value)));
 
       expect(sinTecho, isNotEmpty);
       expect(conTecho, sinTecho, reason: 'saved_promotions se mueve en ${entrada.key}');

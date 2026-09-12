@@ -76,7 +76,12 @@ void main() {
     /// Los tres estados son excluyentes y cubren todos los casos: si dos dan
     /// `true` a la vez, una promo sale en dos pestañas.
     test('los tres estados son excluyentes', () {
-      for (final p in [promo(dia(-10), dia(0)), promo(dia(0), dia(0)), promo(dia(-5), dia(-1)), promo(dia(2), dia(9))]) {
+      for (final p in [
+        promo(dia(-10), dia(0)),
+        promo(dia(0), dia(0)),
+        promo(dia(-5), dia(-1)),
+        promo(dia(2), dia(9))
+      ]) {
         expect([p.isActive, p.isUpcoming, p.isExpired].where((e) => e).length, 1,
             reason: 'activa=${p.isActive} próxima=${p.isUpcoming} expirada=${p.isExpired}');
       }

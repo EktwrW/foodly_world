@@ -52,28 +52,20 @@ mixin _$MenuImportVM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $MenuImportVMCopyWith<MenuImportVM> get copyWith =>
-      _$MenuImportVMCopyWithImpl<MenuImportVM>(
-          this as MenuImportVM, _$identity);
+      _$MenuImportVMCopyWithImpl<MenuImportVM>(this as MenuImportVM, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is MenuImportVM &&
-            const DeepCollectionEquality()
-                .equals(other.selectedFiles, selectedFiles) &&
-            (identical(other.sessionId, sessionId) ||
-                other.sessionId == sessionId) &&
-            const DeepCollectionEquality()
-                .equals(other.uploadedImages, uploadedImages) &&
-            const DeepCollectionEquality()
-                .equals(other.parsedGroups, parsedGroups) &&
-            (identical(other.currentStepIndex, currentStepIndex) ||
-                other.currentStepIndex == currentStepIndex) &&
-            (identical(other.currentStepTotal, currentStepTotal) ||
-                other.currentStepTotal == currentStepTotal) &&
-            (identical(other.bulkStats, bulkStats) ||
-                other.bulkStats == bulkStats) &&
+            const DeepCollectionEquality().equals(other.selectedFiles, selectedFiles) &&
+            (identical(other.sessionId, sessionId) || other.sessionId == sessionId) &&
+            const DeepCollectionEquality().equals(other.uploadedImages, uploadedImages) &&
+            const DeepCollectionEquality().equals(other.parsedGroups, parsedGroups) &&
+            (identical(other.currentStepIndex, currentStepIndex) || other.currentStepIndex == currentStepIndex) &&
+            (identical(other.currentStepTotal, currentStepTotal) || other.currentStepTotal == currentStepTotal) &&
+            (identical(other.bulkStats, bulkStats) || other.bulkStats == bulkStats) &&
             (identical(other.locale, locale) || other.locale == locale));
   }
 
@@ -97,9 +89,7 @@ mixin _$MenuImportVM {
 
 /// @nodoc
 abstract mixin class $MenuImportVMCopyWith<$Res> {
-  factory $MenuImportVMCopyWith(
-          MenuImportVM value, $Res Function(MenuImportVM) _then) =
-      _$MenuImportVMCopyWithImpl;
+  factory $MenuImportVMCopyWith(MenuImportVM value, $Res Function(MenuImportVM) _then) = _$MenuImportVMCopyWithImpl;
   @useResult
   $Res call(
       {List<File> selectedFiles,
@@ -278,15 +268,8 @@ extension MenuImportVMPatterns on MenuImportVM {
     final _that = this;
     switch (_that) {
       case _MenuImportVM() when $default != null:
-        return $default(
-            _that.selectedFiles,
-            _that.sessionId,
-            _that.uploadedImages,
-            _that.parsedGroups,
-            _that.currentStepIndex,
-            _that.currentStepTotal,
-            _that.bulkStats,
-            _that.locale);
+        return $default(_that.selectedFiles, _that.sessionId, _that.uploadedImages, _that.parsedGroups,
+            _that.currentStepIndex, _that.currentStepTotal, _that.bulkStats, _that.locale);
       case _:
         return orElse();
     }
@@ -321,15 +304,8 @@ extension MenuImportVMPatterns on MenuImportVM {
     final _that = this;
     switch (_that) {
       case _MenuImportVM():
-        return $default(
-            _that.selectedFiles,
-            _that.sessionId,
-            _that.uploadedImages,
-            _that.parsedGroups,
-            _that.currentStepIndex,
-            _that.currentStepTotal,
-            _that.bulkStats,
-            _that.locale);
+        return $default(_that.selectedFiles, _that.sessionId, _that.uploadedImages, _that.parsedGroups,
+            _that.currentStepIndex, _that.currentStepTotal, _that.bulkStats, _that.locale);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -363,15 +339,8 @@ extension MenuImportVMPatterns on MenuImportVM {
     final _that = this;
     switch (_that) {
       case _MenuImportVM() when $default != null:
-        return $default(
-            _that.selectedFiles,
-            _that.sessionId,
-            _that.uploadedImages,
-            _that.parsedGroups,
-            _that.currentStepIndex,
-            _that.currentStepTotal,
-            _that.bulkStats,
-            _that.locale);
+        return $default(_that.selectedFiles, _that.sessionId, _that.uploadedImages, _that.parsedGroups,
+            _that.currentStepIndex, _that.currentStepTotal, _that.bulkStats, _that.locale);
       case _:
         return null;
     }
@@ -384,10 +353,8 @@ class _MenuImportVM extends MenuImportVM {
   const _MenuImportVM(
       {final List<File> selectedFiles = const <File>[],
       this.sessionId,
-      final List<MenuImportUploadedImageDM> uploadedImages =
-          const <MenuImportUploadedImageDM>[],
-      final List<ParsedCategoryGroupDM> parsedGroups =
-          const <ParsedCategoryGroupDM>[],
+      final List<MenuImportUploadedImageDM> uploadedImages = const <MenuImportUploadedImageDM>[],
+      final List<ParsedCategoryGroupDM> parsedGroups = const <ParsedCategoryGroupDM>[],
       this.currentStepIndex = 0,
       this.currentStepTotal = 0,
       this.bulkStats,
@@ -475,28 +442,20 @@ class _MenuImportVM extends MenuImportVM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$MenuImportVMCopyWith<_MenuImportVM> get copyWith =>
-      __$MenuImportVMCopyWithImpl<_MenuImportVM>(this, _$identity);
+  _$MenuImportVMCopyWith<_MenuImportVM> get copyWith => __$MenuImportVMCopyWithImpl<_MenuImportVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _MenuImportVM &&
-            const DeepCollectionEquality()
-                .equals(other._selectedFiles, _selectedFiles) &&
-            (identical(other.sessionId, sessionId) ||
-                other.sessionId == sessionId) &&
-            const DeepCollectionEquality()
-                .equals(other._uploadedImages, _uploadedImages) &&
-            const DeepCollectionEquality()
-                .equals(other._parsedGroups, _parsedGroups) &&
-            (identical(other.currentStepIndex, currentStepIndex) ||
-                other.currentStepIndex == currentStepIndex) &&
-            (identical(other.currentStepTotal, currentStepTotal) ||
-                other.currentStepTotal == currentStepTotal) &&
-            (identical(other.bulkStats, bulkStats) ||
-                other.bulkStats == bulkStats) &&
+            const DeepCollectionEquality().equals(other._selectedFiles, _selectedFiles) &&
+            (identical(other.sessionId, sessionId) || other.sessionId == sessionId) &&
+            const DeepCollectionEquality().equals(other._uploadedImages, _uploadedImages) &&
+            const DeepCollectionEquality().equals(other._parsedGroups, _parsedGroups) &&
+            (identical(other.currentStepIndex, currentStepIndex) || other.currentStepIndex == currentStepIndex) &&
+            (identical(other.currentStepTotal, currentStepTotal) || other.currentStepTotal == currentStepTotal) &&
+            (identical(other.bulkStats, bulkStats) || other.bulkStats == bulkStats) &&
             (identical(other.locale, locale) || other.locale == locale));
   }
 
@@ -519,11 +478,8 @@ class _MenuImportVM extends MenuImportVM {
 }
 
 /// @nodoc
-abstract mixin class _$MenuImportVMCopyWith<$Res>
-    implements $MenuImportVMCopyWith<$Res> {
-  factory _$MenuImportVMCopyWith(
-          _MenuImportVM value, $Res Function(_MenuImportVM) _then) =
-      __$MenuImportVMCopyWithImpl;
+abstract mixin class _$MenuImportVMCopyWith<$Res> implements $MenuImportVMCopyWith<$Res> {
+  factory _$MenuImportVMCopyWith(_MenuImportVM value, $Res Function(_MenuImportVM) _then) = __$MenuImportVMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -538,8 +494,7 @@ abstract mixin class _$MenuImportVMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MenuImportVMCopyWithImpl<$Res>
-    implements _$MenuImportVMCopyWith<$Res> {
+class __$MenuImportVMCopyWithImpl<$Res> implements _$MenuImportVMCopyWith<$Res> {
   __$MenuImportVMCopyWithImpl(this._self, this._then);
 
   final _MenuImportVM _self;

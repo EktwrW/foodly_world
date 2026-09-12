@@ -30,8 +30,7 @@ class MenuImportParseResponseDM {
     this.warnings,
   });
 
-  factory MenuImportParseResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$MenuImportParseResponseDMFromJson(json);
+  factory MenuImportParseResponseDM.fromJson(Map<String, dynamic> json) => _$MenuImportParseResponseDMFromJson(json);
   Map<String, dynamic> toJson() => _$MenuImportParseResponseDMToJson(this);
 }
 
@@ -57,8 +56,7 @@ class ParsedCategoryGroupDM {
     this.items,
   });
 
-  factory ParsedCategoryGroupDM.fromJson(Map<String, dynamic> json) =>
-      _$ParsedCategoryGroupDMFromJson(json);
+  factory ParsedCategoryGroupDM.fromJson(Map<String, dynamic> json) => _$ParsedCategoryGroupDMFromJson(json);
   Map<String, dynamic> toJson() => _$ParsedCategoryGroupDMToJson(this);
 }
 
@@ -73,8 +71,7 @@ class ParsedSubcategoryDM {
     required this.items,
   });
 
-  factory ParsedSubcategoryDM.fromJson(Map<String, dynamic> json) =>
-      _$ParsedSubcategoryDMFromJson(json);
+  factory ParsedSubcategoryDM.fromJson(Map<String, dynamic> json) => _$ParsedSubcategoryDMFromJson(json);
   Map<String, dynamic> toJson() => _$ParsedSubcategoryDMToJson(this);
 }
 
@@ -108,8 +105,7 @@ class ParsedMenuItemDM {
     this.confidence,
   });
 
-  factory ParsedMenuItemDM.fromJson(Map<String, dynamic> json) =>
-      _$ParsedMenuItemDMFromJson(json);
+  factory ParsedMenuItemDM.fromJson(Map<String, dynamic> json) => _$ParsedMenuItemDMFromJson(json);
   Map<String, dynamic> toJson() => _$ParsedMenuItemDMToJson(this);
 
   /// Convenience: convierte `prices` (que puede venir con `int` o `double`

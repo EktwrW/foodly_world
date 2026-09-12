@@ -22,8 +22,7 @@ mixin _$ReservationsResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ReservationsResponseDMCopyWith<ReservationsResponseDM> get copyWith =>
-      _$ReservationsResponseDMCopyWithImpl<ReservationsResponseDM>(
-          this as ReservationsResponseDM, _$identity);
+      _$ReservationsResponseDMCopyWithImpl<ReservationsResponseDM>(this as ReservationsResponseDM, _$identity);
 
   /// Serializes this ReservationsResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -33,15 +32,13 @@ mixin _$ReservationsResponseDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ReservationsResponseDM &&
-            const DeepCollectionEquality()
-                .equals(other.reservations, reservations) &&
+            const DeepCollectionEquality().equals(other.reservations, reservations) &&
             (identical(other.meta, meta) || other.meta == meta));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(reservations), meta);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(reservations), meta);
 
   @override
   String toString() {
@@ -51,8 +48,7 @@ mixin _$ReservationsResponseDM {
 
 /// @nodoc
 abstract mixin class $ReservationsResponseDMCopyWith<$Res> {
-  factory $ReservationsResponseDMCopyWith(ReservationsResponseDM value,
-          $Res Function(ReservationsResponseDM) _then) =
+  factory $ReservationsResponseDMCopyWith(ReservationsResponseDM value, $Res Function(ReservationsResponseDM) _then) =
       _$ReservationsResponseDMCopyWithImpl;
   @useResult
   $Res call({List<ReservationDM> reservations, ReservationsMetaDM? meta});
@@ -61,8 +57,7 @@ abstract mixin class $ReservationsResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReservationsResponseDMCopyWithImpl<$Res>
-    implements $ReservationsResponseDMCopyWith<$Res> {
+class _$ReservationsResponseDMCopyWithImpl<$Res> implements $ReservationsResponseDMCopyWith<$Res> {
   _$ReservationsResponseDMCopyWithImpl(this._self, this._then);
 
   final ReservationsResponseDM _self;
@@ -196,9 +191,7 @@ extension ReservationsResponseDMPatterns on ReservationsResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            List<ReservationDM> reservations, ReservationsMetaDM? meta)?
-        $default, {
+    TResult Function(List<ReservationDM> reservations, ReservationsMetaDM? meta)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -225,8 +218,7 @@ extension ReservationsResponseDMPatterns on ReservationsResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(List<ReservationDM> reservations, ReservationsMetaDM? meta)
-        $default,
+    TResult Function(List<ReservationDM> reservations, ReservationsMetaDM? meta) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -251,9 +243,7 @@ extension ReservationsResponseDMPatterns on ReservationsResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            List<ReservationDM> reservations, ReservationsMetaDM? meta)?
-        $default,
+    TResult? Function(List<ReservationDM> reservations, ReservationsMetaDM? meta)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -268,11 +258,9 @@ extension ReservationsResponseDMPatterns on ReservationsResponseDM {
 /// @nodoc
 @JsonSerializable()
 class _ReservationsResponseDM implements ReservationsResponseDM {
-  const _ReservationsResponseDM(
-      {final List<ReservationDM> reservations = const [], this.meta})
+  const _ReservationsResponseDM({final List<ReservationDM> reservations = const [], this.meta})
       : _reservations = reservations;
-  factory _ReservationsResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$ReservationsResponseDMFromJson(json);
+  factory _ReservationsResponseDM.fromJson(Map<String, dynamic> json) => _$ReservationsResponseDMFromJson(json);
 
   final List<ReservationDM> _reservations;
   @override
@@ -292,8 +280,7 @@ class _ReservationsResponseDM implements ReservationsResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$ReservationsResponseDMCopyWith<_ReservationsResponseDM> get copyWith =>
-      __$ReservationsResponseDMCopyWithImpl<_ReservationsResponseDM>(
-          this, _$identity);
+      __$ReservationsResponseDMCopyWithImpl<_ReservationsResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -307,15 +294,13 @@ class _ReservationsResponseDM implements ReservationsResponseDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ReservationsResponseDM &&
-            const DeepCollectionEquality()
-                .equals(other._reservations, _reservations) &&
+            const DeepCollectionEquality().equals(other._reservations, _reservations) &&
             (identical(other.meta, meta) || other.meta == meta));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_reservations), meta);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_reservations), meta);
 
   @override
   String toString() {
@@ -324,10 +309,9 @@ class _ReservationsResponseDM implements ReservationsResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$ReservationsResponseDMCopyWith<$Res>
-    implements $ReservationsResponseDMCopyWith<$Res> {
-  factory _$ReservationsResponseDMCopyWith(_ReservationsResponseDM value,
-          $Res Function(_ReservationsResponseDM) _then) =
+abstract mixin class _$ReservationsResponseDMCopyWith<$Res> implements $ReservationsResponseDMCopyWith<$Res> {
+  factory _$ReservationsResponseDMCopyWith(
+          _ReservationsResponseDM value, $Res Function(_ReservationsResponseDM) _then) =
       __$ReservationsResponseDMCopyWithImpl;
   @override
   @useResult
@@ -338,8 +322,7 @@ abstract mixin class _$ReservationsResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ReservationsResponseDMCopyWithImpl<$Res>
-    implements _$ReservationsResponseDMCopyWith<$Res> {
+class __$ReservationsResponseDMCopyWithImpl<$Res> implements _$ReservationsResponseDMCopyWith<$Res> {
   __$ReservationsResponseDMCopyWithImpl(this._self, this._then);
 
   final _ReservationsResponseDM _self;
@@ -395,8 +378,7 @@ mixin _$ReservationsMetaDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ReservationsMetaDMCopyWith<ReservationsMetaDM> get copyWith =>
-      _$ReservationsMetaDMCopyWithImpl<ReservationsMetaDM>(
-          this as ReservationsMetaDM, _$identity);
+      _$ReservationsMetaDMCopyWithImpl<ReservationsMetaDM>(this as ReservationsMetaDM, _$identity);
 
   /// Serializes this ReservationsMetaDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -406,18 +388,15 @@ mixin _$ReservationsMetaDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ReservationsMetaDM &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.lastPage, lastPage) ||
-                other.lastPage == lastPage) &&
+            (identical(other.currentPage, currentPage) || other.currentPage == currentPage) &&
+            (identical(other.lastPage, lastPage) || other.lastPage == lastPage) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
             (identical(other.total, total) || other.total == total));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, currentPage, lastPage, perPage, total);
+  int get hashCode => Object.hash(runtimeType, currentPage, lastPage, perPage, total);
 
   @override
   String toString() {
@@ -427,8 +406,7 @@ mixin _$ReservationsMetaDM {
 
 /// @nodoc
 abstract mixin class $ReservationsMetaDMCopyWith<$Res> {
-  factory $ReservationsMetaDMCopyWith(
-          ReservationsMetaDM value, $Res Function(ReservationsMetaDM) _then) =
+  factory $ReservationsMetaDMCopyWith(ReservationsMetaDM value, $Res Function(ReservationsMetaDM) _then) =
       _$ReservationsMetaDMCopyWithImpl;
   @useResult
   $Res call(
@@ -439,8 +417,7 @@ abstract mixin class $ReservationsMetaDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReservationsMetaDMCopyWithImpl<$Res>
-    implements $ReservationsMetaDMCopyWith<$Res> {
+class _$ReservationsMetaDMCopyWithImpl<$Res> implements $ReservationsMetaDMCopyWith<$Res> {
   _$ReservationsMetaDMCopyWithImpl(this._self, this._then);
 
   final ReservationsMetaDM _self;
@@ -570,19 +547,15 @@ extension ReservationsMetaDMPatterns on ReservationsMetaDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(name: 'current_page') int currentPage,
-            @JsonKey(name: 'last_page') int lastPage,
-            @JsonKey(name: 'per_page') int perPage,
-            int total)?
+    TResult Function(@JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage,
+            @JsonKey(name: 'per_page') int perPage, int total)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _ReservationsMetaDM() when $default != null:
-        return $default(
-            _that.currentPage, _that.lastPage, _that.perPage, _that.total);
+        return $default(_that.currentPage, _that.lastPage, _that.perPage, _that.total);
       case _:
         return orElse();
     }
@@ -603,18 +576,14 @@ extension ReservationsMetaDMPatterns on ReservationsMetaDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(name: 'current_page') int currentPage,
-            @JsonKey(name: 'last_page') int lastPage,
-            @JsonKey(name: 'per_page') int perPage,
-            int total)
+    TResult Function(@JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage,
+            @JsonKey(name: 'per_page') int perPage, int total)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ReservationsMetaDM():
-        return $default(
-            _that.currentPage, _that.lastPage, _that.perPage, _that.total);
+        return $default(_that.currentPage, _that.lastPage, _that.perPage, _that.total);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -634,18 +603,14 @@ extension ReservationsMetaDMPatterns on ReservationsMetaDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            @JsonKey(name: 'current_page') int currentPage,
-            @JsonKey(name: 'last_page') int lastPage,
-            @JsonKey(name: 'per_page') int perPage,
-            int total)?
+    TResult? Function(@JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage,
+            @JsonKey(name: 'per_page') int perPage, int total)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ReservationsMetaDM() when $default != null:
-        return $default(
-            _that.currentPage, _that.lastPage, _that.perPage, _that.total);
+        return $default(_that.currentPage, _that.lastPage, _that.perPage, _that.total);
       case _:
         return null;
     }
@@ -660,8 +625,7 @@ class _ReservationsMetaDM implements ReservationsMetaDM {
       @JsonKey(name: 'last_page') this.lastPage = 1,
       @JsonKey(name: 'per_page') this.perPage = 20,
       this.total = 0});
-  factory _ReservationsMetaDM.fromJson(Map<String, dynamic> json) =>
-      _$ReservationsMetaDMFromJson(json);
+  factory _ReservationsMetaDM.fromJson(Map<String, dynamic> json) => _$ReservationsMetaDMFromJson(json);
 
   @override
   @JsonKey(name: 'current_page')
@@ -696,18 +660,15 @@ class _ReservationsMetaDM implements ReservationsMetaDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ReservationsMetaDM &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.lastPage, lastPage) ||
-                other.lastPage == lastPage) &&
+            (identical(other.currentPage, currentPage) || other.currentPage == currentPage) &&
+            (identical(other.lastPage, lastPage) || other.lastPage == lastPage) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
             (identical(other.total, total) || other.total == total));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, currentPage, lastPage, perPage, total);
+  int get hashCode => Object.hash(runtimeType, currentPage, lastPage, perPage, total);
 
   @override
   String toString() {
@@ -716,10 +677,8 @@ class _ReservationsMetaDM implements ReservationsMetaDM {
 }
 
 /// @nodoc
-abstract mixin class _$ReservationsMetaDMCopyWith<$Res>
-    implements $ReservationsMetaDMCopyWith<$Res> {
-  factory _$ReservationsMetaDMCopyWith(
-          _ReservationsMetaDM value, $Res Function(_ReservationsMetaDM) _then) =
+abstract mixin class _$ReservationsMetaDMCopyWith<$Res> implements $ReservationsMetaDMCopyWith<$Res> {
+  factory _$ReservationsMetaDMCopyWith(_ReservationsMetaDM value, $Res Function(_ReservationsMetaDM) _then) =
       __$ReservationsMetaDMCopyWithImpl;
   @override
   @useResult
@@ -731,8 +690,7 @@ abstract mixin class _$ReservationsMetaDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ReservationsMetaDMCopyWithImpl<$Res>
-    implements _$ReservationsMetaDMCopyWith<$Res> {
+class __$ReservationsMetaDMCopyWithImpl<$Res> implements _$ReservationsMetaDMCopyWith<$Res> {
   __$ReservationsMetaDMCopyWithImpl(this._self, this._then);
 
   final _ReservationsMetaDM _self;
@@ -779,9 +737,8 @@ mixin _$ReservationCreateResponseDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $ReservationCreateResponseDMCopyWith<ReservationCreateResponseDM>
-      get copyWith => _$ReservationCreateResponseDMCopyWithImpl<
-              ReservationCreateResponseDM>(
+  $ReservationCreateResponseDMCopyWith<ReservationCreateResponseDM> get copyWith =>
+      _$ReservationCreateResponseDMCopyWithImpl<ReservationCreateResponseDM>(
           this as ReservationCreateResponseDM, _$identity);
 
   /// Serializes this ReservationCreateResponseDM to a JSON map.
@@ -794,8 +751,7 @@ mixin _$ReservationCreateResponseDM {
             other is ReservationCreateResponseDM &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.message, message) || other.message == message) &&
-            (identical(other.reservation, reservation) ||
-                other.reservation == reservation));
+            (identical(other.reservation, reservation) || other.reservation == reservation));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -811,8 +767,7 @@ mixin _$ReservationCreateResponseDM {
 /// @nodoc
 abstract mixin class $ReservationCreateResponseDMCopyWith<$Res> {
   factory $ReservationCreateResponseDMCopyWith(
-          ReservationCreateResponseDM value,
-          $Res Function(ReservationCreateResponseDM) _then) =
+          ReservationCreateResponseDM value, $Res Function(ReservationCreateResponseDM) _then) =
       _$ReservationCreateResponseDMCopyWithImpl;
   @useResult
   $Res call({bool success, String message, ReservationDM? reservation});
@@ -821,8 +776,7 @@ abstract mixin class $ReservationCreateResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReservationCreateResponseDMCopyWithImpl<$Res>
-    implements $ReservationCreateResponseDMCopyWith<$Res> {
+class _$ReservationCreateResponseDMCopyWithImpl<$Res> implements $ReservationCreateResponseDMCopyWith<$Res> {
   _$ReservationCreateResponseDMCopyWithImpl(this._self, this._then);
 
   final ReservationCreateResponseDM _self;
@@ -961,8 +915,7 @@ extension ReservationCreateResponseDMPatterns on ReservationCreateResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(bool success, String message, ReservationDM? reservation)?
-        $default, {
+    TResult Function(bool success, String message, ReservationDM? reservation)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -989,8 +942,7 @@ extension ReservationCreateResponseDMPatterns on ReservationCreateResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(bool success, String message, ReservationDM? reservation)
-        $default,
+    TResult Function(bool success, String message, ReservationDM? reservation) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -1015,8 +967,7 @@ extension ReservationCreateResponseDMPatterns on ReservationCreateResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(bool success, String message, ReservationDM? reservation)?
-        $default,
+    TResult? Function(bool success, String message, ReservationDM? reservation)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -1031,8 +982,7 @@ extension ReservationCreateResponseDMPatterns on ReservationCreateResponseDM {
 /// @nodoc
 @JsonSerializable()
 class _ReservationCreateResponseDM implements ReservationCreateResponseDM {
-  const _ReservationCreateResponseDM(
-      {this.success = false, this.message = '', this.reservation});
+  const _ReservationCreateResponseDM({this.success = false, this.message = '', this.reservation});
   factory _ReservationCreateResponseDM.fromJson(Map<String, dynamic> json) =>
       _$ReservationCreateResponseDMFromJson(json);
 
@@ -1050,9 +1000,8 @@ class _ReservationCreateResponseDM implements ReservationCreateResponseDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ReservationCreateResponseDMCopyWith<_ReservationCreateResponseDM>
-      get copyWith => __$ReservationCreateResponseDMCopyWithImpl<
-          _ReservationCreateResponseDM>(this, _$identity);
+  _$ReservationCreateResponseDMCopyWith<_ReservationCreateResponseDM> get copyWith =>
+      __$ReservationCreateResponseDMCopyWithImpl<_ReservationCreateResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1068,8 +1017,7 @@ class _ReservationCreateResponseDM implements ReservationCreateResponseDM {
             other is _ReservationCreateResponseDM &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.message, message) || other.message == message) &&
-            (identical(other.reservation, reservation) ||
-                other.reservation == reservation));
+            (identical(other.reservation, reservation) || other.reservation == reservation));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1083,11 +1031,9 @@ class _ReservationCreateResponseDM implements ReservationCreateResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$ReservationCreateResponseDMCopyWith<$Res>
-    implements $ReservationCreateResponseDMCopyWith<$Res> {
+abstract mixin class _$ReservationCreateResponseDMCopyWith<$Res> implements $ReservationCreateResponseDMCopyWith<$Res> {
   factory _$ReservationCreateResponseDMCopyWith(
-          _ReservationCreateResponseDM value,
-          $Res Function(_ReservationCreateResponseDM) _then) =
+          _ReservationCreateResponseDM value, $Res Function(_ReservationCreateResponseDM) _then) =
       __$ReservationCreateResponseDMCopyWithImpl;
   @override
   @useResult
@@ -1098,8 +1044,7 @@ abstract mixin class _$ReservationCreateResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ReservationCreateResponseDMCopyWithImpl<$Res>
-    implements _$ReservationCreateResponseDMCopyWith<$Res> {
+class __$ReservationCreateResponseDMCopyWithImpl<$Res> implements _$ReservationCreateResponseDMCopyWith<$Res> {
   __$ReservationCreateResponseDMCopyWithImpl(this._self, this._then);
 
   final _ReservationCreateResponseDM _self;
@@ -1155,9 +1100,8 @@ mixin _$ReservationActionResponseDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $ReservationActionResponseDMCopyWith<ReservationActionResponseDM>
-      get copyWith => _$ReservationActionResponseDMCopyWithImpl<
-              ReservationActionResponseDM>(
+  $ReservationActionResponseDMCopyWith<ReservationActionResponseDM> get copyWith =>
+      _$ReservationActionResponseDMCopyWithImpl<ReservationActionResponseDM>(
           this as ReservationActionResponseDM, _$identity);
 
   /// Serializes this ReservationActionResponseDM to a JSON map.
@@ -1170,8 +1114,7 @@ mixin _$ReservationActionResponseDM {
             other is ReservationActionResponseDM &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.message, message) || other.message == message) &&
-            (identical(other.reservation, reservation) ||
-                other.reservation == reservation));
+            (identical(other.reservation, reservation) || other.reservation == reservation));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1187,8 +1130,7 @@ mixin _$ReservationActionResponseDM {
 /// @nodoc
 abstract mixin class $ReservationActionResponseDMCopyWith<$Res> {
   factory $ReservationActionResponseDMCopyWith(
-          ReservationActionResponseDM value,
-          $Res Function(ReservationActionResponseDM) _then) =
+          ReservationActionResponseDM value, $Res Function(ReservationActionResponseDM) _then) =
       _$ReservationActionResponseDMCopyWithImpl;
   @useResult
   $Res call({bool success, String message, ReservationDM? reservation});
@@ -1197,8 +1139,7 @@ abstract mixin class $ReservationActionResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReservationActionResponseDMCopyWithImpl<$Res>
-    implements $ReservationActionResponseDMCopyWith<$Res> {
+class _$ReservationActionResponseDMCopyWithImpl<$Res> implements $ReservationActionResponseDMCopyWith<$Res> {
   _$ReservationActionResponseDMCopyWithImpl(this._self, this._then);
 
   final ReservationActionResponseDM _self;
@@ -1337,8 +1278,7 @@ extension ReservationActionResponseDMPatterns on ReservationActionResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(bool success, String message, ReservationDM? reservation)?
-        $default, {
+    TResult Function(bool success, String message, ReservationDM? reservation)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -1365,8 +1305,7 @@ extension ReservationActionResponseDMPatterns on ReservationActionResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(bool success, String message, ReservationDM? reservation)
-        $default,
+    TResult Function(bool success, String message, ReservationDM? reservation) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -1391,8 +1330,7 @@ extension ReservationActionResponseDMPatterns on ReservationActionResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(bool success, String message, ReservationDM? reservation)?
-        $default,
+    TResult? Function(bool success, String message, ReservationDM? reservation)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -1407,8 +1345,7 @@ extension ReservationActionResponseDMPatterns on ReservationActionResponseDM {
 /// @nodoc
 @JsonSerializable()
 class _ReservationActionResponseDM implements ReservationActionResponseDM {
-  const _ReservationActionResponseDM(
-      {this.success = false, this.message = '', this.reservation});
+  const _ReservationActionResponseDM({this.success = false, this.message = '', this.reservation});
   factory _ReservationActionResponseDM.fromJson(Map<String, dynamic> json) =>
       _$ReservationActionResponseDMFromJson(json);
 
@@ -1426,9 +1363,8 @@ class _ReservationActionResponseDM implements ReservationActionResponseDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ReservationActionResponseDMCopyWith<_ReservationActionResponseDM>
-      get copyWith => __$ReservationActionResponseDMCopyWithImpl<
-          _ReservationActionResponseDM>(this, _$identity);
+  _$ReservationActionResponseDMCopyWith<_ReservationActionResponseDM> get copyWith =>
+      __$ReservationActionResponseDMCopyWithImpl<_ReservationActionResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1444,8 +1380,7 @@ class _ReservationActionResponseDM implements ReservationActionResponseDM {
             other is _ReservationActionResponseDM &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.message, message) || other.message == message) &&
-            (identical(other.reservation, reservation) ||
-                other.reservation == reservation));
+            (identical(other.reservation, reservation) || other.reservation == reservation));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1459,11 +1394,9 @@ class _ReservationActionResponseDM implements ReservationActionResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$ReservationActionResponseDMCopyWith<$Res>
-    implements $ReservationActionResponseDMCopyWith<$Res> {
+abstract mixin class _$ReservationActionResponseDMCopyWith<$Res> implements $ReservationActionResponseDMCopyWith<$Res> {
   factory _$ReservationActionResponseDMCopyWith(
-          _ReservationActionResponseDM value,
-          $Res Function(_ReservationActionResponseDM) _then) =
+          _ReservationActionResponseDM value, $Res Function(_ReservationActionResponseDM) _then) =
       __$ReservationActionResponseDMCopyWithImpl;
   @override
   @useResult
@@ -1474,8 +1407,7 @@ abstract mixin class _$ReservationActionResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ReservationActionResponseDMCopyWithImpl<$Res>
-    implements _$ReservationActionResponseDMCopyWith<$Res> {
+class __$ReservationActionResponseDMCopyWithImpl<$Res> implements _$ReservationActionResponseDMCopyWith<$Res> {
   __$ReservationActionResponseDMCopyWithImpl(this._self, this._then);
 
   final _ReservationActionResponseDM _self;
@@ -1530,8 +1462,7 @@ mixin _$ReservationShowResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ReservationShowResponseDMCopyWith<ReservationShowResponseDM> get copyWith =>
-      _$ReservationShowResponseDMCopyWithImpl<ReservationShowResponseDM>(
-          this as ReservationShowResponseDM, _$identity);
+      _$ReservationShowResponseDMCopyWithImpl<ReservationShowResponseDM>(this as ReservationShowResponseDM, _$identity);
 
   /// Serializes this ReservationShowResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1541,8 +1472,7 @@ mixin _$ReservationShowResponseDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ReservationShowResponseDM &&
-            (identical(other.reservation, reservation) ||
-                other.reservation == reservation));
+            (identical(other.reservation, reservation) || other.reservation == reservation));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1557,8 +1487,8 @@ mixin _$ReservationShowResponseDM {
 
 /// @nodoc
 abstract mixin class $ReservationShowResponseDMCopyWith<$Res> {
-  factory $ReservationShowResponseDMCopyWith(ReservationShowResponseDM value,
-          $Res Function(ReservationShowResponseDM) _then) =
+  factory $ReservationShowResponseDMCopyWith(
+          ReservationShowResponseDM value, $Res Function(ReservationShowResponseDM) _then) =
       _$ReservationShowResponseDMCopyWithImpl;
   @useResult
   $Res call({ReservationDM? reservation});
@@ -1567,8 +1497,7 @@ abstract mixin class $ReservationShowResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReservationShowResponseDMCopyWithImpl<$Res>
-    implements $ReservationShowResponseDMCopyWith<$Res> {
+class _$ReservationShowResponseDMCopyWithImpl<$Res> implements $ReservationShowResponseDMCopyWith<$Res> {
   _$ReservationShowResponseDMCopyWithImpl(this._self, this._then);
 
   final ReservationShowResponseDM _self;
@@ -1765,8 +1694,7 @@ extension ReservationShowResponseDMPatterns on ReservationShowResponseDM {
 @JsonSerializable()
 class _ReservationShowResponseDM implements ReservationShowResponseDM {
   const _ReservationShowResponseDM({this.reservation});
-  factory _ReservationShowResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$ReservationShowResponseDMFromJson(json);
+  factory _ReservationShowResponseDM.fromJson(Map<String, dynamic> json) => _$ReservationShowResponseDMFromJson(json);
 
   @override
   final ReservationDM? reservation;
@@ -1776,10 +1704,8 @@ class _ReservationShowResponseDM implements ReservationShowResponseDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ReservationShowResponseDMCopyWith<_ReservationShowResponseDM>
-      get copyWith =>
-          __$ReservationShowResponseDMCopyWithImpl<_ReservationShowResponseDM>(
-              this, _$identity);
+  _$ReservationShowResponseDMCopyWith<_ReservationShowResponseDM> get copyWith =>
+      __$ReservationShowResponseDMCopyWithImpl<_ReservationShowResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1793,8 +1719,7 @@ class _ReservationShowResponseDM implements ReservationShowResponseDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ReservationShowResponseDM &&
-            (identical(other.reservation, reservation) ||
-                other.reservation == reservation));
+            (identical(other.reservation, reservation) || other.reservation == reservation));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1808,10 +1733,9 @@ class _ReservationShowResponseDM implements ReservationShowResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$ReservationShowResponseDMCopyWith<$Res>
-    implements $ReservationShowResponseDMCopyWith<$Res> {
-  factory _$ReservationShowResponseDMCopyWith(_ReservationShowResponseDM value,
-          $Res Function(_ReservationShowResponseDM) _then) =
+abstract mixin class _$ReservationShowResponseDMCopyWith<$Res> implements $ReservationShowResponseDMCopyWith<$Res> {
+  factory _$ReservationShowResponseDMCopyWith(
+          _ReservationShowResponseDM value, $Res Function(_ReservationShowResponseDM) _then) =
       __$ReservationShowResponseDMCopyWithImpl;
   @override
   @useResult
@@ -1822,8 +1746,7 @@ abstract mixin class _$ReservationShowResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ReservationShowResponseDMCopyWithImpl<$Res>
-    implements _$ReservationShowResponseDMCopyWith<$Res> {
+class __$ReservationShowResponseDMCopyWithImpl<$Res> implements _$ReservationShowResponseDMCopyWith<$Res> {
   __$ReservationShowResponseDMCopyWithImpl(this._self, this._then);
 
   final _ReservationShowResponseDM _self;
@@ -1868,10 +1791,9 @@ mixin _$PendingReservationsCountDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $PendingReservationsCountDMCopyWith<PendingReservationsCountDM>
-      get copyWith =>
-          _$PendingReservationsCountDMCopyWithImpl<PendingReservationsCountDM>(
-              this as PendingReservationsCountDM, _$identity);
+  $PendingReservationsCountDMCopyWith<PendingReservationsCountDM> get copyWith =>
+      _$PendingReservationsCountDMCopyWithImpl<PendingReservationsCountDM>(
+          this as PendingReservationsCountDM, _$identity);
 
   /// Serializes this PendingReservationsCountDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1881,8 +1803,7 @@ mixin _$PendingReservationsCountDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is PendingReservationsCountDM &&
-            (identical(other.pendingCount, pendingCount) ||
-                other.pendingCount == pendingCount));
+            (identical(other.pendingCount, pendingCount) || other.pendingCount == pendingCount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1897,16 +1818,15 @@ mixin _$PendingReservationsCountDM {
 
 /// @nodoc
 abstract mixin class $PendingReservationsCountDMCopyWith<$Res> {
-  factory $PendingReservationsCountDMCopyWith(PendingReservationsCountDM value,
-          $Res Function(PendingReservationsCountDM) _then) =
+  factory $PendingReservationsCountDMCopyWith(
+          PendingReservationsCountDM value, $Res Function(PendingReservationsCountDM) _then) =
       _$PendingReservationsCountDMCopyWithImpl;
   @useResult
   $Res call({@JsonKey(name: 'pending_count') int pendingCount});
 }
 
 /// @nodoc
-class _$PendingReservationsCountDMCopyWithImpl<$Res>
-    implements $PendingReservationsCountDMCopyWith<$Res> {
+class _$PendingReservationsCountDMCopyWithImpl<$Res> implements $PendingReservationsCountDMCopyWith<$Res> {
   _$PendingReservationsCountDMCopyWithImpl(this._self, this._then);
 
   final PendingReservationsCountDM _self;
@@ -2021,8 +1941,7 @@ extension PendingReservationsCountDMPatterns on PendingReservationsCountDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'pending_count') int pendingCount)?
-        $default, {
+    TResult Function(@JsonKey(name: 'pending_count') int pendingCount)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -2074,8 +1993,7 @@ extension PendingReservationsCountDMPatterns on PendingReservationsCountDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(@JsonKey(name: 'pending_count') int pendingCount)?
-        $default,
+    TResult? Function(@JsonKey(name: 'pending_count') int pendingCount)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -2090,10 +2008,8 @@ extension PendingReservationsCountDMPatterns on PendingReservationsCountDM {
 /// @nodoc
 @JsonSerializable()
 class _PendingReservationsCountDM implements PendingReservationsCountDM {
-  const _PendingReservationsCountDM(
-      {@JsonKey(name: 'pending_count') this.pendingCount = 0});
-  factory _PendingReservationsCountDM.fromJson(Map<String, dynamic> json) =>
-      _$PendingReservationsCountDMFromJson(json);
+  const _PendingReservationsCountDM({@JsonKey(name: 'pending_count') this.pendingCount = 0});
+  factory _PendingReservationsCountDM.fromJson(Map<String, dynamic> json) => _$PendingReservationsCountDMFromJson(json);
 
   @override
   @JsonKey(name: 'pending_count')
@@ -2104,9 +2020,8 @@ class _PendingReservationsCountDM implements PendingReservationsCountDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PendingReservationsCountDMCopyWith<_PendingReservationsCountDM>
-      get copyWith => __$PendingReservationsCountDMCopyWithImpl<
-          _PendingReservationsCountDM>(this, _$identity);
+  _$PendingReservationsCountDMCopyWith<_PendingReservationsCountDM> get copyWith =>
+      __$PendingReservationsCountDMCopyWithImpl<_PendingReservationsCountDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -2120,8 +2035,7 @@ class _PendingReservationsCountDM implements PendingReservationsCountDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _PendingReservationsCountDM &&
-            (identical(other.pendingCount, pendingCount) ||
-                other.pendingCount == pendingCount));
+            (identical(other.pendingCount, pendingCount) || other.pendingCount == pendingCount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -2135,11 +2049,9 @@ class _PendingReservationsCountDM implements PendingReservationsCountDM {
 }
 
 /// @nodoc
-abstract mixin class _$PendingReservationsCountDMCopyWith<$Res>
-    implements $PendingReservationsCountDMCopyWith<$Res> {
+abstract mixin class _$PendingReservationsCountDMCopyWith<$Res> implements $PendingReservationsCountDMCopyWith<$Res> {
   factory _$PendingReservationsCountDMCopyWith(
-          _PendingReservationsCountDM value,
-          $Res Function(_PendingReservationsCountDM) _then) =
+          _PendingReservationsCountDM value, $Res Function(_PendingReservationsCountDM) _then) =
       __$PendingReservationsCountDMCopyWithImpl;
   @override
   @useResult
@@ -2147,8 +2059,7 @@ abstract mixin class _$PendingReservationsCountDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PendingReservationsCountDMCopyWithImpl<$Res>
-    implements _$PendingReservationsCountDMCopyWith<$Res> {
+class __$PendingReservationsCountDMCopyWithImpl<$Res> implements _$PendingReservationsCountDMCopyWith<$Res> {
   __$PendingReservationsCountDMCopyWithImpl(this._self, this._then);
 
   final _PendingReservationsCountDM _self;
@@ -2208,8 +2119,7 @@ mixin _$ReservationDM {
   @JsonKey(name: 'business_longitude')
   double? get businessLongitude;
   @JsonKey(name: 'business_address')
-  String?
-      get businessAddress; // Country of the business that owns the reservation. Used by the
+  String? get businessAddress; // Country of the business that owns the reservation. Used by the
 // customer-facing reservation_card to render the quoted_amount in the
 // right currency (€ / $ / ARS / Bs / etc.) instead of always assuming €.
 // [unknownEnumValue: nullForUndefinedEnumValue] is the defensive pattern
@@ -2217,9 +2127,7 @@ mixin _$ReservationDM {
 // country we don't have in [FoodlyCountries] (e.g. Brazil in Phase 3),
 // the whole reservations list MUST NOT fail to deserialize. We just
 // fall back to the global '$' default at the consumer site.
-  @JsonKey(
-      name: 'business_country',
-      unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+  @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
   FoodlyCountries? get businessCountry; // User info
   @JsonKey(name: 'user_uuid')
   String? get userUuid;
@@ -2230,13 +2138,11 @@ mixin _$ReservationDM {
   @JsonKey(name: 'user_email')
   String? get userEmail;
   @JsonKey(name: 'user_phone')
-  String?
-      get userPhone; // ISO del país del teléfono cuando `userPhone` es nacional (sin snapshot).
+  String? get userPhone; // ISO del país del teléfono cuando `userPhone` es nacional (sin snapshot).
 // Si hay snapshot, viene null porque `userPhone` ya es E.164. Se usa para
 // componer el número internacional (display + botón de llamar).
   @JsonKey(name: 'user_phone_country_code')
-  String?
-      get userPhoneCountryCode; // Service booking fields (only present when booking_type = service)
+  String? get userPhoneCountryCode; // Service booking fields (only present when booking_type = service)
   @JsonKey(name: 'service_package_uuid')
   String? get servicePackageUuid;
   @JsonKey(name: 'service_package_title')
@@ -2273,8 +2179,7 @@ mixin _$ReservationDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ReservationDMCopyWith<ReservationDM> get copyWith =>
-      _$ReservationDMCopyWithImpl<ReservationDM>(
-          this as ReservationDM, _$identity);
+      _$ReservationDMCopyWithImpl<ReservationDM>(this as ReservationDM, _$identity);
 
   /// Serializes this ReservationDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -2284,87 +2189,50 @@ mixin _$ReservationDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ReservationDM &&
-            (identical(other.reservationId, reservationId) ||
-                other.reservationId == reservationId) &&
-            (identical(other.reservationUuid, reservationUuid) ||
-                other.reservationUuid == reservationUuid) &&
+            (identical(other.reservationId, reservationId) || other.reservationId == reservationId) &&
+            (identical(other.reservationUuid, reservationUuid) || other.reservationUuid == reservationUuid) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.bookingType, bookingType) ||
-                other.bookingType == bookingType) &&
-            (identical(other.reservationDate, reservationDate) ||
-                other.reservationDate == reservationDate) &&
-            (identical(other.reservationTime, reservationTime) ||
-                other.reservationTime == reservationTime) &&
-            (identical(other.partySize, partySize) ||
-                other.partySize == partySize) &&
-            (identical(other.specialRequests, specialRequests) ||
-                other.specialRequests == specialRequests) &&
-            (identical(other.managerNotes, managerNotes) ||
-                other.managerNotes == managerNotes) &&
-            (identical(other.cancelledBy, cancelledBy) ||
-                other.cancelledBy == cancelledBy) &&
-            (identical(other.cancelledAt, cancelledAt) ||
-                other.cancelledAt == cancelledAt) &&
-            (identical(other.confirmedAt, confirmedAt) ||
-                other.confirmedAt == confirmedAt) &&
-            (identical(other.rejectedAt, rejectedAt) ||
-                other.rejectedAt == rejectedAt) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            (identical(other.businessName, businessName) ||
-                other.businessName == businessName) &&
-            (identical(other.businessPhoto, businessPhoto) ||
-                other.businessPhoto == businessPhoto) &&
-            (identical(other.businessLatitude, businessLatitude) ||
-                other.businessLatitude == businessLatitude) &&
-            (identical(other.businessLongitude, businessLongitude) ||
-                other.businessLongitude == businessLongitude) &&
-            (identical(other.businessAddress, businessAddress) ||
-                other.businessAddress == businessAddress) &&
-            (identical(other.businessCountry, businessCountry) ||
-                other.businessCountry == businessCountry) &&
-            (identical(other.userUuid, userUuid) ||
-                other.userUuid == userUuid) &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.userPhoto, userPhoto) ||
-                other.userPhoto == userPhoto) &&
-            (identical(other.userEmail, userEmail) ||
-                other.userEmail == userEmail) &&
-            (identical(other.userPhone, userPhone) ||
-                other.userPhone == userPhone) &&
+            (identical(other.bookingType, bookingType) || other.bookingType == bookingType) &&
+            (identical(other.reservationDate, reservationDate) || other.reservationDate == reservationDate) &&
+            (identical(other.reservationTime, reservationTime) || other.reservationTime == reservationTime) &&
+            (identical(other.partySize, partySize) || other.partySize == partySize) &&
+            (identical(other.specialRequests, specialRequests) || other.specialRequests == specialRequests) &&
+            (identical(other.managerNotes, managerNotes) || other.managerNotes == managerNotes) &&
+            (identical(other.cancelledBy, cancelledBy) || other.cancelledBy == cancelledBy) &&
+            (identical(other.cancelledAt, cancelledAt) || other.cancelledAt == cancelledAt) &&
+            (identical(other.confirmedAt, confirmedAt) || other.confirmedAt == confirmedAt) &&
+            (identical(other.rejectedAt, rejectedAt) || other.rejectedAt == rejectedAt) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            (identical(other.businessName, businessName) || other.businessName == businessName) &&
+            (identical(other.businessPhoto, businessPhoto) || other.businessPhoto == businessPhoto) &&
+            (identical(other.businessLatitude, businessLatitude) || other.businessLatitude == businessLatitude) &&
+            (identical(other.businessLongitude, businessLongitude) || other.businessLongitude == businessLongitude) &&
+            (identical(other.businessAddress, businessAddress) || other.businessAddress == businessAddress) &&
+            (identical(other.businessCountry, businessCountry) || other.businessCountry == businessCountry) &&
+            (identical(other.userUuid, userUuid) || other.userUuid == userUuid) &&
+            (identical(other.userName, userName) || other.userName == userName) &&
+            (identical(other.userPhoto, userPhoto) || other.userPhoto == userPhoto) &&
+            (identical(other.userEmail, userEmail) || other.userEmail == userEmail) &&
+            (identical(other.userPhone, userPhone) || other.userPhone == userPhone) &&
             (identical(other.userPhoneCountryCode, userPhoneCountryCode) ||
                 other.userPhoneCountryCode == userPhoneCountryCode) &&
             (identical(other.servicePackageUuid, servicePackageUuid) ||
                 other.servicePackageUuid == servicePackageUuid) &&
             (identical(other.servicePackageTitle, servicePackageTitle) ||
                 other.servicePackageTitle == servicePackageTitle) &&
-            (identical(other.eventAddress, eventAddress) ||
-                other.eventAddress == eventAddress) &&
-            (identical(other.eventCity, eventCity) ||
-                other.eventCity == eventCity) &&
-            (identical(other.eventLatitude, eventLatitude) ||
-                other.eventLatitude == eventLatitude) &&
-            (identical(other.eventLongitude, eventLongitude) ||
-                other.eventLongitude == eventLongitude) &&
-            (identical(other.eventType, eventType) ||
-                other.eventType == eventType) &&
-            (identical(other.guestCount, guestCount) ||
-                other.guestCount == guestCount) &&
-            (identical(other.dietaryNotes, dietaryNotes) ||
-                other.dietaryNotes == dietaryNotes) &&
-            (identical(other.budgetEstimate, budgetEstimate) ||
-                other.budgetEstimate == budgetEstimate) &&
-            (identical(other.quotedAmount, quotedAmount) ||
-                other.quotedAmount == quotedAmount) &&
-            (identical(other.quotedAt, quotedAt) ||
-                other.quotedAt == quotedAt) &&
-            (identical(other.messagesCount, messagesCount) ||
-                other.messagesCount == messagesCount) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.eventAddress, eventAddress) || other.eventAddress == eventAddress) &&
+            (identical(other.eventCity, eventCity) || other.eventCity == eventCity) &&
+            (identical(other.eventLatitude, eventLatitude) || other.eventLatitude == eventLatitude) &&
+            (identical(other.eventLongitude, eventLongitude) || other.eventLongitude == eventLongitude) &&
+            (identical(other.eventType, eventType) || other.eventType == eventType) &&
+            (identical(other.guestCount, guestCount) || other.guestCount == guestCount) &&
+            (identical(other.dietaryNotes, dietaryNotes) || other.dietaryNotes == dietaryNotes) &&
+            (identical(other.budgetEstimate, budgetEstimate) || other.budgetEstimate == budgetEstimate) &&
+            (identical(other.quotedAmount, quotedAmount) || other.quotedAmount == quotedAmount) &&
+            (identical(other.quotedAt, quotedAt) || other.quotedAt == quotedAt) &&
+            (identical(other.messagesCount, messagesCount) || other.messagesCount == messagesCount) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -2422,9 +2290,7 @@ mixin _$ReservationDM {
 
 /// @nodoc
 abstract mixin class $ReservationDMCopyWith<$Res> {
-  factory $ReservationDMCopyWith(
-          ReservationDM value, $Res Function(ReservationDM) _then) =
-      _$ReservationDMCopyWithImpl;
+  factory $ReservationDMCopyWith(ReservationDM value, $Res Function(ReservationDM) _then) = _$ReservationDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'reservation_id') int? reservationId,
@@ -2446,9 +2312,7 @@ abstract mixin class $ReservationDMCopyWith<$Res> {
       @JsonKey(name: 'business_latitude') double? businessLatitude,
       @JsonKey(name: 'business_longitude') double? businessLongitude,
       @JsonKey(name: 'business_address') String? businessAddress,
-      @JsonKey(
-          name: 'business_country',
-          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
       FoodlyCountries? businessCountry,
       @JsonKey(name: 'user_uuid') String? userUuid,
       @JsonKey(name: 'user_name') String? userName,
@@ -2474,8 +2338,7 @@ abstract mixin class $ReservationDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReservationDMCopyWithImpl<$Res>
-    implements $ReservationDMCopyWith<$Res> {
+class _$ReservationDMCopyWithImpl<$Res> implements $ReservationDMCopyWith<$Res> {
   _$ReservationDMCopyWithImpl(this._self, this._then);
 
   final ReservationDM _self;
@@ -2810,17 +2673,14 @@ extension ReservationDMPatterns on ReservationDM {
             @JsonKey(name: 'business_latitude') double? businessLatitude,
             @JsonKey(name: 'business_longitude') double? businessLongitude,
             @JsonKey(name: 'business_address') String? businessAddress,
-            @JsonKey(
-                name: 'business_country',
-                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
             FoodlyCountries? businessCountry,
             @JsonKey(name: 'user_uuid') String? userUuid,
             @JsonKey(name: 'user_name') String? userName,
             @JsonKey(name: 'user_photo') String? userPhoto,
             @JsonKey(name: 'user_email') String? userEmail,
             @JsonKey(name: 'user_phone') String? userPhone,
-            @JsonKey(name: 'user_phone_country_code')
-            String? userPhoneCountryCode,
+            @JsonKey(name: 'user_phone_country_code') String? userPhoneCountryCode,
             @JsonKey(name: 'service_package_uuid') String? servicePackageUuid,
             @JsonKey(name: 'service_package_title') String? servicePackageTitle,
             @JsonKey(name: 'event_address') String? eventAddress,
@@ -2924,17 +2784,14 @@ extension ReservationDMPatterns on ReservationDM {
             @JsonKey(name: 'business_latitude') double? businessLatitude,
             @JsonKey(name: 'business_longitude') double? businessLongitude,
             @JsonKey(name: 'business_address') String? businessAddress,
-            @JsonKey(
-                name: 'business_country',
-                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
             FoodlyCountries? businessCountry,
             @JsonKey(name: 'user_uuid') String? userUuid,
             @JsonKey(name: 'user_name') String? userName,
             @JsonKey(name: 'user_photo') String? userPhoto,
             @JsonKey(name: 'user_email') String? userEmail,
             @JsonKey(name: 'user_phone') String? userPhone,
-            @JsonKey(name: 'user_phone_country_code')
-            String? userPhoneCountryCode,
+            @JsonKey(name: 'user_phone_country_code') String? userPhoneCountryCode,
             @JsonKey(name: 'service_package_uuid') String? servicePackageUuid,
             @JsonKey(name: 'service_package_title') String? servicePackageTitle,
             @JsonKey(name: 'event_address') String? eventAddress,
@@ -3036,17 +2893,14 @@ extension ReservationDMPatterns on ReservationDM {
             @JsonKey(name: 'business_latitude') double? businessLatitude,
             @JsonKey(name: 'business_longitude') double? businessLongitude,
             @JsonKey(name: 'business_address') String? businessAddress,
-            @JsonKey(
-                name: 'business_country',
-                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
             FoodlyCountries? businessCountry,
             @JsonKey(name: 'user_uuid') String? userUuid,
             @JsonKey(name: 'user_name') String? userName,
             @JsonKey(name: 'user_photo') String? userPhoto,
             @JsonKey(name: 'user_email') String? userEmail,
             @JsonKey(name: 'user_phone') String? userPhone,
-            @JsonKey(name: 'user_phone_country_code')
-            String? userPhoneCountryCode,
+            @JsonKey(name: 'user_phone_country_code') String? userPhoneCountryCode,
             @JsonKey(name: 'service_package_uuid') String? servicePackageUuid,
             @JsonKey(name: 'service_package_title') String? servicePackageTitle,
             @JsonKey(name: 'event_address') String? eventAddress,
@@ -3138,10 +2992,7 @@ class _ReservationDM extends ReservationDM {
       @JsonKey(name: 'business_latitude') this.businessLatitude,
       @JsonKey(name: 'business_longitude') this.businessLongitude,
       @JsonKey(name: 'business_address') this.businessAddress,
-      @JsonKey(
-          name: 'business_country',
-          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-      this.businessCountry,
+      @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue) this.businessCountry,
       @JsonKey(name: 'user_uuid') this.userUuid,
       @JsonKey(name: 'user_name') this.userName,
       @JsonKey(name: 'user_photo') this.userPhoto,
@@ -3164,8 +3015,7 @@ class _ReservationDM extends ReservationDM {
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'updated_at') this.updatedAt})
       : super._();
-  factory _ReservationDM.fromJson(Map<String, dynamic> json) =>
-      _$ReservationDMFromJson(json);
+  factory _ReservationDM.fromJson(Map<String, dynamic> json) => _$ReservationDMFromJson(json);
 
   @override
   @JsonKey(name: 'reservation_id')
@@ -3234,9 +3084,7 @@ class _ReservationDM extends ReservationDM {
 // the whole reservations list MUST NOT fail to deserialize. We just
 // fall back to the global '$' default at the consumer site.
   @override
-  @JsonKey(
-      name: 'business_country',
-      unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+  @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
   final FoodlyCountries? businessCountry;
 // User info
   @override
@@ -3328,87 +3176,50 @@ class _ReservationDM extends ReservationDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ReservationDM &&
-            (identical(other.reservationId, reservationId) ||
-                other.reservationId == reservationId) &&
-            (identical(other.reservationUuid, reservationUuid) ||
-                other.reservationUuid == reservationUuid) &&
+            (identical(other.reservationId, reservationId) || other.reservationId == reservationId) &&
+            (identical(other.reservationUuid, reservationUuid) || other.reservationUuid == reservationUuid) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.bookingType, bookingType) ||
-                other.bookingType == bookingType) &&
-            (identical(other.reservationDate, reservationDate) ||
-                other.reservationDate == reservationDate) &&
-            (identical(other.reservationTime, reservationTime) ||
-                other.reservationTime == reservationTime) &&
-            (identical(other.partySize, partySize) ||
-                other.partySize == partySize) &&
-            (identical(other.specialRequests, specialRequests) ||
-                other.specialRequests == specialRequests) &&
-            (identical(other.managerNotes, managerNotes) ||
-                other.managerNotes == managerNotes) &&
-            (identical(other.cancelledBy, cancelledBy) ||
-                other.cancelledBy == cancelledBy) &&
-            (identical(other.cancelledAt, cancelledAt) ||
-                other.cancelledAt == cancelledAt) &&
-            (identical(other.confirmedAt, confirmedAt) ||
-                other.confirmedAt == confirmedAt) &&
-            (identical(other.rejectedAt, rejectedAt) ||
-                other.rejectedAt == rejectedAt) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            (identical(other.businessName, businessName) ||
-                other.businessName == businessName) &&
-            (identical(other.businessPhoto, businessPhoto) ||
-                other.businessPhoto == businessPhoto) &&
-            (identical(other.businessLatitude, businessLatitude) ||
-                other.businessLatitude == businessLatitude) &&
-            (identical(other.businessLongitude, businessLongitude) ||
-                other.businessLongitude == businessLongitude) &&
-            (identical(other.businessAddress, businessAddress) ||
-                other.businessAddress == businessAddress) &&
-            (identical(other.businessCountry, businessCountry) ||
-                other.businessCountry == businessCountry) &&
-            (identical(other.userUuid, userUuid) ||
-                other.userUuid == userUuid) &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.userPhoto, userPhoto) ||
-                other.userPhoto == userPhoto) &&
-            (identical(other.userEmail, userEmail) ||
-                other.userEmail == userEmail) &&
-            (identical(other.userPhone, userPhone) ||
-                other.userPhone == userPhone) &&
+            (identical(other.bookingType, bookingType) || other.bookingType == bookingType) &&
+            (identical(other.reservationDate, reservationDate) || other.reservationDate == reservationDate) &&
+            (identical(other.reservationTime, reservationTime) || other.reservationTime == reservationTime) &&
+            (identical(other.partySize, partySize) || other.partySize == partySize) &&
+            (identical(other.specialRequests, specialRequests) || other.specialRequests == specialRequests) &&
+            (identical(other.managerNotes, managerNotes) || other.managerNotes == managerNotes) &&
+            (identical(other.cancelledBy, cancelledBy) || other.cancelledBy == cancelledBy) &&
+            (identical(other.cancelledAt, cancelledAt) || other.cancelledAt == cancelledAt) &&
+            (identical(other.confirmedAt, confirmedAt) || other.confirmedAt == confirmedAt) &&
+            (identical(other.rejectedAt, rejectedAt) || other.rejectedAt == rejectedAt) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            (identical(other.businessName, businessName) || other.businessName == businessName) &&
+            (identical(other.businessPhoto, businessPhoto) || other.businessPhoto == businessPhoto) &&
+            (identical(other.businessLatitude, businessLatitude) || other.businessLatitude == businessLatitude) &&
+            (identical(other.businessLongitude, businessLongitude) || other.businessLongitude == businessLongitude) &&
+            (identical(other.businessAddress, businessAddress) || other.businessAddress == businessAddress) &&
+            (identical(other.businessCountry, businessCountry) || other.businessCountry == businessCountry) &&
+            (identical(other.userUuid, userUuid) || other.userUuid == userUuid) &&
+            (identical(other.userName, userName) || other.userName == userName) &&
+            (identical(other.userPhoto, userPhoto) || other.userPhoto == userPhoto) &&
+            (identical(other.userEmail, userEmail) || other.userEmail == userEmail) &&
+            (identical(other.userPhone, userPhone) || other.userPhone == userPhone) &&
             (identical(other.userPhoneCountryCode, userPhoneCountryCode) ||
                 other.userPhoneCountryCode == userPhoneCountryCode) &&
             (identical(other.servicePackageUuid, servicePackageUuid) ||
                 other.servicePackageUuid == servicePackageUuid) &&
             (identical(other.servicePackageTitle, servicePackageTitle) ||
                 other.servicePackageTitle == servicePackageTitle) &&
-            (identical(other.eventAddress, eventAddress) ||
-                other.eventAddress == eventAddress) &&
-            (identical(other.eventCity, eventCity) ||
-                other.eventCity == eventCity) &&
-            (identical(other.eventLatitude, eventLatitude) ||
-                other.eventLatitude == eventLatitude) &&
-            (identical(other.eventLongitude, eventLongitude) ||
-                other.eventLongitude == eventLongitude) &&
-            (identical(other.eventType, eventType) ||
-                other.eventType == eventType) &&
-            (identical(other.guestCount, guestCount) ||
-                other.guestCount == guestCount) &&
-            (identical(other.dietaryNotes, dietaryNotes) ||
-                other.dietaryNotes == dietaryNotes) &&
-            (identical(other.budgetEstimate, budgetEstimate) ||
-                other.budgetEstimate == budgetEstimate) &&
-            (identical(other.quotedAmount, quotedAmount) ||
-                other.quotedAmount == quotedAmount) &&
-            (identical(other.quotedAt, quotedAt) ||
-                other.quotedAt == quotedAt) &&
-            (identical(other.messagesCount, messagesCount) ||
-                other.messagesCount == messagesCount) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.eventAddress, eventAddress) || other.eventAddress == eventAddress) &&
+            (identical(other.eventCity, eventCity) || other.eventCity == eventCity) &&
+            (identical(other.eventLatitude, eventLatitude) || other.eventLatitude == eventLatitude) &&
+            (identical(other.eventLongitude, eventLongitude) || other.eventLongitude == eventLongitude) &&
+            (identical(other.eventType, eventType) || other.eventType == eventType) &&
+            (identical(other.guestCount, guestCount) || other.guestCount == guestCount) &&
+            (identical(other.dietaryNotes, dietaryNotes) || other.dietaryNotes == dietaryNotes) &&
+            (identical(other.budgetEstimate, budgetEstimate) || other.budgetEstimate == budgetEstimate) &&
+            (identical(other.quotedAmount, quotedAmount) || other.quotedAmount == quotedAmount) &&
+            (identical(other.quotedAt, quotedAt) || other.quotedAt == quotedAt) &&
+            (identical(other.messagesCount, messagesCount) || other.messagesCount == messagesCount) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -3465,10 +3276,8 @@ class _ReservationDM extends ReservationDM {
 }
 
 /// @nodoc
-abstract mixin class _$ReservationDMCopyWith<$Res>
-    implements $ReservationDMCopyWith<$Res> {
-  factory _$ReservationDMCopyWith(
-          _ReservationDM value, $Res Function(_ReservationDM) _then) =
+abstract mixin class _$ReservationDMCopyWith<$Res> implements $ReservationDMCopyWith<$Res> {
+  factory _$ReservationDMCopyWith(_ReservationDM value, $Res Function(_ReservationDM) _then) =
       __$ReservationDMCopyWithImpl;
   @override
   @useResult
@@ -3492,9 +3301,7 @@ abstract mixin class _$ReservationDMCopyWith<$Res>
       @JsonKey(name: 'business_latitude') double? businessLatitude,
       @JsonKey(name: 'business_longitude') double? businessLongitude,
       @JsonKey(name: 'business_address') String? businessAddress,
-      @JsonKey(
-          name: 'business_country',
-          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
       FoodlyCountries? businessCountry,
       @JsonKey(name: 'user_uuid') String? userUuid,
       @JsonKey(name: 'user_name') String? userName,
@@ -3520,8 +3327,7 @@ abstract mixin class _$ReservationDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ReservationDMCopyWithImpl<$Res>
-    implements _$ReservationDMCopyWith<$Res> {
+class __$ReservationDMCopyWithImpl<$Res> implements _$ReservationDMCopyWith<$Res> {
   __$ReservationDMCopyWithImpl(this._self, this._then);
 
   final _ReservationDM _self;

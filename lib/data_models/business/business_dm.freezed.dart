@@ -61,8 +61,7 @@ mixin _$BusinessDM {
   @JsonKey(name: 'ratings_count')
   int? get ratingsCount;
   @JsonKey(name: 'business_opening_hours')
-  BusinessDays
-      get businessDays; // Server-computed open/closed status using the BUSINESS's local
+  BusinessDays get businessDays; // Server-computed open/closed status using the BUSINESS's local
 // timezone (derived from `business_country` in `BusinessStatusHelper`
 // on the BE). The FE no longer computes this — see [currentStatus]
 // getter below for the parsed enum, and `BusinessStatusHelper.php` for
@@ -71,8 +70,7 @@ mixin _$BusinessDM {
 // Values: 'open' | 'closed' | 'opening_soon'. Null only on payloads
 // from controllers that haven't been updated yet (defensive).
   @JsonKey(name: 'status')
-  String?
-      get status; // Human-readable hours for TODAY in the business's local time, e.g.
+  String? get status; // Human-readable hours for TODAY in the business's local time, e.g.
 // "09:00 – 22:00" or "09:00 – 14:00 / 18:00 – 23:00" for split shifts.
 // Server-side string ready to render. Null when no hours configured
 // for today.
@@ -114,8 +112,7 @@ mixin _$BusinessDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $BusinessDMCopyWith<BusinessDM> get copyWith =>
-      _$BusinessDMCopyWithImpl<BusinessDM>(this as BusinessDM, _$identity);
+  $BusinessDMCopyWith<BusinessDM> get copyWith => _$BusinessDMCopyWithImpl<BusinessDM>(this as BusinessDM, _$identity);
 
   /// Serializes this BusinessDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -127,61 +124,44 @@ mixin _$BusinessDM {
             other is BusinessDM &&
             (identical(other.intId, intId) || other.intId == intId) &&
             (identical(other.logo, logo) || other.logo == logo) &&
-            const DeepCollectionEquality()
-                .equals(other.coverImages, coverImages) &&
+            const DeepCollectionEquality().equals(other.coverImages, coverImages) &&
             const DeepCollectionEquality().equals(other.branches, branches) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.aboutUs, aboutUs) || other.aboutUs == aboutUs) &&
             const DeepCollectionEquality().equals(other.services, services) &&
-            const DeepCollectionEquality()
-                .equals(other.promotions, promotions) &&
-            (identical(other.additionalInfo, additionalInfo) ||
-                other.additionalInfo == additionalInfo) &&
+            const DeepCollectionEquality().equals(other.promotions, promotions) &&
+            (identical(other.additionalInfo, additionalInfo) || other.additionalInfo == additionalInfo) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.phoneNumber, phoneNumber) ||
-                other.phoneNumber == phoneNumber) &&
+            (identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber) &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.zipCode, zipCode) || other.zipCode == zipCode) &&
             (identical(other.city, city) || other.city == city) &&
             (identical(other.country, country) || other.country == country) &&
             const DeepCollectionEquality().equals(other.menus, menus) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude) &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId) &&
-            (identical(other.category, category) ||
-                other.category == category) &&
+            (identical(other.latitude, latitude) || other.latitude == latitude) &&
+            (identical(other.longitude, longitude) || other.longitude == longitude) &&
+            (identical(other.categoryId, categoryId) || other.categoryId == categoryId) &&
+            (identical(other.category, category) || other.category == category) &&
             (identical(other.rating, rating) || other.rating == rating) &&
-            (identical(other.ratingsCount, ratingsCount) ||
-                other.ratingsCount == ratingsCount) &&
-            (identical(other.businessDays, businessDays) ||
-                other.businessDays == businessDays) &&
+            (identical(other.ratingsCount, ratingsCount) || other.ratingsCount == ratingsCount) &&
+            (identical(other.businessDays, businessDays) || other.businessDays == businessDays) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.hoursDisplay, hoursDisplay) ||
-                other.hoursDisplay == hoursDisplay) &&
-            (identical(other.followersLength, followersLength) ||
-                other.followersLength == followersLength) &&
-            (identical(other.introMessage, introMessage) ||
-                other.introMessage == introMessage) &&
-            (identical(other.allowReservations, allowReservations) ||
-                other.allowReservations == allowReservations) &&
+            (identical(other.hoursDisplay, hoursDisplay) || other.hoursDisplay == hoursDisplay) &&
+            (identical(other.followersLength, followersLength) || other.followersLength == followersLength) &&
+            (identical(other.introMessage, introMessage) || other.introMessage == introMessage) &&
+            (identical(other.allowReservations, allowReservations) || other.allowReservations == allowReservations) &&
             (identical(other.cardMinAmountMinor, cardMinAmountMinor) ||
                 other.cardMinAmountMinor == cardMinAmountMinor) &&
             (identical(other.reservationsSizeLimit, reservationsSizeLimit) ||
                 other.reservationsSizeLimit == reservationsSizeLimit) &&
-            (identical(other.menuEnabled, menuEnabled) ||
-                other.menuEnabled == menuEnabled) &&
-            (identical(other.combosLabel, combosLabel) ||
-                other.combosLabel == combosLabel) &&
+            (identical(other.menuEnabled, menuEnabled) || other.menuEnabled == menuEnabled) &&
+            (identical(other.combosLabel, combosLabel) || other.combosLabel == combosLabel) &&
             (identical(other.aiPromoMonthlyLimit, aiPromoMonthlyLimit) ||
                 other.aiPromoMonthlyLimit == aiPromoMonthlyLimit) &&
             (identical(other.aiPromosUsedThisMonth, aiPromosUsedThisMonth) ||
                 other.aiPromosUsedThisMonth == aiPromosUsedThisMonth) &&
-            (identical(other.minServicePrice, minServicePrice) ||
-                other.minServicePrice == minServicePrice) &&
+            (identical(other.minServicePrice, minServicePrice) || other.minServicePrice == minServicePrice) &&
             const DeepCollectionEquality().equals(other.reviews, reviews));
   }
 
@@ -236,9 +216,7 @@ mixin _$BusinessDM {
 
 /// @nodoc
 abstract mixin class $BusinessDMCopyWith<$Res> {
-  factory $BusinessDMCopyWith(
-          BusinessDM value, $Res Function(BusinessDM) _then) =
-      _$BusinessDMCopyWithImpl;
+  factory $BusinessDMCopyWith(BusinessDM value, $Res Function(BusinessDM) _then) = _$BusinessDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'id') int? intId,
@@ -260,8 +238,7 @@ abstract mixin class $BusinessDMCopyWith<$Res> {
       @JsonKey(name: 'business_menus') List<MenuDM> menus,
       @JsonKey(name: 'business_latitude') double? latitude,
       @JsonKey(name: 'business_longitude') double? longitude,
-      @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson)
-      FoodlyCategories? categoryId,
+      @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson) FoodlyCategories? categoryId,
       @JsonKey(name: 'category') CategoryDM? category,
       @JsonKey(name: 'rating_avg') double? rating,
       @JsonKey(name: 'ratings_count') int? ratingsCount,
@@ -277,8 +254,7 @@ abstract mixin class $BusinessDMCopyWith<$Res> {
       @JsonKey(name: 'combos_label') String? combosLabel,
       @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
       @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth,
-      @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
-      double? minServicePrice,
+      @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson) double? minServicePrice,
       List<ReviewDM> reviews});
 
   $CategoryDMCopyWith<$Res>? get category;
@@ -608,14 +584,12 @@ extension BusinessDMPatterns on BusinessDM {
     TResult Function(
             @JsonKey(name: 'id') int? intId,
             @JsonKey(name: 'business_logo') String logo,
-            @JsonKey(name: 'cover_images')
-            List<BusinessCoverImageDM> coverImages,
+            @JsonKey(name: 'cover_images') List<BusinessCoverImageDM> coverImages,
             @JsonKey(name: 'branches') List<BusinessDM> branches,
             @JsonKey(name: 'business_uuid') String uuid,
             @JsonKey(name: 'business_name') String? name,
             @JsonKey(name: 'business_about_us') String? aboutUs,
-            @JsonKey(name: 'business_services')
-            List<BusinessServicesDM>? services,
+            @JsonKey(name: 'business_services') List<BusinessServicesDM>? services,
             @JsonKey(name: 'business_promotions') List<PromotionDM>? promotions,
             @JsonKey(name: 'business_additional_info') String? additionalInfo,
             @JsonKey(name: 'business_email') String? email,
@@ -627,8 +601,7 @@ extension BusinessDMPatterns on BusinessDM {
             @JsonKey(name: 'business_menus') List<MenuDM> menus,
             @JsonKey(name: 'business_latitude') double? latitude,
             @JsonKey(name: 'business_longitude') double? longitude,
-            @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson)
-            FoodlyCategories? categoryId,
+            @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson) FoodlyCategories? categoryId,
             @JsonKey(name: 'category') CategoryDM? category,
             @JsonKey(name: 'rating_avg') double? rating,
             @JsonKey(name: 'ratings_count') int? ratingsCount,
@@ -643,10 +616,8 @@ extension BusinessDMPatterns on BusinessDM {
             @JsonKey(name: 'menu_enabled') bool menuEnabled,
             @JsonKey(name: 'combos_label') String? combosLabel,
             @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
-            @JsonKey(name: 'ai_promos_used_this_month')
-            int aiPromosUsedThisMonth,
-            @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
-            double? minServicePrice,
+            @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth,
+            @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson) double? minServicePrice,
             List<ReviewDM> reviews)?
         $default, {
     required TResult orElse(),
@@ -715,14 +686,12 @@ extension BusinessDMPatterns on BusinessDM {
     TResult Function(
             @JsonKey(name: 'id') int? intId,
             @JsonKey(name: 'business_logo') String logo,
-            @JsonKey(name: 'cover_images')
-            List<BusinessCoverImageDM> coverImages,
+            @JsonKey(name: 'cover_images') List<BusinessCoverImageDM> coverImages,
             @JsonKey(name: 'branches') List<BusinessDM> branches,
             @JsonKey(name: 'business_uuid') String uuid,
             @JsonKey(name: 'business_name') String? name,
             @JsonKey(name: 'business_about_us') String? aboutUs,
-            @JsonKey(name: 'business_services')
-            List<BusinessServicesDM>? services,
+            @JsonKey(name: 'business_services') List<BusinessServicesDM>? services,
             @JsonKey(name: 'business_promotions') List<PromotionDM>? promotions,
             @JsonKey(name: 'business_additional_info') String? additionalInfo,
             @JsonKey(name: 'business_email') String? email,
@@ -734,8 +703,7 @@ extension BusinessDMPatterns on BusinessDM {
             @JsonKey(name: 'business_menus') List<MenuDM> menus,
             @JsonKey(name: 'business_latitude') double? latitude,
             @JsonKey(name: 'business_longitude') double? longitude,
-            @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson)
-            FoodlyCategories? categoryId,
+            @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson) FoodlyCategories? categoryId,
             @JsonKey(name: 'category') CategoryDM? category,
             @JsonKey(name: 'rating_avg') double? rating,
             @JsonKey(name: 'ratings_count') int? ratingsCount,
@@ -750,10 +718,8 @@ extension BusinessDMPatterns on BusinessDM {
             @JsonKey(name: 'menu_enabled') bool menuEnabled,
             @JsonKey(name: 'combos_label') String? combosLabel,
             @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
-            @JsonKey(name: 'ai_promos_used_this_month')
-            int aiPromosUsedThisMonth,
-            @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
-            double? minServicePrice,
+            @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth,
+            @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson) double? minServicePrice,
             List<ReviewDM> reviews)
         $default,
   ) {
@@ -820,14 +786,12 @@ extension BusinessDMPatterns on BusinessDM {
     TResult? Function(
             @JsonKey(name: 'id') int? intId,
             @JsonKey(name: 'business_logo') String logo,
-            @JsonKey(name: 'cover_images')
-            List<BusinessCoverImageDM> coverImages,
+            @JsonKey(name: 'cover_images') List<BusinessCoverImageDM> coverImages,
             @JsonKey(name: 'branches') List<BusinessDM> branches,
             @JsonKey(name: 'business_uuid') String uuid,
             @JsonKey(name: 'business_name') String? name,
             @JsonKey(name: 'business_about_us') String? aboutUs,
-            @JsonKey(name: 'business_services')
-            List<BusinessServicesDM>? services,
+            @JsonKey(name: 'business_services') List<BusinessServicesDM>? services,
             @JsonKey(name: 'business_promotions') List<PromotionDM>? promotions,
             @JsonKey(name: 'business_additional_info') String? additionalInfo,
             @JsonKey(name: 'business_email') String? email,
@@ -839,8 +803,7 @@ extension BusinessDMPatterns on BusinessDM {
             @JsonKey(name: 'business_menus') List<MenuDM> menus,
             @JsonKey(name: 'business_latitude') double? latitude,
             @JsonKey(name: 'business_longitude') double? longitude,
-            @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson)
-            FoodlyCategories? categoryId,
+            @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson) FoodlyCategories? categoryId,
             @JsonKey(name: 'category') CategoryDM? category,
             @JsonKey(name: 'rating_avg') double? rating,
             @JsonKey(name: 'ratings_count') int? ratingsCount,
@@ -855,10 +818,8 @@ extension BusinessDMPatterns on BusinessDM {
             @JsonKey(name: 'menu_enabled') bool menuEnabled,
             @JsonKey(name: 'combos_label') String? combosLabel,
             @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
-            @JsonKey(name: 'ai_promos_used_this_month')
-            int aiPromosUsedThisMonth,
-            @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
-            double? minServicePrice,
+            @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth,
+            @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson) double? minServicePrice,
             List<ReviewDM> reviews)?
         $default,
   ) {
@@ -914,16 +875,13 @@ extension BusinessDMPatterns on BusinessDM {
 class _BusinessDM extends BusinessDM {
   const _BusinessDM(
       {@JsonKey(name: 'id') this.intId,
-      @JsonKey(name: 'business_logo')
-      this.logo = FoodlyStrings.LOGO_PLACEHOLDER,
-      @JsonKey(name: 'cover_images')
-      final List<BusinessCoverImageDM> coverImages = const [],
+      @JsonKey(name: 'business_logo') this.logo = FoodlyStrings.LOGO_PLACEHOLDER,
+      @JsonKey(name: 'cover_images') final List<BusinessCoverImageDM> coverImages = const [],
       @JsonKey(name: 'branches') final List<BusinessDM> branches = const [],
       @JsonKey(name: 'business_uuid') this.uuid = '',
       @JsonKey(name: 'business_name') this.name,
       @JsonKey(name: 'business_about_us') this.aboutUs,
-      @JsonKey(name: 'business_services')
-      final List<BusinessServicesDM>? services,
+      @JsonKey(name: 'business_services') final List<BusinessServicesDM>? services,
       @JsonKey(name: 'business_promotions') final List<PromotionDM>? promotions,
       @JsonKey(name: 'business_additional_info') this.additionalInfo,
       @JsonKey(name: 'business_email') this.email,
@@ -935,13 +893,11 @@ class _BusinessDM extends BusinessDM {
       @JsonKey(name: 'business_menus') final List<MenuDM> menus = const [],
       @JsonKey(name: 'business_latitude') this.latitude,
       @JsonKey(name: 'business_longitude') this.longitude,
-      @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson)
-      this.categoryId,
+      @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson) this.categoryId,
       @JsonKey(name: 'category') this.category,
       @JsonKey(name: 'rating_avg') this.rating,
       @JsonKey(name: 'ratings_count') this.ratingsCount,
-      @JsonKey(name: 'business_opening_hours')
-      this.businessDays = const BusinessDays(),
+      @JsonKey(name: 'business_opening_hours') this.businessDays = const BusinessDays(),
       @JsonKey(name: 'status') this.status,
       @JsonKey(name: 'hours_display') this.hoursDisplay,
       @JsonKey(name: 'followers_length') this.followersLength = 0,
@@ -952,10 +908,8 @@ class _BusinessDM extends BusinessDM {
       @JsonKey(name: 'menu_enabled') this.menuEnabled = false,
       @JsonKey(name: 'combos_label') this.combosLabel,
       @JsonKey(name: 'ai_promo_monthly_limit') this.aiPromoMonthlyLimit = 3,
-      @JsonKey(name: 'ai_promos_used_this_month')
-      this.aiPromosUsedThisMonth = 0,
-      @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
-      this.minServicePrice,
+      @JsonKey(name: 'ai_promos_used_this_month') this.aiPromosUsedThisMonth = 0,
+      @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson) this.minServicePrice,
       final List<ReviewDM> reviews = const []})
       : _coverImages = coverImages,
         _branches = branches,
@@ -964,8 +918,7 @@ class _BusinessDM extends BusinessDM {
         _menus = menus,
         _reviews = reviews,
         super._();
-  factory _BusinessDM.fromJson(Map<String, dynamic> json) =>
-      _$BusinessDMFromJson(json);
+  factory _BusinessDM.fromJson(Map<String, dynamic> json) => _$BusinessDMFromJson(json);
 
   @override
   @JsonKey(name: 'id')
@@ -1148,8 +1101,7 @@ class _BusinessDM extends BusinessDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$BusinessDMCopyWith<_BusinessDM> get copyWith =>
-      __$BusinessDMCopyWithImpl<_BusinessDM>(this, _$identity);
+  _$BusinessDMCopyWith<_BusinessDM> get copyWith => __$BusinessDMCopyWithImpl<_BusinessDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1165,61 +1117,44 @@ class _BusinessDM extends BusinessDM {
             other is _BusinessDM &&
             (identical(other.intId, intId) || other.intId == intId) &&
             (identical(other.logo, logo) || other.logo == logo) &&
-            const DeepCollectionEquality()
-                .equals(other._coverImages, _coverImages) &&
+            const DeepCollectionEquality().equals(other._coverImages, _coverImages) &&
             const DeepCollectionEquality().equals(other._branches, _branches) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.aboutUs, aboutUs) || other.aboutUs == aboutUs) &&
             const DeepCollectionEquality().equals(other._services, _services) &&
-            const DeepCollectionEquality()
-                .equals(other._promotions, _promotions) &&
-            (identical(other.additionalInfo, additionalInfo) ||
-                other.additionalInfo == additionalInfo) &&
+            const DeepCollectionEquality().equals(other._promotions, _promotions) &&
+            (identical(other.additionalInfo, additionalInfo) || other.additionalInfo == additionalInfo) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.phoneNumber, phoneNumber) ||
-                other.phoneNumber == phoneNumber) &&
+            (identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber) &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.zipCode, zipCode) || other.zipCode == zipCode) &&
             (identical(other.city, city) || other.city == city) &&
             (identical(other.country, country) || other.country == country) &&
             const DeepCollectionEquality().equals(other._menus, _menus) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude) &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId) &&
-            (identical(other.category, category) ||
-                other.category == category) &&
+            (identical(other.latitude, latitude) || other.latitude == latitude) &&
+            (identical(other.longitude, longitude) || other.longitude == longitude) &&
+            (identical(other.categoryId, categoryId) || other.categoryId == categoryId) &&
+            (identical(other.category, category) || other.category == category) &&
             (identical(other.rating, rating) || other.rating == rating) &&
-            (identical(other.ratingsCount, ratingsCount) ||
-                other.ratingsCount == ratingsCount) &&
-            (identical(other.businessDays, businessDays) ||
-                other.businessDays == businessDays) &&
+            (identical(other.ratingsCount, ratingsCount) || other.ratingsCount == ratingsCount) &&
+            (identical(other.businessDays, businessDays) || other.businessDays == businessDays) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.hoursDisplay, hoursDisplay) ||
-                other.hoursDisplay == hoursDisplay) &&
-            (identical(other.followersLength, followersLength) ||
-                other.followersLength == followersLength) &&
-            (identical(other.introMessage, introMessage) ||
-                other.introMessage == introMessage) &&
-            (identical(other.allowReservations, allowReservations) ||
-                other.allowReservations == allowReservations) &&
+            (identical(other.hoursDisplay, hoursDisplay) || other.hoursDisplay == hoursDisplay) &&
+            (identical(other.followersLength, followersLength) || other.followersLength == followersLength) &&
+            (identical(other.introMessage, introMessage) || other.introMessage == introMessage) &&
+            (identical(other.allowReservations, allowReservations) || other.allowReservations == allowReservations) &&
             (identical(other.cardMinAmountMinor, cardMinAmountMinor) ||
                 other.cardMinAmountMinor == cardMinAmountMinor) &&
             (identical(other.reservationsSizeLimit, reservationsSizeLimit) ||
                 other.reservationsSizeLimit == reservationsSizeLimit) &&
-            (identical(other.menuEnabled, menuEnabled) ||
-                other.menuEnabled == menuEnabled) &&
-            (identical(other.combosLabel, combosLabel) ||
-                other.combosLabel == combosLabel) &&
+            (identical(other.menuEnabled, menuEnabled) || other.menuEnabled == menuEnabled) &&
+            (identical(other.combosLabel, combosLabel) || other.combosLabel == combosLabel) &&
             (identical(other.aiPromoMonthlyLimit, aiPromoMonthlyLimit) ||
                 other.aiPromoMonthlyLimit == aiPromoMonthlyLimit) &&
             (identical(other.aiPromosUsedThisMonth, aiPromosUsedThisMonth) ||
                 other.aiPromosUsedThisMonth == aiPromosUsedThisMonth) &&
-            (identical(other.minServicePrice, minServicePrice) ||
-                other.minServicePrice == minServicePrice) &&
+            (identical(other.minServicePrice, minServicePrice) || other.minServicePrice == minServicePrice) &&
             const DeepCollectionEquality().equals(other._reviews, _reviews));
   }
 
@@ -1273,11 +1208,8 @@ class _BusinessDM extends BusinessDM {
 }
 
 /// @nodoc
-abstract mixin class _$BusinessDMCopyWith<$Res>
-    implements $BusinessDMCopyWith<$Res> {
-  factory _$BusinessDMCopyWith(
-          _BusinessDM value, $Res Function(_BusinessDM) _then) =
-      __$BusinessDMCopyWithImpl;
+abstract mixin class _$BusinessDMCopyWith<$Res> implements $BusinessDMCopyWith<$Res> {
+  factory _$BusinessDMCopyWith(_BusinessDM value, $Res Function(_BusinessDM) _then) = __$BusinessDMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -1300,8 +1232,7 @@ abstract mixin class _$BusinessDMCopyWith<$Res>
       @JsonKey(name: 'business_menus') List<MenuDM> menus,
       @JsonKey(name: 'business_latitude') double? latitude,
       @JsonKey(name: 'business_longitude') double? longitude,
-      @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson)
-      FoodlyCategories? categoryId,
+      @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson) FoodlyCategories? categoryId,
       @JsonKey(name: 'category') CategoryDM? category,
       @JsonKey(name: 'rating_avg') double? rating,
       @JsonKey(name: 'ratings_count') int? ratingsCount,
@@ -1317,8 +1248,7 @@ abstract mixin class _$BusinessDMCopyWith<$Res>
       @JsonKey(name: 'combos_label') String? combosLabel,
       @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
       @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth,
-      @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
-      double? minServicePrice,
+      @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson) double? minServicePrice,
       List<ReviewDM> reviews});
 
   @override
@@ -1569,8 +1499,7 @@ mixin _$CategoryDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $CategoryDMCopyWith<CategoryDM> get copyWith =>
-      _$CategoryDMCopyWithImpl<CategoryDM>(this as CategoryDM, _$identity);
+  $CategoryDMCopyWith<CategoryDM> get copyWith => _$CategoryDMCopyWithImpl<CategoryDM>(this as CategoryDM, _$identity);
 
   /// Serializes this CategoryDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1581,18 +1510,14 @@ mixin _$CategoryDM {
         (other.runtimeType == runtimeType &&
             other is CategoryDM &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.categoryUuid, categoryUuid) ||
-                other.categoryUuid == categoryUuid) &&
-            (identical(other.categoryName, categoryName) ||
-                other.categoryName == categoryName) &&
-            (identical(other.categoryImagePath, categoryImagePath) ||
-                other.categoryImagePath == categoryImagePath));
+            (identical(other.categoryUuid, categoryUuid) || other.categoryUuid == categoryUuid) &&
+            (identical(other.categoryName, categoryName) || other.categoryName == categoryName) &&
+            (identical(other.categoryImagePath, categoryImagePath) || other.categoryImagePath == categoryImagePath));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, categoryUuid, categoryName, categoryImagePath);
+  int get hashCode => Object.hash(runtimeType, id, categoryUuid, categoryName, categoryImagePath);
 
   @override
   String toString() {
@@ -1602,13 +1527,10 @@ mixin _$CategoryDM {
 
 /// @nodoc
 abstract mixin class $CategoryDMCopyWith<$Res> {
-  factory $CategoryDMCopyWith(
-          CategoryDM value, $Res Function(CategoryDM) _then) =
-      _$CategoryDMCopyWithImpl;
+  factory $CategoryDMCopyWith(CategoryDM value, $Res Function(CategoryDM) _then) = _$CategoryDMCopyWithImpl;
   @useResult
   $Res call(
-      {@JsonKey(name: 'id', fromJson: _safeCategoryFromJson)
-      FoodlyCategories? id,
+      {@JsonKey(name: 'id', fromJson: _safeCategoryFromJson) FoodlyCategories? id,
       @JsonKey(name: 'category_uuid') String? categoryUuid,
       @JsonKey(name: 'category_name') String? categoryName,
       @JsonKey(name: 'category_image_path') String? categoryImagePath});
@@ -1746,8 +1668,7 @@ extension CategoryDMPatterns on CategoryDM {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
-            @JsonKey(name: 'id', fromJson: _safeCategoryFromJson)
-            FoodlyCategories? id,
+            @JsonKey(name: 'id', fromJson: _safeCategoryFromJson) FoodlyCategories? id,
             @JsonKey(name: 'category_uuid') String? categoryUuid,
             @JsonKey(name: 'category_name') String? categoryName,
             @JsonKey(name: 'category_image_path') String? categoryImagePath)?
@@ -1757,8 +1678,7 @@ extension CategoryDMPatterns on CategoryDM {
     final _that = this;
     switch (_that) {
       case _CategoryDM() when $default != null:
-        return $default(_that.id, _that.categoryUuid, _that.categoryName,
-            _that.categoryImagePath);
+        return $default(_that.id, _that.categoryUuid, _that.categoryName, _that.categoryImagePath);
       case _:
         return orElse();
     }
@@ -1780,8 +1700,7 @@ extension CategoryDMPatterns on CategoryDM {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
-            @JsonKey(name: 'id', fromJson: _safeCategoryFromJson)
-            FoodlyCategories? id,
+            @JsonKey(name: 'id', fromJson: _safeCategoryFromJson) FoodlyCategories? id,
             @JsonKey(name: 'category_uuid') String? categoryUuid,
             @JsonKey(name: 'category_name') String? categoryName,
             @JsonKey(name: 'category_image_path') String? categoryImagePath)
@@ -1790,8 +1709,7 @@ extension CategoryDMPatterns on CategoryDM {
     final _that = this;
     switch (_that) {
       case _CategoryDM():
-        return $default(_that.id, _that.categoryUuid, _that.categoryName,
-            _that.categoryImagePath);
+        return $default(_that.id, _that.categoryUuid, _that.categoryName, _that.categoryImagePath);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -1812,8 +1730,7 @@ extension CategoryDMPatterns on CategoryDM {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
-            @JsonKey(name: 'id', fromJson: _safeCategoryFromJson)
-            FoodlyCategories? id,
+            @JsonKey(name: 'id', fromJson: _safeCategoryFromJson) FoodlyCategories? id,
             @JsonKey(name: 'category_uuid') String? categoryUuid,
             @JsonKey(name: 'category_name') String? categoryName,
             @JsonKey(name: 'category_image_path') String? categoryImagePath)?
@@ -1822,8 +1739,7 @@ extension CategoryDMPatterns on CategoryDM {
     final _that = this;
     switch (_that) {
       case _CategoryDM() when $default != null:
-        return $default(_that.id, _that.categoryUuid, _that.categoryName,
-            _that.categoryImagePath);
+        return $default(_that.id, _that.categoryUuid, _that.categoryName, _that.categoryImagePath);
       case _:
         return null;
     }
@@ -1838,8 +1754,7 @@ class _CategoryDM implements CategoryDM {
       @JsonKey(name: 'category_uuid') this.categoryUuid,
       @JsonKey(name: 'category_name') this.categoryName,
       @JsonKey(name: 'category_image_path') this.categoryImagePath});
-  factory _CategoryDM.fromJson(Map<String, dynamic> json) =>
-      _$CategoryDMFromJson(json);
+  factory _CategoryDM.fromJson(Map<String, dynamic> json) => _$CategoryDMFromJson(json);
 
   @override
   @JsonKey(name: 'id', fromJson: _safeCategoryFromJson)
@@ -1859,8 +1774,7 @@ class _CategoryDM implements CategoryDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$CategoryDMCopyWith<_CategoryDM> get copyWith =>
-      __$CategoryDMCopyWithImpl<_CategoryDM>(this, _$identity);
+  _$CategoryDMCopyWith<_CategoryDM> get copyWith => __$CategoryDMCopyWithImpl<_CategoryDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1875,18 +1789,14 @@ class _CategoryDM implements CategoryDM {
         (other.runtimeType == runtimeType &&
             other is _CategoryDM &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.categoryUuid, categoryUuid) ||
-                other.categoryUuid == categoryUuid) &&
-            (identical(other.categoryName, categoryName) ||
-                other.categoryName == categoryName) &&
-            (identical(other.categoryImagePath, categoryImagePath) ||
-                other.categoryImagePath == categoryImagePath));
+            (identical(other.categoryUuid, categoryUuid) || other.categoryUuid == categoryUuid) &&
+            (identical(other.categoryName, categoryName) || other.categoryName == categoryName) &&
+            (identical(other.categoryImagePath, categoryImagePath) || other.categoryImagePath == categoryImagePath));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, categoryUuid, categoryName, categoryImagePath);
+  int get hashCode => Object.hash(runtimeType, id, categoryUuid, categoryName, categoryImagePath);
 
   @override
   String toString() {
@@ -1895,16 +1805,12 @@ class _CategoryDM implements CategoryDM {
 }
 
 /// @nodoc
-abstract mixin class _$CategoryDMCopyWith<$Res>
-    implements $CategoryDMCopyWith<$Res> {
-  factory _$CategoryDMCopyWith(
-          _CategoryDM value, $Res Function(_CategoryDM) _then) =
-      __$CategoryDMCopyWithImpl;
+abstract mixin class _$CategoryDMCopyWith<$Res> implements $CategoryDMCopyWith<$Res> {
+  factory _$CategoryDMCopyWith(_CategoryDM value, $Res Function(_CategoryDM) _then) = __$CategoryDMCopyWithImpl;
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'id', fromJson: _safeCategoryFromJson)
-      FoodlyCategories? id,
+      {@JsonKey(name: 'id', fromJson: _safeCategoryFromJson) FoodlyCategories? id,
       @JsonKey(name: 'category_uuid') String? categoryUuid,
       @JsonKey(name: 'category_name') String? categoryName,
       @JsonKey(name: 'category_image_path') String? categoryImagePath});
@@ -1970,8 +1876,7 @@ mixin _$BusinessServicesDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $BusinessServicesDMCopyWith<BusinessServicesDM> get copyWith =>
-      _$BusinessServicesDMCopyWithImpl<BusinessServicesDM>(
-          this as BusinessServicesDM, _$identity);
+      _$BusinessServicesDMCopyWithImpl<BusinessServicesDM>(this as BusinessServicesDM, _$identity);
 
   /// Serializes this BusinessServicesDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1983,18 +1888,14 @@ mixin _$BusinessServicesDM {
             other is BusinessServicesDM &&
             (identical(other.service, service) || other.service == service) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.serviceName, serviceName) ||
-                other.serviceName == serviceName) &&
-            (identical(other.serviceDescriptio, serviceDescriptio) ||
-                other.serviceDescriptio == serviceDescriptio) &&
-            (identical(other.serviceImagePath, serviceImagePath) ||
-                other.serviceImagePath == serviceImagePath));
+            (identical(other.serviceName, serviceName) || other.serviceName == serviceName) &&
+            (identical(other.serviceDescriptio, serviceDescriptio) || other.serviceDescriptio == serviceDescriptio) &&
+            (identical(other.serviceImagePath, serviceImagePath) || other.serviceImagePath == serviceImagePath));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, service, uuid, serviceName,
-      serviceDescriptio, serviceImagePath);
+  int get hashCode => Object.hash(runtimeType, service, uuid, serviceName, serviceDescriptio, serviceImagePath);
 
   @override
   String toString() {
@@ -2004,13 +1905,11 @@ mixin _$BusinessServicesDM {
 
 /// @nodoc
 abstract mixin class $BusinessServicesDMCopyWith<$Res> {
-  factory $BusinessServicesDMCopyWith(
-          BusinessServicesDM value, $Res Function(BusinessServicesDM) _then) =
+  factory $BusinessServicesDMCopyWith(BusinessServicesDM value, $Res Function(BusinessServicesDM) _then) =
       _$BusinessServicesDMCopyWithImpl;
   @useResult
   $Res call(
-      {@JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-      BusinessServices? service,
+      {@JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue) BusinessServices? service,
       @JsonKey(name: 'service_uuid') String? uuid,
       @JsonKey(name: 'service_name') String? serviceName,
       @JsonKey(name: 'service_description') String? serviceDescriptio,
@@ -2018,8 +1917,7 @@ abstract mixin class $BusinessServicesDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BusinessServicesDMCopyWithImpl<$Res>
-    implements $BusinessServicesDMCopyWith<$Res> {
+class _$BusinessServicesDMCopyWithImpl<$Res> implements $BusinessServicesDMCopyWith<$Res> {
   _$BusinessServicesDMCopyWithImpl(this._self, this._then);
 
   final BusinessServicesDM _self;
@@ -2155,9 +2053,7 @@ extension BusinessServicesDMPatterns on BusinessServicesDM {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
-            @JsonKey(
-                name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-            BusinessServices? service,
+            @JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue) BusinessServices? service,
             @JsonKey(name: 'service_uuid') String? uuid,
             @JsonKey(name: 'service_name') String? serviceName,
             @JsonKey(name: 'service_description') String? serviceDescriptio,
@@ -2168,8 +2064,7 @@ extension BusinessServicesDMPatterns on BusinessServicesDM {
     final _that = this;
     switch (_that) {
       case _BusinessServiceDM() when $default != null:
-        return $default(_that.service, _that.uuid, _that.serviceName,
-            _that.serviceDescriptio, _that.serviceImagePath);
+        return $default(_that.service, _that.uuid, _that.serviceName, _that.serviceDescriptio, _that.serviceImagePath);
       case _:
         return orElse();
     }
@@ -2191,9 +2086,7 @@ extension BusinessServicesDMPatterns on BusinessServicesDM {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
-            @JsonKey(
-                name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-            BusinessServices? service,
+            @JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue) BusinessServices? service,
             @JsonKey(name: 'service_uuid') String? uuid,
             @JsonKey(name: 'service_name') String? serviceName,
             @JsonKey(name: 'service_description') String? serviceDescriptio,
@@ -2203,8 +2096,7 @@ extension BusinessServicesDMPatterns on BusinessServicesDM {
     final _that = this;
     switch (_that) {
       case _BusinessServiceDM():
-        return $default(_that.service, _that.uuid, _that.serviceName,
-            _that.serviceDescriptio, _that.serviceImagePath);
+        return $default(_that.service, _that.uuid, _that.serviceName, _that.serviceDescriptio, _that.serviceImagePath);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -2225,9 +2117,7 @@ extension BusinessServicesDMPatterns on BusinessServicesDM {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
-            @JsonKey(
-                name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-            BusinessServices? service,
+            @JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue) BusinessServices? service,
             @JsonKey(name: 'service_uuid') String? uuid,
             @JsonKey(name: 'service_name') String? serviceName,
             @JsonKey(name: 'service_description') String? serviceDescriptio,
@@ -2237,8 +2127,7 @@ extension BusinessServicesDMPatterns on BusinessServicesDM {
     final _that = this;
     switch (_that) {
       case _BusinessServiceDM() when $default != null:
-        return $default(_that.service, _that.uuid, _that.serviceName,
-            _that.serviceDescriptio, _that.serviceImagePath);
+        return $default(_that.service, _that.uuid, _that.serviceName, _that.serviceDescriptio, _that.serviceImagePath);
       case _:
         return null;
     }
@@ -2249,15 +2138,13 @@ extension BusinessServicesDMPatterns on BusinessServicesDM {
 @JsonSerializable()
 class _BusinessServiceDM extends BusinessServicesDM {
   const _BusinessServiceDM(
-      {@JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-      this.service,
+      {@JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue) this.service,
       @JsonKey(name: 'service_uuid') this.uuid,
       @JsonKey(name: 'service_name') this.serviceName,
       @JsonKey(name: 'service_description') this.serviceDescriptio,
       @JsonKey(name: 'service_image_path') this.serviceImagePath})
       : super._();
-  factory _BusinessServiceDM.fromJson(Map<String, dynamic> json) =>
-      _$BusinessServiceDMFromJson(json);
+  factory _BusinessServiceDM.fromJson(Map<String, dynamic> json) => _$BusinessServiceDMFromJson(json);
 
   @override
   @JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
@@ -2297,18 +2184,14 @@ class _BusinessServiceDM extends BusinessServicesDM {
             other is _BusinessServiceDM &&
             (identical(other.service, service) || other.service == service) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.serviceName, serviceName) ||
-                other.serviceName == serviceName) &&
-            (identical(other.serviceDescriptio, serviceDescriptio) ||
-                other.serviceDescriptio == serviceDescriptio) &&
-            (identical(other.serviceImagePath, serviceImagePath) ||
-                other.serviceImagePath == serviceImagePath));
+            (identical(other.serviceName, serviceName) || other.serviceName == serviceName) &&
+            (identical(other.serviceDescriptio, serviceDescriptio) || other.serviceDescriptio == serviceDescriptio) &&
+            (identical(other.serviceImagePath, serviceImagePath) || other.serviceImagePath == serviceImagePath));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, service, uuid, serviceName,
-      serviceDescriptio, serviceImagePath);
+  int get hashCode => Object.hash(runtimeType, service, uuid, serviceName, serviceDescriptio, serviceImagePath);
 
   @override
   String toString() {
@@ -2317,16 +2200,13 @@ class _BusinessServiceDM extends BusinessServicesDM {
 }
 
 /// @nodoc
-abstract mixin class _$BusinessServiceDMCopyWith<$Res>
-    implements $BusinessServicesDMCopyWith<$Res> {
-  factory _$BusinessServiceDMCopyWith(
-          _BusinessServiceDM value, $Res Function(_BusinessServiceDM) _then) =
+abstract mixin class _$BusinessServiceDMCopyWith<$Res> implements $BusinessServicesDMCopyWith<$Res> {
+  factory _$BusinessServiceDMCopyWith(_BusinessServiceDM value, $Res Function(_BusinessServiceDM) _then) =
       __$BusinessServiceDMCopyWithImpl;
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-      BusinessServices? service,
+      {@JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue) BusinessServices? service,
       @JsonKey(name: 'service_uuid') String? uuid,
       @JsonKey(name: 'service_name') String? serviceName,
       @JsonKey(name: 'service_description') String? serviceDescriptio,
@@ -2334,8 +2214,7 @@ abstract mixin class _$BusinessServiceDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$BusinessServiceDMCopyWithImpl<$Res>
-    implements _$BusinessServiceDMCopyWith<$Res> {
+class __$BusinessServiceDMCopyWithImpl<$Res> implements _$BusinessServiceDMCopyWith<$Res> {
   __$BusinessServiceDMCopyWithImpl(this._self, this._then);
 
   final _BusinessServiceDM _self;

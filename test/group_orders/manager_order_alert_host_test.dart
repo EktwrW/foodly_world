@@ -44,7 +44,8 @@ void main() {
         if (body != null) 'body': body,
       };
 
-  testWidgets('push fuera del panel → modal con cuerpo; CTA navega al panel '
+  testWidgets(
+      'push fuera del panel → modal con cuerpo; CTA navega al panel '
       'del negocio del payload y cierra', (tester) async {
     String? navigatedTo;
     await tester.pumpWidget(host(onGo: (uuid, _) => navigatedTo = uuid));
@@ -103,7 +104,8 @@ void main() {
     expect(find.text('segunda'), findsNothing);
   });
 
-  testWidgets('payload sin business_uuid usa el fallback (negocio del owner '
+  testWidgets(
+      'payload sin business_uuid usa el fallback (negocio del owner '
       'en sesión)', (tester) async {
     String? navigatedTo;
     await tester.pumpWidget(host(onGo: (uuid, _) => navigatedTo = uuid, fallbackUuid: 'biz-fallback'));
@@ -139,8 +141,7 @@ void main() {
     expect(find.text(S.current.managerNewOrderTitle), findsNothing);
   });
 
-  testWidgets('kind=paid (prepago) → "¡Nueva orden pagada!" e invita a atenderla',
-      (tester) async {
+  testWidgets('kind=paid (prepago) → "¡Nueva orden pagada!" e invita a atenderla', (tester) async {
     await tester.pumpWidget(host());
     pushes.add(push(businessUuid: 'biz-1', kind: 'paid'));
     await tester.pumpAndSettle();
@@ -150,7 +151,8 @@ void main() {
     expect(find.text(S.current.managerNewOrderGo), findsOneWidget);
   });
 
-  testWidgets('kind=tab_closed (cuenta abierta) → "Cuenta cerrada" y NO invita '
+  testWidgets(
+      'kind=tab_closed (cuenta abierta) → "Cuenta cerrada" y NO invita '
       'a atender una mesa que ya se fue', (tester) async {
     await tester.pumpWidget(host());
     pushes.add(push(businessUuid: 'biz-1', kind: 'tab_closed'));
@@ -188,8 +190,7 @@ void main() {
 
   // ── Navegación a la orden concreta ─────────────────────────────────
 
-  testWidgets('el CTA lleva el uuid de la ORDEN, no solo el del negocio',
-      (tester) async {
+  testWidgets('el CTA lleva el uuid de la ORDEN, no solo el del negocio', (tester) async {
     String? biz;
     String? order;
     await tester.pumpWidget(host(onGo: (b, o) {

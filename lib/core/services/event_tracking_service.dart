@@ -142,7 +142,8 @@ class EventTrackingService with WidgetsBindingObserver {
     } catch (e) {
       _consecutiveFailures++;
       if (_consecutiveFailures <= _maxRetries) {
-        _logger.w('[Analytics] Batch flush failed (attempt $_consecutiveFailures/$_maxRetries) — re-queuing ${batch.length} events');
+        _logger.w(
+            '[Analytics] Batch flush failed (attempt $_consecutiveFailures/$_maxRetries) — re-queuing ${batch.length} events');
         final available = _maxQueueSize - _queue.length;
         if (available > 0) {
           _queue.insertAll(0, batch.take(available));

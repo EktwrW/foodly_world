@@ -28,41 +28,26 @@ mixin _$NotificationsVM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $NotificationsVMCopyWith<NotificationsVM> get copyWith =>
-      _$NotificationsVMCopyWithImpl<NotificationsVM>(
-          this as NotificationsVM, _$identity);
+      _$NotificationsVMCopyWithImpl<NotificationsVM>(this as NotificationsVM, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is NotificationsVM &&
-            const DeepCollectionEquality()
-                .equals(other.notifications, notifications) &&
-            (identical(other.unreadCount, unreadCount) ||
-                other.unreadCount == unreadCount) &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.lastPage, lastPage) ||
-                other.lastPage == lastPage) &&
+            const DeepCollectionEquality().equals(other.notifications, notifications) &&
+            (identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount) &&
+            (identical(other.currentPage, currentPage) || other.currentPage == currentPage) &&
+            (identical(other.lastPage, lastPage) || other.lastPage == lastPage) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
             (identical(other.total, total) || other.total == total) &&
-            (identical(other.isPolling, isPolling) ||
-                other.isPolling == isPolling) &&
-            (identical(other.hasMorePages, hasMorePages) ||
-                other.hasMorePages == hasMorePages));
+            (identical(other.isPolling, isPolling) || other.isPolling == isPolling) &&
+            (identical(other.hasMorePages, hasMorePages) || other.hasMorePages == hasMorePages));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(notifications),
-      unreadCount,
-      currentPage,
-      lastPage,
-      perPage,
-      total,
-      isPolling,
-      hasMorePages);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(notifications), unreadCount,
+      currentPage, lastPage, perPage, total, isPolling, hasMorePages);
 
   @override
   String toString() {
@@ -72,8 +57,7 @@ mixin _$NotificationsVM {
 
 /// @nodoc
 abstract mixin class $NotificationsVMCopyWith<$Res> {
-  factory $NotificationsVMCopyWith(
-          NotificationsVM value, $Res Function(NotificationsVM) _then) =
+  factory $NotificationsVMCopyWith(NotificationsVM value, $Res Function(NotificationsVM) _then) =
       _$NotificationsVMCopyWithImpl;
   @useResult
   $Res call(
@@ -88,8 +72,7 @@ abstract mixin class $NotificationsVMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NotificationsVMCopyWithImpl<$Res>
-    implements $NotificationsVMCopyWith<$Res> {
+class _$NotificationsVMCopyWithImpl<$Res> implements $NotificationsVMCopyWith<$Res> {
   _$NotificationsVMCopyWithImpl(this._self, this._then);
 
   final NotificationsVM _self;
@@ -239,30 +222,16 @@ extension NotificationsVMPatterns on NotificationsVM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            List<NotificationDM> notifications,
-            int unreadCount,
-            int currentPage,
-            int lastPage,
-            int perPage,
-            int total,
-            bool isPolling,
-            bool hasMorePages)?
+    TResult Function(List<NotificationDM> notifications, int unreadCount, int currentPage, int lastPage, int perPage,
+            int total, bool isPolling, bool hasMorePages)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _NotificationsVM() when $default != null:
-        return $default(
-            _that.notifications,
-            _that.unreadCount,
-            _that.currentPage,
-            _that.lastPage,
-            _that.perPage,
-            _that.total,
-            _that.isPolling,
-            _that.hasMorePages);
+        return $default(_that.notifications, _that.unreadCount, _that.currentPage, _that.lastPage, _that.perPage,
+            _that.total, _that.isPolling, _that.hasMorePages);
       case _:
         return orElse();
     }
@@ -283,29 +252,15 @@ extension NotificationsVMPatterns on NotificationsVM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            List<NotificationDM> notifications,
-            int unreadCount,
-            int currentPage,
-            int lastPage,
-            int perPage,
-            int total,
-            bool isPolling,
-            bool hasMorePages)
+    TResult Function(List<NotificationDM> notifications, int unreadCount, int currentPage, int lastPage, int perPage,
+            int total, bool isPolling, bool hasMorePages)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _NotificationsVM():
-        return $default(
-            _that.notifications,
-            _that.unreadCount,
-            _that.currentPage,
-            _that.lastPage,
-            _that.perPage,
-            _that.total,
-            _that.isPolling,
-            _that.hasMorePages);
+        return $default(_that.notifications, _that.unreadCount, _that.currentPage, _that.lastPage, _that.perPage,
+            _that.total, _that.isPolling, _that.hasMorePages);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -325,29 +280,15 @@ extension NotificationsVMPatterns on NotificationsVM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            List<NotificationDM> notifications,
-            int unreadCount,
-            int currentPage,
-            int lastPage,
-            int perPage,
-            int total,
-            bool isPolling,
-            bool hasMorePages)?
+    TResult? Function(List<NotificationDM> notifications, int unreadCount, int currentPage, int lastPage, int perPage,
+            int total, bool isPolling, bool hasMorePages)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _NotificationsVM() when $default != null:
-        return $default(
-            _that.notifications,
-            _that.unreadCount,
-            _that.currentPage,
-            _that.lastPage,
-            _that.perPage,
-            _that.total,
-            _that.isPolling,
-            _that.hasMorePages);
+        return $default(_that.notifications, _that.unreadCount, _that.currentPage, _that.lastPage, _that.perPage,
+            _that.total, _that.isPolling, _that.hasMorePages);
       case _:
         return null;
     }
@@ -413,33 +354,19 @@ class _NotificationsVM extends NotificationsVM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _NotificationsVM &&
-            const DeepCollectionEquality()
-                .equals(other._notifications, _notifications) &&
-            (identical(other.unreadCount, unreadCount) ||
-                other.unreadCount == unreadCount) &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.lastPage, lastPage) ||
-                other.lastPage == lastPage) &&
+            const DeepCollectionEquality().equals(other._notifications, _notifications) &&
+            (identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount) &&
+            (identical(other.currentPage, currentPage) || other.currentPage == currentPage) &&
+            (identical(other.lastPage, lastPage) || other.lastPage == lastPage) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
             (identical(other.total, total) || other.total == total) &&
-            (identical(other.isPolling, isPolling) ||
-                other.isPolling == isPolling) &&
-            (identical(other.hasMorePages, hasMorePages) ||
-                other.hasMorePages == hasMorePages));
+            (identical(other.isPolling, isPolling) || other.isPolling == isPolling) &&
+            (identical(other.hasMorePages, hasMorePages) || other.hasMorePages == hasMorePages));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_notifications),
-      unreadCount,
-      currentPage,
-      lastPage,
-      perPage,
-      total,
-      isPolling,
-      hasMorePages);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_notifications), unreadCount,
+      currentPage, lastPage, perPage, total, isPolling, hasMorePages);
 
   @override
   String toString() {
@@ -448,10 +375,8 @@ class _NotificationsVM extends NotificationsVM {
 }
 
 /// @nodoc
-abstract mixin class _$NotificationsVMCopyWith<$Res>
-    implements $NotificationsVMCopyWith<$Res> {
-  factory _$NotificationsVMCopyWith(
-          _NotificationsVM value, $Res Function(_NotificationsVM) _then) =
+abstract mixin class _$NotificationsVMCopyWith<$Res> implements $NotificationsVMCopyWith<$Res> {
+  factory _$NotificationsVMCopyWith(_NotificationsVM value, $Res Function(_NotificationsVM) _then) =
       __$NotificationsVMCopyWithImpl;
   @override
   @useResult
@@ -467,8 +392,7 @@ abstract mixin class _$NotificationsVMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$NotificationsVMCopyWithImpl<$Res>
-    implements _$NotificationsVMCopyWith<$Res> {
+class __$NotificationsVMCopyWithImpl<$Res> implements _$NotificationsVMCopyWith<$Res> {
   __$NotificationsVMCopyWithImpl(this._self, this._then);
 
   final _NotificationsVM _self;

@@ -115,9 +115,8 @@ void main() {
 
     test('los totales de la mesa nunca incluyen anulados', () {
       for (final o in allOrders(mode: GroupPaymentMode.openTab)) {
-        final expectedSent = o.items
-            .where((i) => i.isSent && !i.isVoided)
-            .fold<double>(0, (acc, i) => acc + i.lineTotal);
+        final expectedSent =
+            o.items.where((i) => i.isSent && !i.isVoided).fold<double>(0, (acc, i) => acc + i.lineTotal);
         expect(o.sentTotal, expectedSent, reason: o.uuid);
         expect(o.pendingTotal, greaterThanOrEqualTo(0), reason: o.uuid);
       }
@@ -181,7 +180,8 @@ void main() {
   });
 
   group('invariantes del panel del manager', () {
-    test('si queda algo por servir, la orden NUNCA está "terminada" '
+    test(
+        'si queda algo por servir, la orden NUNCA está "terminada" '
         '(bug e2e: tarjeta opaca con chip ENTREGADA y 2/3 ítems)', () {
       for (final o in allOrders(mode: GroupPaymentMode.openTab)) {
         // "Falta servir" se mide en términos de COCINA: un plato que sigue
@@ -272,8 +272,7 @@ void main() {
         items: [itemShapes['entregado']!('a'), itemShapes['entregado']!('b')],
       );
 
-      expect(o.canBeClosedByBusiness, isTrue,
-          reason: 'sin esto el negocio no tiene NINGÚN botón para esta mesa');
+      expect(o.canBeClosedByBusiness, isTrue, reason: 'sin esto el negocio no tiene NINGÚN botón para esta mesa');
     });
 
     test('un pago en vuelo sigue bloqueando el cierre', () {

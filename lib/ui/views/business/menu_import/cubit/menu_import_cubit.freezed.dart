@@ -21,15 +21,12 @@ mixin _$MenuImportState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $MenuImportStateCopyWith<MenuImportState> get copyWith =>
-      _$MenuImportStateCopyWithImpl<MenuImportState>(
-          this as MenuImportState, _$identity);
+      _$MenuImportStateCopyWithImpl<MenuImportState>(this as MenuImportState, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is MenuImportState &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is MenuImportState && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -43,8 +40,7 @@ mixin _$MenuImportState {
 
 /// @nodoc
 abstract mixin class $MenuImportStateCopyWith<$Res> {
-  factory $MenuImportStateCopyWith(
-          MenuImportState value, $Res Function(MenuImportState) _then) =
+  factory $MenuImportStateCopyWith(MenuImportState value, $Res Function(MenuImportState) _then) =
       _$MenuImportStateCopyWithImpl;
   @useResult
   $Res call({MenuImportVM vm});
@@ -53,8 +49,7 @@ abstract mixin class $MenuImportStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MenuImportStateCopyWithImpl<$Res>
-    implements $MenuImportStateCopyWith<$Res> {
+class _$MenuImportStateCopyWithImpl<$Res> implements $MenuImportStateCopyWith<$Res> {
   _$MenuImportStateCopyWithImpl(this._self, this._then);
 
   final MenuImportState _self;
@@ -378,15 +373,12 @@ class _Initial implements MenuImportState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Initial &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Initial && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -399,10 +391,8 @@ class _Initial implements MenuImportState {
 }
 
 /// @nodoc
-abstract mixin class _$InitialCopyWith<$Res>
-    implements $MenuImportStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
-      __$InitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $MenuImportStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({MenuImportVM vm});
@@ -457,15 +447,12 @@ class _Picking implements MenuImportState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PickingCopyWith<_Picking> get copyWith =>
-      __$PickingCopyWithImpl<_Picking>(this, _$identity);
+  _$PickingCopyWith<_Picking> get copyWith => __$PickingCopyWithImpl<_Picking>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Picking &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Picking && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -478,10 +465,8 @@ class _Picking implements MenuImportState {
 }
 
 /// @nodoc
-abstract mixin class _$PickingCopyWith<$Res>
-    implements $MenuImportStateCopyWith<$Res> {
-  factory _$PickingCopyWith(_Picking value, $Res Function(_Picking) _then) =
-      __$PickingCopyWithImpl;
+abstract mixin class _$PickingCopyWith<$Res> implements $MenuImportStateCopyWith<$Res> {
+  factory _$PickingCopyWith(_Picking value, $Res Function(_Picking) _then) = __$PickingCopyWithImpl;
   @override
   @useResult
   $Res call({MenuImportVM vm});
@@ -536,15 +521,12 @@ class _Uploading implements MenuImportState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$UploadingCopyWith<_Uploading> get copyWith =>
-      __$UploadingCopyWithImpl<_Uploading>(this, _$identity);
+  _$UploadingCopyWith<_Uploading> get copyWith => __$UploadingCopyWithImpl<_Uploading>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Uploading &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Uploading && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -557,11 +539,8 @@ class _Uploading implements MenuImportState {
 }
 
 /// @nodoc
-abstract mixin class _$UploadingCopyWith<$Res>
-    implements $MenuImportStateCopyWith<$Res> {
-  factory _$UploadingCopyWith(
-          _Uploading value, $Res Function(_Uploading) _then) =
-      __$UploadingCopyWithImpl;
+abstract mixin class _$UploadingCopyWith<$Res> implements $MenuImportStateCopyWith<$Res> {
+  factory _$UploadingCopyWith(_Uploading value, $Res Function(_Uploading) _then) = __$UploadingCopyWithImpl;
   @override
   @useResult
   $Res call({MenuImportVM vm});
@@ -616,15 +595,12 @@ class _Parsing implements MenuImportState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ParsingCopyWith<_Parsing> get copyWith =>
-      __$ParsingCopyWithImpl<_Parsing>(this, _$identity);
+  _$ParsingCopyWith<_Parsing> get copyWith => __$ParsingCopyWithImpl<_Parsing>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Parsing &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Parsing && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -637,10 +613,8 @@ class _Parsing implements MenuImportState {
 }
 
 /// @nodoc
-abstract mixin class _$ParsingCopyWith<$Res>
-    implements $MenuImportStateCopyWith<$Res> {
-  factory _$ParsingCopyWith(_Parsing value, $Res Function(_Parsing) _then) =
-      __$ParsingCopyWithImpl;
+abstract mixin class _$ParsingCopyWith<$Res> implements $MenuImportStateCopyWith<$Res> {
+  factory _$ParsingCopyWith(_Parsing value, $Res Function(_Parsing) _then) = __$ParsingCopyWithImpl;
   @override
   @useResult
   $Res call({MenuImportVM vm});
@@ -695,15 +669,12 @@ class _Reviewing implements MenuImportState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ReviewingCopyWith<_Reviewing> get copyWith =>
-      __$ReviewingCopyWithImpl<_Reviewing>(this, _$identity);
+  _$ReviewingCopyWith<_Reviewing> get copyWith => __$ReviewingCopyWithImpl<_Reviewing>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Reviewing &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Reviewing && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -716,11 +687,8 @@ class _Reviewing implements MenuImportState {
 }
 
 /// @nodoc
-abstract mixin class _$ReviewingCopyWith<$Res>
-    implements $MenuImportStateCopyWith<$Res> {
-  factory _$ReviewingCopyWith(
-          _Reviewing value, $Res Function(_Reviewing) _then) =
-      __$ReviewingCopyWithImpl;
+abstract mixin class _$ReviewingCopyWith<$Res> implements $MenuImportStateCopyWith<$Res> {
+  factory _$ReviewingCopyWith(_Reviewing value, $Res Function(_Reviewing) _then) = __$ReviewingCopyWithImpl;
   @override
   @useResult
   $Res call({MenuImportVM vm});
@@ -775,15 +743,12 @@ class _Confirming implements MenuImportState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ConfirmingCopyWith<_Confirming> get copyWith =>
-      __$ConfirmingCopyWithImpl<_Confirming>(this, _$identity);
+  _$ConfirmingCopyWith<_Confirming> get copyWith => __$ConfirmingCopyWithImpl<_Confirming>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Confirming &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Confirming && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -796,11 +761,8 @@ class _Confirming implements MenuImportState {
 }
 
 /// @nodoc
-abstract mixin class _$ConfirmingCopyWith<$Res>
-    implements $MenuImportStateCopyWith<$Res> {
-  factory _$ConfirmingCopyWith(
-          _Confirming value, $Res Function(_Confirming) _then) =
-      __$ConfirmingCopyWithImpl;
+abstract mixin class _$ConfirmingCopyWith<$Res> implements $MenuImportStateCopyWith<$Res> {
+  factory _$ConfirmingCopyWith(_Confirming value, $Res Function(_Confirming) _then) = __$ConfirmingCopyWithImpl;
   @override
   @useResult
   $Res call({MenuImportVM vm});
@@ -855,15 +817,12 @@ class _Done implements MenuImportState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$DoneCopyWith<_Done> get copyWith =>
-      __$DoneCopyWithImpl<_Done>(this, _$identity);
+  _$DoneCopyWith<_Done> get copyWith => __$DoneCopyWithImpl<_Done>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Done &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Done && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -876,10 +835,8 @@ class _Done implements MenuImportState {
 }
 
 /// @nodoc
-abstract mixin class _$DoneCopyWith<$Res>
-    implements $MenuImportStateCopyWith<$Res> {
-  factory _$DoneCopyWith(_Done value, $Res Function(_Done) _then) =
-      __$DoneCopyWithImpl;
+abstract mixin class _$DoneCopyWith<$Res> implements $MenuImportStateCopyWith<$Res> {
+  factory _$DoneCopyWith(_Done value, $Res Function(_Done) _then) = __$DoneCopyWithImpl;
   @override
   @useResult
   $Res call({MenuImportVM vm});
@@ -935,8 +892,7 @@ class _Error implements MenuImportState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -957,10 +913,8 @@ class _Error implements MenuImportState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $MenuImportStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $MenuImportStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({String message, MenuImportVM vm});

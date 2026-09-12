@@ -21,8 +21,7 @@ mixin _$ManagePromotionsState implements DiagnosticableTreeMixin {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ManagePromotionsStateCopyWith<ManagePromotionsState> get copyWith =>
-      _$ManagePromotionsStateCopyWithImpl<ManagePromotionsState>(
-          this as ManagePromotionsState, _$identity);
+      _$ManagePromotionsStateCopyWithImpl<ManagePromotionsState>(this as ManagePromotionsState, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -50,8 +49,7 @@ mixin _$ManagePromotionsState implements DiagnosticableTreeMixin {
 
 /// @nodoc
 abstract mixin class $ManagePromotionsStateCopyWith<$Res> {
-  factory $ManagePromotionsStateCopyWith(ManagePromotionsState value,
-          $Res Function(ManagePromotionsState) _then) =
+  factory $ManagePromotionsStateCopyWith(ManagePromotionsState value, $Res Function(ManagePromotionsState) _then) =
       _$ManagePromotionsStateCopyWithImpl;
   @useResult
   $Res call({ManagePromotionsVM vm});
@@ -60,8 +58,7 @@ abstract mixin class $ManagePromotionsStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ManagePromotionsStateCopyWithImpl<$Res>
-    implements $ManagePromotionsStateCopyWith<$Res> {
+class _$ManagePromotionsStateCopyWithImpl<$Res> implements $ManagePromotionsStateCopyWith<$Res> {
   _$ManagePromotionsStateCopyWithImpl(this._self, this._then);
 
   final ManagePromotionsState _self;
@@ -331,8 +328,7 @@ class _Initial with DiagnosticableTreeMixin implements ManagePromotionsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -344,9 +340,7 @@ class _Initial with DiagnosticableTreeMixin implements ManagePromotionsState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Initial &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Initial && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -359,10 +353,8 @@ class _Initial with DiagnosticableTreeMixin implements ManagePromotionsState {
 }
 
 /// @nodoc
-abstract mixin class _$InitialCopyWith<$Res>
-    implements $ManagePromotionsStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
-      __$InitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $ManagePromotionsStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({ManagePromotionsVM vm});
@@ -417,8 +409,7 @@ class _Loading with DiagnosticableTreeMixin implements ManagePromotionsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadingCopyWith<_Loading> get copyWith =>
-      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+  _$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -430,9 +421,7 @@ class _Loading with DiagnosticableTreeMixin implements ManagePromotionsState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loading &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loading && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -445,10 +434,8 @@ class _Loading with DiagnosticableTreeMixin implements ManagePromotionsState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadingCopyWith<$Res>
-    implements $ManagePromotionsStateCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
-      __$LoadingCopyWithImpl;
+abstract mixin class _$LoadingCopyWith<$Res> implements $ManagePromotionsStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
   @override
   @useResult
   $Res call({ManagePromotionsVM vm});
@@ -503,8 +490,7 @@ class _Loaded with DiagnosticableTreeMixin implements ManagePromotionsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -516,9 +502,7 @@ class _Loaded with DiagnosticableTreeMixin implements ManagePromotionsState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loaded &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loaded && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -531,10 +515,8 @@ class _Loaded with DiagnosticableTreeMixin implements ManagePromotionsState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res>
-    implements $ManagePromotionsStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
-      __$LoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $ManagePromotionsStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
   @override
   @useResult
   $Res call({ManagePromotionsVM vm});
@@ -590,8 +572,7 @@ class _Error with DiagnosticableTreeMixin implements ManagePromotionsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -620,10 +601,8 @@ class _Error with DiagnosticableTreeMixin implements ManagePromotionsState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $ManagePromotionsStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $ManagePromotionsStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({String message, ManagePromotionsVM vm});
@@ -672,9 +651,7 @@ class __$ErrorCopyWithImpl<$Res> implements _$ErrorCopyWith<$Res> {
 
 /// @nodoc
 
-class _AiQuotaExhausted
-    with DiagnosticableTreeMixin
-    implements ManagePromotionsState {
+class _AiQuotaExhausted with DiagnosticableTreeMixin implements ManagePromotionsState {
   const _AiQuotaExhausted(this.vm);
 
   @override
@@ -691,17 +668,14 @@ class _AiQuotaExhausted
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties
-      ..add(
-          DiagnosticsProperty('type', 'ManagePromotionsState.aiQuotaExhausted'))
+      ..add(DiagnosticsProperty('type', 'ManagePromotionsState.aiQuotaExhausted'))
       ..add(DiagnosticsProperty('vm', vm));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _AiQuotaExhausted &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _AiQuotaExhausted && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -714,10 +688,8 @@ class _AiQuotaExhausted
 }
 
 /// @nodoc
-abstract mixin class _$AiQuotaExhaustedCopyWith<$Res>
-    implements $ManagePromotionsStateCopyWith<$Res> {
-  factory _$AiQuotaExhaustedCopyWith(
-          _AiQuotaExhausted value, $Res Function(_AiQuotaExhausted) _then) =
+abstract mixin class _$AiQuotaExhaustedCopyWith<$Res> implements $ManagePromotionsStateCopyWith<$Res> {
+  factory _$AiQuotaExhaustedCopyWith(_AiQuotaExhausted value, $Res Function(_AiQuotaExhausted) _then) =
       __$AiQuotaExhaustedCopyWithImpl;
   @override
   @useResult
@@ -728,8 +700,7 @@ abstract mixin class _$AiQuotaExhaustedCopyWith<$Res>
 }
 
 /// @nodoc
-class __$AiQuotaExhaustedCopyWithImpl<$Res>
-    implements _$AiQuotaExhaustedCopyWith<$Res> {
+class __$AiQuotaExhaustedCopyWithImpl<$Res> implements _$AiQuotaExhaustedCopyWith<$Res> {
   __$AiQuotaExhaustedCopyWithImpl(this._self, this._then);
 
   final _AiQuotaExhausted _self;

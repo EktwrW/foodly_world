@@ -24,8 +24,7 @@ abstract class AvailabilityVM with _$AvailabilityVM {
   // ── Derived helpers ──────────────────────────────────────────
 
   /// Manual entries the manager can freely edit or delete.
-  List<BusinessAvailabilityDM> get manualEntries =>
-      entries.where((e) => e.isManual).toList(growable: false);
+  List<BusinessAvailabilityDM> get manualEntries => entries.where((e) => e.isManual).toList(growable: false);
 
   /// Entries auto-created from confirmed reservations (read-only in UI).
   List<BusinessAvailabilityDM> get autoReservationEntries =>
@@ -44,13 +43,11 @@ abstract class AvailabilityVM with _$AvailabilityVM {
   }
 
   /// True when [date] is fully blocked (any `isFullDay` entry on that date).
-  bool isFullyBlocked(DateTime date) =>
-      entriesForDate(date).any((e) => e.isFullDay && e.isBlocked);
+  bool isFullyBlocked(DateTime date) => entriesForDate(date).any((e) => e.isFullDay && e.isBlocked);
 
   /// True when [date] has partial blocks but no full-day block.
   bool hasPartialBlocks(DateTime date) {
     final list = entriesForDate(date);
-    return list.any((e) => e.isPartial && e.isBlocked) &&
-        !list.any((e) => e.isFullDay && e.isBlocked);
+    return list.any((e) => e.isPartial && e.isBlocked) && !list.any((e) => e.isFullDay && e.isBlocked);
   }
 }

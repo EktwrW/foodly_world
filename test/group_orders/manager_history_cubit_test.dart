@@ -102,7 +102,8 @@ void main() {
       expect(repo.calls, 1);
     });
 
-    test('loadMore guard: hasMore=true pero sin cursor (backend '
+    test(
+        'loadMore guard: hasMore=true pero sin cursor (backend '
         'inconsistente) → no-op', () async {
       repo.outcomes.add(const ApiResult.success(ManagerHistoryResponseDM(hasMore: true)));
       await cubit.load();

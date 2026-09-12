@@ -7,8 +7,7 @@ import 'package:foodly_world/data_models/analytics/service_overview_dm.dart';
 class DashboardRepo {
   final DashboardClient _dashboardClient;
 
-  const DashboardRepo({required DashboardClient dashboardClient})
-      : _dashboardClient = dashboardClient;
+  const DashboardRepo({required DashboardClient dashboardClient}) : _dashboardClient = dashboardClient;
 
   Future<ApiResult<BusinessOverviewResponseDM>> getBusinessOverview({
     int? days,

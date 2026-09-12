@@ -26,8 +26,7 @@ mixin _$ReviewUpdateDTO {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ReviewUpdateDTOCopyWith<ReviewUpdateDTO> get copyWith =>
-      _$ReviewUpdateDTOCopyWithImpl<ReviewUpdateDTO>(
-          this as ReviewUpdateDTO, _$identity);
+      _$ReviewUpdateDTOCopyWithImpl<ReviewUpdateDTO>(this as ReviewUpdateDTO, _$identity);
 
   /// Serializes this ReviewUpdateDTO to a JSON map.
   Map<String, dynamic> toJson();
@@ -38,17 +37,14 @@ mixin _$ReviewUpdateDTO {
         (other.runtimeType == runtimeType &&
             other is ReviewUpdateDTO &&
             (identical(other.rating, rating) || other.rating == rating) &&
-            (identical(other.reviewType, reviewType) ||
-                other.reviewType == reviewType) &&
+            (identical(other.reviewType, reviewType) || other.reviewType == reviewType) &&
             (identical(other.comment, comment) || other.comment == comment) &&
-            (identical(other.businessVisitedAt, businessVisitedAt) ||
-                other.businessVisitedAt == businessVisitedAt));
+            (identical(other.businessVisitedAt, businessVisitedAt) || other.businessVisitedAt == businessVisitedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, rating, reviewType, comment, businessVisitedAt);
+  int get hashCode => Object.hash(runtimeType, rating, reviewType, comment, businessVisitedAt);
 
   @override
   String toString() {
@@ -58,8 +54,7 @@ mixin _$ReviewUpdateDTO {
 
 /// @nodoc
 abstract mixin class $ReviewUpdateDTOCopyWith<$Res> {
-  factory $ReviewUpdateDTOCopyWith(
-          ReviewUpdateDTO value, $Res Function(ReviewUpdateDTO) _then) =
+  factory $ReviewUpdateDTOCopyWith(ReviewUpdateDTO value, $Res Function(ReviewUpdateDTO) _then) =
       _$ReviewUpdateDTOCopyWithImpl;
   @useResult
   $Res call(
@@ -70,8 +65,7 @@ abstract mixin class $ReviewUpdateDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReviewUpdateDTOCopyWithImpl<$Res>
-    implements $ReviewUpdateDTOCopyWith<$Res> {
+class _$ReviewUpdateDTOCopyWithImpl<$Res> implements $ReviewUpdateDTOCopyWith<$Res> {
   _$ReviewUpdateDTOCopyWithImpl(this._self, this._then);
 
   final ReviewUpdateDTO _self;
@@ -201,10 +195,7 @@ extension ReviewUpdateDTOPatterns on ReviewUpdateDTO {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            int? rating,
-            @JsonKey(name: 'review_type') ReviewType? reviewType,
-            String? comment,
+    TResult Function(int? rating, @JsonKey(name: 'review_type') ReviewType? reviewType, String? comment,
             @JsonKey(name: 'business_visited_at') String? businessVisitedAt)?
         $default, {
     required TResult orElse(),
@@ -212,8 +203,7 @@ extension ReviewUpdateDTOPatterns on ReviewUpdateDTO {
     final _that = this;
     switch (_that) {
       case _ReviewUpdateDTO() when $default != null:
-        return $default(_that.rating, _that.reviewType, _that.comment,
-            _that.businessVisitedAt);
+        return $default(_that.rating, _that.reviewType, _that.comment, _that.businessVisitedAt);
       case _:
         return orElse();
     }
@@ -234,18 +224,14 @@ extension ReviewUpdateDTOPatterns on ReviewUpdateDTO {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            int? rating,
-            @JsonKey(name: 'review_type') ReviewType? reviewType,
-            String? comment,
+    TResult Function(int? rating, @JsonKey(name: 'review_type') ReviewType? reviewType, String? comment,
             @JsonKey(name: 'business_visited_at') String? businessVisitedAt)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ReviewUpdateDTO():
-        return $default(_that.rating, _that.reviewType, _that.comment,
-            _that.businessVisitedAt);
+        return $default(_that.rating, _that.reviewType, _that.comment, _that.businessVisitedAt);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -265,18 +251,14 @@ extension ReviewUpdateDTOPatterns on ReviewUpdateDTO {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            int? rating,
-            @JsonKey(name: 'review_type') ReviewType? reviewType,
-            String? comment,
+    TResult? Function(int? rating, @JsonKey(name: 'review_type') ReviewType? reviewType, String? comment,
             @JsonKey(name: 'business_visited_at') String? businessVisitedAt)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ReviewUpdateDTO() when $default != null:
-        return $default(_that.rating, _that.reviewType, _that.comment,
-            _that.businessVisitedAt);
+        return $default(_that.rating, _that.reviewType, _that.comment, _that.businessVisitedAt);
       case _:
         return null;
     }
@@ -291,8 +273,7 @@ class _ReviewUpdateDTO implements ReviewUpdateDTO {
       @JsonKey(name: 'review_type') this.reviewType,
       this.comment,
       @JsonKey(name: 'business_visited_at') this.businessVisitedAt});
-  factory _ReviewUpdateDTO.fromJson(Map<String, dynamic> json) =>
-      _$ReviewUpdateDTOFromJson(json);
+  factory _ReviewUpdateDTO.fromJson(Map<String, dynamic> json) => _$ReviewUpdateDTOFromJson(json);
 
   @override
   final int? rating;
@@ -326,17 +307,14 @@ class _ReviewUpdateDTO implements ReviewUpdateDTO {
         (other.runtimeType == runtimeType &&
             other is _ReviewUpdateDTO &&
             (identical(other.rating, rating) || other.rating == rating) &&
-            (identical(other.reviewType, reviewType) ||
-                other.reviewType == reviewType) &&
+            (identical(other.reviewType, reviewType) || other.reviewType == reviewType) &&
             (identical(other.comment, comment) || other.comment == comment) &&
-            (identical(other.businessVisitedAt, businessVisitedAt) ||
-                other.businessVisitedAt == businessVisitedAt));
+            (identical(other.businessVisitedAt, businessVisitedAt) || other.businessVisitedAt == businessVisitedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, rating, reviewType, comment, businessVisitedAt);
+  int get hashCode => Object.hash(runtimeType, rating, reviewType, comment, businessVisitedAt);
 
   @override
   String toString() {
@@ -345,10 +323,8 @@ class _ReviewUpdateDTO implements ReviewUpdateDTO {
 }
 
 /// @nodoc
-abstract mixin class _$ReviewUpdateDTOCopyWith<$Res>
-    implements $ReviewUpdateDTOCopyWith<$Res> {
-  factory _$ReviewUpdateDTOCopyWith(
-          _ReviewUpdateDTO value, $Res Function(_ReviewUpdateDTO) _then) =
+abstract mixin class _$ReviewUpdateDTOCopyWith<$Res> implements $ReviewUpdateDTOCopyWith<$Res> {
+  factory _$ReviewUpdateDTOCopyWith(_ReviewUpdateDTO value, $Res Function(_ReviewUpdateDTO) _then) =
       __$ReviewUpdateDTOCopyWithImpl;
   @override
   @useResult
@@ -360,8 +336,7 @@ abstract mixin class _$ReviewUpdateDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ReviewUpdateDTOCopyWithImpl<$Res>
-    implements _$ReviewUpdateDTOCopyWith<$Res> {
+class __$ReviewUpdateDTOCopyWithImpl<$Res> implements _$ReviewUpdateDTOCopyWith<$Res> {
   __$ReviewUpdateDTOCopyWithImpl(this._self, this._then);
 
   final _ReviewUpdateDTO _self;

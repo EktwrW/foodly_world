@@ -171,9 +171,7 @@ class ManageReservationsCubit extends Cubit<ManageReservationsState> {
       success: (response) {
         final ReservationDM? updated = response.reservation;
         if (updated != null) {
-          final list = _vm.reservations
-              .map((r) => r.reservationUuid == uuid ? updated : r)
-              .toList();
+          final list = _vm.reservations.map((r) => r.reservationUuid == uuid ? updated : r).toList();
           _vm = _vm.copyWith(reservations: list);
         }
         emit(ManageReservationsState.loaded(_vm));

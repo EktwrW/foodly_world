@@ -12,6 +12,5 @@ abstract class PublicMenuResponseDM with _$PublicMenuResponseDM {
     required MenuDM menu,
   }) = _PublicMenuResponseDM;
 
-  factory PublicMenuResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$PublicMenuResponseDMFromJson(json);
+  factory PublicMenuResponseDM.fromJson(Map<String, dynamic> json) => _$PublicMenuResponseDMFromJson(json);
 }

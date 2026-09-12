@@ -15,8 +15,7 @@ abstract class AiPromoQuotaResponse with _$AiPromoQuotaResponse {
     String? message,
   }) = _AiPromoQuotaResponse;
 
-  factory AiPromoQuotaResponse.fromJson(Map<String, dynamic> json) =>
-      _$AiPromoQuotaResponseFromJson(json);
+  factory AiPromoQuotaResponse.fromJson(Map<String, dynamic> json) => _$AiPromoQuotaResponseFromJson(json);
 
   bool get quotaExhausted => !granted && remaining <= 0;
 }

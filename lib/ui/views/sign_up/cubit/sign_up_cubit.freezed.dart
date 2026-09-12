@@ -21,8 +21,7 @@ mixin _$SignUpState implements DiagnosticableTreeMixin {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SignUpState);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is SignUpState);
   }
 
   @override
@@ -101,8 +100,7 @@ extension SignUpStatePatterns on SignUpState {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_UserCreated value) userCreated,
-    required TResult Function(_BusinessCreationFinished value)
-        businessCreationFinished,
+    required TResult Function(_BusinessCreationFinished value) businessCreationFinished,
     required TResult Function(_Error value) error,
   }) {
     final _that = this;
@@ -140,8 +138,7 @@ extension SignUpStatePatterns on SignUpState {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_UserCreated value)? userCreated,
-    TResult? Function(_BusinessCreationFinished value)?
-        businessCreationFinished,
+    TResult? Function(_BusinessCreationFinished value)? businessCreationFinished,
     TResult? Function(_Error value)? error,
   }) {
     final _that = this;
@@ -296,8 +293,7 @@ class _Initial with DiagnosticableTreeMixin implements SignUpState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _Initial);
   }
 
   @override
@@ -320,8 +316,7 @@ class _Loading with DiagnosticableTreeMixin implements SignUpState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadingCopyWith<_Loading> get copyWith =>
-      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+  _$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -335,8 +330,7 @@ class _Loading with DiagnosticableTreeMixin implements SignUpState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Loading &&
-            (identical(other.signUpVM, signUpVM) ||
-                other.signUpVM == signUpVM));
+            (identical(other.signUpVM, signUpVM) || other.signUpVM == signUpVM));
   }
 
   @override
@@ -349,10 +343,8 @@ class _Loading with DiagnosticableTreeMixin implements SignUpState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadingCopyWith<$Res>
-    implements $SignUpStateCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
-      __$LoadingCopyWithImpl;
+abstract mixin class _$LoadingCopyWith<$Res> implements $SignUpStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
   @useResult
   $Res call({UserProfileVM signUpVM});
 
@@ -402,8 +394,7 @@ class _Loaded with DiagnosticableTreeMixin implements SignUpState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -417,8 +408,7 @@ class _Loaded with DiagnosticableTreeMixin implements SignUpState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Loaded &&
-            (identical(other.signUpVM, signUpVM) ||
-                other.signUpVM == signUpVM));
+            (identical(other.signUpVM, signUpVM) || other.signUpVM == signUpVM));
   }
 
   @override
@@ -431,10 +421,8 @@ class _Loaded with DiagnosticableTreeMixin implements SignUpState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res>
-    implements $SignUpStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
-      __$LoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $SignUpStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
   @useResult
   $Res call({UserProfileVM signUpVM});
 
@@ -484,8 +472,7 @@ class _UserCreated with DiagnosticableTreeMixin implements SignUpState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$UserCreatedCopyWith<_UserCreated> get copyWith =>
-      __$UserCreatedCopyWithImpl<_UserCreated>(this, _$identity);
+  _$UserCreatedCopyWith<_UserCreated> get copyWith => __$UserCreatedCopyWithImpl<_UserCreated>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -499,8 +486,7 @@ class _UserCreated with DiagnosticableTreeMixin implements SignUpState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _UserCreated &&
-            (identical(other.signUpVM, signUpVM) ||
-                other.signUpVM == signUpVM));
+            (identical(other.signUpVM, signUpVM) || other.signUpVM == signUpVM));
   }
 
   @override
@@ -513,11 +499,8 @@ class _UserCreated with DiagnosticableTreeMixin implements SignUpState {
 }
 
 /// @nodoc
-abstract mixin class _$UserCreatedCopyWith<$Res>
-    implements $SignUpStateCopyWith<$Res> {
-  factory _$UserCreatedCopyWith(
-          _UserCreated value, $Res Function(_UserCreated) _then) =
-      __$UserCreatedCopyWithImpl;
+abstract mixin class _$UserCreatedCopyWith<$Res> implements $SignUpStateCopyWith<$Res> {
+  factory _$UserCreatedCopyWith(_UserCreated value, $Res Function(_UserCreated) _then) = __$UserCreatedCopyWithImpl;
   @useResult
   $Res call({UserProfileVM signUpVM});
 
@@ -558,9 +541,7 @@ class __$UserCreatedCopyWithImpl<$Res> implements _$UserCreatedCopyWith<$Res> {
 
 /// @nodoc
 
-class _BusinessCreationFinished
-    with DiagnosticableTreeMixin
-    implements SignUpState {
+class _BusinessCreationFinished with DiagnosticableTreeMixin implements SignUpState {
   const _BusinessCreationFinished(this.signUpVM);
 
   final UserProfileVM signUpVM;
@@ -570,8 +551,7 @@ class _BusinessCreationFinished
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$BusinessCreationFinishedCopyWith<_BusinessCreationFinished> get copyWith =>
-      __$BusinessCreationFinishedCopyWithImpl<_BusinessCreationFinished>(
-          this, _$identity);
+      __$BusinessCreationFinishedCopyWithImpl<_BusinessCreationFinished>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -585,8 +565,7 @@ class _BusinessCreationFinished
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _BusinessCreationFinished &&
-            (identical(other.signUpVM, signUpVM) ||
-                other.signUpVM == signUpVM));
+            (identical(other.signUpVM, signUpVM) || other.signUpVM == signUpVM));
   }
 
   @override
@@ -599,10 +578,9 @@ class _BusinessCreationFinished
 }
 
 /// @nodoc
-abstract mixin class _$BusinessCreationFinishedCopyWith<$Res>
-    implements $SignUpStateCopyWith<$Res> {
-  factory _$BusinessCreationFinishedCopyWith(_BusinessCreationFinished value,
-          $Res Function(_BusinessCreationFinished) _then) =
+abstract mixin class _$BusinessCreationFinishedCopyWith<$Res> implements $SignUpStateCopyWith<$Res> {
+  factory _$BusinessCreationFinishedCopyWith(
+          _BusinessCreationFinished value, $Res Function(_BusinessCreationFinished) _then) =
       __$BusinessCreationFinishedCopyWithImpl;
   @useResult
   $Res call({UserProfileVM signUpVM});
@@ -611,8 +589,7 @@ abstract mixin class _$BusinessCreationFinishedCopyWith<$Res>
 }
 
 /// @nodoc
-class __$BusinessCreationFinishedCopyWithImpl<$Res>
-    implements _$BusinessCreationFinishedCopyWith<$Res> {
+class __$BusinessCreationFinishedCopyWithImpl<$Res> implements _$BusinessCreationFinishedCopyWith<$Res> {
   __$BusinessCreationFinishedCopyWithImpl(this._self, this._then);
 
   final _BusinessCreationFinished _self;
@@ -655,8 +632,7 @@ class _Error with DiagnosticableTreeMixin implements SignUpState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -672,8 +648,7 @@ class _Error with DiagnosticableTreeMixin implements SignUpState {
         (other.runtimeType == runtimeType &&
             other is _Error &&
             (identical(other.msg, msg) || other.msg == msg) &&
-            (identical(other.signUpVM, signUpVM) ||
-                other.signUpVM == signUpVM));
+            (identical(other.signUpVM, signUpVM) || other.signUpVM == signUpVM));
   }
 
   @override
@@ -686,10 +661,8 @@ class _Error with DiagnosticableTreeMixin implements SignUpState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $SignUpStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $SignUpStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @useResult
   $Res call({String msg, UserProfileVM signUpVM});
 

@@ -36,7 +36,10 @@ int columnasDeLista(double anchoDisponible, {double anchoObjetivo = kAnchoDeFila
 /// ordenes lleva una cabecera por dia que debe ocupar todo el ancho, y solo las
 /// ordenes de debajo se reparten. Ahi hay que emitir las filas a mano.
 List<List<T?>> enFilasDe<T>(List<T> elementos, int columnas) {
-  if (columnas <= 1) return [for (final e in elementos) [e]];
+  if (columnas <= 1)
+    return [
+      for (final e in elementos) [e]
+    ];
 
   return [
     for (var i = 0; i < elementos.length; i += columnas)

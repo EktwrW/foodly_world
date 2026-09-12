@@ -21,8 +21,7 @@ mixin _$BusinessEvent implements DiagnosticableTreeMixin {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is BusinessEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is BusinessEvent);
   }
 
   @override
@@ -144,8 +143,7 @@ extension BusinessEventPatterns on BusinessEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
+    required TResult Function(_EditCoverImagesDialog value) editCoverImagesDialog,
     required TResult Function(_AddPicture value) addPicture,
     required TResult Function(_SetCategory value) setCategory,
     required TResult Function(_SetService value) setService,
@@ -154,19 +152,15 @@ extension BusinessEventPatterns on BusinessEvent {
     required TResult Function(_UpdatePicture value) updatePicture,
     required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
     required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
+    required TResult Function(_CancelDeleteCoverImage value) cancelDeleteCoverImage,
     required TResult Function(_UpdateEditing value) updateEditing,
     required TResult Function(_EditLocationDialog value) editLocationDialog,
     required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
+    required TResult Function(_SetAddressFromPlacesAPI value) setAddressFromPlacesAPI,
     required TResult Function(_SetMapController value) setMapController,
     required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
+    required TResult Function(_ToggleAllowReservations value) toggleAllowReservations,
+    required TResult Function(_SetReservationSizeLimit value) setReservationSizeLimit,
     required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     final _that = this;
@@ -412,8 +406,7 @@ extension BusinessEventPatterns on BusinessEvent {
     required TResult Function() uploadPictures,
     required TResult Function(String imageId, String filePath) updatePicture,
     required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
+    required TResult Function(BusinessCoverImageDM coverImageDM) deleteCoverImageById,
     required TResult Function() cancelDeleteCoverImage,
     required TResult Function(DashboardEditing editing) updateEditing,
     required TResult Function() editLocationDialog,
@@ -570,8 +563,7 @@ class _Started with DiagnosticableTreeMixin implements BusinessEvent {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Started);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _Started);
   }
 
   @override
@@ -594,8 +586,7 @@ class _UpdateLogo with DiagnosticableTreeMixin implements BusinessEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$UpdateLogoCopyWith<_UpdateLogo> get copyWith =>
-      __$UpdateLogoCopyWithImpl<_UpdateLogo>(this, _$identity);
+  _$UpdateLogoCopyWith<_UpdateLogo> get copyWith => __$UpdateLogoCopyWithImpl<_UpdateLogo>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -622,11 +613,8 @@ class _UpdateLogo with DiagnosticableTreeMixin implements BusinessEvent {
 }
 
 /// @nodoc
-abstract mixin class _$UpdateLogoCopyWith<$Res>
-    implements $BusinessEventCopyWith<$Res> {
-  factory _$UpdateLogoCopyWith(
-          _UpdateLogo value, $Res Function(_UpdateLogo) _then) =
-      __$UpdateLogoCopyWithImpl;
+abstract mixin class _$UpdateLogoCopyWith<$Res> implements $BusinessEventCopyWith<$Res> {
+  factory _$UpdateLogoCopyWith(_UpdateLogo value, $Res Function(_UpdateLogo) _then) = __$UpdateLogoCopyWithImpl;
   @useResult
   $Res call({String path});
 }
@@ -655,21 +643,17 @@ class __$UpdateLogoCopyWithImpl<$Res> implements _$UpdateLogoCopyWith<$Res> {
 
 /// @nodoc
 
-class _EditCoverImagesDialog
-    with DiagnosticableTreeMixin
-    implements BusinessEvent {
+class _EditCoverImagesDialog with DiagnosticableTreeMixin implements BusinessEvent {
   const _EditCoverImagesDialog();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(DiagnosticsProperty('type', 'BusinessEvent.editCoverImagesDialog'));
+    properties..add(DiagnosticsProperty('type', 'BusinessEvent.editCoverImagesDialog'));
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _EditCoverImagesDialog);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _EditCoverImagesDialog);
   }
 
   @override
@@ -692,8 +676,7 @@ class _AddPicture with DiagnosticableTreeMixin implements BusinessEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$AddPictureCopyWith<_AddPicture> get copyWith =>
-      __$AddPictureCopyWithImpl<_AddPicture>(this, _$identity);
+  _$AddPictureCopyWith<_AddPicture> get copyWith => __$AddPictureCopyWithImpl<_AddPicture>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -720,11 +703,8 @@ class _AddPicture with DiagnosticableTreeMixin implements BusinessEvent {
 }
 
 /// @nodoc
-abstract mixin class _$AddPictureCopyWith<$Res>
-    implements $BusinessEventCopyWith<$Res> {
-  factory _$AddPictureCopyWith(
-          _AddPicture value, $Res Function(_AddPicture) _then) =
-      __$AddPictureCopyWithImpl;
+abstract mixin class _$AddPictureCopyWith<$Res> implements $BusinessEventCopyWith<$Res> {
+  factory _$AddPictureCopyWith(_AddPicture value, $Res Function(_AddPicture) _then) = __$AddPictureCopyWithImpl;
   @useResult
   $Res call({String path});
 }
@@ -762,8 +742,7 @@ class _SetCategory with DiagnosticableTreeMixin implements BusinessEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$SetCategoryCopyWith<_SetCategory> get copyWith =>
-      __$SetCategoryCopyWithImpl<_SetCategory>(this, _$identity);
+  _$SetCategoryCopyWith<_SetCategory> get copyWith => __$SetCategoryCopyWithImpl<_SetCategory>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -777,8 +756,7 @@ class _SetCategory with DiagnosticableTreeMixin implements BusinessEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _SetCategory &&
-            (identical(other.category, category) ||
-                other.category == category));
+            (identical(other.category, category) || other.category == category));
   }
 
   @override
@@ -791,11 +769,8 @@ class _SetCategory with DiagnosticableTreeMixin implements BusinessEvent {
 }
 
 /// @nodoc
-abstract mixin class _$SetCategoryCopyWith<$Res>
-    implements $BusinessEventCopyWith<$Res> {
-  factory _$SetCategoryCopyWith(
-          _SetCategory value, $Res Function(_SetCategory) _then) =
-      __$SetCategoryCopyWithImpl;
+abstract mixin class _$SetCategoryCopyWith<$Res> implements $BusinessEventCopyWith<$Res> {
+  factory _$SetCategoryCopyWith(_SetCategory value, $Res Function(_SetCategory) _then) = __$SetCategoryCopyWithImpl;
   @useResult
   $Res call({FoodlyCategories category});
 }
@@ -833,8 +808,7 @@ class _SetService with DiagnosticableTreeMixin implements BusinessEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$SetServiceCopyWith<_SetService> get copyWith =>
-      __$SetServiceCopyWithImpl<_SetService>(this, _$identity);
+  _$SetServiceCopyWith<_SetService> get copyWith => __$SetServiceCopyWithImpl<_SetService>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -861,11 +835,8 @@ class _SetService with DiagnosticableTreeMixin implements BusinessEvent {
 }
 
 /// @nodoc
-abstract mixin class _$SetServiceCopyWith<$Res>
-    implements $BusinessEventCopyWith<$Res> {
-  factory _$SetServiceCopyWith(
-          _SetService value, $Res Function(_SetService) _then) =
-      __$SetServiceCopyWithImpl;
+abstract mixin class _$SetServiceCopyWith<$Res> implements $BusinessEventCopyWith<$Res> {
+  factory _$SetServiceCopyWith(_SetService value, $Res Function(_SetService) _then) = __$SetServiceCopyWithImpl;
   @useResult
   $Res call({BusinessServices service});
 }
@@ -894,9 +865,7 @@ class __$SetServiceCopyWithImpl<$Res> implements _$SetServiceCopyWith<$Res> {
 
 /// @nodoc
 
-class _SetOpeningHoursDay
-    with DiagnosticableTreeMixin
-    implements BusinessEvent {
+class _SetOpeningHoursDay with DiagnosticableTreeMixin implements BusinessEvent {
   const _SetOpeningHoursDay(this.dayIndex, this.day);
 
   final int dayIndex;
@@ -922,8 +891,7 @@ class _SetOpeningHoursDay
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _SetOpeningHoursDay &&
-            (identical(other.dayIndex, dayIndex) ||
-                other.dayIndex == dayIndex) &&
+            (identical(other.dayIndex, dayIndex) || other.dayIndex == dayIndex) &&
             (identical(other.day, day) || other.day == day));
   }
 
@@ -937,10 +905,8 @@ class _SetOpeningHoursDay
 }
 
 /// @nodoc
-abstract mixin class _$SetOpeningHoursDayCopyWith<$Res>
-    implements $BusinessEventCopyWith<$Res> {
-  factory _$SetOpeningHoursDayCopyWith(
-          _SetOpeningHoursDay value, $Res Function(_SetOpeningHoursDay) _then) =
+abstract mixin class _$SetOpeningHoursDayCopyWith<$Res> implements $BusinessEventCopyWith<$Res> {
+  factory _$SetOpeningHoursDayCopyWith(_SetOpeningHoursDay value, $Res Function(_SetOpeningHoursDay) _then) =
       __$SetOpeningHoursDayCopyWithImpl;
   @useResult
   $Res call({int dayIndex, Day day});
@@ -949,8 +915,7 @@ abstract mixin class _$SetOpeningHoursDayCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SetOpeningHoursDayCopyWithImpl<$Res>
-    implements _$SetOpeningHoursDayCopyWith<$Res> {
+class __$SetOpeningHoursDayCopyWithImpl<$Res> implements _$SetOpeningHoursDayCopyWith<$Res> {
   __$SetOpeningHoursDayCopyWithImpl(this._self, this._then);
 
   final _SetOpeningHoursDay _self;
@@ -993,14 +958,12 @@ class _UploadPictures with DiagnosticableTreeMixin implements BusinessEvent {
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(DiagnosticsProperty('type', 'BusinessEvent.uploadPictures'));
+    properties..add(DiagnosticsProperty('type', 'BusinessEvent.uploadPictures'));
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _UploadPictures);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _UploadPictures);
   }
 
   @override
@@ -1041,8 +1004,7 @@ class _UpdatePicture with DiagnosticableTreeMixin implements BusinessEvent {
         (other.runtimeType == runtimeType &&
             other is _UpdatePicture &&
             (identical(other.imageId, imageId) || other.imageId == imageId) &&
-            (identical(other.filePath, filePath) ||
-                other.filePath == filePath));
+            (identical(other.filePath, filePath) || other.filePath == filePath));
   }
 
   @override
@@ -1055,18 +1017,15 @@ class _UpdatePicture with DiagnosticableTreeMixin implements BusinessEvent {
 }
 
 /// @nodoc
-abstract mixin class _$UpdatePictureCopyWith<$Res>
-    implements $BusinessEventCopyWith<$Res> {
-  factory _$UpdatePictureCopyWith(
-          _UpdatePicture value, $Res Function(_UpdatePicture) _then) =
+abstract mixin class _$UpdatePictureCopyWith<$Res> implements $BusinessEventCopyWith<$Res> {
+  factory _$UpdatePictureCopyWith(_UpdatePicture value, $Res Function(_UpdatePicture) _then) =
       __$UpdatePictureCopyWithImpl;
   @useResult
   $Res call({String imageId, String filePath});
 }
 
 /// @nodoc
-class __$UpdatePictureCopyWithImpl<$Res>
-    implements _$UpdatePictureCopyWith<$Res> {
+class __$UpdatePictureCopyWithImpl<$Res> implements _$UpdatePictureCopyWith<$Res> {
   __$UpdatePictureCopyWithImpl(this._self, this._then);
 
   final _UpdatePicture _self;
@@ -1094,21 +1053,17 @@ class __$UpdatePictureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _CancelUploadPictures
-    with DiagnosticableTreeMixin
-    implements BusinessEvent {
+class _CancelUploadPictures with DiagnosticableTreeMixin implements BusinessEvent {
   const _CancelUploadPictures();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(DiagnosticsProperty('type', 'BusinessEvent.cancelUploadPictures'));
+    properties..add(DiagnosticsProperty('type', 'BusinessEvent.cancelUploadPictures'));
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _CancelUploadPictures);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _CancelUploadPictures);
   }
 
   @override
@@ -1122,9 +1077,7 @@ class _CancelUploadPictures
 
 /// @nodoc
 
-class _DeleteCoverImageById
-    with DiagnosticableTreeMixin
-    implements BusinessEvent {
+class _DeleteCoverImageById with DiagnosticableTreeMixin implements BusinessEvent {
   const _DeleteCoverImageById(this.coverImageDM);
 
   final BusinessCoverImageDM coverImageDM;
@@ -1134,8 +1087,7 @@ class _DeleteCoverImageById
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$DeleteCoverImageByIdCopyWith<_DeleteCoverImageById> get copyWith =>
-      __$DeleteCoverImageByIdCopyWithImpl<_DeleteCoverImageById>(
-          this, _$identity);
+      __$DeleteCoverImageByIdCopyWithImpl<_DeleteCoverImageById>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -1149,8 +1101,7 @@ class _DeleteCoverImageById
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _DeleteCoverImageById &&
-            (identical(other.coverImageDM, coverImageDM) ||
-                other.coverImageDM == coverImageDM));
+            (identical(other.coverImageDM, coverImageDM) || other.coverImageDM == coverImageDM));
   }
 
   @override
@@ -1163,10 +1114,8 @@ class _DeleteCoverImageById
 }
 
 /// @nodoc
-abstract mixin class _$DeleteCoverImageByIdCopyWith<$Res>
-    implements $BusinessEventCopyWith<$Res> {
-  factory _$DeleteCoverImageByIdCopyWith(_DeleteCoverImageById value,
-          $Res Function(_DeleteCoverImageById) _then) =
+abstract mixin class _$DeleteCoverImageByIdCopyWith<$Res> implements $BusinessEventCopyWith<$Res> {
+  factory _$DeleteCoverImageByIdCopyWith(_DeleteCoverImageById value, $Res Function(_DeleteCoverImageById) _then) =
       __$DeleteCoverImageByIdCopyWithImpl;
   @useResult
   $Res call({BusinessCoverImageDM coverImageDM});
@@ -1175,8 +1124,7 @@ abstract mixin class _$DeleteCoverImageByIdCopyWith<$Res>
 }
 
 /// @nodoc
-class __$DeleteCoverImageByIdCopyWithImpl<$Res>
-    implements _$DeleteCoverImageByIdCopyWith<$Res> {
+class __$DeleteCoverImageByIdCopyWithImpl<$Res> implements _$DeleteCoverImageByIdCopyWith<$Res> {
   __$DeleteCoverImageByIdCopyWithImpl(this._self, this._then);
 
   final _DeleteCoverImageById _self;
@@ -1209,22 +1157,17 @@ class __$DeleteCoverImageByIdCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _CancelDeleteCoverImage
-    with DiagnosticableTreeMixin
-    implements BusinessEvent {
+class _CancelDeleteCoverImage with DiagnosticableTreeMixin implements BusinessEvent {
   const _CancelDeleteCoverImage();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(
-          DiagnosticsProperty('type', 'BusinessEvent.cancelDeleteCoverImage'));
+    properties..add(DiagnosticsProperty('type', 'BusinessEvent.cancelDeleteCoverImage'));
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _CancelDeleteCoverImage);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _CancelDeleteCoverImage);
   }
 
   @override
@@ -1275,18 +1218,15 @@ class _UpdateEditing with DiagnosticableTreeMixin implements BusinessEvent {
 }
 
 /// @nodoc
-abstract mixin class _$UpdateEditingCopyWith<$Res>
-    implements $BusinessEventCopyWith<$Res> {
-  factory _$UpdateEditingCopyWith(
-          _UpdateEditing value, $Res Function(_UpdateEditing) _then) =
+abstract mixin class _$UpdateEditingCopyWith<$Res> implements $BusinessEventCopyWith<$Res> {
+  factory _$UpdateEditingCopyWith(_UpdateEditing value, $Res Function(_UpdateEditing) _then) =
       __$UpdateEditingCopyWithImpl;
   @useResult
   $Res call({DashboardEditing editing});
 }
 
 /// @nodoc
-class __$UpdateEditingCopyWithImpl<$Res>
-    implements _$UpdateEditingCopyWith<$Res> {
+class __$UpdateEditingCopyWithImpl<$Res> implements _$UpdateEditingCopyWith<$Res> {
   __$UpdateEditingCopyWithImpl(this._self, this._then);
 
   final _UpdateEditing _self;
@@ -1309,21 +1249,17 @@ class __$UpdateEditingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _EditLocationDialog
-    with DiagnosticableTreeMixin
-    implements BusinessEvent {
+class _EditLocationDialog with DiagnosticableTreeMixin implements BusinessEvent {
   const _EditLocationDialog();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(DiagnosticsProperty('type', 'BusinessEvent.editLocationDialog'));
+    properties..add(DiagnosticsProperty('type', 'BusinessEvent.editLocationDialog'));
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _EditLocationDialog);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _EditLocationDialog);
   }
 
   @override
@@ -1346,8 +1282,7 @@ class _SetCountry with DiagnosticableTreeMixin implements BusinessEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$SetCountryCopyWith<_SetCountry> get copyWith =>
-      __$SetCountryCopyWithImpl<_SetCountry>(this, _$identity);
+  _$SetCountryCopyWith<_SetCountry> get copyWith => __$SetCountryCopyWithImpl<_SetCountry>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -1374,11 +1309,8 @@ class _SetCountry with DiagnosticableTreeMixin implements BusinessEvent {
 }
 
 /// @nodoc
-abstract mixin class _$SetCountryCopyWith<$Res>
-    implements $BusinessEventCopyWith<$Res> {
-  factory _$SetCountryCopyWith(
-          _SetCountry value, $Res Function(_SetCountry) _then) =
-      __$SetCountryCopyWithImpl;
+abstract mixin class _$SetCountryCopyWith<$Res> implements $BusinessEventCopyWith<$Res> {
+  factory _$SetCountryCopyWith(_SetCountry value, $Res Function(_SetCountry) _then) = __$SetCountryCopyWithImpl;
   @useResult
   $Res call({FoodlyCountries country});
 }
@@ -1407,9 +1339,7 @@ class __$SetCountryCopyWithImpl<$Res> implements _$SetCountryCopyWith<$Res> {
 
 /// @nodoc
 
-class _SetAddressFromPlacesAPI
-    with DiagnosticableTreeMixin
-    implements BusinessEvent {
+class _SetAddressFromPlacesAPI with DiagnosticableTreeMixin implements BusinessEvent {
   const _SetAddressFromPlacesAPI(this.detail);
 
   final Place detail;
@@ -1419,14 +1349,12 @@ class _SetAddressFromPlacesAPI
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$SetAddressFromPlacesAPICopyWith<_SetAddressFromPlacesAPI> get copyWith =>
-      __$SetAddressFromPlacesAPICopyWithImpl<_SetAddressFromPlacesAPI>(
-          this, _$identity);
+      __$SetAddressFromPlacesAPICopyWithImpl<_SetAddressFromPlacesAPI>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties
-      ..add(
-          DiagnosticsProperty('type', 'BusinessEvent.setAddressFromPlacesAPI'))
+      ..add(DiagnosticsProperty('type', 'BusinessEvent.setAddressFromPlacesAPI'))
       ..add(DiagnosticsProperty('detail', detail));
   }
 
@@ -1448,18 +1376,16 @@ class _SetAddressFromPlacesAPI
 }
 
 /// @nodoc
-abstract mixin class _$SetAddressFromPlacesAPICopyWith<$Res>
-    implements $BusinessEventCopyWith<$Res> {
-  factory _$SetAddressFromPlacesAPICopyWith(_SetAddressFromPlacesAPI value,
-          $Res Function(_SetAddressFromPlacesAPI) _then) =
+abstract mixin class _$SetAddressFromPlacesAPICopyWith<$Res> implements $BusinessEventCopyWith<$Res> {
+  factory _$SetAddressFromPlacesAPICopyWith(
+          _SetAddressFromPlacesAPI value, $Res Function(_SetAddressFromPlacesAPI) _then) =
       __$SetAddressFromPlacesAPICopyWithImpl;
   @useResult
   $Res call({Place detail});
 }
 
 /// @nodoc
-class __$SetAddressFromPlacesAPICopyWithImpl<$Res>
-    implements _$SetAddressFromPlacesAPICopyWith<$Res> {
+class __$SetAddressFromPlacesAPICopyWithImpl<$Res> implements _$SetAddressFromPlacesAPICopyWith<$Res> {
   __$SetAddressFromPlacesAPICopyWithImpl(this._self, this._then);
 
   final _SetAddressFromPlacesAPI _self;
@@ -1506,8 +1432,7 @@ class _SetMapController with DiagnosticableTreeMixin implements BusinessEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _SetMapController &&
-            (identical(other.controller, controller) ||
-                other.controller == controller));
+            (identical(other.controller, controller) || other.controller == controller));
   }
 
   @override
@@ -1520,18 +1445,15 @@ class _SetMapController with DiagnosticableTreeMixin implements BusinessEvent {
 }
 
 /// @nodoc
-abstract mixin class _$SetMapControllerCopyWith<$Res>
-    implements $BusinessEventCopyWith<$Res> {
-  factory _$SetMapControllerCopyWith(
-          _SetMapController value, $Res Function(_SetMapController) _then) =
+abstract mixin class _$SetMapControllerCopyWith<$Res> implements $BusinessEventCopyWith<$Res> {
+  factory _$SetMapControllerCopyWith(_SetMapController value, $Res Function(_SetMapController) _then) =
       __$SetMapControllerCopyWithImpl;
   @useResult
   $Res call({GoogleMapController controller});
 }
 
 /// @nodoc
-class __$SetMapControllerCopyWithImpl<$Res>
-    implements _$SetMapControllerCopyWith<$Res> {
+class __$SetMapControllerCopyWithImpl<$Res> implements _$SetMapControllerCopyWith<$Res> {
   __$SetMapControllerCopyWithImpl(this._self, this._then);
 
   final _SetMapController _self;
@@ -1559,14 +1481,12 @@ class _UpdateBusiness with DiagnosticableTreeMixin implements BusinessEvent {
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(DiagnosticsProperty('type', 'BusinessEvent.updateBusiness'));
+    properties..add(DiagnosticsProperty('type', 'BusinessEvent.updateBusiness'));
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _UpdateBusiness);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _UpdateBusiness);
   }
 
   @override
@@ -1580,9 +1500,7 @@ class _UpdateBusiness with DiagnosticableTreeMixin implements BusinessEvent {
 
 /// @nodoc
 
-class _ToggleAllowReservations
-    with DiagnosticableTreeMixin
-    implements BusinessEvent {
+class _ToggleAllowReservations with DiagnosticableTreeMixin implements BusinessEvent {
   const _ToggleAllowReservations(this.value);
 
   final bool value;
@@ -1592,14 +1510,12 @@ class _ToggleAllowReservations
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$ToggleAllowReservationsCopyWith<_ToggleAllowReservations> get copyWith =>
-      __$ToggleAllowReservationsCopyWithImpl<_ToggleAllowReservations>(
-          this, _$identity);
+      __$ToggleAllowReservationsCopyWithImpl<_ToggleAllowReservations>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties
-      ..add(
-          DiagnosticsProperty('type', 'BusinessEvent.toggleAllowReservations'))
+      ..add(DiagnosticsProperty('type', 'BusinessEvent.toggleAllowReservations'))
       ..add(DiagnosticsProperty('value', value));
   }
 
@@ -1621,18 +1537,16 @@ class _ToggleAllowReservations
 }
 
 /// @nodoc
-abstract mixin class _$ToggleAllowReservationsCopyWith<$Res>
-    implements $BusinessEventCopyWith<$Res> {
-  factory _$ToggleAllowReservationsCopyWith(_ToggleAllowReservations value,
-          $Res Function(_ToggleAllowReservations) _then) =
+abstract mixin class _$ToggleAllowReservationsCopyWith<$Res> implements $BusinessEventCopyWith<$Res> {
+  factory _$ToggleAllowReservationsCopyWith(
+          _ToggleAllowReservations value, $Res Function(_ToggleAllowReservations) _then) =
       __$ToggleAllowReservationsCopyWithImpl;
   @useResult
   $Res call({bool value});
 }
 
 /// @nodoc
-class __$ToggleAllowReservationsCopyWithImpl<$Res>
-    implements _$ToggleAllowReservationsCopyWith<$Res> {
+class __$ToggleAllowReservationsCopyWithImpl<$Res> implements _$ToggleAllowReservationsCopyWith<$Res> {
   __$ToggleAllowReservationsCopyWithImpl(this._self, this._then);
 
   final _ToggleAllowReservations _self;
@@ -1655,9 +1569,7 @@ class __$ToggleAllowReservationsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _SetReservationSizeLimit
-    with DiagnosticableTreeMixin
-    implements BusinessEvent {
+class _SetReservationSizeLimit with DiagnosticableTreeMixin implements BusinessEvent {
   const _SetReservationSizeLimit(this.value);
 
   final int value;
@@ -1667,14 +1579,12 @@ class _SetReservationSizeLimit
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$SetReservationSizeLimitCopyWith<_SetReservationSizeLimit> get copyWith =>
-      __$SetReservationSizeLimitCopyWithImpl<_SetReservationSizeLimit>(
-          this, _$identity);
+      __$SetReservationSizeLimitCopyWithImpl<_SetReservationSizeLimit>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties
-      ..add(
-          DiagnosticsProperty('type', 'BusinessEvent.setReservationSizeLimit'))
+      ..add(DiagnosticsProperty('type', 'BusinessEvent.setReservationSizeLimit'))
       ..add(DiagnosticsProperty('value', value));
   }
 
@@ -1696,18 +1606,16 @@ class _SetReservationSizeLimit
 }
 
 /// @nodoc
-abstract mixin class _$SetReservationSizeLimitCopyWith<$Res>
-    implements $BusinessEventCopyWith<$Res> {
-  factory _$SetReservationSizeLimitCopyWith(_SetReservationSizeLimit value,
-          $Res Function(_SetReservationSizeLimit) _then) =
+abstract mixin class _$SetReservationSizeLimitCopyWith<$Res> implements $BusinessEventCopyWith<$Res> {
+  factory _$SetReservationSizeLimitCopyWith(
+          _SetReservationSizeLimit value, $Res Function(_SetReservationSizeLimit) _then) =
       __$SetReservationSizeLimitCopyWithImpl;
   @useResult
   $Res call({int value});
 }
 
 /// @nodoc
-class __$SetReservationSizeLimitCopyWithImpl<$Res>
-    implements _$SetReservationSizeLimitCopyWith<$Res> {
+class __$SetReservationSizeLimitCopyWithImpl<$Res> implements _$SetReservationSizeLimitCopyWith<$Res> {
   __$SetReservationSizeLimitCopyWithImpl(this._self, this._then);
 
   final _SetReservationSizeLimit _self;
@@ -1767,18 +1675,15 @@ class _ToggleMenuEnabled with DiagnosticableTreeMixin implements BusinessEvent {
 }
 
 /// @nodoc
-abstract mixin class _$ToggleMenuEnabledCopyWith<$Res>
-    implements $BusinessEventCopyWith<$Res> {
-  factory _$ToggleMenuEnabledCopyWith(
-          _ToggleMenuEnabled value, $Res Function(_ToggleMenuEnabled) _then) =
+abstract mixin class _$ToggleMenuEnabledCopyWith<$Res> implements $BusinessEventCopyWith<$Res> {
+  factory _$ToggleMenuEnabledCopyWith(_ToggleMenuEnabled value, $Res Function(_ToggleMenuEnabled) _then) =
       __$ToggleMenuEnabledCopyWithImpl;
   @useResult
   $Res call({bool value});
 }
 
 /// @nodoc
-class __$ToggleMenuEnabledCopyWithImpl<$Res>
-    implements _$ToggleMenuEnabledCopyWith<$Res> {
+class __$ToggleMenuEnabledCopyWithImpl<$Res> implements _$ToggleMenuEnabledCopyWith<$Res> {
   __$ToggleMenuEnabledCopyWithImpl(this._self, this._then);
 
   final _ToggleMenuEnabled _self;
@@ -1808,8 +1713,7 @@ mixin _$BusinessState implements DiagnosticableTreeMixin {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $BusinessStateCopyWith<BusinessState> get copyWith =>
-      _$BusinessStateCopyWithImpl<BusinessState>(
-          this as BusinessState, _$identity);
+      _$BusinessStateCopyWithImpl<BusinessState>(this as BusinessState, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -1821,9 +1725,7 @@ mixin _$BusinessState implements DiagnosticableTreeMixin {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is BusinessState &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is BusinessState && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -1837,9 +1739,7 @@ mixin _$BusinessState implements DiagnosticableTreeMixin {
 
 /// @nodoc
 abstract mixin class $BusinessStateCopyWith<$Res> {
-  factory $BusinessStateCopyWith(
-          BusinessState value, $Res Function(BusinessState) _then) =
-      _$BusinessStateCopyWithImpl;
+  factory $BusinessStateCopyWith(BusinessState value, $Res Function(BusinessState) _then) = _$BusinessStateCopyWithImpl;
   @useResult
   $Res call({BusinessVM vm});
 
@@ -1847,8 +1747,7 @@ abstract mixin class $BusinessStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BusinessStateCopyWithImpl<$Res>
-    implements $BusinessStateCopyWith<$Res> {
+class _$BusinessStateCopyWithImpl<$Res> implements $BusinessStateCopyWith<$Res> {
   _$BusinessStateCopyWithImpl(this._self, this._then);
 
   final BusinessState _self;
@@ -1967,8 +1866,7 @@ extension BusinessStatePatterns on BusinessState {
     required TResult Function(_PictureDeleted value) pictureDeleted,
     required TResult Function(_EditLocation value) editLocation,
     required TResult Function(_LocationUpdated value) locationUpdated,
-    required TResult Function(_ShowCoverImagesDialog value)
-        showCoverImagesDialog,
+    required TResult Function(_ShowCoverImagesDialog value) showCoverImagesDialog,
   }) {
     final _that = this;
     switch (_that) {
@@ -2245,8 +2143,7 @@ class _Initial with DiagnosticableTreeMixin implements BusinessState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -2258,9 +2155,7 @@ class _Initial with DiagnosticableTreeMixin implements BusinessState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Initial &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Initial && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -2273,10 +2168,8 @@ class _Initial with DiagnosticableTreeMixin implements BusinessState {
 }
 
 /// @nodoc
-abstract mixin class _$InitialCopyWith<$Res>
-    implements $BusinessStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
-      __$InitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $BusinessStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({BusinessVM vm});
@@ -2331,8 +2224,7 @@ class _Loading with DiagnosticableTreeMixin implements BusinessState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadingCopyWith<_Loading> get copyWith =>
-      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+  _$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -2344,9 +2236,7 @@ class _Loading with DiagnosticableTreeMixin implements BusinessState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loading &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loading && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -2359,10 +2249,8 @@ class _Loading with DiagnosticableTreeMixin implements BusinessState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadingCopyWith<$Res>
-    implements $BusinessStateCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
-      __$LoadingCopyWithImpl;
+abstract mixin class _$LoadingCopyWith<$Res> implements $BusinessStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
   @override
   @useResult
   $Res call({BusinessVM vm});
@@ -2417,8 +2305,7 @@ class _Loaded with DiagnosticableTreeMixin implements BusinessState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -2430,9 +2317,7 @@ class _Loaded with DiagnosticableTreeMixin implements BusinessState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loaded &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loaded && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -2445,10 +2330,8 @@ class _Loaded with DiagnosticableTreeMixin implements BusinessState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res>
-    implements $BusinessStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
-      __$LoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $BusinessStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
   @override
   @useResult
   $Res call({BusinessVM vm});
@@ -2504,8 +2387,7 @@ class _Error with DiagnosticableTreeMixin implements BusinessState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -2534,10 +2416,8 @@ class _Error with DiagnosticableTreeMixin implements BusinessState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $BusinessStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $BusinessStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({String msg, BusinessVM vm});
@@ -2597,8 +2477,7 @@ class _UpdatingLogo with DiagnosticableTreeMixin implements BusinessState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$UpdatingLogoCopyWith<_UpdatingLogo> get copyWith =>
-      __$UpdatingLogoCopyWithImpl<_UpdatingLogo>(this, _$identity);
+  _$UpdatingLogoCopyWith<_UpdatingLogo> get copyWith => __$UpdatingLogoCopyWithImpl<_UpdatingLogo>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -2610,9 +2489,7 @@ class _UpdatingLogo with DiagnosticableTreeMixin implements BusinessState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _UpdatingLogo &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _UpdatingLogo && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -2625,11 +2502,8 @@ class _UpdatingLogo with DiagnosticableTreeMixin implements BusinessState {
 }
 
 /// @nodoc
-abstract mixin class _$UpdatingLogoCopyWith<$Res>
-    implements $BusinessStateCopyWith<$Res> {
-  factory _$UpdatingLogoCopyWith(
-          _UpdatingLogo value, $Res Function(_UpdatingLogo) _then) =
-      __$UpdatingLogoCopyWithImpl;
+abstract mixin class _$UpdatingLogoCopyWith<$Res> implements $BusinessStateCopyWith<$Res> {
+  factory _$UpdatingLogoCopyWith(_UpdatingLogo value, $Res Function(_UpdatingLogo) _then) = __$UpdatingLogoCopyWithImpl;
   @override
   @useResult
   $Res call({BusinessVM vm});
@@ -2639,8 +2513,7 @@ abstract mixin class _$UpdatingLogoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$UpdatingLogoCopyWithImpl<$Res>
-    implements _$UpdatingLogoCopyWith<$Res> {
+class __$UpdatingLogoCopyWithImpl<$Res> implements _$UpdatingLogoCopyWith<$Res> {
   __$UpdatingLogoCopyWithImpl(this._self, this._then);
 
   final _UpdatingLogo _self;
@@ -2685,8 +2558,7 @@ class _UpdatingMenu with DiagnosticableTreeMixin implements BusinessState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$UpdatingMenuCopyWith<_UpdatingMenu> get copyWith =>
-      __$UpdatingMenuCopyWithImpl<_UpdatingMenu>(this, _$identity);
+  _$UpdatingMenuCopyWith<_UpdatingMenu> get copyWith => __$UpdatingMenuCopyWithImpl<_UpdatingMenu>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -2698,9 +2570,7 @@ class _UpdatingMenu with DiagnosticableTreeMixin implements BusinessState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _UpdatingMenu &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _UpdatingMenu && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -2713,11 +2583,8 @@ class _UpdatingMenu with DiagnosticableTreeMixin implements BusinessState {
 }
 
 /// @nodoc
-abstract mixin class _$UpdatingMenuCopyWith<$Res>
-    implements $BusinessStateCopyWith<$Res> {
-  factory _$UpdatingMenuCopyWith(
-          _UpdatingMenu value, $Res Function(_UpdatingMenu) _then) =
-      __$UpdatingMenuCopyWithImpl;
+abstract mixin class _$UpdatingMenuCopyWith<$Res> implements $BusinessStateCopyWith<$Res> {
+  factory _$UpdatingMenuCopyWith(_UpdatingMenu value, $Res Function(_UpdatingMenu) _then) = __$UpdatingMenuCopyWithImpl;
   @override
   @useResult
   $Res call({BusinessVM vm});
@@ -2727,8 +2594,7 @@ abstract mixin class _$UpdatingMenuCopyWith<$Res>
 }
 
 /// @nodoc
-class __$UpdatingMenuCopyWithImpl<$Res>
-    implements _$UpdatingMenuCopyWith<$Res> {
+class __$UpdatingMenuCopyWithImpl<$Res> implements _$UpdatingMenuCopyWith<$Res> {
   __$UpdatingMenuCopyWithImpl(this._self, this._then);
 
   final _UpdatingMenu _self;
@@ -2786,9 +2652,7 @@ class _UpdatingPictures with DiagnosticableTreeMixin implements BusinessState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _UpdatingPictures &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _UpdatingPictures && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -2801,10 +2665,8 @@ class _UpdatingPictures with DiagnosticableTreeMixin implements BusinessState {
 }
 
 /// @nodoc
-abstract mixin class _$UpdatingPicturesCopyWith<$Res>
-    implements $BusinessStateCopyWith<$Res> {
-  factory _$UpdatingPicturesCopyWith(
-          _UpdatingPictures value, $Res Function(_UpdatingPictures) _then) =
+abstract mixin class _$UpdatingPicturesCopyWith<$Res> implements $BusinessStateCopyWith<$Res> {
+  factory _$UpdatingPicturesCopyWith(_UpdatingPictures value, $Res Function(_UpdatingPictures) _then) =
       __$UpdatingPicturesCopyWithImpl;
   @override
   @useResult
@@ -2815,8 +2677,7 @@ abstract mixin class _$UpdatingPicturesCopyWith<$Res>
 }
 
 /// @nodoc
-class __$UpdatingPicturesCopyWithImpl<$Res>
-    implements _$UpdatingPicturesCopyWith<$Res> {
+class __$UpdatingPicturesCopyWithImpl<$Res> implements _$UpdatingPicturesCopyWith<$Res> {
   __$UpdatingPicturesCopyWithImpl(this._self, this._then);
 
   final _UpdatingPictures _self;
@@ -2874,9 +2735,7 @@ class _PicturesUpdated with DiagnosticableTreeMixin implements BusinessState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _PicturesUpdated &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _PicturesUpdated && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -2889,10 +2748,8 @@ class _PicturesUpdated with DiagnosticableTreeMixin implements BusinessState {
 }
 
 /// @nodoc
-abstract mixin class _$PicturesUpdatedCopyWith<$Res>
-    implements $BusinessStateCopyWith<$Res> {
-  factory _$PicturesUpdatedCopyWith(
-          _PicturesUpdated value, $Res Function(_PicturesUpdated) _then) =
+abstract mixin class _$PicturesUpdatedCopyWith<$Res> implements $BusinessStateCopyWith<$Res> {
+  factory _$PicturesUpdatedCopyWith(_PicturesUpdated value, $Res Function(_PicturesUpdated) _then) =
       __$PicturesUpdatedCopyWithImpl;
   @override
   @useResult
@@ -2903,8 +2760,7 @@ abstract mixin class _$PicturesUpdatedCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PicturesUpdatedCopyWithImpl<$Res>
-    implements _$PicturesUpdatedCopyWith<$Res> {
+class __$PicturesUpdatedCopyWithImpl<$Res> implements _$PicturesUpdatedCopyWith<$Res> {
   __$PicturesUpdatedCopyWithImpl(this._self, this._then);
 
   final _PicturesUpdated _self;
@@ -2962,9 +2818,7 @@ class _PictureDeleted with DiagnosticableTreeMixin implements BusinessState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _PictureDeleted &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _PictureDeleted && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -2977,10 +2831,8 @@ class _PictureDeleted with DiagnosticableTreeMixin implements BusinessState {
 }
 
 /// @nodoc
-abstract mixin class _$PictureDeletedCopyWith<$Res>
-    implements $BusinessStateCopyWith<$Res> {
-  factory _$PictureDeletedCopyWith(
-          _PictureDeleted value, $Res Function(_PictureDeleted) _then) =
+abstract mixin class _$PictureDeletedCopyWith<$Res> implements $BusinessStateCopyWith<$Res> {
+  factory _$PictureDeletedCopyWith(_PictureDeleted value, $Res Function(_PictureDeleted) _then) =
       __$PictureDeletedCopyWithImpl;
   @override
   @useResult
@@ -2991,8 +2843,7 @@ abstract mixin class _$PictureDeletedCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PictureDeletedCopyWithImpl<$Res>
-    implements _$PictureDeletedCopyWith<$Res> {
+class __$PictureDeletedCopyWithImpl<$Res> implements _$PictureDeletedCopyWith<$Res> {
   __$PictureDeletedCopyWithImpl(this._self, this._then);
 
   final _PictureDeleted _self;
@@ -3037,8 +2888,7 @@ class _EditLocation with DiagnosticableTreeMixin implements BusinessState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$EditLocationCopyWith<_EditLocation> get copyWith =>
-      __$EditLocationCopyWithImpl<_EditLocation>(this, _$identity);
+  _$EditLocationCopyWith<_EditLocation> get copyWith => __$EditLocationCopyWithImpl<_EditLocation>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -3050,9 +2900,7 @@ class _EditLocation with DiagnosticableTreeMixin implements BusinessState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _EditLocation &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _EditLocation && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -3065,11 +2913,8 @@ class _EditLocation with DiagnosticableTreeMixin implements BusinessState {
 }
 
 /// @nodoc
-abstract mixin class _$EditLocationCopyWith<$Res>
-    implements $BusinessStateCopyWith<$Res> {
-  factory _$EditLocationCopyWith(
-          _EditLocation value, $Res Function(_EditLocation) _then) =
-      __$EditLocationCopyWithImpl;
+abstract mixin class _$EditLocationCopyWith<$Res> implements $BusinessStateCopyWith<$Res> {
+  factory _$EditLocationCopyWith(_EditLocation value, $Res Function(_EditLocation) _then) = __$EditLocationCopyWithImpl;
   @override
   @useResult
   $Res call({BusinessVM vm});
@@ -3079,8 +2924,7 @@ abstract mixin class _$EditLocationCopyWith<$Res>
 }
 
 /// @nodoc
-class __$EditLocationCopyWithImpl<$Res>
-    implements _$EditLocationCopyWith<$Res> {
+class __$EditLocationCopyWithImpl<$Res> implements _$EditLocationCopyWith<$Res> {
   __$EditLocationCopyWithImpl(this._self, this._then);
 
   final _EditLocation _self;
@@ -3138,9 +2982,7 @@ class _LocationUpdated with DiagnosticableTreeMixin implements BusinessState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _LocationUpdated &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _LocationUpdated && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -3153,10 +2995,8 @@ class _LocationUpdated with DiagnosticableTreeMixin implements BusinessState {
 }
 
 /// @nodoc
-abstract mixin class _$LocationUpdatedCopyWith<$Res>
-    implements $BusinessStateCopyWith<$Res> {
-  factory _$LocationUpdatedCopyWith(
-          _LocationUpdated value, $Res Function(_LocationUpdated) _then) =
+abstract mixin class _$LocationUpdatedCopyWith<$Res> implements $BusinessStateCopyWith<$Res> {
+  factory _$LocationUpdatedCopyWith(_LocationUpdated value, $Res Function(_LocationUpdated) _then) =
       __$LocationUpdatedCopyWithImpl;
   @override
   @useResult
@@ -3167,8 +3007,7 @@ abstract mixin class _$LocationUpdatedCopyWith<$Res>
 }
 
 /// @nodoc
-class __$LocationUpdatedCopyWithImpl<$Res>
-    implements _$LocationUpdatedCopyWith<$Res> {
+class __$LocationUpdatedCopyWithImpl<$Res> implements _$LocationUpdatedCopyWith<$Res> {
   __$LocationUpdatedCopyWithImpl(this._self, this._then);
 
   final _LocationUpdated _self;
@@ -3202,9 +3041,7 @@ class __$LocationUpdatedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _ShowCoverImagesDialog
-    with DiagnosticableTreeMixin
-    implements BusinessState {
+class _ShowCoverImagesDialog with DiagnosticableTreeMixin implements BusinessState {
   const _ShowCoverImagesDialog(this.vm);
 
   @override
@@ -3216,8 +3053,7 @@ class _ShowCoverImagesDialog
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$ShowCoverImagesDialogCopyWith<_ShowCoverImagesDialog> get copyWith =>
-      __$ShowCoverImagesDialogCopyWithImpl<_ShowCoverImagesDialog>(
-          this, _$identity);
+      __$ShowCoverImagesDialogCopyWithImpl<_ShowCoverImagesDialog>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -3244,10 +3080,8 @@ class _ShowCoverImagesDialog
 }
 
 /// @nodoc
-abstract mixin class _$ShowCoverImagesDialogCopyWith<$Res>
-    implements $BusinessStateCopyWith<$Res> {
-  factory _$ShowCoverImagesDialogCopyWith(_ShowCoverImagesDialog value,
-          $Res Function(_ShowCoverImagesDialog) _then) =
+abstract mixin class _$ShowCoverImagesDialogCopyWith<$Res> implements $BusinessStateCopyWith<$Res> {
+  factory _$ShowCoverImagesDialogCopyWith(_ShowCoverImagesDialog value, $Res Function(_ShowCoverImagesDialog) _then) =
       __$ShowCoverImagesDialogCopyWithImpl;
   @override
   @useResult
@@ -3258,8 +3092,7 @@ abstract mixin class _$ShowCoverImagesDialogCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ShowCoverImagesDialogCopyWithImpl<$Res>
-    implements _$ShowCoverImagesDialogCopyWith<$Res> {
+class __$ShowCoverImagesDialogCopyWithImpl<$Res> implements _$ShowCoverImagesDialogCopyWith<$Res> {
   __$ShowCoverImagesDialogCopyWithImpl(this._self, this._then);
 
   final _ShowCoverImagesDialog _self;

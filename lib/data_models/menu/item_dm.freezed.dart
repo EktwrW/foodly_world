@@ -58,8 +58,7 @@ mixin _$ItemDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $ItemDMCopyWith<ItemDM> get copyWith =>
-      _$ItemDMCopyWithImpl<ItemDM>(this as ItemDM, _$identity);
+  $ItemDMCopyWith<ItemDM> get copyWith => _$ItemDMCopyWithImpl<ItemDM>(this as ItemDM, _$identity);
 
   /// Serializes this ItemDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -70,47 +69,29 @@ mixin _$ItemDM {
         (other.runtimeType == runtimeType &&
             other is ItemDM &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.description, description) || other.description == description) &&
             const DeepCollectionEquality().equals(other.versions, versions) &&
             (identical(other.prices, prices) || other.prices == prices) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.menuUuid, menuUuid) ||
-                other.menuUuid == menuUuid) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            const DeepCollectionEquality()
-                .equals(other.foodPhotos, foodPhotos) &&
-            const DeepCollectionEquality()
-                .equals(other.drinkPhotos, drinkPhotos) &&
-            const DeepCollectionEquality()
-                .equals(other.comboPhotos, comboPhotos) &&
-            (identical(other.favoritesCount, favoritesCount) ||
-                other.favoritesCount == favoritesCount) &&
-            (identical(other.foodCategoryId, foodCategoryId) ||
-                other.foodCategoryId == foodCategoryId) &&
-            (identical(other.drinkCategoryId, drinkCategoryId) ||
-                other.drinkCategoryId == drinkCategoryId) &&
-            (identical(other.comboCategoryId, comboCategoryId) ||
-                other.comboCategoryId == comboCategoryId) &&
-            (identical(other.available, available) ||
-                other.available == available) &&
-            (identical(other.followersLength, followersLength) ||
-                other.followersLength == followersLength) &&
-            (identical(other.sortOrder, sortOrder) ||
-                other.sortOrder == sortOrder) &&
+            (identical(other.menuUuid, menuUuid) || other.menuUuid == menuUuid) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            const DeepCollectionEquality().equals(other.foodPhotos, foodPhotos) &&
+            const DeepCollectionEquality().equals(other.drinkPhotos, drinkPhotos) &&
+            const DeepCollectionEquality().equals(other.comboPhotos, comboPhotos) &&
+            (identical(other.favoritesCount, favoritesCount) || other.favoritesCount == favoritesCount) &&
+            (identical(other.foodCategoryId, foodCategoryId) || other.foodCategoryId == foodCategoryId) &&
+            (identical(other.drinkCategoryId, drinkCategoryId) || other.drinkCategoryId == drinkCategoryId) &&
+            (identical(other.comboCategoryId, comboCategoryId) || other.comboCategoryId == comboCategoryId) &&
+            (identical(other.available, available) || other.available == available) &&
+            (identical(other.followersLength, followersLength) || other.followersLength == followersLength) &&
+            (identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder) &&
             const DeepCollectionEquality().equals(other.newPhotos, newPhotos) &&
-            (identical(other.selectedVersion, selectedVersion) ||
-                other.selectedVersion == selectedVersion) &&
-            (identical(other.editingField, editingField) ||
-                other.editingField == editingField) &&
-            const DeepCollectionEquality()
-                .equals(other.imagePaths, imagePaths) &&
-            (identical(other.photosRemovedDuringEdition,
-                    photosRemovedDuringEdition) ||
-                other.photosRemovedDuringEdition ==
-                    photosRemovedDuringEdition));
+            (identical(other.selectedVersion, selectedVersion) || other.selectedVersion == selectedVersion) &&
+            (identical(other.editingField, editingField) || other.editingField == editingField) &&
+            const DeepCollectionEquality().equals(other.imagePaths, imagePaths) &&
+            (identical(other.photosRemovedDuringEdition, photosRemovedDuringEdition) ||
+                other.photosRemovedDuringEdition == photosRemovedDuringEdition));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -150,8 +131,7 @@ mixin _$ItemDM {
 
 /// @nodoc
 abstract mixin class $ItemDMCopyWith<$Res> {
-  factory $ItemDMCopyWith(ItemDM value, $Res Function(ItemDM) _then) =
-      _$ItemDMCopyWithImpl;
+  factory $ItemDMCopyWith(ItemDM value, $Res Function(ItemDM) _then) = _$ItemDMCopyWithImpl;
   @useResult
   $Res call(
       {String name,
@@ -162,12 +142,9 @@ abstract mixin class $ItemDMCopyWith<$Res> {
       String uuid,
       @JsonKey(name: 'menu_uuid') String? menuUuid,
       @JsonKey(name: 'business_uuid') String? businessUuid,
-      @JsonKey(name: 'business_food_reference_photos')
-      List<MenuItemPhotoDM>? foodPhotos,
-      @JsonKey(name: 'business_drink_reference_photos')
-      List<MenuItemPhotoDM>? drinkPhotos,
-      @JsonKey(name: 'business_combos_reference_photos')
-      List<MenuItemPhotoDM>? comboPhotos,
+      @JsonKey(name: 'business_food_reference_photos') List<MenuItemPhotoDM>? foodPhotos,
+      @JsonKey(name: 'business_drink_reference_photos') List<MenuItemPhotoDM>? drinkPhotos,
+      @JsonKey(name: 'business_combos_reference_photos') List<MenuItemPhotoDM>? comboPhotos,
       @JsonKey(name: 'favorites_count') int favoritesCount,
       @JsonKey(name: 'business_food_category_id') int? foodCategoryId,
       @JsonKey(name: 'business_drink_category_id') int? drinkCategoryId,
@@ -175,16 +152,11 @@ abstract mixin class $ItemDMCopyWith<$Res> {
       bool available,
       @JsonKey(name: 'followers_length') int followersLength,
       @JsonKey(name: 'sort_order') int sortOrder,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      List<MenuItemPhotoDM>? newPhotos,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      Version? selectedVersion,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      ItemEditing editingField,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      List<String> imagePaths,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      bool photosRemovedDuringEdition});
+      @JsonKey(includeFromJson: false, includeToJson: false) List<MenuItemPhotoDM>? newPhotos,
+      @JsonKey(includeFromJson: false, includeToJson: false) Version? selectedVersion,
+      @JsonKey(includeFromJson: false, includeToJson: false) ItemEditing editingField,
+      @JsonKey(includeFromJson: false, includeToJson: false) List<String> imagePaths,
+      @JsonKey(includeFromJson: false, includeToJson: false) bool photosRemovedDuringEdition});
 
   $PricesCopyWith<$Res> get prices;
 }
@@ -434,12 +406,9 @@ extension ItemDMPatterns on ItemDM {
             String uuid,
             @JsonKey(name: 'menu_uuid') String? menuUuid,
             @JsonKey(name: 'business_uuid') String? businessUuid,
-            @JsonKey(name: 'business_food_reference_photos')
-            List<MenuItemPhotoDM>? foodPhotos,
-            @JsonKey(name: 'business_drink_reference_photos')
-            List<MenuItemPhotoDM>? drinkPhotos,
-            @JsonKey(name: 'business_combos_reference_photos')
-            List<MenuItemPhotoDM>? comboPhotos,
+            @JsonKey(name: 'business_food_reference_photos') List<MenuItemPhotoDM>? foodPhotos,
+            @JsonKey(name: 'business_drink_reference_photos') List<MenuItemPhotoDM>? drinkPhotos,
+            @JsonKey(name: 'business_combos_reference_photos') List<MenuItemPhotoDM>? comboPhotos,
             @JsonKey(name: 'favorites_count') int favoritesCount,
             @JsonKey(name: 'business_food_category_id') int? foodCategoryId,
             @JsonKey(name: 'business_drink_category_id') int? drinkCategoryId,
@@ -447,16 +416,11 @@ extension ItemDMPatterns on ItemDM {
             bool available,
             @JsonKey(name: 'followers_length') int followersLength,
             @JsonKey(name: 'sort_order') int sortOrder,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            List<MenuItemPhotoDM>? newPhotos,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            Version? selectedVersion,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            ItemEditing editingField,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            List<String> imagePaths,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            bool photosRemovedDuringEdition)?
+            @JsonKey(includeFromJson: false, includeToJson: false) List<MenuItemPhotoDM>? newPhotos,
+            @JsonKey(includeFromJson: false, includeToJson: false) Version? selectedVersion,
+            @JsonKey(includeFromJson: false, includeToJson: false) ItemEditing editingField,
+            @JsonKey(includeFromJson: false, includeToJson: false) List<String> imagePaths,
+            @JsonKey(includeFromJson: false, includeToJson: false) bool photosRemovedDuringEdition)?
         $default, {
     required TResult orElse(),
   }) {
@@ -516,12 +480,9 @@ extension ItemDMPatterns on ItemDM {
             String uuid,
             @JsonKey(name: 'menu_uuid') String? menuUuid,
             @JsonKey(name: 'business_uuid') String? businessUuid,
-            @JsonKey(name: 'business_food_reference_photos')
-            List<MenuItemPhotoDM>? foodPhotos,
-            @JsonKey(name: 'business_drink_reference_photos')
-            List<MenuItemPhotoDM>? drinkPhotos,
-            @JsonKey(name: 'business_combos_reference_photos')
-            List<MenuItemPhotoDM>? comboPhotos,
+            @JsonKey(name: 'business_food_reference_photos') List<MenuItemPhotoDM>? foodPhotos,
+            @JsonKey(name: 'business_drink_reference_photos') List<MenuItemPhotoDM>? drinkPhotos,
+            @JsonKey(name: 'business_combos_reference_photos') List<MenuItemPhotoDM>? comboPhotos,
             @JsonKey(name: 'favorites_count') int favoritesCount,
             @JsonKey(name: 'business_food_category_id') int? foodCategoryId,
             @JsonKey(name: 'business_drink_category_id') int? drinkCategoryId,
@@ -529,16 +490,11 @@ extension ItemDMPatterns on ItemDM {
             bool available,
             @JsonKey(name: 'followers_length') int followersLength,
             @JsonKey(name: 'sort_order') int sortOrder,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            List<MenuItemPhotoDM>? newPhotos,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            Version? selectedVersion,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            ItemEditing editingField,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            List<String> imagePaths,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            bool photosRemovedDuringEdition)
+            @JsonKey(includeFromJson: false, includeToJson: false) List<MenuItemPhotoDM>? newPhotos,
+            @JsonKey(includeFromJson: false, includeToJson: false) Version? selectedVersion,
+            @JsonKey(includeFromJson: false, includeToJson: false) ItemEditing editingField,
+            @JsonKey(includeFromJson: false, includeToJson: false) List<String> imagePaths,
+            @JsonKey(includeFromJson: false, includeToJson: false) bool photosRemovedDuringEdition)
         $default,
   ) {
     final _that = this;
@@ -596,12 +552,9 @@ extension ItemDMPatterns on ItemDM {
             String uuid,
             @JsonKey(name: 'menu_uuid') String? menuUuid,
             @JsonKey(name: 'business_uuid') String? businessUuid,
-            @JsonKey(name: 'business_food_reference_photos')
-            List<MenuItemPhotoDM>? foodPhotos,
-            @JsonKey(name: 'business_drink_reference_photos')
-            List<MenuItemPhotoDM>? drinkPhotos,
-            @JsonKey(name: 'business_combos_reference_photos')
-            List<MenuItemPhotoDM>? comboPhotos,
+            @JsonKey(name: 'business_food_reference_photos') List<MenuItemPhotoDM>? foodPhotos,
+            @JsonKey(name: 'business_drink_reference_photos') List<MenuItemPhotoDM>? drinkPhotos,
+            @JsonKey(name: 'business_combos_reference_photos') List<MenuItemPhotoDM>? comboPhotos,
             @JsonKey(name: 'favorites_count') int favoritesCount,
             @JsonKey(name: 'business_food_category_id') int? foodCategoryId,
             @JsonKey(name: 'business_drink_category_id') int? drinkCategoryId,
@@ -609,16 +562,11 @@ extension ItemDMPatterns on ItemDM {
             bool available,
             @JsonKey(name: 'followers_length') int followersLength,
             @JsonKey(name: 'sort_order') int sortOrder,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            List<MenuItemPhotoDM>? newPhotos,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            Version? selectedVersion,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            ItemEditing editingField,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            List<String> imagePaths,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            bool photosRemovedDuringEdition)?
+            @JsonKey(includeFromJson: false, includeToJson: false) List<MenuItemPhotoDM>? newPhotos,
+            @JsonKey(includeFromJson: false, includeToJson: false) Version? selectedVersion,
+            @JsonKey(includeFromJson: false, includeToJson: false) ItemEditing editingField,
+            @JsonKey(includeFromJson: false, includeToJson: false) List<String> imagePaths,
+            @JsonKey(includeFromJson: false, includeToJson: false) bool photosRemovedDuringEdition)?
         $default,
   ) {
     final _that = this;
@@ -666,12 +614,9 @@ class _ItemDM extends ItemDM {
       required this.uuid,
       @JsonKey(name: 'menu_uuid') this.menuUuid,
       @JsonKey(name: 'business_uuid') this.businessUuid,
-      @JsonKey(name: 'business_food_reference_photos')
-      final List<MenuItemPhotoDM>? foodPhotos,
-      @JsonKey(name: 'business_drink_reference_photos')
-      final List<MenuItemPhotoDM>? drinkPhotos,
-      @JsonKey(name: 'business_combos_reference_photos')
-      final List<MenuItemPhotoDM>? comboPhotos,
+      @JsonKey(name: 'business_food_reference_photos') final List<MenuItemPhotoDM>? foodPhotos,
+      @JsonKey(name: 'business_drink_reference_photos') final List<MenuItemPhotoDM>? drinkPhotos,
+      @JsonKey(name: 'business_combos_reference_photos') final List<MenuItemPhotoDM>? comboPhotos,
       @JsonKey(name: 'favorites_count') this.favoritesCount = 0,
       @JsonKey(name: 'business_food_category_id') this.foodCategoryId,
       @JsonKey(name: 'business_drink_category_id') this.drinkCategoryId,
@@ -679,16 +624,11 @@ class _ItemDM extends ItemDM {
       this.available = true,
       @JsonKey(name: 'followers_length') this.followersLength = 0,
       @JsonKey(name: 'sort_order') this.sortOrder = 0,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      final List<MenuItemPhotoDM>? newPhotos,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      this.selectedVersion,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      this.editingField = ItemEditing.none,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      final List<String> imagePaths = const [],
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      this.photosRemovedDuringEdition = false})
+      @JsonKey(includeFromJson: false, includeToJson: false) final List<MenuItemPhotoDM>? newPhotos,
+      @JsonKey(includeFromJson: false, includeToJson: false) this.selectedVersion,
+      @JsonKey(includeFromJson: false, includeToJson: false) this.editingField = ItemEditing.none,
+      @JsonKey(includeFromJson: false, includeToJson: false) final List<String> imagePaths = const [],
+      @JsonKey(includeFromJson: false, includeToJson: false) this.photosRemovedDuringEdition = false})
       : _versions = versions,
         _foodPhotos = foodPhotos,
         _drinkPhotos = drinkPhotos,
@@ -814,8 +754,7 @@ class _ItemDM extends ItemDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ItemDMCopyWith<_ItemDM> get copyWith =>
-      __$ItemDMCopyWithImpl<_ItemDM>(this, _$identity);
+  _$ItemDMCopyWith<_ItemDM> get copyWith => __$ItemDMCopyWithImpl<_ItemDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -830,48 +769,29 @@ class _ItemDM extends ItemDM {
         (other.runtimeType == runtimeType &&
             other is _ItemDM &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.description, description) || other.description == description) &&
             const DeepCollectionEquality().equals(other._versions, _versions) &&
             (identical(other.prices, prices) || other.prices == prices) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.menuUuid, menuUuid) ||
-                other.menuUuid == menuUuid) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            const DeepCollectionEquality()
-                .equals(other._foodPhotos, _foodPhotos) &&
-            const DeepCollectionEquality()
-                .equals(other._drinkPhotos, _drinkPhotos) &&
-            const DeepCollectionEquality()
-                .equals(other._comboPhotos, _comboPhotos) &&
-            (identical(other.favoritesCount, favoritesCount) ||
-                other.favoritesCount == favoritesCount) &&
-            (identical(other.foodCategoryId, foodCategoryId) ||
-                other.foodCategoryId == foodCategoryId) &&
-            (identical(other.drinkCategoryId, drinkCategoryId) ||
-                other.drinkCategoryId == drinkCategoryId) &&
-            (identical(other.comboCategoryId, comboCategoryId) ||
-                other.comboCategoryId == comboCategoryId) &&
-            (identical(other.available, available) ||
-                other.available == available) &&
-            (identical(other.followersLength, followersLength) ||
-                other.followersLength == followersLength) &&
-            (identical(other.sortOrder, sortOrder) ||
-                other.sortOrder == sortOrder) &&
-            const DeepCollectionEquality()
-                .equals(other._newPhotos, _newPhotos) &&
-            (identical(other.selectedVersion, selectedVersion) ||
-                other.selectedVersion == selectedVersion) &&
-            (identical(other.editingField, editingField) ||
-                other.editingField == editingField) &&
-            const DeepCollectionEquality()
-                .equals(other._imagePaths, _imagePaths) &&
-            (identical(other.photosRemovedDuringEdition,
-                    photosRemovedDuringEdition) ||
-                other.photosRemovedDuringEdition ==
-                    photosRemovedDuringEdition));
+            (identical(other.menuUuid, menuUuid) || other.menuUuid == menuUuid) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            const DeepCollectionEquality().equals(other._foodPhotos, _foodPhotos) &&
+            const DeepCollectionEquality().equals(other._drinkPhotos, _drinkPhotos) &&
+            const DeepCollectionEquality().equals(other._comboPhotos, _comboPhotos) &&
+            (identical(other.favoritesCount, favoritesCount) || other.favoritesCount == favoritesCount) &&
+            (identical(other.foodCategoryId, foodCategoryId) || other.foodCategoryId == foodCategoryId) &&
+            (identical(other.drinkCategoryId, drinkCategoryId) || other.drinkCategoryId == drinkCategoryId) &&
+            (identical(other.comboCategoryId, comboCategoryId) || other.comboCategoryId == comboCategoryId) &&
+            (identical(other.available, available) || other.available == available) &&
+            (identical(other.followersLength, followersLength) || other.followersLength == followersLength) &&
+            (identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder) &&
+            const DeepCollectionEquality().equals(other._newPhotos, _newPhotos) &&
+            (identical(other.selectedVersion, selectedVersion) || other.selectedVersion == selectedVersion) &&
+            (identical(other.editingField, editingField) || other.editingField == editingField) &&
+            const DeepCollectionEquality().equals(other._imagePaths, _imagePaths) &&
+            (identical(other.photosRemovedDuringEdition, photosRemovedDuringEdition) ||
+                other.photosRemovedDuringEdition == photosRemovedDuringEdition));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -911,8 +831,7 @@ class _ItemDM extends ItemDM {
 
 /// @nodoc
 abstract mixin class _$ItemDMCopyWith<$Res> implements $ItemDMCopyWith<$Res> {
-  factory _$ItemDMCopyWith(_ItemDM value, $Res Function(_ItemDM) _then) =
-      __$ItemDMCopyWithImpl;
+  factory _$ItemDMCopyWith(_ItemDM value, $Res Function(_ItemDM) _then) = __$ItemDMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -924,12 +843,9 @@ abstract mixin class _$ItemDMCopyWith<$Res> implements $ItemDMCopyWith<$Res> {
       String uuid,
       @JsonKey(name: 'menu_uuid') String? menuUuid,
       @JsonKey(name: 'business_uuid') String? businessUuid,
-      @JsonKey(name: 'business_food_reference_photos')
-      List<MenuItemPhotoDM>? foodPhotos,
-      @JsonKey(name: 'business_drink_reference_photos')
-      List<MenuItemPhotoDM>? drinkPhotos,
-      @JsonKey(name: 'business_combos_reference_photos')
-      List<MenuItemPhotoDM>? comboPhotos,
+      @JsonKey(name: 'business_food_reference_photos') List<MenuItemPhotoDM>? foodPhotos,
+      @JsonKey(name: 'business_drink_reference_photos') List<MenuItemPhotoDM>? drinkPhotos,
+      @JsonKey(name: 'business_combos_reference_photos') List<MenuItemPhotoDM>? comboPhotos,
       @JsonKey(name: 'favorites_count') int favoritesCount,
       @JsonKey(name: 'business_food_category_id') int? foodCategoryId,
       @JsonKey(name: 'business_drink_category_id') int? drinkCategoryId,
@@ -937,16 +853,11 @@ abstract mixin class _$ItemDMCopyWith<$Res> implements $ItemDMCopyWith<$Res> {
       bool available,
       @JsonKey(name: 'followers_length') int followersLength,
       @JsonKey(name: 'sort_order') int sortOrder,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      List<MenuItemPhotoDM>? newPhotos,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      Version? selectedVersion,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      ItemEditing editingField,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      List<String> imagePaths,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      bool photosRemovedDuringEdition});
+      @JsonKey(includeFromJson: false, includeToJson: false) List<MenuItemPhotoDM>? newPhotos,
+      @JsonKey(includeFromJson: false, includeToJson: false) Version? selectedVersion,
+      @JsonKey(includeFromJson: false, includeToJson: false) ItemEditing editingField,
+      @JsonKey(includeFromJson: false, includeToJson: false) List<String> imagePaths,
+      @JsonKey(includeFromJson: false, includeToJson: false) bool photosRemovedDuringEdition});
 
   @override
   $PricesCopyWith<$Res> get prices;
@@ -1105,8 +1016,7 @@ mixin _$Prices {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $PricesCopyWith<Prices> get copyWith =>
-      _$PricesCopyWithImpl<Prices>(this as Prices, _$identity);
+  $PricesCopyWith<Prices> get copyWith => _$PricesCopyWithImpl<Prices>(this as Prices, _$identity);
 
   /// Serializes this Prices to a JSON map.
   Map<String, dynamic> toJson();
@@ -1133,8 +1043,7 @@ mixin _$Prices {
 
 /// @nodoc
 abstract mixin class $PricesCopyWith<$Res> {
-  factory $PricesCopyWith(Prices value, $Res Function(Prices) _then) =
-      _$PricesCopyWithImpl;
+  factory $PricesCopyWith(Prices value, $Res Function(Prices) _then) = _$PricesCopyWithImpl;
   @useResult
   $Res call({double regular, double medium, double big});
 }
@@ -1350,8 +1259,7 @@ class _Prices implements Prices {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PricesCopyWith<_Prices> get copyWith =>
-      __$PricesCopyWithImpl<_Prices>(this, _$identity);
+  _$PricesCopyWith<_Prices> get copyWith => __$PricesCopyWithImpl<_Prices>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1382,8 +1290,7 @@ class _Prices implements Prices {
 
 /// @nodoc
 abstract mixin class _$PricesCopyWith<$Res> implements $PricesCopyWith<$Res> {
-  factory _$PricesCopyWith(_Prices value, $Res Function(_Prices) _then) =
-      __$PricesCopyWithImpl;
+  factory _$PricesCopyWith(_Prices value, $Res Function(_Prices) _then) = __$PricesCopyWithImpl;
   @override
   @useResult
   $Res call({double regular, double medium, double big});

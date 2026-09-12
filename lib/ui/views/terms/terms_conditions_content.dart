@@ -23,13 +23,15 @@ List<TermsSection> buildTermsContent(String langCode) {
 const _en = [
   TermsSection(
     heading: 'Acceptance of Terms',
-    body: 'Welcome to Foodly. By downloading, installing, or using the Foodly mobile application ("App"), you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree to these Terms, do not use the App.\n\n'
+    body:
+        'Welcome to Foodly. By downloading, installing, or using the Foodly mobile application ("App"), you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree to these Terms, do not use the App.\n\n'
         'These Terms constitute a legally binding agreement between you and Hector Waldman ("Foodly", "we", "us", "our"), an independent commercial operator based in Portugal.\n\n'
         'Last updated: May 21, 2026',
   ),
   TermsSection(
     heading: 'Description of the Service',
-    body: 'Foodly is a platform that connects users with local food businesses, restaurants, and gastronomy-related services. The App allows you to:\n\n'
+    body:
+        'Foodly is a platform that connects users with local food businesses, restaurants, and gastronomy-related services. The App allows you to:\n\n'
         '• Discover nearby food businesses using GPS-based search.\n'
         '• Search for businesses using text or voice queries in multiple languages.\n'
         '• View business profiles, menus, promotions, and opening hours.\n'
@@ -130,13 +132,15 @@ const _en = [
   ),
   TermsSection(
     heading: 'Intellectual Property',
-    body: 'All intellectual property rights in the App — including the Foodly name, logo, design, software, and original content — are owned by or licensed to Foodly. Nothing in these Terms grants you any right to use Foodly\'s intellectual property beyond normal use of the App.\n\n'
+    body:
+        'All intellectual property rights in the App — including the Foodly name, logo, design, software, and original content — are owned by or licensed to Foodly. Nothing in these Terms grants you any right to use Foodly\'s intellectual property beyond normal use of the App.\n\n'
         'Business names, logos, menu images, and other content uploaded by managers remain the property of their respective owners. By uploading such content, managers grant Foodly a licence to display it within the App.\n\n'
         'If you believe content on the App infringes your intellectual property rights, contact us at privacy@foodly.solutions.',
   ),
   TermsSection(
     heading: 'Payments (Future Feature)',
-    body: 'Foodly does not currently process payments for food orders or reservations. When payment functionality becomes available:\n\n'
+    body:
+        'Foodly does not currently process payments for food orders or reservations. When payment functionality becomes available:\n\n'
         '• Payments will be processed by Mercado Pago and/or Stripe.\n'
         '• Foodly does not store payment card numbers, bank account details, or tax identification numbers.\n'
         '• All transactions will be subject to the payment processor\'s own terms.\n'
@@ -165,7 +169,8 @@ const _en = [
   ),
   TermsSection(
     heading: 'Termination',
-    body: 'YOU MAY TERMINATE YOUR ACCOUNT AT ANY TIME by deleting it in the App (Profile → Delete Account). Your personal data will be anonymised as described in our Privacy Policy.\n\n'
+    body:
+        'YOU MAY TERMINATE YOUR ACCOUNT AT ANY TIME by deleting it in the App (Profile → Delete Account). Your personal data will be anonymised as described in our Privacy Policy.\n\n'
         'FOODLY MAY SUSPEND OR TERMINATE your access at any time, with or without notice, if you:\n'
         '• Violate these Terms.\n'
         '• Engage in fraudulent, abusive, or illegal behaviour.\n'
@@ -180,7 +185,8 @@ const _en = [
   ),
   TermsSection(
     heading: 'Changes to These Terms',
-    body: 'We may update these Terms from time to time. When we make material changes, we will notify you through the App or by email at least 15 days before the changes take effect.\n\n'
+    body:
+        'We may update these Terms from time to time. When we make material changes, we will notify you through the App or by email at least 15 days before the changes take effect.\n\n'
         'Continued use of the App after the effective date constitutes acceptance of the revised Terms. If you do not agree, you must stop using the App and delete your account.',
   ),
   TermsSection(
@@ -204,13 +210,15 @@ const _en = [
 const _es = [
   TermsSection(
     heading: 'Aceptación de los Términos',
-    body: 'Bienvenido/a a Foodly. Al descargar, instalar o usar la aplicación móvil Foodly ("App"), aceptas estar sujeto/a a estos Términos y Condiciones ("Términos"). Si no estás de acuerdo, no uses la App.\n\n'
+    body:
+        'Bienvenido/a a Foodly. Al descargar, instalar o usar la aplicación móvil Foodly ("App"), aceptas estar sujeto/a a estos Términos y Condiciones ("Términos"). Si no estás de acuerdo, no uses la App.\n\n'
         'Estos Términos constituyen un acuerdo legalmente vinculante entre tú y Hector Waldman ("Foodly"), operador comercial independiente con actividad registrada en Portugal.\n\n'
         'Última actualización: 21 de mayo de 2026',
   ),
   TermsSection(
     heading: 'Descripción del Servicio',
-    body: 'Foodly es una plataforma que conecta a usuarios con negocios gastronómicos locales, restaurantes y servicios relacionados. La App te permite:\n\n'
+    body:
+        'Foodly es una plataforma que conecta a usuarios con negocios gastronómicos locales, restaurantes y servicios relacionados. La App te permite:\n\n'
         '• Descubrir negocios gastronómicos cercanos mediante búsqueda por GPS.\n'
         '• Buscar negocios usando texto o voz en múltiples idiomas.\n'
         '• Ver perfiles de negocios, menús, promociones y horarios.\n'
@@ -267,7 +275,8 @@ const _es = [
   ),
   TermsSection(
     heading: 'Contenido Comunitario y Reseñas',
-    body: 'La App te permite enviar reseñas, calificaciones, publicaciones, comentarios y fotos ("Contenido de Usuario").\n\n'
+    body:
+        'La App te permite enviar reseñas, calificaciones, publicaciones, comentarios y fotos ("Contenido de Usuario").\n\n'
         'AL ENVIAR CONTENIDO DE USUARIO:\n'
         '• Otorgas a Foodly una licencia no exclusiva y mundial para mostrar y promover tu contenido dentro de la App.\n'
         '• Confirmas que eres propietario/a del contenido o tienes derecho a compartirlo.\n'
@@ -310,13 +319,15 @@ const _es = [
   ),
   TermsSection(
     heading: 'Propiedad Intelectual',
-    body: 'Todos los derechos de propiedad intelectual de la App — incluyendo el nombre Foodly, logotipo, diseño, software y contenido original — son propiedad de Foodly o están licenciados a Foodly.\n\n'
+    body:
+        'Todos los derechos de propiedad intelectual de la App — incluyendo el nombre Foodly, logotipo, diseño, software y contenido original — son propiedad de Foodly o están licenciados a Foodly.\n\n'
         'Los nombres de negocios, logotipos e imágenes cargados por los gestores siguen siendo propiedad de sus respectivos dueños. Al cargarlos, los gestores otorgan a Foodly una licencia para mostrarlos en la App.\n\n'
         'Si crees que algún contenido infringe tus derechos de propiedad intelectual, contáctanos en privacy@foodly.solutions.',
   ),
   TermsSection(
     heading: 'Pagos (Función Futura)',
-    body: 'Foodly no procesa actualmente pagos por pedidos o reservaciones. Cuando la funcionalidad de pago esté disponible:\n\n'
+    body:
+        'Foodly no procesa actualmente pagos por pedidos o reservaciones. Cuando la funcionalidad de pago esté disponible:\n\n'
         '• Los pagos serán procesados por Mercado Pago y/o Stripe.\n'
         '• Foodly no almacena números de tarjetas, datos bancarios ni identificación fiscal.\n'
         '• Todas las transacciones estarán sujetas a los términos del procesador de pagos.\n\n'
@@ -343,7 +354,8 @@ const _es = [
   ),
   TermsSection(
     heading: 'Terminación',
-    body: 'PUEDES TERMINAR TU CUENTA EN CUALQUIER MOMENTO desde la App (Perfil → Eliminar cuenta). Tus datos personales serán anonimizados según nuestra Política de Privacidad.\n\n'
+    body:
+        'PUEDES TERMINAR TU CUENTA EN CUALQUIER MOMENTO desde la App (Perfil → Eliminar cuenta). Tus datos personales serán anonimizados según nuestra Política de Privacidad.\n\n'
         'FOODLY PUEDE SUSPENDER O TERMINAR tu acceso si:\n'
         '• Infringes estos Términos.\n'
         '• Incurres en conducta fraudulenta, abusiva o ilegal.\n'
@@ -351,13 +363,15 @@ const _es = [
   ),
   TermsSection(
     heading: 'Ley Aplicable y Resolución de Disputas',
-    body: 'Estos Términos se rigen por las leyes de Portugal y, donde corresponda, por la legislación de la Unión Europea.\n\n'
+    body:
+        'Estos Términos se rigen por las leyes de Portugal y, donde corresponda, por la legislación de la Unión Europea.\n\n'
         'Los usuarios en la UE/EEE también pueden beneficiarse de las disposiciones obligatorias de protección al consumidor de su país (LGDCU España, Ley 24.240 Argentina, Ley de Protección al Consumidor Venezuela).\n\n'
         'Te animamos a resolver disputas de forma informal primero en privacy@foodly.solutions. Si no es posible, los tribunales competentes de Portugal tendrán jurisdicción.',
   ),
   TermsSection(
     heading: 'Cambios en los Términos',
-    body: 'Podemos actualizar estos Términos periódicamente. Te notificaremos con al menos 15 días de anticipación ante cambios sustanciales, a través de la App o por correo electrónico.\n\n'
+    body:
+        'Podemos actualizar estos Términos periódicamente. Te notificaremos con al menos 15 días de anticipación ante cambios sustanciales, a través de la App o por correo electrónico.\n\n'
         'El uso continuado de la App tras la fecha de vigencia de los Términos revisados constituye tu aceptación de los cambios.',
   ),
   TermsSection(
@@ -381,13 +395,15 @@ const _es = [
 const _pt = [
   TermsSection(
     heading: 'Aceitação dos Termos',
-    body: 'Bem-vindo/a à Foodly. Ao descarregar, instalar ou utilizar a aplicação móvel Foodly ("App"), aceita ficar vinculado/a a estes Termos e Condições ("Termos"). Se não concordar, não utilize a App.\n\n'
+    body:
+        'Bem-vindo/a à Foodly. Ao descarregar, instalar ou utilizar a aplicação móvel Foodly ("App"), aceita ficar vinculado/a a estes Termos e Condições ("Termos"). Se não concordar, não utilize a App.\n\n'
         'Estes Termos constituem um acordo legalmente vinculativo entre si e Hector Waldman ("Foodly"), operador comercial independente com atividade registada em Portugal.\n\n'
         'Última atualização: 21 de maio de 2026',
   ),
   TermsSection(
     heading: 'Descrição do Serviço',
-    body: 'A Foodly é uma plataforma que liga utilizadores a negócios gastronómicos locais, restaurantes e serviços relacionados. A App permite-lhe:\n\n'
+    body:
+        'A Foodly é uma plataforma que liga utilizadores a negócios gastronómicos locais, restaurantes e serviços relacionados. A App permite-lhe:\n\n'
         '• Descobrir negócios gastronómicos próximos através de pesquisa por GPS.\n'
         '• Pesquisar negócios por texto ou voz em vários idiomas.\n'
         '• Ver perfis de negócios, menus, promoções e horários.\n'
@@ -444,7 +460,8 @@ const _pt = [
   ),
   TermsSection(
     heading: 'Conteúdo Comunitário e Avaliações',
-    body: 'A App permite-lhe submeter avaliações, classificações, publicações, comentários e fotos ("Conteúdo do Utilizador").\n\n'
+    body:
+        'A App permite-lhe submeter avaliações, classificações, publicações, comentários e fotos ("Conteúdo do Utilizador").\n\n'
         'AO SUBMETER CONTEÚDO DO UTILIZADOR:\n'
         '• Concede à Foodly uma licença não exclusiva e mundial para exibir e promover o seu conteúdo dentro da App.\n'
         '• Confirma que é proprietário/a do conteúdo ou tem o direito de o partilhar.\n'
@@ -487,13 +504,15 @@ const _pt = [
   ),
   TermsSection(
     heading: 'Propriedade Intelectual',
-    body: 'Todos os direitos de propriedade intelectual da App — incluindo o nome Foodly, logótipo, design, software e conteúdo original — são propriedade da Foodly ou estão licenciados à Foodly.\n\n'
+    body:
+        'Todos os direitos de propriedade intelectual da App — incluindo o nome Foodly, logótipo, design, software e conteúdo original — são propriedade da Foodly ou estão licenciados à Foodly.\n\n'
         'Os nomes de negócios, logótipos e imagens carregados pelos gestores continuam a ser propriedade dos respetivos proprietários. Ao carregá-los, os gestores concedem à Foodly uma licença para os exibir na App.\n\n'
         'Se acredita que algum conteúdo infringe os seus direitos de propriedade intelectual, contacte-nos em privacy@foodly.solutions.',
   ),
   TermsSection(
     heading: 'Pagamentos (Funcionalidade Futura)',
-    body: 'A Foodly não processa atualmente pagamentos por encomendas ou reservas. Quando a funcionalidade de pagamento estiver disponível:\n\n'
+    body:
+        'A Foodly não processa atualmente pagamentos por encomendas ou reservas. Quando a funcionalidade de pagamento estiver disponível:\n\n'
         '• Os pagamentos serão processados pelo Mercado Pago e/ou Stripe.\n'
         '• A Foodly não armazena números de cartões, dados bancários nem identificação fiscal.\n'
         '• Todas as transações estarão sujeitas aos termos do processador de pagamentos.\n\n'
@@ -520,7 +539,8 @@ const _pt = [
   ),
   TermsSection(
     heading: 'Rescisão',
-    body: 'PODE ENCERRAR A SUA CONTA A QUALQUER MOMENTO na App (Perfil → Eliminar conta). Os seus dados pessoais serão anonimizados conforme a nossa Política de Privacidade.\n\n'
+    body:
+        'PODE ENCERRAR A SUA CONTA A QUALQUER MOMENTO na App (Perfil → Eliminar conta). Os seus dados pessoais serão anonimizados conforme a nossa Política de Privacidade.\n\n'
         'A FOODLY PODE SUSPENDER OU ENCERRAR o seu acesso se:\n'
         '• Violar estes Termos.\n'
         '• Adotar comportamento fraudulento, abusivo ou ilegal.\n'
@@ -534,7 +554,8 @@ const _pt = [
   ),
   TermsSection(
     heading: 'Alterações aos Termos',
-    body: 'Podemos atualizar estes Termos periodicamente. Notificá-lo-emos com pelo menos 15 dias de antecedência sobre alterações substanciais, através da App ou por e-mail.\n\n'
+    body:
+        'Podemos atualizar estes Termos periodicamente. Notificá-lo-emos com pelo menos 15 dias de antecedência sobre alterações substanciais, através da App ou por e-mail.\n\n'
         'A utilização continuada da App após a data de entrada em vigor dos Termos revistos constitui a sua aceitação das alterações.',
   ),
   TermsSection(

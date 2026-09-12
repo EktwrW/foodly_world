@@ -29,8 +29,7 @@ class GeocodingForwardRequestDTO {
     this.region,
   });
 
-  factory GeocodingForwardRequestDTO.fromJson(Map<String, dynamic> json) =>
-      _$GeocodingForwardRequestDTOFromJson(json);
+  factory GeocodingForwardRequestDTO.fromJson(Map<String, dynamic> json) => _$GeocodingForwardRequestDTOFromJson(json);
 
   Map<String, dynamic> toJson() => _$GeocodingForwardRequestDTOToJson(this);
 }

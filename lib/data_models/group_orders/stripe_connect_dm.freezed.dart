@@ -21,13 +21,11 @@ mixin _$StripeConnectStatusDM {
   @JsonKey(name: 'payouts_enabled')
   bool get payoutsEnabled;
   @JsonKey(name: 'details_submitted')
-  bool
-      get detailsSubmitted; // Ajustes de cobro, que viajan en este mismo payload porque es el que el
+  bool get detailsSubmitted; // Ajustes de cobro, que viajan en este mismo payload porque es el que el
 // banner del panel ya pollea: así el selector de "¿cómo cobra tu negocio?"
 // abre con los valores puestos en vez de en blanco.
   @JsonKey(name: 'group_payment_mode')
-  String?
-      get groupPaymentMode; // Mínimo para pagar en la app, en CÉNTIMOS. null = sin mínimo.
+  String? get groupPaymentMode; // Mínimo para pagar en la app, en CÉNTIMOS. null = sin mínimo.
   @JsonKey(name: 'card_min_amount_minor')
   int? get cardMinAmountMinor;
 
@@ -40,8 +38,7 @@ mixin _$StripeConnectStatusDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $StripeConnectStatusDMCopyWith<StripeConnectStatusDM> get copyWith =>
-      _$StripeConnectStatusDMCopyWithImpl<StripeConnectStatusDM>(
-          this as StripeConnectStatusDM, _$identity);
+      _$StripeConnectStatusDMCopyWithImpl<StripeConnectStatusDM>(this as StripeConnectStatusDM, _$identity);
 
   /// Serializes this StripeConnectStatusDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -52,34 +49,20 @@ mixin _$StripeConnectStatusDM {
         (other.runtimeType == runtimeType &&
             other is StripeConnectStatusDM &&
             (identical(other.success, success) || other.success == success) &&
-            (identical(other.connected, connected) ||
-                other.connected == connected) &&
-            (identical(other.chargesEnabled, chargesEnabled) ||
-                other.chargesEnabled == chargesEnabled) &&
-            (identical(other.payoutsEnabled, payoutsEnabled) ||
-                other.payoutsEnabled == payoutsEnabled) &&
-            (identical(other.detailsSubmitted, detailsSubmitted) ||
-                other.detailsSubmitted == detailsSubmitted) &&
-            (identical(other.groupPaymentMode, groupPaymentMode) ||
-                other.groupPaymentMode == groupPaymentMode) &&
+            (identical(other.connected, connected) || other.connected == connected) &&
+            (identical(other.chargesEnabled, chargesEnabled) || other.chargesEnabled == chargesEnabled) &&
+            (identical(other.payoutsEnabled, payoutsEnabled) || other.payoutsEnabled == payoutsEnabled) &&
+            (identical(other.detailsSubmitted, detailsSubmitted) || other.detailsSubmitted == detailsSubmitted) &&
+            (identical(other.groupPaymentMode, groupPaymentMode) || other.groupPaymentMode == groupPaymentMode) &&
             (identical(other.cardMinAmountMinor, cardMinAmountMinor) ||
                 other.cardMinAmountMinor == cardMinAmountMinor) &&
-            (identical(other.tableService, tableService) ||
-                other.tableService == tableService));
+            (identical(other.tableService, tableService) || other.tableService == tableService));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      success,
-      connected,
-      chargesEnabled,
-      payoutsEnabled,
-      detailsSubmitted,
-      groupPaymentMode,
-      cardMinAmountMinor,
-      tableService);
+  int get hashCode => Object.hash(runtimeType, success, connected, chargesEnabled, payoutsEnabled, detailsSubmitted,
+      groupPaymentMode, cardMinAmountMinor, tableService);
 
   @override
   String toString() {
@@ -89,8 +72,7 @@ mixin _$StripeConnectStatusDM {
 
 /// @nodoc
 abstract mixin class $StripeConnectStatusDMCopyWith<$Res> {
-  factory $StripeConnectStatusDMCopyWith(StripeConnectStatusDM value,
-          $Res Function(StripeConnectStatusDM) _then) =
+  factory $StripeConnectStatusDMCopyWith(StripeConnectStatusDM value, $Res Function(StripeConnectStatusDM) _then) =
       _$StripeConnectStatusDMCopyWithImpl;
   @useResult
   $Res call(
@@ -105,8 +87,7 @@ abstract mixin class $StripeConnectStatusDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$StripeConnectStatusDMCopyWithImpl<$Res>
-    implements $StripeConnectStatusDMCopyWith<$Res> {
+class _$StripeConnectStatusDMCopyWithImpl<$Res> implements $StripeConnectStatusDMCopyWith<$Res> {
   _$StripeConnectStatusDMCopyWithImpl(this._self, this._then);
 
   final StripeConnectStatusDM _self;
@@ -271,15 +252,8 @@ extension StripeConnectStatusDMPatterns on StripeConnectStatusDM {
     final _that = this;
     switch (_that) {
       case _StripeConnectStatusDM() when $default != null:
-        return $default(
-            _that.success,
-            _that.connected,
-            _that.chargesEnabled,
-            _that.payoutsEnabled,
-            _that.detailsSubmitted,
-            _that.groupPaymentMode,
-            _that.cardMinAmountMinor,
-            _that.tableService);
+        return $default(_that.success, _that.connected, _that.chargesEnabled, _that.payoutsEnabled,
+            _that.detailsSubmitted, _that.groupPaymentMode, _that.cardMinAmountMinor, _that.tableService);
       case _:
         return orElse();
     }
@@ -314,15 +288,8 @@ extension StripeConnectStatusDMPatterns on StripeConnectStatusDM {
     final _that = this;
     switch (_that) {
       case _StripeConnectStatusDM():
-        return $default(
-            _that.success,
-            _that.connected,
-            _that.chargesEnabled,
-            _that.payoutsEnabled,
-            _that.detailsSubmitted,
-            _that.groupPaymentMode,
-            _that.cardMinAmountMinor,
-            _that.tableService);
+        return $default(_that.success, _that.connected, _that.chargesEnabled, _that.payoutsEnabled,
+            _that.detailsSubmitted, _that.groupPaymentMode, _that.cardMinAmountMinor, _that.tableService);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -356,15 +323,8 @@ extension StripeConnectStatusDMPatterns on StripeConnectStatusDM {
     final _that = this;
     switch (_that) {
       case _StripeConnectStatusDM() when $default != null:
-        return $default(
-            _that.success,
-            _that.connected,
-            _that.chargesEnabled,
-            _that.payoutsEnabled,
-            _that.detailsSubmitted,
-            _that.groupPaymentMode,
-            _that.cardMinAmountMinor,
-            _that.tableService);
+        return $default(_that.success, _that.connected, _that.chargesEnabled, _that.payoutsEnabled,
+            _that.detailsSubmitted, _that.groupPaymentMode, _that.cardMinAmountMinor, _that.tableService);
       case _:
         return null;
     }
@@ -383,8 +343,7 @@ class _StripeConnectStatusDM implements StripeConnectStatusDM {
       @JsonKey(name: 'group_payment_mode') this.groupPaymentMode,
       @JsonKey(name: 'card_min_amount_minor') this.cardMinAmountMinor,
       @JsonKey(name: 'table_service') this.tableService = false});
-  factory _StripeConnectStatusDM.fromJson(Map<String, dynamic> json) =>
-      _$StripeConnectStatusDMFromJson(json);
+  factory _StripeConnectStatusDM.fromJson(Map<String, dynamic> json) => _$StripeConnectStatusDMFromJson(json);
 
   @override
   @JsonKey()
@@ -423,8 +382,7 @@ class _StripeConnectStatusDM implements StripeConnectStatusDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$StripeConnectStatusDMCopyWith<_StripeConnectStatusDM> get copyWith =>
-      __$StripeConnectStatusDMCopyWithImpl<_StripeConnectStatusDM>(
-          this, _$identity);
+      __$StripeConnectStatusDMCopyWithImpl<_StripeConnectStatusDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -439,34 +397,20 @@ class _StripeConnectStatusDM implements StripeConnectStatusDM {
         (other.runtimeType == runtimeType &&
             other is _StripeConnectStatusDM &&
             (identical(other.success, success) || other.success == success) &&
-            (identical(other.connected, connected) ||
-                other.connected == connected) &&
-            (identical(other.chargesEnabled, chargesEnabled) ||
-                other.chargesEnabled == chargesEnabled) &&
-            (identical(other.payoutsEnabled, payoutsEnabled) ||
-                other.payoutsEnabled == payoutsEnabled) &&
-            (identical(other.detailsSubmitted, detailsSubmitted) ||
-                other.detailsSubmitted == detailsSubmitted) &&
-            (identical(other.groupPaymentMode, groupPaymentMode) ||
-                other.groupPaymentMode == groupPaymentMode) &&
+            (identical(other.connected, connected) || other.connected == connected) &&
+            (identical(other.chargesEnabled, chargesEnabled) || other.chargesEnabled == chargesEnabled) &&
+            (identical(other.payoutsEnabled, payoutsEnabled) || other.payoutsEnabled == payoutsEnabled) &&
+            (identical(other.detailsSubmitted, detailsSubmitted) || other.detailsSubmitted == detailsSubmitted) &&
+            (identical(other.groupPaymentMode, groupPaymentMode) || other.groupPaymentMode == groupPaymentMode) &&
             (identical(other.cardMinAmountMinor, cardMinAmountMinor) ||
                 other.cardMinAmountMinor == cardMinAmountMinor) &&
-            (identical(other.tableService, tableService) ||
-                other.tableService == tableService));
+            (identical(other.tableService, tableService) || other.tableService == tableService));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      success,
-      connected,
-      chargesEnabled,
-      payoutsEnabled,
-      detailsSubmitted,
-      groupPaymentMode,
-      cardMinAmountMinor,
-      tableService);
+  int get hashCode => Object.hash(runtimeType, success, connected, chargesEnabled, payoutsEnabled, detailsSubmitted,
+      groupPaymentMode, cardMinAmountMinor, tableService);
 
   @override
   String toString() {
@@ -475,10 +419,8 @@ class _StripeConnectStatusDM implements StripeConnectStatusDM {
 }
 
 /// @nodoc
-abstract mixin class _$StripeConnectStatusDMCopyWith<$Res>
-    implements $StripeConnectStatusDMCopyWith<$Res> {
-  factory _$StripeConnectStatusDMCopyWith(_StripeConnectStatusDM value,
-          $Res Function(_StripeConnectStatusDM) _then) =
+abstract mixin class _$StripeConnectStatusDMCopyWith<$Res> implements $StripeConnectStatusDMCopyWith<$Res> {
+  factory _$StripeConnectStatusDMCopyWith(_StripeConnectStatusDM value, $Res Function(_StripeConnectStatusDM) _then) =
       __$StripeConnectStatusDMCopyWithImpl;
   @override
   @useResult
@@ -494,8 +436,7 @@ abstract mixin class _$StripeConnectStatusDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$StripeConnectStatusDMCopyWithImpl<$Res>
-    implements _$StripeConnectStatusDMCopyWith<$Res> {
+class __$StripeConnectStatusDMCopyWithImpl<$Res> implements _$StripeConnectStatusDMCopyWith<$Res> {
   __$StripeConnectStatusDMCopyWithImpl(this._self, this._then);
 
   final _StripeConnectStatusDM _self;
@@ -565,8 +506,7 @@ mixin _$StripeOnboardResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $StripeOnboardResponseDMCopyWith<StripeOnboardResponseDM> get copyWith =>
-      _$StripeOnboardResponseDMCopyWithImpl<StripeOnboardResponseDM>(
-          this as StripeOnboardResponseDM, _$identity);
+      _$StripeOnboardResponseDMCopyWithImpl<StripeOnboardResponseDM>(this as StripeOnboardResponseDM, _$identity);
 
   /// Serializes this StripeOnboardResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -577,16 +517,13 @@ mixin _$StripeOnboardResponseDM {
         (other.runtimeType == runtimeType &&
             other is StripeOnboardResponseDM &&
             (identical(other.success, success) || other.success == success) &&
-            (identical(other.onboardingUrl, onboardingUrl) ||
-                other.onboardingUrl == onboardingUrl) &&
-            (identical(other.chargesEnabled, chargesEnabled) ||
-                other.chargesEnabled == chargesEnabled));
+            (identical(other.onboardingUrl, onboardingUrl) || other.onboardingUrl == onboardingUrl) &&
+            (identical(other.chargesEnabled, chargesEnabled) || other.chargesEnabled == chargesEnabled));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, success, onboardingUrl, chargesEnabled);
+  int get hashCode => Object.hash(runtimeType, success, onboardingUrl, chargesEnabled);
 
   @override
   String toString() {
@@ -596,8 +533,8 @@ mixin _$StripeOnboardResponseDM {
 
 /// @nodoc
 abstract mixin class $StripeOnboardResponseDMCopyWith<$Res> {
-  factory $StripeOnboardResponseDMCopyWith(StripeOnboardResponseDM value,
-          $Res Function(StripeOnboardResponseDM) _then) =
+  factory $StripeOnboardResponseDMCopyWith(
+          StripeOnboardResponseDM value, $Res Function(StripeOnboardResponseDM) _then) =
       _$StripeOnboardResponseDMCopyWithImpl;
   @useResult
   $Res call(
@@ -607,8 +544,7 @@ abstract mixin class $StripeOnboardResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$StripeOnboardResponseDMCopyWithImpl<$Res>
-    implements $StripeOnboardResponseDMCopyWith<$Res> {
+class _$StripeOnboardResponseDMCopyWithImpl<$Res> implements $StripeOnboardResponseDMCopyWith<$Res> {
   _$StripeOnboardResponseDMCopyWithImpl(this._self, this._then);
 
   final StripeOnboardResponseDM _self;
@@ -733,9 +669,7 @@ extension StripeOnboardResponseDMPatterns on StripeOnboardResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            bool success,
-            @JsonKey(name: 'onboarding_url') String? onboardingUrl,
+    TResult Function(bool success, @JsonKey(name: 'onboarding_url') String? onboardingUrl,
             @JsonKey(name: 'charges_enabled') bool chargesEnabled)?
         $default, {
     required TResult orElse(),
@@ -743,8 +677,7 @@ extension StripeOnboardResponseDMPatterns on StripeOnboardResponseDM {
     final _that = this;
     switch (_that) {
       case _StripeOnboardResponseDM() when $default != null:
-        return $default(
-            _that.success, _that.onboardingUrl, _that.chargesEnabled);
+        return $default(_that.success, _that.onboardingUrl, _that.chargesEnabled);
       case _:
         return orElse();
     }
@@ -765,17 +698,14 @@ extension StripeOnboardResponseDMPatterns on StripeOnboardResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            bool success,
-            @JsonKey(name: 'onboarding_url') String? onboardingUrl,
+    TResult Function(bool success, @JsonKey(name: 'onboarding_url') String? onboardingUrl,
             @JsonKey(name: 'charges_enabled') bool chargesEnabled)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _StripeOnboardResponseDM():
-        return $default(
-            _that.success, _that.onboardingUrl, _that.chargesEnabled);
+        return $default(_that.success, _that.onboardingUrl, _that.chargesEnabled);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -795,17 +725,14 @@ extension StripeOnboardResponseDMPatterns on StripeOnboardResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            bool success,
-            @JsonKey(name: 'onboarding_url') String? onboardingUrl,
+    TResult? Function(bool success, @JsonKey(name: 'onboarding_url') String? onboardingUrl,
             @JsonKey(name: 'charges_enabled') bool chargesEnabled)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _StripeOnboardResponseDM() when $default != null:
-        return $default(
-            _that.success, _that.onboardingUrl, _that.chargesEnabled);
+        return $default(_that.success, _that.onboardingUrl, _that.chargesEnabled);
       case _:
         return null;
     }
@@ -819,8 +746,7 @@ class _StripeOnboardResponseDM implements StripeOnboardResponseDM {
       {this.success = true,
       @JsonKey(name: 'onboarding_url') this.onboardingUrl,
       @JsonKey(name: 'charges_enabled') this.chargesEnabled = false});
-  factory _StripeOnboardResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$StripeOnboardResponseDMFromJson(json);
+  factory _StripeOnboardResponseDM.fromJson(Map<String, dynamic> json) => _$StripeOnboardResponseDMFromJson(json);
 
   @override
   @JsonKey()
@@ -838,8 +764,7 @@ class _StripeOnboardResponseDM implements StripeOnboardResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$StripeOnboardResponseDMCopyWith<_StripeOnboardResponseDM> get copyWith =>
-      __$StripeOnboardResponseDMCopyWithImpl<_StripeOnboardResponseDM>(
-          this, _$identity);
+      __$StripeOnboardResponseDMCopyWithImpl<_StripeOnboardResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -854,16 +779,13 @@ class _StripeOnboardResponseDM implements StripeOnboardResponseDM {
         (other.runtimeType == runtimeType &&
             other is _StripeOnboardResponseDM &&
             (identical(other.success, success) || other.success == success) &&
-            (identical(other.onboardingUrl, onboardingUrl) ||
-                other.onboardingUrl == onboardingUrl) &&
-            (identical(other.chargesEnabled, chargesEnabled) ||
-                other.chargesEnabled == chargesEnabled));
+            (identical(other.onboardingUrl, onboardingUrl) || other.onboardingUrl == onboardingUrl) &&
+            (identical(other.chargesEnabled, chargesEnabled) || other.chargesEnabled == chargesEnabled));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, success, onboardingUrl, chargesEnabled);
+  int get hashCode => Object.hash(runtimeType, success, onboardingUrl, chargesEnabled);
 
   @override
   String toString() {
@@ -872,10 +794,9 @@ class _StripeOnboardResponseDM implements StripeOnboardResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$StripeOnboardResponseDMCopyWith<$Res>
-    implements $StripeOnboardResponseDMCopyWith<$Res> {
-  factory _$StripeOnboardResponseDMCopyWith(_StripeOnboardResponseDM value,
-          $Res Function(_StripeOnboardResponseDM) _then) =
+abstract mixin class _$StripeOnboardResponseDMCopyWith<$Res> implements $StripeOnboardResponseDMCopyWith<$Res> {
+  factory _$StripeOnboardResponseDMCopyWith(
+          _StripeOnboardResponseDM value, $Res Function(_StripeOnboardResponseDM) _then) =
       __$StripeOnboardResponseDMCopyWithImpl;
   @override
   @useResult
@@ -886,8 +807,7 @@ abstract mixin class _$StripeOnboardResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$StripeOnboardResponseDMCopyWithImpl<$Res>
-    implements _$StripeOnboardResponseDMCopyWith<$Res> {
+class __$StripeOnboardResponseDMCopyWithImpl<$Res> implements _$StripeOnboardResponseDMCopyWith<$Res> {
   __$StripeOnboardResponseDMCopyWithImpl(this._self, this._then);
 
   final _StripeOnboardResponseDM _self;

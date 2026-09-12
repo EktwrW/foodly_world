@@ -22,8 +22,7 @@ mixin _$ReviewsResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ReviewsResponseDMCopyWith<ReviewsResponseDM> get copyWith =>
-      _$ReviewsResponseDMCopyWithImpl<ReviewsResponseDM>(
-          this as ReviewsResponseDM, _$identity);
+      _$ReviewsResponseDMCopyWithImpl<ReviewsResponseDM>(this as ReviewsResponseDM, _$identity);
 
   /// Serializes this ReviewsResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -39,8 +38,7 @@ mixin _$ReviewsResponseDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(reviews), meta);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(reviews), meta);
 
   @override
   String toString() {
@@ -50,8 +48,7 @@ mixin _$ReviewsResponseDM {
 
 /// @nodoc
 abstract mixin class $ReviewsResponseDMCopyWith<$Res> {
-  factory $ReviewsResponseDMCopyWith(
-          ReviewsResponseDM value, $Res Function(ReviewsResponseDM) _then) =
+  factory $ReviewsResponseDMCopyWith(ReviewsResponseDM value, $Res Function(ReviewsResponseDM) _then) =
       _$ReviewsResponseDMCopyWithImpl;
   @useResult
   $Res call({List<ReviewDM> reviews, ReviewsMetaDM? meta});
@@ -60,8 +57,7 @@ abstract mixin class $ReviewsResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReviewsResponseDMCopyWithImpl<$Res>
-    implements $ReviewsResponseDMCopyWith<$Res> {
+class _$ReviewsResponseDMCopyWithImpl<$Res> implements $ReviewsResponseDMCopyWith<$Res> {
   _$ReviewsResponseDMCopyWithImpl(this._self, this._then);
 
   final ReviewsResponseDM _self;
@@ -262,10 +258,8 @@ extension ReviewsResponseDMPatterns on ReviewsResponseDM {
 /// @nodoc
 @JsonSerializable()
 class _ReviewsResponseDM implements ReviewsResponseDM {
-  const _ReviewsResponseDM({final List<ReviewDM> reviews = const [], this.meta})
-      : _reviews = reviews;
-  factory _ReviewsResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$ReviewsResponseDMFromJson(json);
+  const _ReviewsResponseDM({final List<ReviewDM> reviews = const [], this.meta}) : _reviews = reviews;
+  factory _ReviewsResponseDM.fromJson(Map<String, dynamic> json) => _$ReviewsResponseDMFromJson(json);
 
   final List<ReviewDM> _reviews;
   @override
@@ -305,8 +299,7 @@ class _ReviewsResponseDM implements ReviewsResponseDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_reviews), meta);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_reviews), meta);
 
   @override
   String toString() {
@@ -315,10 +308,8 @@ class _ReviewsResponseDM implements ReviewsResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$ReviewsResponseDMCopyWith<$Res>
-    implements $ReviewsResponseDMCopyWith<$Res> {
-  factory _$ReviewsResponseDMCopyWith(
-          _ReviewsResponseDM value, $Res Function(_ReviewsResponseDM) _then) =
+abstract mixin class _$ReviewsResponseDMCopyWith<$Res> implements $ReviewsResponseDMCopyWith<$Res> {
+  factory _$ReviewsResponseDMCopyWith(_ReviewsResponseDM value, $Res Function(_ReviewsResponseDM) _then) =
       __$ReviewsResponseDMCopyWithImpl;
   @override
   @useResult
@@ -329,8 +320,7 @@ abstract mixin class _$ReviewsResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ReviewsResponseDMCopyWithImpl<$Res>
-    implements _$ReviewsResponseDMCopyWith<$Res> {
+class __$ReviewsResponseDMCopyWithImpl<$Res> implements _$ReviewsResponseDMCopyWith<$Res> {
   __$ReviewsResponseDMCopyWithImpl(this._self, this._then);
 
   final _ReviewsResponseDM _self;
@@ -390,8 +380,7 @@ mixin _$ReviewsMetaDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ReviewsMetaDMCopyWith<ReviewsMetaDM> get copyWith =>
-      _$ReviewsMetaDMCopyWithImpl<ReviewsMetaDM>(
-          this as ReviewsMetaDM, _$identity);
+      _$ReviewsMetaDMCopyWithImpl<ReviewsMetaDM>(this as ReviewsMetaDM, _$identity);
 
   /// Serializes this ReviewsMetaDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -401,22 +390,17 @@ mixin _$ReviewsMetaDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ReviewsMetaDM &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.lastPage, lastPage) ||
-                other.lastPage == lastPage) &&
+            (identical(other.currentPage, currentPage) || other.currentPage == currentPage) &&
+            (identical(other.lastPage, lastPage) || other.lastPage == lastPage) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
             (identical(other.total, total) || other.total == total) &&
-            (identical(other.averageRating, averageRating) ||
-                other.averageRating == averageRating) &&
-            (identical(other.ratingsCount, ratingsCount) ||
-                other.ratingsCount == ratingsCount));
+            (identical(other.averageRating, averageRating) || other.averageRating == averageRating) &&
+            (identical(other.ratingsCount, ratingsCount) || other.ratingsCount == ratingsCount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, currentPage, lastPage, perPage,
-      total, averageRating, ratingsCount);
+  int get hashCode => Object.hash(runtimeType, currentPage, lastPage, perPage, total, averageRating, ratingsCount);
 
   @override
   String toString() {
@@ -426,9 +410,7 @@ mixin _$ReviewsMetaDM {
 
 /// @nodoc
 abstract mixin class $ReviewsMetaDMCopyWith<$Res> {
-  factory $ReviewsMetaDMCopyWith(
-          ReviewsMetaDM value, $Res Function(ReviewsMetaDM) _then) =
-      _$ReviewsMetaDMCopyWithImpl;
+  factory $ReviewsMetaDMCopyWith(ReviewsMetaDM value, $Res Function(ReviewsMetaDM) _then) = _$ReviewsMetaDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'current_page') int currentPage,
@@ -440,8 +422,7 @@ abstract mixin class $ReviewsMetaDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReviewsMetaDMCopyWithImpl<$Res>
-    implements $ReviewsMetaDMCopyWith<$Res> {
+class _$ReviewsMetaDMCopyWithImpl<$Res> implements $ReviewsMetaDMCopyWith<$Res> {
   _$ReviewsMetaDMCopyWithImpl(this._self, this._then);
 
   final ReviewsMetaDM _self;
@@ -594,8 +575,8 @@ extension ReviewsMetaDMPatterns on ReviewsMetaDM {
     final _that = this;
     switch (_that) {
       case _ReviewsMetaDM() when $default != null:
-        return $default(_that.currentPage, _that.lastPage, _that.perPage,
-            _that.total, _that.averageRating, _that.ratingsCount);
+        return $default(
+            _that.currentPage, _that.lastPage, _that.perPage, _that.total, _that.averageRating, _that.ratingsCount);
       case _:
         return orElse();
     }
@@ -628,8 +609,8 @@ extension ReviewsMetaDMPatterns on ReviewsMetaDM {
     final _that = this;
     switch (_that) {
       case _ReviewsMetaDM():
-        return $default(_that.currentPage, _that.lastPage, _that.perPage,
-            _that.total, _that.averageRating, _that.ratingsCount);
+        return $default(
+            _that.currentPage, _that.lastPage, _that.perPage, _that.total, _that.averageRating, _that.ratingsCount);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -661,8 +642,8 @@ extension ReviewsMetaDMPatterns on ReviewsMetaDM {
     final _that = this;
     switch (_that) {
       case _ReviewsMetaDM() when $default != null:
-        return $default(_that.currentPage, _that.lastPage, _that.perPage,
-            _that.total, _that.averageRating, _that.ratingsCount);
+        return $default(
+            _that.currentPage, _that.lastPage, _that.perPage, _that.total, _that.averageRating, _that.ratingsCount);
       case _:
         return null;
     }
@@ -679,8 +660,7 @@ class _ReviewsMetaDM implements ReviewsMetaDM {
       this.total = 0,
       @JsonKey(name: 'average_rating') this.averageRating = 0,
       @JsonKey(name: 'ratings_count') this.ratingsCount = 0});
-  factory _ReviewsMetaDM.fromJson(Map<String, dynamic> json) =>
-      _$ReviewsMetaDMFromJson(json);
+  factory _ReviewsMetaDM.fromJson(Map<String, dynamic> json) => _$ReviewsMetaDMFromJson(json);
 
   @override
   @JsonKey(name: 'current_page')
@@ -721,22 +701,17 @@ class _ReviewsMetaDM implements ReviewsMetaDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ReviewsMetaDM &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.lastPage, lastPage) ||
-                other.lastPage == lastPage) &&
+            (identical(other.currentPage, currentPage) || other.currentPage == currentPage) &&
+            (identical(other.lastPage, lastPage) || other.lastPage == lastPage) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
             (identical(other.total, total) || other.total == total) &&
-            (identical(other.averageRating, averageRating) ||
-                other.averageRating == averageRating) &&
-            (identical(other.ratingsCount, ratingsCount) ||
-                other.ratingsCount == ratingsCount));
+            (identical(other.averageRating, averageRating) || other.averageRating == averageRating) &&
+            (identical(other.ratingsCount, ratingsCount) || other.ratingsCount == ratingsCount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, currentPage, lastPage, perPage,
-      total, averageRating, ratingsCount);
+  int get hashCode => Object.hash(runtimeType, currentPage, lastPage, perPage, total, averageRating, ratingsCount);
 
   @override
   String toString() {
@@ -745,10 +720,8 @@ class _ReviewsMetaDM implements ReviewsMetaDM {
 }
 
 /// @nodoc
-abstract mixin class _$ReviewsMetaDMCopyWith<$Res>
-    implements $ReviewsMetaDMCopyWith<$Res> {
-  factory _$ReviewsMetaDMCopyWith(
-          _ReviewsMetaDM value, $Res Function(_ReviewsMetaDM) _then) =
+abstract mixin class _$ReviewsMetaDMCopyWith<$Res> implements $ReviewsMetaDMCopyWith<$Res> {
+  factory _$ReviewsMetaDMCopyWith(_ReviewsMetaDM value, $Res Function(_ReviewsMetaDM) _then) =
       __$ReviewsMetaDMCopyWithImpl;
   @override
   @useResult
@@ -762,8 +735,7 @@ abstract mixin class _$ReviewsMetaDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ReviewsMetaDMCopyWithImpl<$Res>
-    implements _$ReviewsMetaDMCopyWith<$Res> {
+class __$ReviewsMetaDMCopyWithImpl<$Res> implements _$ReviewsMetaDMCopyWith<$Res> {
   __$ReviewsMetaDMCopyWithImpl(this._self, this._then);
 
   final _ReviewsMetaDM _self;
@@ -821,8 +793,7 @@ mixin _$ReviewCheckResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ReviewCheckResponseDMCopyWith<ReviewCheckResponseDM> get copyWith =>
-      _$ReviewCheckResponseDMCopyWithImpl<ReviewCheckResponseDM>(
-          this as ReviewCheckResponseDM, _$identity);
+      _$ReviewCheckResponseDMCopyWithImpl<ReviewCheckResponseDM>(this as ReviewCheckResponseDM, _$identity);
 
   /// Serializes this ReviewCheckResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -832,8 +803,7 @@ mixin _$ReviewCheckResponseDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ReviewCheckResponseDM &&
-            (identical(other.hasReviewed, hasReviewed) ||
-                other.hasReviewed == hasReviewed) &&
+            (identical(other.hasReviewed, hasReviewed) || other.hasReviewed == hasReviewed) &&
             (identical(other.review, review) || other.review == review));
   }
 
@@ -849,19 +819,16 @@ mixin _$ReviewCheckResponseDM {
 
 /// @nodoc
 abstract mixin class $ReviewCheckResponseDMCopyWith<$Res> {
-  factory $ReviewCheckResponseDMCopyWith(ReviewCheckResponseDM value,
-          $Res Function(ReviewCheckResponseDM) _then) =
+  factory $ReviewCheckResponseDMCopyWith(ReviewCheckResponseDM value, $Res Function(ReviewCheckResponseDM) _then) =
       _$ReviewCheckResponseDMCopyWithImpl;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'has_reviewed') bool hasReviewed, ReviewDM? review});
+  $Res call({@JsonKey(name: 'has_reviewed') bool hasReviewed, ReviewDM? review});
 
   $ReviewDMCopyWith<$Res>? get review;
 }
 
 /// @nodoc
-class _$ReviewCheckResponseDMCopyWithImpl<$Res>
-    implements $ReviewCheckResponseDMCopyWith<$Res> {
+class _$ReviewCheckResponseDMCopyWithImpl<$Res> implements $ReviewCheckResponseDMCopyWith<$Res> {
   _$ReviewCheckResponseDMCopyWithImpl(this._self, this._then);
 
   final ReviewCheckResponseDM _self;
@@ -995,9 +962,7 @@ extension ReviewCheckResponseDMPatterns on ReviewCheckResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(name: 'has_reviewed') bool hasReviewed, ReviewDM? review)?
-        $default, {
+    TResult Function(@JsonKey(name: 'has_reviewed') bool hasReviewed, ReviewDM? review)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -1024,9 +989,7 @@ extension ReviewCheckResponseDMPatterns on ReviewCheckResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(name: 'has_reviewed') bool hasReviewed, ReviewDM? review)
-        $default,
+    TResult Function(@JsonKey(name: 'has_reviewed') bool hasReviewed, ReviewDM? review) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -1051,9 +1014,7 @@ extension ReviewCheckResponseDMPatterns on ReviewCheckResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            @JsonKey(name: 'has_reviewed') bool hasReviewed, ReviewDM? review)?
-        $default,
+    TResult? Function(@JsonKey(name: 'has_reviewed') bool hasReviewed, ReviewDM? review)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -1068,10 +1029,8 @@ extension ReviewCheckResponseDMPatterns on ReviewCheckResponseDM {
 /// @nodoc
 @JsonSerializable()
 class _ReviewCheckResponseDM implements ReviewCheckResponseDM {
-  const _ReviewCheckResponseDM(
-      {@JsonKey(name: 'has_reviewed') this.hasReviewed = false, this.review});
-  factory _ReviewCheckResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$ReviewCheckResponseDMFromJson(json);
+  const _ReviewCheckResponseDM({@JsonKey(name: 'has_reviewed') this.hasReviewed = false, this.review});
+  factory _ReviewCheckResponseDM.fromJson(Map<String, dynamic> json) => _$ReviewCheckResponseDMFromJson(json);
 
   @override
   @JsonKey(name: 'has_reviewed')
@@ -1085,8 +1044,7 @@ class _ReviewCheckResponseDM implements ReviewCheckResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$ReviewCheckResponseDMCopyWith<_ReviewCheckResponseDM> get copyWith =>
-      __$ReviewCheckResponseDMCopyWithImpl<_ReviewCheckResponseDM>(
-          this, _$identity);
+      __$ReviewCheckResponseDMCopyWithImpl<_ReviewCheckResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1100,8 +1058,7 @@ class _ReviewCheckResponseDM implements ReviewCheckResponseDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ReviewCheckResponseDM &&
-            (identical(other.hasReviewed, hasReviewed) ||
-                other.hasReviewed == hasReviewed) &&
+            (identical(other.hasReviewed, hasReviewed) || other.hasReviewed == hasReviewed) &&
             (identical(other.review, review) || other.review == review));
   }
 
@@ -1116,23 +1073,19 @@ class _ReviewCheckResponseDM implements ReviewCheckResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$ReviewCheckResponseDMCopyWith<$Res>
-    implements $ReviewCheckResponseDMCopyWith<$Res> {
-  factory _$ReviewCheckResponseDMCopyWith(_ReviewCheckResponseDM value,
-          $Res Function(_ReviewCheckResponseDM) _then) =
+abstract mixin class _$ReviewCheckResponseDMCopyWith<$Res> implements $ReviewCheckResponseDMCopyWith<$Res> {
+  factory _$ReviewCheckResponseDMCopyWith(_ReviewCheckResponseDM value, $Res Function(_ReviewCheckResponseDM) _then) =
       __$ReviewCheckResponseDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: 'has_reviewed') bool hasReviewed, ReviewDM? review});
+  $Res call({@JsonKey(name: 'has_reviewed') bool hasReviewed, ReviewDM? review});
 
   @override
   $ReviewDMCopyWith<$Res>? get review;
 }
 
 /// @nodoc
-class __$ReviewCheckResponseDMCopyWithImpl<$Res>
-    implements _$ReviewCheckResponseDMCopyWith<$Res> {
+class __$ReviewCheckResponseDMCopyWithImpl<$Res> implements _$ReviewCheckResponseDMCopyWith<$Res> {
   __$ReviewCheckResponseDMCopyWithImpl(this._self, this._then);
 
   final _ReviewCheckResponseDM _self;
@@ -1184,8 +1137,7 @@ mixin _$ReviewCreateResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ReviewCreateResponseDMCopyWith<ReviewCreateResponseDM> get copyWith =>
-      _$ReviewCreateResponseDMCopyWithImpl<ReviewCreateResponseDM>(
-          this as ReviewCreateResponseDM, _$identity);
+      _$ReviewCreateResponseDMCopyWithImpl<ReviewCreateResponseDM>(this as ReviewCreateResponseDM, _$identity);
 
   /// Serializes this ReviewCreateResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1212,8 +1164,7 @@ mixin _$ReviewCreateResponseDM {
 
 /// @nodoc
 abstract mixin class $ReviewCreateResponseDMCopyWith<$Res> {
-  factory $ReviewCreateResponseDMCopyWith(ReviewCreateResponseDM value,
-          $Res Function(ReviewCreateResponseDM) _then) =
+  factory $ReviewCreateResponseDMCopyWith(ReviewCreateResponseDM value, $Res Function(ReviewCreateResponseDM) _then) =
       _$ReviewCreateResponseDMCopyWithImpl;
   @useResult
   $Res call({bool success, String message, ReviewDM? review});
@@ -1222,8 +1173,7 @@ abstract mixin class $ReviewCreateResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReviewCreateResponseDMCopyWithImpl<$Res>
-    implements $ReviewCreateResponseDMCopyWith<$Res> {
+class _$ReviewCreateResponseDMCopyWithImpl<$Res> implements $ReviewCreateResponseDMCopyWith<$Res> {
   _$ReviewCreateResponseDMCopyWithImpl(this._self, this._then);
 
   final ReviewCreateResponseDM _self;
@@ -1362,8 +1312,7 @@ extension ReviewCreateResponseDMPatterns on ReviewCreateResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(bool success, String message, ReviewDM? review)?
-        $default, {
+    TResult Function(bool success, String message, ReviewDM? review)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -1430,10 +1379,8 @@ extension ReviewCreateResponseDMPatterns on ReviewCreateResponseDM {
 /// @nodoc
 @JsonSerializable()
 class _ReviewCreateResponseDM implements ReviewCreateResponseDM {
-  const _ReviewCreateResponseDM(
-      {this.success = false, this.message = '', this.review});
-  factory _ReviewCreateResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$ReviewCreateResponseDMFromJson(json);
+  const _ReviewCreateResponseDM({this.success = false, this.message = '', this.review});
+  factory _ReviewCreateResponseDM.fromJson(Map<String, dynamic> json) => _$ReviewCreateResponseDMFromJson(json);
 
   @override
   @JsonKey()
@@ -1450,8 +1397,7 @@ class _ReviewCreateResponseDM implements ReviewCreateResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$ReviewCreateResponseDMCopyWith<_ReviewCreateResponseDM> get copyWith =>
-      __$ReviewCreateResponseDMCopyWithImpl<_ReviewCreateResponseDM>(
-          this, _$identity);
+      __$ReviewCreateResponseDMCopyWithImpl<_ReviewCreateResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1481,10 +1427,9 @@ class _ReviewCreateResponseDM implements ReviewCreateResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$ReviewCreateResponseDMCopyWith<$Res>
-    implements $ReviewCreateResponseDMCopyWith<$Res> {
-  factory _$ReviewCreateResponseDMCopyWith(_ReviewCreateResponseDM value,
-          $Res Function(_ReviewCreateResponseDM) _then) =
+abstract mixin class _$ReviewCreateResponseDMCopyWith<$Res> implements $ReviewCreateResponseDMCopyWith<$Res> {
+  factory _$ReviewCreateResponseDMCopyWith(
+          _ReviewCreateResponseDM value, $Res Function(_ReviewCreateResponseDM) _then) =
       __$ReviewCreateResponseDMCopyWithImpl;
   @override
   @useResult
@@ -1495,8 +1440,7 @@ abstract mixin class _$ReviewCreateResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ReviewCreateResponseDMCopyWithImpl<$Res>
-    implements _$ReviewCreateResponseDMCopyWith<$Res> {
+class __$ReviewCreateResponseDMCopyWithImpl<$Res> implements _$ReviewCreateResponseDMCopyWith<$Res> {
   __$ReviewCreateResponseDMCopyWithImpl(this._self, this._then);
 
   final _ReviewCreateResponseDM _self;
@@ -1553,8 +1497,7 @@ mixin _$ReviewUpdateResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ReviewUpdateResponseDMCopyWith<ReviewUpdateResponseDM> get copyWith =>
-      _$ReviewUpdateResponseDMCopyWithImpl<ReviewUpdateResponseDM>(
-          this as ReviewUpdateResponseDM, _$identity);
+      _$ReviewUpdateResponseDMCopyWithImpl<ReviewUpdateResponseDM>(this as ReviewUpdateResponseDM, _$identity);
 
   /// Serializes this ReviewUpdateResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1581,8 +1524,7 @@ mixin _$ReviewUpdateResponseDM {
 
 /// @nodoc
 abstract mixin class $ReviewUpdateResponseDMCopyWith<$Res> {
-  factory $ReviewUpdateResponseDMCopyWith(ReviewUpdateResponseDM value,
-          $Res Function(ReviewUpdateResponseDM) _then) =
+  factory $ReviewUpdateResponseDMCopyWith(ReviewUpdateResponseDM value, $Res Function(ReviewUpdateResponseDM) _then) =
       _$ReviewUpdateResponseDMCopyWithImpl;
   @useResult
   $Res call({bool success, String message, ReviewDM? review});
@@ -1591,8 +1533,7 @@ abstract mixin class $ReviewUpdateResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReviewUpdateResponseDMCopyWithImpl<$Res>
-    implements $ReviewUpdateResponseDMCopyWith<$Res> {
+class _$ReviewUpdateResponseDMCopyWithImpl<$Res> implements $ReviewUpdateResponseDMCopyWith<$Res> {
   _$ReviewUpdateResponseDMCopyWithImpl(this._self, this._then);
 
   final ReviewUpdateResponseDM _self;
@@ -1731,8 +1672,7 @@ extension ReviewUpdateResponseDMPatterns on ReviewUpdateResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(bool success, String message, ReviewDM? review)?
-        $default, {
+    TResult Function(bool success, String message, ReviewDM? review)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -1799,10 +1739,8 @@ extension ReviewUpdateResponseDMPatterns on ReviewUpdateResponseDM {
 /// @nodoc
 @JsonSerializable()
 class _ReviewUpdateResponseDM implements ReviewUpdateResponseDM {
-  const _ReviewUpdateResponseDM(
-      {this.success = false, this.message = '', this.review});
-  factory _ReviewUpdateResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$ReviewUpdateResponseDMFromJson(json);
+  const _ReviewUpdateResponseDM({this.success = false, this.message = '', this.review});
+  factory _ReviewUpdateResponseDM.fromJson(Map<String, dynamic> json) => _$ReviewUpdateResponseDMFromJson(json);
 
   @override
   @JsonKey()
@@ -1819,8 +1757,7 @@ class _ReviewUpdateResponseDM implements ReviewUpdateResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$ReviewUpdateResponseDMCopyWith<_ReviewUpdateResponseDM> get copyWith =>
-      __$ReviewUpdateResponseDMCopyWithImpl<_ReviewUpdateResponseDM>(
-          this, _$identity);
+      __$ReviewUpdateResponseDMCopyWithImpl<_ReviewUpdateResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1850,10 +1787,9 @@ class _ReviewUpdateResponseDM implements ReviewUpdateResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$ReviewUpdateResponseDMCopyWith<$Res>
-    implements $ReviewUpdateResponseDMCopyWith<$Res> {
-  factory _$ReviewUpdateResponseDMCopyWith(_ReviewUpdateResponseDM value,
-          $Res Function(_ReviewUpdateResponseDM) _then) =
+abstract mixin class _$ReviewUpdateResponseDMCopyWith<$Res> implements $ReviewUpdateResponseDMCopyWith<$Res> {
+  factory _$ReviewUpdateResponseDMCopyWith(
+          _ReviewUpdateResponseDM value, $Res Function(_ReviewUpdateResponseDM) _then) =
       __$ReviewUpdateResponseDMCopyWithImpl;
   @override
   @useResult
@@ -1864,8 +1800,7 @@ abstract mixin class _$ReviewUpdateResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ReviewUpdateResponseDMCopyWithImpl<$Res>
-    implements _$ReviewUpdateResponseDMCopyWith<$Res> {
+class __$ReviewUpdateResponseDMCopyWithImpl<$Res> implements _$ReviewUpdateResponseDMCopyWith<$Res> {
   __$ReviewUpdateResponseDMCopyWithImpl(this._self, this._then);
 
   final _ReviewUpdateResponseDM _self;
@@ -1923,8 +1858,7 @@ mixin _$ReviewPhotoDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ReviewPhotoDMCopyWith<ReviewPhotoDM> get copyWith =>
-      _$ReviewPhotoDMCopyWithImpl<ReviewPhotoDM>(
-          this as ReviewPhotoDM, _$identity);
+      _$ReviewPhotoDMCopyWithImpl<ReviewPhotoDM>(this as ReviewPhotoDM, _$identity);
 
   /// Serializes this ReviewPhotoDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1934,10 +1868,8 @@ mixin _$ReviewPhotoDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ReviewPhotoDM &&
-            (identical(other.photoUuid, photoUuid) ||
-                other.photoUuid == photoUuid) &&
-            (identical(other.photoUrl, photoUrl) ||
-                other.photoUrl == photoUrl));
+            (identical(other.photoUuid, photoUuid) || other.photoUuid == photoUuid) &&
+            (identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1952,18 +1884,13 @@ mixin _$ReviewPhotoDM {
 
 /// @nodoc
 abstract mixin class $ReviewPhotoDMCopyWith<$Res> {
-  factory $ReviewPhotoDMCopyWith(
-          ReviewPhotoDM value, $Res Function(ReviewPhotoDM) _then) =
-      _$ReviewPhotoDMCopyWithImpl;
+  factory $ReviewPhotoDMCopyWith(ReviewPhotoDM value, $Res Function(ReviewPhotoDM) _then) = _$ReviewPhotoDMCopyWithImpl;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'photo_uuid') String? photoUuid,
-      @JsonKey(name: 'photo_url') String? photoUrl});
+  $Res call({@JsonKey(name: 'photo_uuid') String? photoUuid, @JsonKey(name: 'photo_url') String? photoUrl});
 }
 
 /// @nodoc
-class _$ReviewPhotoDMCopyWithImpl<$Res>
-    implements $ReviewPhotoDMCopyWith<$Res> {
+class _$ReviewPhotoDMCopyWithImpl<$Res> implements $ReviewPhotoDMCopyWith<$Res> {
   _$ReviewPhotoDMCopyWithImpl(this._self, this._then);
 
   final ReviewPhotoDM _self;
@@ -2083,8 +2010,7 @@ extension ReviewPhotoDMPatterns on ReviewPhotoDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'photo_uuid') String? photoUuid,
-            @JsonKey(name: 'photo_url') String? photoUrl)?
+    TResult Function(@JsonKey(name: 'photo_uuid') String? photoUuid, @JsonKey(name: 'photo_url') String? photoUrl)?
         $default, {
     required TResult orElse(),
   }) {
@@ -2112,8 +2038,7 @@ extension ReviewPhotoDMPatterns on ReviewPhotoDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'photo_uuid') String? photoUuid,
-            @JsonKey(name: 'photo_url') String? photoUrl)
+    TResult Function(@JsonKey(name: 'photo_uuid') String? photoUuid, @JsonKey(name: 'photo_url') String? photoUrl)
         $default,
   ) {
     final _that = this;
@@ -2139,8 +2064,7 @@ extension ReviewPhotoDMPatterns on ReviewPhotoDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(@JsonKey(name: 'photo_uuid') String? photoUuid,
-            @JsonKey(name: 'photo_url') String? photoUrl)?
+    TResult? Function(@JsonKey(name: 'photo_uuid') String? photoUuid, @JsonKey(name: 'photo_url') String? photoUrl)?
         $default,
   ) {
     final _that = this;
@@ -2156,11 +2080,8 @@ extension ReviewPhotoDMPatterns on ReviewPhotoDM {
 /// @nodoc
 @JsonSerializable()
 class _ReviewPhotoDM implements ReviewPhotoDM {
-  const _ReviewPhotoDM(
-      {@JsonKey(name: 'photo_uuid') this.photoUuid,
-      @JsonKey(name: 'photo_url') this.photoUrl});
-  factory _ReviewPhotoDM.fromJson(Map<String, dynamic> json) =>
-      _$ReviewPhotoDMFromJson(json);
+  const _ReviewPhotoDM({@JsonKey(name: 'photo_uuid') this.photoUuid, @JsonKey(name: 'photo_url') this.photoUrl});
+  factory _ReviewPhotoDM.fromJson(Map<String, dynamic> json) => _$ReviewPhotoDMFromJson(json);
 
   @override
   @JsonKey(name: 'photo_uuid')
@@ -2189,10 +2110,8 @@ class _ReviewPhotoDM implements ReviewPhotoDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ReviewPhotoDM &&
-            (identical(other.photoUuid, photoUuid) ||
-                other.photoUuid == photoUuid) &&
-            (identical(other.photoUrl, photoUrl) ||
-                other.photoUrl == photoUrl));
+            (identical(other.photoUuid, photoUuid) || other.photoUuid == photoUuid) &&
+            (identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -2206,21 +2125,16 @@ class _ReviewPhotoDM implements ReviewPhotoDM {
 }
 
 /// @nodoc
-abstract mixin class _$ReviewPhotoDMCopyWith<$Res>
-    implements $ReviewPhotoDMCopyWith<$Res> {
-  factory _$ReviewPhotoDMCopyWith(
-          _ReviewPhotoDM value, $Res Function(_ReviewPhotoDM) _then) =
+abstract mixin class _$ReviewPhotoDMCopyWith<$Res> implements $ReviewPhotoDMCopyWith<$Res> {
+  factory _$ReviewPhotoDMCopyWith(_ReviewPhotoDM value, $Res Function(_ReviewPhotoDM) _then) =
       __$ReviewPhotoDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: 'photo_uuid') String? photoUuid,
-      @JsonKey(name: 'photo_url') String? photoUrl});
+  $Res call({@JsonKey(name: 'photo_uuid') String? photoUuid, @JsonKey(name: 'photo_url') String? photoUrl});
 }
 
 /// @nodoc
-class __$ReviewPhotoDMCopyWithImpl<$Res>
-    implements _$ReviewPhotoDMCopyWith<$Res> {
+class __$ReviewPhotoDMCopyWithImpl<$Res> implements _$ReviewPhotoDMCopyWith<$Res> {
   __$ReviewPhotoDMCopyWithImpl(this._self, this._then);
 
   final _ReviewPhotoDM _self;
@@ -2281,8 +2195,7 @@ mixin _$ReviewDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $ReviewDMCopyWith<ReviewDM> get copyWith =>
-      _$ReviewDMCopyWithImpl<ReviewDM>(this as ReviewDM, _$identity);
+  $ReviewDMCopyWith<ReviewDM> get copyWith => _$ReviewDMCopyWithImpl<ReviewDM>(this as ReviewDM, _$identity);
 
   /// Serializes this ReviewDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -2292,33 +2205,21 @@ mixin _$ReviewDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ReviewDM &&
-            (identical(other.reviewId, reviewId) ||
-                other.reviewId == reviewId) &&
-            (identical(other.reviewUuid, reviewUuid) ||
-                other.reviewUuid == reviewUuid) &&
-            (identical(other.reviewType, reviewType) ||
-                other.reviewType == reviewType) &&
+            (identical(other.reviewId, reviewId) || other.reviewId == reviewId) &&
+            (identical(other.reviewUuid, reviewUuid) || other.reviewUuid == reviewUuid) &&
+            (identical(other.reviewType, reviewType) || other.reviewType == reviewType) &&
             (identical(other.rating, rating) || other.rating == rating) &&
             (identical(other.comment, comment) || other.comment == comment) &&
             const DeepCollectionEquality().equals(other.photos, photos) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            (identical(other.businessName, businessName) ||
-                other.businessName == businessName) &&
-            (identical(other.businessPhoto, businessPhoto) ||
-                other.businessPhoto == businessPhoto) &&
-            (identical(other.userUuid, userUuid) ||
-                other.userUuid == userUuid) &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.userPhoto, userPhoto) ||
-                other.userPhoto == userPhoto) &&
-            (identical(other.businessVisitedAt, businessVisitedAt) ||
-                other.businessVisitedAt == businessVisitedAt) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            (identical(other.businessName, businessName) || other.businessName == businessName) &&
+            (identical(other.businessPhoto, businessPhoto) || other.businessPhoto == businessPhoto) &&
+            (identical(other.userUuid, userUuid) || other.userUuid == userUuid) &&
+            (identical(other.userName, userName) || other.userName == userName) &&
+            (identical(other.userPhoto, userPhoto) || other.userPhoto == userPhoto) &&
+            (identical(other.businessVisitedAt, businessVisitedAt) || other.businessVisitedAt == businessVisitedAt) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -2349,8 +2250,7 @@ mixin _$ReviewDM {
 
 /// @nodoc
 abstract mixin class $ReviewDMCopyWith<$Res> {
-  factory $ReviewDMCopyWith(ReviewDM value, $Res Function(ReviewDM) _then) =
-      _$ReviewDMCopyWithImpl;
+  factory $ReviewDMCopyWith(ReviewDM value, $Res Function(ReviewDM) _then) = _$ReviewDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'review_id') int? reviewId,
@@ -2734,8 +2634,7 @@ class _ReviewDM extends ReviewDM {
       @JsonKey(name: 'updated_at') this.updatedAt})
       : _photos = photos,
         super._();
-  factory _ReviewDM.fromJson(Map<String, dynamic> json) =>
-      _$ReviewDMFromJson(json);
+  factory _ReviewDM.fromJson(Map<String, dynamic> json) => _$ReviewDMFromJson(json);
 
   @override
   @JsonKey(name: 'review_id')
@@ -2793,8 +2692,7 @@ class _ReviewDM extends ReviewDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ReviewDMCopyWith<_ReviewDM> get copyWith =>
-      __$ReviewDMCopyWithImpl<_ReviewDM>(this, _$identity);
+  _$ReviewDMCopyWith<_ReviewDM> get copyWith => __$ReviewDMCopyWithImpl<_ReviewDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -2808,33 +2706,21 @@ class _ReviewDM extends ReviewDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ReviewDM &&
-            (identical(other.reviewId, reviewId) ||
-                other.reviewId == reviewId) &&
-            (identical(other.reviewUuid, reviewUuid) ||
-                other.reviewUuid == reviewUuid) &&
-            (identical(other.reviewType, reviewType) ||
-                other.reviewType == reviewType) &&
+            (identical(other.reviewId, reviewId) || other.reviewId == reviewId) &&
+            (identical(other.reviewUuid, reviewUuid) || other.reviewUuid == reviewUuid) &&
+            (identical(other.reviewType, reviewType) || other.reviewType == reviewType) &&
             (identical(other.rating, rating) || other.rating == rating) &&
             (identical(other.comment, comment) || other.comment == comment) &&
             const DeepCollectionEquality().equals(other._photos, _photos) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            (identical(other.businessName, businessName) ||
-                other.businessName == businessName) &&
-            (identical(other.businessPhoto, businessPhoto) ||
-                other.businessPhoto == businessPhoto) &&
-            (identical(other.userUuid, userUuid) ||
-                other.userUuid == userUuid) &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.userPhoto, userPhoto) ||
-                other.userPhoto == userPhoto) &&
-            (identical(other.businessVisitedAt, businessVisitedAt) ||
-                other.businessVisitedAt == businessVisitedAt) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            (identical(other.businessName, businessName) || other.businessName == businessName) &&
+            (identical(other.businessPhoto, businessPhoto) || other.businessPhoto == businessPhoto) &&
+            (identical(other.userUuid, userUuid) || other.userUuid == userUuid) &&
+            (identical(other.userName, userName) || other.userName == userName) &&
+            (identical(other.userPhoto, userPhoto) || other.userPhoto == userPhoto) &&
+            (identical(other.businessVisitedAt, businessVisitedAt) || other.businessVisitedAt == businessVisitedAt) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -2864,10 +2750,8 @@ class _ReviewDM extends ReviewDM {
 }
 
 /// @nodoc
-abstract mixin class _$ReviewDMCopyWith<$Res>
-    implements $ReviewDMCopyWith<$Res> {
-  factory _$ReviewDMCopyWith(_ReviewDM value, $Res Function(_ReviewDM) _then) =
-      __$ReviewDMCopyWithImpl;
+abstract mixin class _$ReviewDMCopyWith<$Res> implements $ReviewDMCopyWith<$Res> {
+  factory _$ReviewDMCopyWith(_ReviewDM value, $Res Function(_ReviewDM) _then) = __$ReviewDMCopyWithImpl;
   @override
   @useResult
   $Res call(

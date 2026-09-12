@@ -121,8 +121,7 @@ class GroupOrderRepo {
     String? tableLabel,
   }) async {
     try {
-      return ApiResult.success(
-          await _client.lockGroupOrder(uuid, splitMode: splitMode, tableLabel: tableLabel));
+      return ApiResult.success(await _client.lockGroupOrder(uuid, splitMode: splitMode, tableLabel: tableLabel));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
@@ -330,8 +329,7 @@ class GroupOrderRepo {
     String? tableLabel,
   }) async {
     try {
-      return ApiResult.success(
-          await _client.requestBill(uuid, splitMode: splitMode, tableLabel: tableLabel));
+      return ApiResult.success(await _client.requestBill(uuid, splitMode: splitMode, tableLabel: tableLabel));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

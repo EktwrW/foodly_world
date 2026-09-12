@@ -39,8 +39,7 @@ abstract class ServiceOverviewResponseDM with _$ServiceOverviewResponseDM {
     ServiceOverviewDataDM? data,
   }) = _ServiceOverviewResponseDM;
 
-  factory ServiceOverviewResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$ServiceOverviewResponseDMFromJson(json);
+  factory ServiceOverviewResponseDM.fromJson(Map<String, dynamic> json) => _$ServiceOverviewResponseDMFromJson(json);
 }
 
 @freezed
@@ -54,8 +53,7 @@ abstract class ServiceOverviewDataDM with _$ServiceOverviewDataDM {
     AnalyticsMetaDM? meta,
   }) = _ServiceOverviewDataDM;
 
-  factory ServiceOverviewDataDM.fromJson(Map<String, dynamic> json) =>
-      _$ServiceOverviewDataDMFromJson(json);
+  factory ServiceOverviewDataDM.fromJson(Map<String, dynamic> json) => _$ServiceOverviewDataDMFromJson(json);
 }
 
 // ─── Scope (shared shape across both overviews) ───────────────────────────
@@ -73,8 +71,7 @@ abstract class AnalyticsScopeDM with _$AnalyticsScopeDM {
     @Default([]) List<AnalyticsBusinessRefDM> businesses,
   }) = _AnalyticsScopeDM;
 
-  factory AnalyticsScopeDM.fromJson(Map<String, dynamic> json) =>
-      _$AnalyticsScopeDMFromJson(json);
+  factory AnalyticsScopeDM.fromJson(Map<String, dynamic> json) => _$AnalyticsScopeDMFromJson(json);
 }
 
 @freezed
@@ -85,8 +82,7 @@ abstract class AnalyticsPeriodDM with _$AnalyticsPeriodDM {
     @Default('') String end,
   }) = _AnalyticsPeriodDM;
 
-  factory AnalyticsPeriodDM.fromJson(Map<String, dynamic> json) =>
-      _$AnalyticsPeriodDMFromJson(json);
+  factory AnalyticsPeriodDM.fromJson(Map<String, dynamic> json) => _$AnalyticsPeriodDMFromJson(json);
 }
 
 /// Lightweight business identifier returned inside `scope.businesses`.
@@ -100,8 +96,7 @@ abstract class AnalyticsBusinessRefDM with _$AnalyticsBusinessRefDM {
     @JsonKey(name: 'business_name') String? businessName,
   }) = _AnalyticsBusinessRefDM;
 
-  factory AnalyticsBusinessRefDM.fromJson(Map<String, dynamic> json) =>
-      _$AnalyticsBusinessRefDMFromJson(json);
+  factory AnalyticsBusinessRefDM.fromJson(Map<String, dynamic> json) => _$AnalyticsBusinessRefDMFromJson(json);
 }
 
 // ─── KPIs — service-specific ──────────────────────────────────────────────
@@ -176,8 +171,7 @@ abstract class ServiceFunnelDM with _$ServiceFunnelDM {
     ServiceFunnelConversionDM? conversion,
   }) = _ServiceFunnelDM;
 
-  factory ServiceFunnelDM.fromJson(Map<String, dynamic> json) =>
-      _$ServiceFunnelDMFromJson(json);
+  factory ServiceFunnelDM.fromJson(Map<String, dynamic> json) => _$ServiceFunnelDMFromJson(json);
 }
 
 /// Conversion rates between the meaningful jump points in the service
@@ -198,8 +192,7 @@ abstract class ServiceFunnelConversionDM with _$ServiceFunnelConversionDM {
     @JsonKey(name: 'view_to_booking_rate') @Default(0.0) double viewToBookingRate,
   }) = _ServiceFunnelConversionDM;
 
-  factory ServiceFunnelConversionDM.fromJson(Map<String, dynamic> json) =>
-      _$ServiceFunnelConversionDMFromJson(json);
+  factory ServiceFunnelConversionDM.fromJson(Map<String, dynamic> json) => _$ServiceFunnelConversionDMFromJson(json);
 }
 
 // ─── Daily Series ─────────────────────────────────────────────────────────
@@ -228,8 +221,7 @@ abstract class ServiceDailySeriesDM with _$ServiceDailySeriesDM {
     @JsonKey(name: 'events_daily') @Default([]) List<DailyPointDM> eventsDaily,
   }) = _ServiceDailySeriesDM;
 
-  factory ServiceDailySeriesDM.fromJson(Map<String, dynamic> json) =>
-      _$ServiceDailySeriesDMFromJson(json);
+  factory ServiceDailySeriesDM.fromJson(Map<String, dynamic> json) => _$ServiceDailySeriesDMFromJson(json);
 }
 
 // ─── Breakdowns ───────────────────────────────────────────────────────────
@@ -261,8 +253,7 @@ abstract class ServiceBreakdownsDM with _$ServiceBreakdownsDM {
     @JsonKey(name: 'top_packages') @Default([]) List<TopServicePackageDM> topPackages,
   }) = _ServiceBreakdownsDM;
 
-  factory ServiceBreakdownsDM.fromJson(Map<String, dynamic> json) =>
-      _$ServiceBreakdownsDMFromJson(json);
+  factory ServiceBreakdownsDM.fromJson(Map<String, dynamic> json) => _$ServiceBreakdownsDMFromJson(json);
 }
 
 /// One row of the `top_packages` breakdown — a full package descriptor with
@@ -284,8 +275,7 @@ abstract class TopServicePackageDM with _$TopServicePackageDM {
     @JsonKey(name: 'bookings_count') @Default(0) int bookingsCount,
   }) = _TopServicePackageDM;
 
-  factory TopServicePackageDM.fromJson(Map<String, dynamic> json) =>
-      _$TopServicePackageDMFromJson(json);
+  factory TopServicePackageDM.fromJson(Map<String, dynamic> json) => _$TopServicePackageDMFromJson(json);
 }
 
 // ─── Meta ─────────────────────────────────────────────────────────────────
@@ -302,6 +292,5 @@ abstract class AnalyticsMetaDM with _$AnalyticsMetaDM {
     @Default('') String source,
   }) = _AnalyticsMetaDM;
 
-  factory AnalyticsMetaDM.fromJson(Map<String, dynamic> json) =>
-      _$AnalyticsMetaDMFromJson(json);
+  factory AnalyticsMetaDM.fromJson(Map<String, dynamic> json) => _$AnalyticsMetaDMFromJson(json);
 }

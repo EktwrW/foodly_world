@@ -402,7 +402,6 @@ void main() {
       expect(await cubit.unlock(), isFalse);
     });
   });
-
 }
 
 /// Fake manual del repo: solo implementa lo que el cubit usa; el resto cae en

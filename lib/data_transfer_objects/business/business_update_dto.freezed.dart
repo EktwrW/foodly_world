@@ -58,8 +58,7 @@ mixin _$BusinessUpdateDTO {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $BusinessUpdateDTOCopyWith<BusinessUpdateDTO> get copyWith =>
-      _$BusinessUpdateDTOCopyWithImpl<BusinessUpdateDTO>(
-          this as BusinessUpdateDTO, _$identity);
+      _$BusinessUpdateDTOCopyWithImpl<BusinessUpdateDTO>(this as BusinessUpdateDTO, _$identity);
 
   /// Serializes this BusinessUpdateDTO to a JSON map.
   Map<String, dynamic> toJson();
@@ -69,44 +68,27 @@ mixin _$BusinessUpdateDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is BusinessUpdateDTO &&
-            (identical(other.businessName, businessName) ||
-                other.businessName == businessName) &&
-            (identical(other.businessAboutUs, businessAboutUs) ||
-                other.businessAboutUs == businessAboutUs) &&
+            (identical(other.businessName, businessName) || other.businessName == businessName) &&
+            (identical(other.businessAboutUs, businessAboutUs) || other.businessAboutUs == businessAboutUs) &&
             (identical(other.businessAdditionalInfo, businessAdditionalInfo) ||
                 other.businessAdditionalInfo == businessAdditionalInfo) &&
-            const DeepCollectionEquality()
-                .equals(other.businessServices, businessServices) &&
-            (identical(other.businessEmail, businessEmail) ||
-                other.businessEmail == businessEmail) &&
-            (identical(other.businessPhone, businessPhone) ||
-                other.businessPhone == businessPhone) &&
-            (identical(other.businessAddress, businessAddress) ||
-                other.businessAddress == businessAddress) &&
-            (identical(other.businessZipcode, businessZipcode) ||
-                other.businessZipcode == businessZipcode) &&
-            (identical(other.businessCity, businessCity) ||
-                other.businessCity == businessCity) &&
-            (identical(other.businessCountry, businessCountry) ||
-                other.businessCountry == businessCountry) &&
-            (identical(other.businessWebsite, businessWebsite) ||
-                other.businessWebsite == businessWebsite) &&
-            (identical(other.businessLatitude, businessLatitude) ||
-                other.businessLatitude == businessLatitude) &&
-            (identical(other.businessLongitude, businessLongitude) ||
-                other.businessLongitude == businessLongitude) &&
-            (identical(other.category, category) ||
-                other.category == category) &&
-            (identical(other.businessDays, businessDays) ||
-                other.businessDays == businessDays) &&
-            (identical(other.allowReservations, allowReservations) ||
-                other.allowReservations == allowReservations) &&
+            const DeepCollectionEquality().equals(other.businessServices, businessServices) &&
+            (identical(other.businessEmail, businessEmail) || other.businessEmail == businessEmail) &&
+            (identical(other.businessPhone, businessPhone) || other.businessPhone == businessPhone) &&
+            (identical(other.businessAddress, businessAddress) || other.businessAddress == businessAddress) &&
+            (identical(other.businessZipcode, businessZipcode) || other.businessZipcode == businessZipcode) &&
+            (identical(other.businessCity, businessCity) || other.businessCity == businessCity) &&
+            (identical(other.businessCountry, businessCountry) || other.businessCountry == businessCountry) &&
+            (identical(other.businessWebsite, businessWebsite) || other.businessWebsite == businessWebsite) &&
+            (identical(other.businessLatitude, businessLatitude) || other.businessLatitude == businessLatitude) &&
+            (identical(other.businessLongitude, businessLongitude) || other.businessLongitude == businessLongitude) &&
+            (identical(other.category, category) || other.category == category) &&
+            (identical(other.businessDays, businessDays) || other.businessDays == businessDays) &&
+            (identical(other.allowReservations, allowReservations) || other.allowReservations == allowReservations) &&
             (identical(other.reservationSizeLimit, reservationSizeLimit) ||
                 other.reservationSizeLimit == reservationSizeLimit) &&
-            (identical(other.menuEnabled, menuEnabled) ||
-                other.menuEnabled == menuEnabled) &&
-            (identical(other.combosLabel, combosLabel) ||
-                other.combosLabel == combosLabel));
+            (identical(other.menuEnabled, menuEnabled) || other.menuEnabled == menuEnabled) &&
+            (identical(other.combosLabel, combosLabel) || other.combosLabel == combosLabel));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -142,16 +124,14 @@ mixin _$BusinessUpdateDTO {
 
 /// @nodoc
 abstract mixin class $BusinessUpdateDTOCopyWith<$Res> {
-  factory $BusinessUpdateDTOCopyWith(
-          BusinessUpdateDTO value, $Res Function(BusinessUpdateDTO) _then) =
+  factory $BusinessUpdateDTOCopyWith(BusinessUpdateDTO value, $Res Function(BusinessUpdateDTO) _then) =
       _$BusinessUpdateDTOCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'business_name') String? businessName,
       @JsonKey(name: 'business_about_us') String? businessAboutUs,
       @JsonKey(name: 'business_additional_info') String? businessAdditionalInfo,
-      @JsonKey(name: 'business_services')
-      List<BusinessServices>? businessServices,
+      @JsonKey(name: 'business_services') List<BusinessServices>? businessServices,
       @JsonKey(name: 'business_email') String? businessEmail,
       @JsonKey(name: 'business_phone') String? businessPhone,
       @JsonKey(name: 'business_address') String? businessAddress,
@@ -172,8 +152,7 @@ abstract mixin class $BusinessUpdateDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BusinessUpdateDTOCopyWithImpl<$Res>
-    implements $BusinessUpdateDTOCopyWith<$Res> {
+class _$BusinessUpdateDTOCopyWithImpl<$Res> implements $BusinessUpdateDTOCopyWith<$Res> {
   _$BusinessUpdateDTOCopyWithImpl(this._self, this._then);
 
   final BusinessUpdateDTO _self;
@@ -395,10 +374,8 @@ extension BusinessUpdateDTOPatterns on BusinessUpdateDTO {
     TResult Function(
             @JsonKey(name: 'business_name') String? businessName,
             @JsonKey(name: 'business_about_us') String? businessAboutUs,
-            @JsonKey(name: 'business_additional_info')
-            String? businessAdditionalInfo,
-            @JsonKey(name: 'business_services')
-            List<BusinessServices>? businessServices,
+            @JsonKey(name: 'business_additional_info') String? businessAdditionalInfo,
+            @JsonKey(name: 'business_services') List<BusinessServices>? businessServices,
             @JsonKey(name: 'business_email') String? businessEmail,
             @JsonKey(name: 'business_phone') String? businessPhone,
             @JsonKey(name: 'business_address') String? businessAddress,
@@ -463,10 +440,8 @@ extension BusinessUpdateDTOPatterns on BusinessUpdateDTO {
     TResult Function(
             @JsonKey(name: 'business_name') String? businessName,
             @JsonKey(name: 'business_about_us') String? businessAboutUs,
-            @JsonKey(name: 'business_additional_info')
-            String? businessAdditionalInfo,
-            @JsonKey(name: 'business_services')
-            List<BusinessServices>? businessServices,
+            @JsonKey(name: 'business_additional_info') String? businessAdditionalInfo,
+            @JsonKey(name: 'business_services') List<BusinessServices>? businessServices,
             @JsonKey(name: 'business_email') String? businessEmail,
             @JsonKey(name: 'business_phone') String? businessPhone,
             @JsonKey(name: 'business_address') String? businessAddress,
@@ -529,10 +504,8 @@ extension BusinessUpdateDTOPatterns on BusinessUpdateDTO {
     TResult? Function(
             @JsonKey(name: 'business_name') String? businessName,
             @JsonKey(name: 'business_about_us') String? businessAboutUs,
-            @JsonKey(name: 'business_additional_info')
-            String? businessAdditionalInfo,
-            @JsonKey(name: 'business_services')
-            List<BusinessServices>? businessServices,
+            @JsonKey(name: 'business_additional_info') String? businessAdditionalInfo,
+            @JsonKey(name: 'business_services') List<BusinessServices>? businessServices,
             @JsonKey(name: 'business_email') String? businessEmail,
             @JsonKey(name: 'business_phone') String? businessPhone,
             @JsonKey(name: 'business_address') String? businessAddress,
@@ -586,8 +559,7 @@ class _BusinessUpdateDTO implements BusinessUpdateDTO {
       {@JsonKey(name: 'business_name') this.businessName,
       @JsonKey(name: 'business_about_us') this.businessAboutUs,
       @JsonKey(name: 'business_additional_info') this.businessAdditionalInfo,
-      @JsonKey(name: 'business_services')
-      final List<BusinessServices>? businessServices,
+      @JsonKey(name: 'business_services') final List<BusinessServices>? businessServices,
       @JsonKey(name: 'business_email') this.businessEmail,
       @JsonKey(name: 'business_phone') this.businessPhone,
       @JsonKey(name: 'business_address') this.businessAddress,
@@ -604,8 +576,7 @@ class _BusinessUpdateDTO implements BusinessUpdateDTO {
       @JsonKey(name: 'menu_enabled') this.menuEnabled,
       @JsonKey(name: 'combos_label') this.combosLabel})
       : _businessServices = businessServices;
-  factory _BusinessUpdateDTO.fromJson(Map<String, dynamic> json) =>
-      _$BusinessUpdateDTOFromJson(json);
+  factory _BusinessUpdateDTO.fromJson(Map<String, dynamic> json) => _$BusinessUpdateDTOFromJson(json);
 
   @override
   @JsonKey(name: 'business_name')
@@ -622,8 +593,7 @@ class _BusinessUpdateDTO implements BusinessUpdateDTO {
   List<BusinessServices>? get businessServices {
     final value = _businessServices;
     if (value == null) return null;
-    if (_businessServices is EqualUnmodifiableListView)
-      return _businessServices;
+    if (_businessServices is EqualUnmodifiableListView) return _businessServices;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -694,44 +664,27 @@ class _BusinessUpdateDTO implements BusinessUpdateDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _BusinessUpdateDTO &&
-            (identical(other.businessName, businessName) ||
-                other.businessName == businessName) &&
-            (identical(other.businessAboutUs, businessAboutUs) ||
-                other.businessAboutUs == businessAboutUs) &&
+            (identical(other.businessName, businessName) || other.businessName == businessName) &&
+            (identical(other.businessAboutUs, businessAboutUs) || other.businessAboutUs == businessAboutUs) &&
             (identical(other.businessAdditionalInfo, businessAdditionalInfo) ||
                 other.businessAdditionalInfo == businessAdditionalInfo) &&
-            const DeepCollectionEquality()
-                .equals(other._businessServices, _businessServices) &&
-            (identical(other.businessEmail, businessEmail) ||
-                other.businessEmail == businessEmail) &&
-            (identical(other.businessPhone, businessPhone) ||
-                other.businessPhone == businessPhone) &&
-            (identical(other.businessAddress, businessAddress) ||
-                other.businessAddress == businessAddress) &&
-            (identical(other.businessZipcode, businessZipcode) ||
-                other.businessZipcode == businessZipcode) &&
-            (identical(other.businessCity, businessCity) ||
-                other.businessCity == businessCity) &&
-            (identical(other.businessCountry, businessCountry) ||
-                other.businessCountry == businessCountry) &&
-            (identical(other.businessWebsite, businessWebsite) ||
-                other.businessWebsite == businessWebsite) &&
-            (identical(other.businessLatitude, businessLatitude) ||
-                other.businessLatitude == businessLatitude) &&
-            (identical(other.businessLongitude, businessLongitude) ||
-                other.businessLongitude == businessLongitude) &&
-            (identical(other.category, category) ||
-                other.category == category) &&
-            (identical(other.businessDays, businessDays) ||
-                other.businessDays == businessDays) &&
-            (identical(other.allowReservations, allowReservations) ||
-                other.allowReservations == allowReservations) &&
+            const DeepCollectionEquality().equals(other._businessServices, _businessServices) &&
+            (identical(other.businessEmail, businessEmail) || other.businessEmail == businessEmail) &&
+            (identical(other.businessPhone, businessPhone) || other.businessPhone == businessPhone) &&
+            (identical(other.businessAddress, businessAddress) || other.businessAddress == businessAddress) &&
+            (identical(other.businessZipcode, businessZipcode) || other.businessZipcode == businessZipcode) &&
+            (identical(other.businessCity, businessCity) || other.businessCity == businessCity) &&
+            (identical(other.businessCountry, businessCountry) || other.businessCountry == businessCountry) &&
+            (identical(other.businessWebsite, businessWebsite) || other.businessWebsite == businessWebsite) &&
+            (identical(other.businessLatitude, businessLatitude) || other.businessLatitude == businessLatitude) &&
+            (identical(other.businessLongitude, businessLongitude) || other.businessLongitude == businessLongitude) &&
+            (identical(other.category, category) || other.category == category) &&
+            (identical(other.businessDays, businessDays) || other.businessDays == businessDays) &&
+            (identical(other.allowReservations, allowReservations) || other.allowReservations == allowReservations) &&
             (identical(other.reservationSizeLimit, reservationSizeLimit) ||
                 other.reservationSizeLimit == reservationSizeLimit) &&
-            (identical(other.menuEnabled, menuEnabled) ||
-                other.menuEnabled == menuEnabled) &&
-            (identical(other.combosLabel, combosLabel) ||
-                other.combosLabel == combosLabel));
+            (identical(other.menuEnabled, menuEnabled) || other.menuEnabled == menuEnabled) &&
+            (identical(other.combosLabel, combosLabel) || other.combosLabel == combosLabel));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -766,10 +719,8 @@ class _BusinessUpdateDTO implements BusinessUpdateDTO {
 }
 
 /// @nodoc
-abstract mixin class _$BusinessUpdateDTOCopyWith<$Res>
-    implements $BusinessUpdateDTOCopyWith<$Res> {
-  factory _$BusinessUpdateDTOCopyWith(
-          _BusinessUpdateDTO value, $Res Function(_BusinessUpdateDTO) _then) =
+abstract mixin class _$BusinessUpdateDTOCopyWith<$Res> implements $BusinessUpdateDTOCopyWith<$Res> {
+  factory _$BusinessUpdateDTOCopyWith(_BusinessUpdateDTO value, $Res Function(_BusinessUpdateDTO) _then) =
       __$BusinessUpdateDTOCopyWithImpl;
   @override
   @useResult
@@ -777,8 +728,7 @@ abstract mixin class _$BusinessUpdateDTOCopyWith<$Res>
       {@JsonKey(name: 'business_name') String? businessName,
       @JsonKey(name: 'business_about_us') String? businessAboutUs,
       @JsonKey(name: 'business_additional_info') String? businessAdditionalInfo,
-      @JsonKey(name: 'business_services')
-      List<BusinessServices>? businessServices,
+      @JsonKey(name: 'business_services') List<BusinessServices>? businessServices,
       @JsonKey(name: 'business_email') String? businessEmail,
       @JsonKey(name: 'business_phone') String? businessPhone,
       @JsonKey(name: 'business_address') String? businessAddress,
@@ -800,8 +750,7 @@ abstract mixin class _$BusinessUpdateDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$BusinessUpdateDTOCopyWithImpl<$Res>
-    implements _$BusinessUpdateDTOCopyWith<$Res> {
+class __$BusinessUpdateDTOCopyWithImpl<$Res> implements _$BusinessUpdateDTOCopyWith<$Res> {
   __$BusinessUpdateDTOCopyWithImpl(this._self, this._then);
 
   final _BusinessUpdateDTO _self;

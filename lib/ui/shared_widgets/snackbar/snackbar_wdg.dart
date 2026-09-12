@@ -46,7 +46,9 @@ class SnackBarWdg {
         _ => FoodlyThemes.primaryFoodly,
       };
 
-  IconData get _getIcon => icon ?? switch (type) {
+  IconData get _getIcon =>
+      icon ??
+      switch (type) {
         SnackBarType.success => FontAwesome.circle_check_solid,
         SnackBarType.error => Clarity.error_line,
         SnackBarType.warning => Clarity.warning_standard_solid,
@@ -138,67 +140,66 @@ class SnackBarWdg {
                     // teclado abierto.
                     // Sin `clamp`: `num.clamp` devuelve `num`, no `double`,
                     // y `BoxConstraints.maxHeight` exige `double`.
-                    final available =
-                        mq.size.height - mq.padding.top - mq.padding.bottom - mq.viewInsets.bottom - 96;
+                    final available = mq.size.height - mq.padding.top - mq.padding.bottom - mq.viewInsets.bottom - 96;
                     final maxCardHeight = available < 240 ? 240.0 : available;
 
                     return ConstrainedBox(
                       constraints: BoxConstraints(maxHeight: maxCardHeight),
                       child: Column(
-                    // `min` es obligatorio junto al techo de arriba: con `max`
-                    // cualquier aviso corto se estiraria hasta ocupar la
-                    // pantalla entera.
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Visibility(
-                        // `action` no lleva icono por diseño, pero pedir uno
-                        // explícito es decir "este sí" — si no, el parámetro
-                        // se ignoraría en silencio justo donde más se usa.
-                        visible: type != SnackBarType.action || icon != null,
-                        child: Icon(_getIcon, size: 34, color: _getColor),
-                      ),
-                      // El contenido scrollea; el boton queda FUERA del
-                      // scroll para que siempre este visible y alcanzable.
-                      Flexible(
-                        child: SingleChildScrollView(
-                          child: content.paddingSymmetric(vertical: 20),
-                        ),
-                      ),
-                      (buttonBuilder?.call(handleDismiss) ??
-                              SizedBox(
-                                height: 46,
-                                child: ui.NeumorphicButton(
-                                  onPressed: () {
-                                    if (onPressed != null) onPressed!();
-                                    handleDismiss();
-                                  },
-                                  style: ui.NeumorphicStyle(
-                                    shape: ui.NeumorphicShape.convex,
-                                    boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
-                                    depth: 3,
-                                    lightSource: ui.LightSource.topRight,
-                                    intensity: 1.2,
-                                    surfaceIntensity: .3,
-                                    color: ui.NeumorphicColors.embossMaxWhiteColor,
-                                  ),
-                                  padding: const EdgeInsets.all(8),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      ClayText(
-                                        _buttonText,
-                                        color: FoodlyThemes.primaryFoodly,
-                                        spread: 0,
-                                        style: FoodlyTextStyles.snackBarPrimaryButton,
+                        // `min` es obligatorio junto al techo de arriba: con `max`
+                        // cualquier aviso corto se estiraria hasta ocupar la
+                        // pantalla entera.
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Visibility(
+                            // `action` no lleva icono por diseño, pero pedir uno
+                            // explícito es decir "este sí" — si no, el parámetro
+                            // se ignoraría en silencio justo donde más se usa.
+                            visible: type != SnackBarType.action || icon != null,
+                            child: Icon(_getIcon, size: 34, color: _getColor),
+                          ),
+                          // El contenido scrollea; el boton queda FUERA del
+                          // scroll para que siempre este visible y alcanzable.
+                          Flexible(
+                            child: SingleChildScrollView(
+                              child: content.paddingSymmetric(vertical: 20),
+                            ),
+                          ),
+                          (buttonBuilder?.call(handleDismiss) ??
+                                  SizedBox(
+                                    height: 46,
+                                    child: ui.NeumorphicButton(
+                                      onPressed: () {
+                                        if (onPressed != null) onPressed!();
+                                        handleDismiss();
+                                      },
+                                      style: ui.NeumorphicStyle(
+                                        shape: ui.NeumorphicShape.convex,
+                                        boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
+                                        depth: 3,
+                                        lightSource: ui.LightSource.topRight,
+                                        intensity: 1.2,
+                                        surfaceIntensity: .3,
+                                        color: ui.NeumorphicColors.embossMaxWhiteColor,
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ))
-                          .paddingOnly(bottom: 5, top: topBtnPadding),
-                    ],
-                  ),
-                );
+                                      padding: const EdgeInsets.all(8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          ClayText(
+                                            _buttonText,
+                                            color: FoodlyThemes.primaryFoodly,
+                                            spread: 0,
+                                            style: FoodlyTextStyles.snackBarPrimaryButton,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ))
+                              .paddingOnly(bottom: 5, top: topBtnPadding),
+                        ],
+                      ),
+                    );
                   }),
                 ),
               ),

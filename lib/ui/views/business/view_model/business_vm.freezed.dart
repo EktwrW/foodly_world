@@ -52,82 +52,52 @@ mixin _$BusinessVM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $BusinessVMCopyWith<BusinessVM> get copyWith =>
-      _$BusinessVMCopyWithImpl<BusinessVM>(this as BusinessVM, _$identity);
+  $BusinessVMCopyWith<BusinessVM> get copyWith => _$BusinessVMCopyWithImpl<BusinessVM>(this as BusinessVM, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is BusinessVM &&
-            (identical(other.dashboardEditing, dashboardEditing) ||
-                other.dashboardEditing == dashboardEditing) &&
-            const DeepCollectionEquality()
-                .equals(other.myBusinessesses, myBusinessesses) &&
-            (identical(other.currentBusiness, currentBusiness) ||
-                other.currentBusiness == currentBusiness) &&
-            const DeepCollectionEquality().equals(
-                other.currentBusinessServices, currentBusinessServices) &&
-            const DeepCollectionEquality()
-                .equals(other.picturesPath, picturesPath) &&
-            (identical(other.newCategory, newCategory) ||
-                other.newCategory == newCategory) &&
-            (identical(other.targetForDelete, targetForDelete) ||
-                other.targetForDelete == targetForDelete) &&
-            (identical(other.businessNameCtrl, businessNameCtrl) ||
-                other.businessNameCtrl == businessNameCtrl) &&
+            (identical(other.dashboardEditing, dashboardEditing) || other.dashboardEditing == dashboardEditing) &&
+            const DeepCollectionEquality().equals(other.myBusinessesses, myBusinessesses) &&
+            (identical(other.currentBusiness, currentBusiness) || other.currentBusiness == currentBusiness) &&
+            const DeepCollectionEquality().equals(other.currentBusinessServices, currentBusinessServices) &&
+            const DeepCollectionEquality().equals(other.picturesPath, picturesPath) &&
+            (identical(other.newCategory, newCategory) || other.newCategory == newCategory) &&
+            (identical(other.targetForDelete, targetForDelete) || other.targetForDelete == targetForDelete) &&
+            (identical(other.businessNameCtrl, businessNameCtrl) || other.businessNameCtrl == businessNameCtrl) &&
             (identical(other.businessAboutUsCtrl, businessAboutUsCtrl) ||
                 other.businessAboutUsCtrl == businessAboutUsCtrl) &&
-            (identical(other.businessEmailCtrl, businessEmailCtrl) ||
-                other.businessEmailCtrl == businessEmailCtrl) &&
-            (identical(other.businessPhoneCtrl, businessPhoneCtrl) ||
-                other.businessPhoneCtrl == businessPhoneCtrl) &&
-            (identical(other.businessCityCtrl, businessCityCtrl) ||
-                other.businessCityCtrl == businessCityCtrl) &&
+            (identical(other.businessEmailCtrl, businessEmailCtrl) || other.businessEmailCtrl == businessEmailCtrl) &&
+            (identical(other.businessPhoneCtrl, businessPhoneCtrl) || other.businessPhoneCtrl == businessPhoneCtrl) &&
+            (identical(other.businessCityCtrl, businessCityCtrl) || other.businessCityCtrl == businessCityCtrl) &&
             (identical(other.businessAddressCtrl, businessAddressCtrl) ||
                 other.businessAddressCtrl == businessAddressCtrl) &&
             (identical(other.businessZipCodeCtrl, businessZipCodeCtrl) ||
                 other.businessZipCodeCtrl == businessZipCodeCtrl) &&
-            (identical(other.businessAdditionalInfoCtrl,
-                    businessAdditionalInfoCtrl) ||
-                other.businessAdditionalInfoCtrl ==
-                    businessAdditionalInfoCtrl) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude) &&
-            (identical(other.nameFormKey, nameFormKey) ||
-                other.nameFormKey == nameFormKey) &&
-            (identical(other.aboutUsFormKey, aboutUsFormKey) ||
-                other.aboutUsFormKey == aboutUsFormKey) &&
+            (identical(other.businessAdditionalInfoCtrl, businessAdditionalInfoCtrl) ||
+                other.businessAdditionalInfoCtrl == businessAdditionalInfoCtrl) &&
+            (identical(other.latitude, latitude) || other.latitude == latitude) &&
+            (identical(other.longitude, longitude) || other.longitude == longitude) &&
+            (identical(other.nameFormKey, nameFormKey) || other.nameFormKey == nameFormKey) &&
+            (identical(other.aboutUsFormKey, aboutUsFormKey) || other.aboutUsFormKey == aboutUsFormKey) &&
             (identical(other.openingHoursFormKey, openingHoursFormKey) ||
                 other.openingHoursFormKey == openingHoursFormKey) &&
-            (identical(other.servicesFormKey, servicesFormKey) ||
-                other.servicesFormKey == servicesFormKey) &&
-            (identical(other.contactUsFormKey, contactUsFormKey) ||
-                other.contactUsFormKey == contactUsFormKey) &&
-            (identical(other.addInfoFormKey, addInfoFormKey) ||
-                other.addInfoFormKey == addInfoFormKey) &&
-            (identical(other.locationFormKey, locationFormKey) ||
-                other.locationFormKey == locationFormKey) &&
-            (identical(other.categoryFormKey, categoryFormKey) ||
-                other.categoryFormKey == categoryFormKey) &&
-            (identical(other.businessCountry, businessCountry) ||
-                other.businessCountry == businessCountry) &&
+            (identical(other.servicesFormKey, servicesFormKey) || other.servicesFormKey == servicesFormKey) &&
+            (identical(other.contactUsFormKey, contactUsFormKey) || other.contactUsFormKey == contactUsFormKey) &&
+            (identical(other.addInfoFormKey, addInfoFormKey) || other.addInfoFormKey == addInfoFormKey) &&
+            (identical(other.locationFormKey, locationFormKey) || other.locationFormKey == locationFormKey) &&
+            (identical(other.categoryFormKey, categoryFormKey) || other.categoryFormKey == categoryFormKey) &&
+            (identical(other.businessCountry, businessCountry) || other.businessCountry == businessCountry) &&
             const DeepCollectionEquality().equals(other.markers, markers) &&
-            (identical(other.mapController, mapController) ||
-                other.mapController == mapController) &&
-            (identical(other.autovalidateMode, autovalidateMode) ||
-                other.autovalidateMode == autovalidateMode) &&
-            (identical(other.businessDays, businessDays) ||
-                other.businessDays == businessDays) &&
-            (identical(other.loggedUserCanEdit, loggedUserCanEdit) ||
-                other.loggedUserCanEdit == loggedUserCanEdit) &&
-            (identical(
-                    other.reservationSizeLimitCtrl, reservationSizeLimitCtrl) ||
+            (identical(other.mapController, mapController) || other.mapController == mapController) &&
+            (identical(other.autovalidateMode, autovalidateMode) || other.autovalidateMode == autovalidateMode) &&
+            (identical(other.businessDays, businessDays) || other.businessDays == businessDays) &&
+            (identical(other.loggedUserCanEdit, loggedUserCanEdit) || other.loggedUserCanEdit == loggedUserCanEdit) &&
+            (identical(other.reservationSizeLimitCtrl, reservationSizeLimitCtrl) ||
                 other.reservationSizeLimitCtrl == reservationSizeLimitCtrl) &&
-            (identical(other.allowReservations, allowReservations) ||
-                other.allowReservations == allowReservations));
+            (identical(other.allowReservations, allowReservations) || other.allowReservations == allowReservations));
   }
 
   @override
@@ -176,9 +146,7 @@ mixin _$BusinessVM {
 
 /// @nodoc
 abstract mixin class $BusinessVMCopyWith<$Res> {
-  factory $BusinessVMCopyWith(
-          BusinessVM value, $Res Function(BusinessVM) _then) =
-      _$BusinessVMCopyWithImpl;
+  factory $BusinessVMCopyWith(BusinessVM value, $Res Function(BusinessVM) _then) = _$BusinessVMCopyWithImpl;
   @useResult
   $Res call(
       {DashboardEditing dashboardEditing,
@@ -546,8 +514,7 @@ class _$BusinessVMCopyWithImpl<$Res> implements $BusinessVMCopyWith<$Res> {
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.businessAdditionalInfoCtrl!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.businessAdditionalInfoCtrl!, (value) {
       return _then(_self.copyWith(businessAdditionalInfoCtrl: value));
     });
   }
@@ -571,8 +538,7 @@ class _$BusinessVMCopyWithImpl<$Res> implements $BusinessVMCopyWith<$Res> {
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.reservationSizeLimitCtrl!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.reservationSizeLimitCtrl!, (value) {
       return _then(_self.copyWith(reservationSizeLimitCtrl: value));
     });
   }
@@ -997,8 +963,7 @@ class _BusinessVM extends BusinessVM {
   @override
   @JsonKey()
   List<BusinessServices> get currentBusinessServices {
-    if (_currentBusinessServices is EqualUnmodifiableListView)
-      return _currentBusinessServices;
+    if (_currentBusinessServices is EqualUnmodifiableListView) return _currentBusinessServices;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_currentBusinessServices);
   }
@@ -1085,82 +1050,52 @@ class _BusinessVM extends BusinessVM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$BusinessVMCopyWith<_BusinessVM> get copyWith =>
-      __$BusinessVMCopyWithImpl<_BusinessVM>(this, _$identity);
+  _$BusinessVMCopyWith<_BusinessVM> get copyWith => __$BusinessVMCopyWithImpl<_BusinessVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _BusinessVM &&
-            (identical(other.dashboardEditing, dashboardEditing) ||
-                other.dashboardEditing == dashboardEditing) &&
-            const DeepCollectionEquality()
-                .equals(other._myBusinessesses, _myBusinessesses) &&
-            (identical(other.currentBusiness, currentBusiness) ||
-                other.currentBusiness == currentBusiness) &&
-            const DeepCollectionEquality().equals(
-                other._currentBusinessServices, _currentBusinessServices) &&
-            const DeepCollectionEquality()
-                .equals(other._picturesPath, _picturesPath) &&
-            (identical(other.newCategory, newCategory) ||
-                other.newCategory == newCategory) &&
-            (identical(other.targetForDelete, targetForDelete) ||
-                other.targetForDelete == targetForDelete) &&
-            (identical(other.businessNameCtrl, businessNameCtrl) ||
-                other.businessNameCtrl == businessNameCtrl) &&
+            (identical(other.dashboardEditing, dashboardEditing) || other.dashboardEditing == dashboardEditing) &&
+            const DeepCollectionEquality().equals(other._myBusinessesses, _myBusinessesses) &&
+            (identical(other.currentBusiness, currentBusiness) || other.currentBusiness == currentBusiness) &&
+            const DeepCollectionEquality().equals(other._currentBusinessServices, _currentBusinessServices) &&
+            const DeepCollectionEquality().equals(other._picturesPath, _picturesPath) &&
+            (identical(other.newCategory, newCategory) || other.newCategory == newCategory) &&
+            (identical(other.targetForDelete, targetForDelete) || other.targetForDelete == targetForDelete) &&
+            (identical(other.businessNameCtrl, businessNameCtrl) || other.businessNameCtrl == businessNameCtrl) &&
             (identical(other.businessAboutUsCtrl, businessAboutUsCtrl) ||
                 other.businessAboutUsCtrl == businessAboutUsCtrl) &&
-            (identical(other.businessEmailCtrl, businessEmailCtrl) ||
-                other.businessEmailCtrl == businessEmailCtrl) &&
-            (identical(other.businessPhoneCtrl, businessPhoneCtrl) ||
-                other.businessPhoneCtrl == businessPhoneCtrl) &&
-            (identical(other.businessCityCtrl, businessCityCtrl) ||
-                other.businessCityCtrl == businessCityCtrl) &&
+            (identical(other.businessEmailCtrl, businessEmailCtrl) || other.businessEmailCtrl == businessEmailCtrl) &&
+            (identical(other.businessPhoneCtrl, businessPhoneCtrl) || other.businessPhoneCtrl == businessPhoneCtrl) &&
+            (identical(other.businessCityCtrl, businessCityCtrl) || other.businessCityCtrl == businessCityCtrl) &&
             (identical(other.businessAddressCtrl, businessAddressCtrl) ||
                 other.businessAddressCtrl == businessAddressCtrl) &&
             (identical(other.businessZipCodeCtrl, businessZipCodeCtrl) ||
                 other.businessZipCodeCtrl == businessZipCodeCtrl) &&
-            (identical(other.businessAdditionalInfoCtrl,
-                    businessAdditionalInfoCtrl) ||
-                other.businessAdditionalInfoCtrl ==
-                    businessAdditionalInfoCtrl) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude) &&
-            (identical(other.nameFormKey, nameFormKey) ||
-                other.nameFormKey == nameFormKey) &&
-            (identical(other.aboutUsFormKey, aboutUsFormKey) ||
-                other.aboutUsFormKey == aboutUsFormKey) &&
+            (identical(other.businessAdditionalInfoCtrl, businessAdditionalInfoCtrl) ||
+                other.businessAdditionalInfoCtrl == businessAdditionalInfoCtrl) &&
+            (identical(other.latitude, latitude) || other.latitude == latitude) &&
+            (identical(other.longitude, longitude) || other.longitude == longitude) &&
+            (identical(other.nameFormKey, nameFormKey) || other.nameFormKey == nameFormKey) &&
+            (identical(other.aboutUsFormKey, aboutUsFormKey) || other.aboutUsFormKey == aboutUsFormKey) &&
             (identical(other.openingHoursFormKey, openingHoursFormKey) ||
                 other.openingHoursFormKey == openingHoursFormKey) &&
-            (identical(other.servicesFormKey, servicesFormKey) ||
-                other.servicesFormKey == servicesFormKey) &&
-            (identical(other.contactUsFormKey, contactUsFormKey) ||
-                other.contactUsFormKey == contactUsFormKey) &&
-            (identical(other.addInfoFormKey, addInfoFormKey) ||
-                other.addInfoFormKey == addInfoFormKey) &&
-            (identical(other.locationFormKey, locationFormKey) ||
-                other.locationFormKey == locationFormKey) &&
-            (identical(other.categoryFormKey, categoryFormKey) ||
-                other.categoryFormKey == categoryFormKey) &&
-            (identical(other.businessCountry, businessCountry) ||
-                other.businessCountry == businessCountry) &&
+            (identical(other.servicesFormKey, servicesFormKey) || other.servicesFormKey == servicesFormKey) &&
+            (identical(other.contactUsFormKey, contactUsFormKey) || other.contactUsFormKey == contactUsFormKey) &&
+            (identical(other.addInfoFormKey, addInfoFormKey) || other.addInfoFormKey == addInfoFormKey) &&
+            (identical(other.locationFormKey, locationFormKey) || other.locationFormKey == locationFormKey) &&
+            (identical(other.categoryFormKey, categoryFormKey) || other.categoryFormKey == categoryFormKey) &&
+            (identical(other.businessCountry, businessCountry) || other.businessCountry == businessCountry) &&
             const DeepCollectionEquality().equals(other._markers, _markers) &&
-            (identical(other.mapController, mapController) ||
-                other.mapController == mapController) &&
-            (identical(other.autovalidateMode, autovalidateMode) ||
-                other.autovalidateMode == autovalidateMode) &&
-            (identical(other.businessDays, businessDays) ||
-                other.businessDays == businessDays) &&
-            (identical(other.loggedUserCanEdit, loggedUserCanEdit) ||
-                other.loggedUserCanEdit == loggedUserCanEdit) &&
-            (identical(
-                    other.reservationSizeLimitCtrl, reservationSizeLimitCtrl) ||
+            (identical(other.mapController, mapController) || other.mapController == mapController) &&
+            (identical(other.autovalidateMode, autovalidateMode) || other.autovalidateMode == autovalidateMode) &&
+            (identical(other.businessDays, businessDays) || other.businessDays == businessDays) &&
+            (identical(other.loggedUserCanEdit, loggedUserCanEdit) || other.loggedUserCanEdit == loggedUserCanEdit) &&
+            (identical(other.reservationSizeLimitCtrl, reservationSizeLimitCtrl) ||
                 other.reservationSizeLimitCtrl == reservationSizeLimitCtrl) &&
-            (identical(other.allowReservations, allowReservations) ||
-                other.allowReservations == allowReservations));
+            (identical(other.allowReservations, allowReservations) || other.allowReservations == allowReservations));
   }
 
   @override
@@ -1208,11 +1143,8 @@ class _BusinessVM extends BusinessVM {
 }
 
 /// @nodoc
-abstract mixin class _$BusinessVMCopyWith<$Res>
-    implements $BusinessVMCopyWith<$Res> {
-  factory _$BusinessVMCopyWith(
-          _BusinessVM value, $Res Function(_BusinessVM) _then) =
-      __$BusinessVMCopyWithImpl;
+abstract mixin class _$BusinessVMCopyWith<$Res> implements $BusinessVMCopyWith<$Res> {
+  factory _$BusinessVMCopyWith(_BusinessVM value, $Res Function(_BusinessVM) _then) = __$BusinessVMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -1593,8 +1525,7 @@ class __$BusinessVMCopyWithImpl<$Res> implements _$BusinessVMCopyWith<$Res> {
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.businessAdditionalInfoCtrl!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.businessAdditionalInfoCtrl!, (value) {
       return _then(_self.copyWith(businessAdditionalInfoCtrl: value));
     });
   }
@@ -1618,8 +1549,7 @@ class __$BusinessVMCopyWithImpl<$Res> implements _$BusinessVMCopyWith<$Res> {
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.reservationSizeLimitCtrl!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.reservationSizeLimitCtrl!, (value) {
       return _then(_self.copyWith(reservationSizeLimitCtrl: value));
     });
   }

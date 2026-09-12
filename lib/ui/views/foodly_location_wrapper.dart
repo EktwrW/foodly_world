@@ -289,8 +289,8 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
             // (al instante) y el fix preciso (segundos después). Se recarga
             // con la primera; la segunda solo si movió el mapa de verdad (≥ 1 km).
             final before = _locationService.hasLocationData ? _locationService.currentLocation.position : null;
-            final reload = !_locationService.hasLocationData ||
-                LocationService.movedSignificantly(before, locationDM.position);
+            final reload =
+                !_locationService.hasLocationData || LocationService.movedSignificantly(before, locationDM.position);
             _locationService.updateLocation(locationDM);
             if (!reload) {
               _tryRemoveSplash();

@@ -224,10 +224,8 @@ void main() {
             reason: 'Un 401 en /login significa credenciales incorrectas — '
                 'la cubit ya muestra el error inline. Disparar el modal '
                 'de "sesión expirada" confunde al usuario');
-        expect(spy.silentRefreshCalls, 0,
-            reason: 'No tiene sentido refrescar un token cuando todavía no hay sesión');
-        expect(handler.rejectCalls, 1,
-            reason: 'El error sigue propagando para que la cubit lo reciba');
+        expect(spy.silentRefreshCalls, 0, reason: 'No tiene sentido refrescar un token cuando todavía no hay sesión');
+        expect(handler.rejectCalls, 1, reason: 'El error sigue propagando para que la cubit lo reciba');
       },
     );
 
@@ -267,8 +265,7 @@ void main() {
         for (final path in ['/social-login', '/register']) {
           spy.notifyTokenExpiredCalls = 0;
           await _runError(_build401(path));
-          expect(spy.notifyTokenExpiredCalls, 0,
-              reason: '$path es endpoint público, 401 = error de credenciales');
+          expect(spy.notifyTokenExpiredCalls, 0, reason: '$path es endpoint público, 401 = error de credenciales');
         }
       },
     );
@@ -302,10 +299,8 @@ void main() {
         ));
 
         expect(spy.notifyTokenExpiredCalls, 0);
-        expect(spy.silentRefreshCalls, 0,
-            reason: 'No refrescamos si la falla es de validación de password');
-        expect(handler.rejectCalls, 1,
-            reason: 'El error propaga para que el form lo muestre inline');
+        expect(spy.silentRefreshCalls, 0, reason: 'No refrescamos si la falla es de validación de password');
+        expect(handler.rejectCalls, 1, reason: 'El error propaga para que el form lo muestre inline');
       },
     );
 
@@ -363,8 +358,7 @@ void main() {
           body: {'message': 'Token has expired'},
         ));
 
-        expect(spy.notifyTokenExpiredCalls, 1,
-            reason: 'Body sin signs de sudo-mode debe escalar normalmente');
+        expect(spy.notifyTokenExpiredCalls, 1, reason: 'Body sin signs de sudo-mode debe escalar normalmente');
       },
     );
   });
@@ -405,10 +399,8 @@ void main() {
         final handler = await _runError(_build401('/me'));
 
         expect(spy.silentRefreshCalls, 1);
-        expect(spy.notifyTokenExpiredCalls, 0,
-            reason: 'Recovery exitoso NO debe disparar el modal');
-        expect(handler.resolveCalls, 1,
-            reason: 'El handler debe resolver con la respuesta del retry');
+        expect(spy.notifyTokenExpiredCalls, 0, reason: 'Recovery exitoso NO debe disparar el modal');
+        expect(handler.resolveCalls, 1, reason: 'El handler debe resolver con la respuesta del retry');
         expect(handler.lastResolved?.statusCode, 200);
       },
     );
@@ -445,8 +437,7 @@ void main() {
         await _runError(_build401('/me'));
 
         expect(spy.silentRefreshCalls, 1);
-        expect(spy.notifyTokenExpiredCalls, 1,
-            reason: 'Si refresh también muere, es game over: forceToLogin');
+        expect(spy.notifyTokenExpiredCalls, 1, reason: 'Si refresh también muere, es game over: forceToLogin');
       },
     );
 
@@ -459,8 +450,7 @@ void main() {
 
         await _runError(_build401('/me'));
 
-        expect(spy.silentRefreshCalls, 0,
-            reason: 'No hay token para refrescar — no intentar');
+        expect(spy.silentRefreshCalls, 0, reason: 'No hay token para refrescar — no intentar');
         expect(spy.notifyTokenExpiredCalls, 1);
       },
     );
@@ -484,10 +474,8 @@ void main() {
 
         await _runError(_build401('/me'));
 
-        expect(spy.silentRefreshCalls, 1,
-            reason: 'Delega en silentRefresh; la deduplicación vive allá adentro');
-        expect(spy.notifyTokenExpiredCalls, 0,
-            reason: 'Un refresco que va a salir bien no puede terminar en logout');
+        expect(spy.silentRefreshCalls, 1, reason: 'Delega en silentRefresh; la deduplicación vive allá adentro');
+        expect(spy.notifyTokenExpiredCalls, 0, reason: 'Un refresco que va a salir bien no puede terminar en logout');
       },
     );
   });
@@ -508,12 +496,9 @@ void main() {
 
         final handler = await _runError(_build401('/me', sessionGeneration: 7));
 
-        expect(spy.notifyTokenExpiredCalls, 0,
-            reason: 'Una sesión que ya no existe no puede opinar sobre la vigente');
-        expect(spy.silentRefreshCalls, 0,
-            reason: 'Tampoco tiene sentido refrescar por un eco');
-        expect(handler.rejectCalls, 1,
-            reason: 'El error igual propaga: quien pidió merece enterarse del fallo');
+        expect(spy.notifyTokenExpiredCalls, 0, reason: 'Una sesión que ya no existe no puede opinar sobre la vigente');
+        expect(spy.silentRefreshCalls, 0, reason: 'Tampoco tiene sentido refrescar por un eco');
+        expect(handler.rejectCalls, 1, reason: 'El error igual propaga: quien pidió merece enterarse del fallo');
       },
     );
 
@@ -539,8 +524,7 @@ void main() {
 
         await _runError(_build401('/me'));
 
-        expect(spy.notifyTokenExpiredCalls, 1,
-            reason: 'Una request sin sello no debe quedar en tierra de nadie');
+        expect(spy.notifyTokenExpiredCalls, 1, reason: 'Una request sin sello no debe quedar en tierra de nadie');
       },
     );
   });
@@ -561,10 +545,8 @@ void main() {
 
         await _runError(e);
 
-        expect(spy.silentRefreshCalls, 0,
-            reason: 'Con un token recién emitido y otro 401, el problema no es el token');
-        expect(spy.notifyTokenExpiredCalls, 1,
-            reason: 'Se corta el ciclo escalando una sola vez');
+        expect(spy.silentRefreshCalls, 0, reason: 'Con un token recién emitido y otro 401, el problema no es el token');
+        expect(spy.notifyTokenExpiredCalls, 1, reason: 'Se corta el ciclo escalando una sola vez');
       },
     );
   });
@@ -589,8 +571,7 @@ void main() {
           spy.notifyTokenExpiredCalls = 0;
           spy.silentRefreshCalls = 0;
           await _runError(_build401('/me', statusCode: code));
-          expect(spy.notifyTokenExpiredCalls, 0,
-              reason: 'status=$code no debe escalar a notifyTokenExpired');
+          expect(spy.notifyTokenExpiredCalls, 0, reason: 'status=$code no debe escalar a notifyTokenExpired');
           expect(spy.silentRefreshCalls, 0);
         }
       },

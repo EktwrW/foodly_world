@@ -16,8 +16,7 @@ T _$identity<T>(T value) => value;
 mixin _$PublicMenuState {
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is PublicMenuState);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is PublicMenuState);
   }
 
   @override
@@ -31,8 +30,7 @@ mixin _$PublicMenuState {
 
 /// @nodoc
 class $PublicMenuStateCopyWith<$Res> {
-  $PublicMenuStateCopyWith(
-      PublicMenuState _, $Res Function(PublicMenuState) __);
+  $PublicMenuStateCopyWith(PublicMenuState _, $Res Function(PublicMenuState) __);
 }
 
 /// Adds pattern-matching-related methods to [PublicMenuState].
@@ -249,8 +247,7 @@ class _Initial implements PublicMenuState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _Initial);
   }
 
   @override
@@ -269,8 +266,7 @@ class _Loading implements PublicMenuState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Loading);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _Loading);
   }
 
   @override
@@ -294,16 +290,14 @@ class _Loaded implements PublicMenuState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Loaded &&
-            (identical(other.business, business) ||
-                other.business == business) &&
+            (identical(other.business, business) || other.business == business) &&
             (identical(other.menu, menu) || other.menu == menu));
   }
 
@@ -317,10 +311,8 @@ class _Loaded implements PublicMenuState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res>
-    implements $PublicMenuStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
-      __$LoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $PublicMenuStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
   @useResult
   $Res call({BusinessDM business, MenuDM menu});
 
@@ -386,8 +378,7 @@ class _Error implements PublicMenuState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -407,10 +398,8 @@ class _Error implements PublicMenuState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $PublicMenuStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $PublicMenuStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @useResult
   $Res call({String message});
 }

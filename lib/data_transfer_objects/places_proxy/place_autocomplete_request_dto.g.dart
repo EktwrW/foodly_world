@@ -6,8 +6,7 @@ part of 'place_autocomplete_request_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PlaceAutocompleteRequestDTO _$PlaceAutocompleteRequestDTOFromJson(
-        Map<String, dynamic> json) =>
+PlaceAutocompleteRequestDTO _$PlaceAutocompleteRequestDTOFromJson(Map<String, dynamic> json) =>
     PlaceAutocompleteRequestDTO(
       input: json['input'] as String,
       sessionToken: json['sessionToken'] as String?,
@@ -19,9 +18,7 @@ PlaceAutocompleteRequestDTO _$PlaceAutocompleteRequestDTOFromJson(
       types: json['types'] as String?,
     );
 
-Map<String, dynamic> _$PlaceAutocompleteRequestDTOToJson(
-        PlaceAutocompleteRequestDTO instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PlaceAutocompleteRequestDTOToJson(PlaceAutocompleteRequestDTO instance) => <String, dynamic>{
       'input': instance.input,
       if (instance.sessionToken case final value?) 'sessionToken': value,
       if (instance.language case final value?) 'language': value,

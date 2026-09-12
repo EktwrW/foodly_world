@@ -16,6 +16,5 @@ abstract class UserBodySetPasswordDTO with _$UserBodySetPasswordDTO {
     @JsonKey(name: 'new_password') required String newPassword,
   }) = _UserBodySetPasswordDTO;
 
-  factory UserBodySetPasswordDTO.fromJson(Map<String, dynamic> json) =>
-      _$UserBodySetPasswordDTOFromJson(json);
+  factory UserBodySetPasswordDTO.fromJson(Map<String, dynamic> json) => _$UserBodySetPasswordDTOFromJson(json);
 }

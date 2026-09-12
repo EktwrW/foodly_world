@@ -37,8 +37,7 @@ mixin _$MenuItemPhotoDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $MenuItemPhotoDMCopyWith<MenuItemPhotoDM> get copyWith =>
-      _$MenuItemPhotoDMCopyWithImpl<MenuItemPhotoDM>(
-          this as MenuItemPhotoDM, _$identity);
+      _$MenuItemPhotoDMCopyWithImpl<MenuItemPhotoDM>(this as MenuItemPhotoDM, _$identity);
 
   /// Serializes this MenuItemPhotoDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -66,16 +65,8 @@ mixin _$MenuItemPhotoDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      uuid,
-      businessFoodPhotoUrl,
-      businessFoodItemId,
-      businessDrinkPhotoUrl,
-      businessDrinkItemId,
-      businessComboPhotoUrl,
-      businessComboItemId);
+  int get hashCode => Object.hash(runtimeType, id, uuid, businessFoodPhotoUrl, businessFoodItemId,
+      businessDrinkPhotoUrl, businessDrinkItemId, businessComboPhotoUrl, businessComboItemId);
 
   @override
   String toString() {
@@ -85,8 +76,7 @@ mixin _$MenuItemPhotoDM {
 
 /// @nodoc
 abstract mixin class $MenuItemPhotoDMCopyWith<$Res> {
-  factory $MenuItemPhotoDMCopyWith(
-          MenuItemPhotoDM value, $Res Function(MenuItemPhotoDM) _then) =
+  factory $MenuItemPhotoDMCopyWith(MenuItemPhotoDM value, $Res Function(MenuItemPhotoDM) _then) =
       _$MenuItemPhotoDMCopyWithImpl;
   @useResult
   $Res call(
@@ -101,8 +91,7 @@ abstract mixin class $MenuItemPhotoDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MenuItemPhotoDMCopyWithImpl<$Res>
-    implements $MenuItemPhotoDMCopyWith<$Res> {
+class _$MenuItemPhotoDMCopyWithImpl<$Res> implements $MenuItemPhotoDMCopyWith<$Res> {
   _$MenuItemPhotoDMCopyWithImpl(this._self, this._then);
 
   final MenuItemPhotoDM _self;
@@ -255,14 +244,11 @@ extension MenuItemPhotoDMPatterns on MenuItemPhotoDM {
     TResult Function(
             int id,
             String uuid,
-            @JsonKey(name: 'business_food_photo_url')
-            String? businessFoodPhotoUrl,
+            @JsonKey(name: 'business_food_photo_url') String? businessFoodPhotoUrl,
             @JsonKey(name: 'business_food_item_id') int? businessFoodItemId,
-            @JsonKey(name: 'business_drink_photo_url')
-            String? businessDrinkPhotoUrl,
+            @JsonKey(name: 'business_drink_photo_url') String? businessDrinkPhotoUrl,
             @JsonKey(name: 'business_drink_item_id') int? businessDrinkItemId,
-            @JsonKey(name: 'business_combos_photo_url')
-            String? businessComboPhotoUrl,
+            @JsonKey(name: 'business_combos_photo_url') String? businessComboPhotoUrl,
             @JsonKey(name: 'business_combos_id') int? businessComboItemId)?
         $default, {
     required TResult orElse(),
@@ -302,14 +288,11 @@ extension MenuItemPhotoDMPatterns on MenuItemPhotoDM {
     TResult Function(
             int id,
             String uuid,
-            @JsonKey(name: 'business_food_photo_url')
-            String? businessFoodPhotoUrl,
+            @JsonKey(name: 'business_food_photo_url') String? businessFoodPhotoUrl,
             @JsonKey(name: 'business_food_item_id') int? businessFoodItemId,
-            @JsonKey(name: 'business_drink_photo_url')
-            String? businessDrinkPhotoUrl,
+            @JsonKey(name: 'business_drink_photo_url') String? businessDrinkPhotoUrl,
             @JsonKey(name: 'business_drink_item_id') int? businessDrinkItemId,
-            @JsonKey(name: 'business_combos_photo_url')
-            String? businessComboPhotoUrl,
+            @JsonKey(name: 'business_combos_photo_url') String? businessComboPhotoUrl,
             @JsonKey(name: 'business_combos_id') int? businessComboItemId)
         $default,
   ) {
@@ -347,14 +330,11 @@ extension MenuItemPhotoDMPatterns on MenuItemPhotoDM {
     TResult? Function(
             int id,
             String uuid,
-            @JsonKey(name: 'business_food_photo_url')
-            String? businessFoodPhotoUrl,
+            @JsonKey(name: 'business_food_photo_url') String? businessFoodPhotoUrl,
             @JsonKey(name: 'business_food_item_id') int? businessFoodItemId,
-            @JsonKey(name: 'business_drink_photo_url')
-            String? businessDrinkPhotoUrl,
+            @JsonKey(name: 'business_drink_photo_url') String? businessDrinkPhotoUrl,
             @JsonKey(name: 'business_drink_item_id') int? businessDrinkItemId,
-            @JsonKey(name: 'business_combos_photo_url')
-            String? businessComboPhotoUrl,
+            @JsonKey(name: 'business_combos_photo_url') String? businessComboPhotoUrl,
             @JsonKey(name: 'business_combos_id') int? businessComboItemId)?
         $default,
   ) {
@@ -388,8 +368,7 @@ class _MenuItemPhotoDMDM implements MenuItemPhotoDM {
       @JsonKey(name: 'business_drink_item_id') this.businessDrinkItemId,
       @JsonKey(name: 'business_combos_photo_url') this.businessComboPhotoUrl,
       @JsonKey(name: 'business_combos_id') this.businessComboItemId});
-  factory _MenuItemPhotoDMDM.fromJson(Map<String, dynamic> json) =>
-      _$MenuItemPhotoDMDMFromJson(json);
+  factory _MenuItemPhotoDMDM.fromJson(Map<String, dynamic> json) => _$MenuItemPhotoDMDMFromJson(json);
 
   @override
   final int id;
@@ -452,16 +431,8 @@ class _MenuItemPhotoDMDM implements MenuItemPhotoDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      uuid,
-      businessFoodPhotoUrl,
-      businessFoodItemId,
-      businessDrinkPhotoUrl,
-      businessDrinkItemId,
-      businessComboPhotoUrl,
-      businessComboItemId);
+  int get hashCode => Object.hash(runtimeType, id, uuid, businessFoodPhotoUrl, businessFoodItemId,
+      businessDrinkPhotoUrl, businessDrinkItemId, businessComboPhotoUrl, businessComboItemId);
 
   @override
   String toString() {
@@ -470,10 +441,8 @@ class _MenuItemPhotoDMDM implements MenuItemPhotoDM {
 }
 
 /// @nodoc
-abstract mixin class _$MenuItemPhotoDMDMCopyWith<$Res>
-    implements $MenuItemPhotoDMCopyWith<$Res> {
-  factory _$MenuItemPhotoDMDMCopyWith(
-          _MenuItemPhotoDMDM value, $Res Function(_MenuItemPhotoDMDM) _then) =
+abstract mixin class _$MenuItemPhotoDMDMCopyWith<$Res> implements $MenuItemPhotoDMCopyWith<$Res> {
+  factory _$MenuItemPhotoDMDMCopyWith(_MenuItemPhotoDMDM value, $Res Function(_MenuItemPhotoDMDM) _then) =
       __$MenuItemPhotoDMDMCopyWithImpl;
   @override
   @useResult
@@ -489,8 +458,7 @@ abstract mixin class _$MenuItemPhotoDMDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MenuItemPhotoDMDMCopyWithImpl<$Res>
-    implements _$MenuItemPhotoDMDMCopyWith<$Res> {
+class __$MenuItemPhotoDMDMCopyWithImpl<$Res> implements _$MenuItemPhotoDMDMCopyWith<$Res> {
   __$MenuItemPhotoDMDMCopyWithImpl(this._self, this._then);
 
   final _MenuItemPhotoDMDM _self;
@@ -561,8 +529,7 @@ mixin _$MenuItemPhotoResponse {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $MenuItemPhotoResponseCopyWith<MenuItemPhotoResponse> get copyWith =>
-      _$MenuItemPhotoResponseCopyWithImpl<MenuItemPhotoResponse>(
-          this as MenuItemPhotoResponse, _$identity);
+      _$MenuItemPhotoResponseCopyWithImpl<MenuItemPhotoResponse>(this as MenuItemPhotoResponse, _$identity);
 
   /// Serializes this MenuItemPhotoResponse to a JSON map.
   Map<String, dynamic> toJson();
@@ -572,12 +539,9 @@ mixin _$MenuItemPhotoResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is MenuItemPhotoResponse &&
-            const DeepCollectionEquality()
-                .equals(other.foodReferencePhotos, foodReferencePhotos) &&
-            const DeepCollectionEquality()
-                .equals(other.drinkReferencePhotos, drinkReferencePhotos) &&
-            const DeepCollectionEquality()
-                .equals(other.comboReferencePhotos, comboReferencePhotos));
+            const DeepCollectionEquality().equals(other.foodReferencePhotos, foodReferencePhotos) &&
+            const DeepCollectionEquality().equals(other.drinkReferencePhotos, drinkReferencePhotos) &&
+            const DeepCollectionEquality().equals(other.comboReferencePhotos, comboReferencePhotos));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -596,22 +560,17 @@ mixin _$MenuItemPhotoResponse {
 
 /// @nodoc
 abstract mixin class $MenuItemPhotoResponseCopyWith<$Res> {
-  factory $MenuItemPhotoResponseCopyWith(MenuItemPhotoResponse value,
-          $Res Function(MenuItemPhotoResponse) _then) =
+  factory $MenuItemPhotoResponseCopyWith(MenuItemPhotoResponse value, $Res Function(MenuItemPhotoResponse) _then) =
       _$MenuItemPhotoResponseCopyWithImpl;
   @useResult
   $Res call(
-      {@JsonKey(name: 'business_food_reference_photos')
-      List<MenuItemPhotoDM>? foodReferencePhotos,
-      @JsonKey(name: 'business_drink_reference_photos')
-      List<MenuItemPhotoDM>? drinkReferencePhotos,
-      @JsonKey(name: 'business_combo_photos')
-      List<MenuItemPhotoDM>? comboReferencePhotos});
+      {@JsonKey(name: 'business_food_reference_photos') List<MenuItemPhotoDM>? foodReferencePhotos,
+      @JsonKey(name: 'business_drink_reference_photos') List<MenuItemPhotoDM>? drinkReferencePhotos,
+      @JsonKey(name: 'business_combo_photos') List<MenuItemPhotoDM>? comboReferencePhotos});
 }
 
 /// @nodoc
-class _$MenuItemPhotoResponseCopyWithImpl<$Res>
-    implements $MenuItemPhotoResponseCopyWith<$Res> {
+class _$MenuItemPhotoResponseCopyWithImpl<$Res> implements $MenuItemPhotoResponseCopyWith<$Res> {
   _$MenuItemPhotoResponseCopyWithImpl(this._self, this._then);
 
   final MenuItemPhotoResponse _self;
@@ -737,20 +696,16 @@ extension MenuItemPhotoResponsePatterns on MenuItemPhotoResponse {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
-            @JsonKey(name: 'business_food_reference_photos')
-            List<MenuItemPhotoDM>? foodReferencePhotos,
-            @JsonKey(name: 'business_drink_reference_photos')
-            List<MenuItemPhotoDM>? drinkReferencePhotos,
-            @JsonKey(name: 'business_combo_photos')
-            List<MenuItemPhotoDM>? comboReferencePhotos)?
+            @JsonKey(name: 'business_food_reference_photos') List<MenuItemPhotoDM>? foodReferencePhotos,
+            @JsonKey(name: 'business_drink_reference_photos') List<MenuItemPhotoDM>? drinkReferencePhotos,
+            @JsonKey(name: 'business_combo_photos') List<MenuItemPhotoDM>? comboReferencePhotos)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _MenuItemPhotoResponse() when $default != null:
-        return $default(_that.foodReferencePhotos, _that.drinkReferencePhotos,
-            _that.comboReferencePhotos);
+        return $default(_that.foodReferencePhotos, _that.drinkReferencePhotos, _that.comboReferencePhotos);
       case _:
         return orElse();
     }
@@ -772,19 +727,15 @@ extension MenuItemPhotoResponsePatterns on MenuItemPhotoResponse {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
-            @JsonKey(name: 'business_food_reference_photos')
-            List<MenuItemPhotoDM>? foodReferencePhotos,
-            @JsonKey(name: 'business_drink_reference_photos')
-            List<MenuItemPhotoDM>? drinkReferencePhotos,
-            @JsonKey(name: 'business_combo_photos')
-            List<MenuItemPhotoDM>? comboReferencePhotos)
+            @JsonKey(name: 'business_food_reference_photos') List<MenuItemPhotoDM>? foodReferencePhotos,
+            @JsonKey(name: 'business_drink_reference_photos') List<MenuItemPhotoDM>? drinkReferencePhotos,
+            @JsonKey(name: 'business_combo_photos') List<MenuItemPhotoDM>? comboReferencePhotos)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _MenuItemPhotoResponse():
-        return $default(_that.foodReferencePhotos, _that.drinkReferencePhotos,
-            _that.comboReferencePhotos);
+        return $default(_that.foodReferencePhotos, _that.drinkReferencePhotos, _that.comboReferencePhotos);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -805,19 +756,15 @@ extension MenuItemPhotoResponsePatterns on MenuItemPhotoResponse {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
-            @JsonKey(name: 'business_food_reference_photos')
-            List<MenuItemPhotoDM>? foodReferencePhotos,
-            @JsonKey(name: 'business_drink_reference_photos')
-            List<MenuItemPhotoDM>? drinkReferencePhotos,
-            @JsonKey(name: 'business_combo_photos')
-            List<MenuItemPhotoDM>? comboReferencePhotos)?
+            @JsonKey(name: 'business_food_reference_photos') List<MenuItemPhotoDM>? foodReferencePhotos,
+            @JsonKey(name: 'business_drink_reference_photos') List<MenuItemPhotoDM>? drinkReferencePhotos,
+            @JsonKey(name: 'business_combo_photos') List<MenuItemPhotoDM>? comboReferencePhotos)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _MenuItemPhotoResponse() when $default != null:
-        return $default(_that.foodReferencePhotos, _that.drinkReferencePhotos,
-            _that.comboReferencePhotos);
+        return $default(_that.foodReferencePhotos, _that.drinkReferencePhotos, _that.comboReferencePhotos);
       case _:
         return null;
     }
@@ -828,17 +775,13 @@ extension MenuItemPhotoResponsePatterns on MenuItemPhotoResponse {
 @JsonSerializable()
 class _MenuItemPhotoResponse implements MenuItemPhotoResponse {
   const _MenuItemPhotoResponse(
-      {@JsonKey(name: 'business_food_reference_photos')
-      final List<MenuItemPhotoDM>? foodReferencePhotos,
-      @JsonKey(name: 'business_drink_reference_photos')
-      final List<MenuItemPhotoDM>? drinkReferencePhotos,
-      @JsonKey(name: 'business_combo_photos')
-      final List<MenuItemPhotoDM>? comboReferencePhotos})
+      {@JsonKey(name: 'business_food_reference_photos') final List<MenuItemPhotoDM>? foodReferencePhotos,
+      @JsonKey(name: 'business_drink_reference_photos') final List<MenuItemPhotoDM>? drinkReferencePhotos,
+      @JsonKey(name: 'business_combo_photos') final List<MenuItemPhotoDM>? comboReferencePhotos})
       : _foodReferencePhotos = foodReferencePhotos,
         _drinkReferencePhotos = drinkReferencePhotos,
         _comboReferencePhotos = comboReferencePhotos;
-  factory _MenuItemPhotoResponse.fromJson(Map<String, dynamic> json) =>
-      _$MenuItemPhotoResponseFromJson(json);
+  factory _MenuItemPhotoResponse.fromJson(Map<String, dynamic> json) => _$MenuItemPhotoResponseFromJson(json);
 
   final List<MenuItemPhotoDM>? _foodReferencePhotos;
   @override
@@ -846,8 +789,7 @@ class _MenuItemPhotoResponse implements MenuItemPhotoResponse {
   List<MenuItemPhotoDM>? get foodReferencePhotos {
     final value = _foodReferencePhotos;
     if (value == null) return null;
-    if (_foodReferencePhotos is EqualUnmodifiableListView)
-      return _foodReferencePhotos;
+    if (_foodReferencePhotos is EqualUnmodifiableListView) return _foodReferencePhotos;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -858,8 +800,7 @@ class _MenuItemPhotoResponse implements MenuItemPhotoResponse {
   List<MenuItemPhotoDM>? get drinkReferencePhotos {
     final value = _drinkReferencePhotos;
     if (value == null) return null;
-    if (_drinkReferencePhotos is EqualUnmodifiableListView)
-      return _drinkReferencePhotos;
+    if (_drinkReferencePhotos is EqualUnmodifiableListView) return _drinkReferencePhotos;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -870,8 +811,7 @@ class _MenuItemPhotoResponse implements MenuItemPhotoResponse {
   List<MenuItemPhotoDM>? get comboReferencePhotos {
     final value = _comboReferencePhotos;
     if (value == null) return null;
-    if (_comboReferencePhotos is EqualUnmodifiableListView)
-      return _comboReferencePhotos;
+    if (_comboReferencePhotos is EqualUnmodifiableListView) return _comboReferencePhotos;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -882,8 +822,7 @@ class _MenuItemPhotoResponse implements MenuItemPhotoResponse {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$MenuItemPhotoResponseCopyWith<_MenuItemPhotoResponse> get copyWith =>
-      __$MenuItemPhotoResponseCopyWithImpl<_MenuItemPhotoResponse>(
-          this, _$identity);
+      __$MenuItemPhotoResponseCopyWithImpl<_MenuItemPhotoResponse>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -897,12 +836,9 @@ class _MenuItemPhotoResponse implements MenuItemPhotoResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _MenuItemPhotoResponse &&
-            const DeepCollectionEquality()
-                .equals(other._foodReferencePhotos, _foodReferencePhotos) &&
-            const DeepCollectionEquality()
-                .equals(other._drinkReferencePhotos, _drinkReferencePhotos) &&
-            const DeepCollectionEquality()
-                .equals(other._comboReferencePhotos, _comboReferencePhotos));
+            const DeepCollectionEquality().equals(other._foodReferencePhotos, _foodReferencePhotos) &&
+            const DeepCollectionEquality().equals(other._drinkReferencePhotos, _drinkReferencePhotos) &&
+            const DeepCollectionEquality().equals(other._comboReferencePhotos, _comboReferencePhotos));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -920,25 +856,19 @@ class _MenuItemPhotoResponse implements MenuItemPhotoResponse {
 }
 
 /// @nodoc
-abstract mixin class _$MenuItemPhotoResponseCopyWith<$Res>
-    implements $MenuItemPhotoResponseCopyWith<$Res> {
-  factory _$MenuItemPhotoResponseCopyWith(_MenuItemPhotoResponse value,
-          $Res Function(_MenuItemPhotoResponse) _then) =
+abstract mixin class _$MenuItemPhotoResponseCopyWith<$Res> implements $MenuItemPhotoResponseCopyWith<$Res> {
+  factory _$MenuItemPhotoResponseCopyWith(_MenuItemPhotoResponse value, $Res Function(_MenuItemPhotoResponse) _then) =
       __$MenuItemPhotoResponseCopyWithImpl;
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'business_food_reference_photos')
-      List<MenuItemPhotoDM>? foodReferencePhotos,
-      @JsonKey(name: 'business_drink_reference_photos')
-      List<MenuItemPhotoDM>? drinkReferencePhotos,
-      @JsonKey(name: 'business_combo_photos')
-      List<MenuItemPhotoDM>? comboReferencePhotos});
+      {@JsonKey(name: 'business_food_reference_photos') List<MenuItemPhotoDM>? foodReferencePhotos,
+      @JsonKey(name: 'business_drink_reference_photos') List<MenuItemPhotoDM>? drinkReferencePhotos,
+      @JsonKey(name: 'business_combo_photos') List<MenuItemPhotoDM>? comboReferencePhotos});
 }
 
 /// @nodoc
-class __$MenuItemPhotoResponseCopyWithImpl<$Res>
-    implements _$MenuItemPhotoResponseCopyWith<$Res> {
+class __$MenuItemPhotoResponseCopyWithImpl<$Res> implements _$MenuItemPhotoResponseCopyWith<$Res> {
   __$MenuItemPhotoResponseCopyWithImpl(this._self, this._then);
 
   final _MenuItemPhotoResponse _self;

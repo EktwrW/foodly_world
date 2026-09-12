@@ -47,8 +47,7 @@ mixin _$ActiveSessionDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ActiveSessionDMCopyWith<ActiveSessionDM> get copyWith =>
-      _$ActiveSessionDMCopyWithImpl<ActiveSessionDM>(
-          this as ActiveSessionDM, _$identity);
+      _$ActiveSessionDMCopyWithImpl<ActiveSessionDM>(this as ActiveSessionDM, _$identity);
 
   /// Serializes this ActiveSessionDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -60,23 +59,18 @@ mixin _$ActiveSessionDM {
             other is ActiveSessionDM &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.current, current) || other.current == current) &&
-            (identical(other.platform, platform) ||
-                other.platform == platform) &&
+            (identical(other.platform, platform) || other.platform == platform) &&
             (identical(other.model, model) || other.model == model) &&
-            (identical(other.osVersion, osVersion) ||
-                other.osVersion == osVersion) &&
-            (identical(other.appVersion, appVersion) ||
-                other.appVersion == appVersion) &&
-            (identical(other.startedAt, startedAt) ||
-                other.startedAt == startedAt) &&
-            (identical(other.lastUsedAt, lastUsedAt) ||
-                other.lastUsedAt == lastUsedAt));
+            (identical(other.osVersion, osVersion) || other.osVersion == osVersion) &&
+            (identical(other.appVersion, appVersion) || other.appVersion == appVersion) &&
+            (identical(other.startedAt, startedAt) || other.startedAt == startedAt) &&
+            (identical(other.lastUsedAt, lastUsedAt) || other.lastUsedAt == lastUsedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, current, platform, model,
-      osVersion, appVersion, startedAt, lastUsedAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, current, platform, model, osVersion, appVersion, startedAt, lastUsedAt);
 
   @override
   String toString() {
@@ -86,8 +80,7 @@ mixin _$ActiveSessionDM {
 
 /// @nodoc
 abstract mixin class $ActiveSessionDMCopyWith<$Res> {
-  factory $ActiveSessionDMCopyWith(
-          ActiveSessionDM value, $Res Function(ActiveSessionDM) _then) =
+  factory $ActiveSessionDMCopyWith(ActiveSessionDM value, $Res Function(ActiveSessionDM) _then) =
       _$ActiveSessionDMCopyWithImpl;
   @useResult
   $Res call(
@@ -102,8 +95,7 @@ abstract mixin class $ActiveSessionDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ActiveSessionDMCopyWithImpl<$Res>
-    implements $ActiveSessionDMCopyWith<$Res> {
+class _$ActiveSessionDMCopyWithImpl<$Res> implements $ActiveSessionDMCopyWith<$Res> {
   _$ActiveSessionDMCopyWithImpl(this._self, this._then);
 
   final ActiveSessionDM _self;
@@ -268,15 +260,8 @@ extension ActiveSessionDMPatterns on ActiveSessionDM {
     final _that = this;
     switch (_that) {
       case _ActiveSessionDM() when $default != null:
-        return $default(
-            _that.id,
-            _that.current,
-            _that.platform,
-            _that.model,
-            _that.osVersion,
-            _that.appVersion,
-            _that.startedAt,
-            _that.lastUsedAt);
+        return $default(_that.id, _that.current, _that.platform, _that.model, _that.osVersion, _that.appVersion,
+            _that.startedAt, _that.lastUsedAt);
       case _:
         return orElse();
     }
@@ -311,15 +296,8 @@ extension ActiveSessionDMPatterns on ActiveSessionDM {
     final _that = this;
     switch (_that) {
       case _ActiveSessionDM():
-        return $default(
-            _that.id,
-            _that.current,
-            _that.platform,
-            _that.model,
-            _that.osVersion,
-            _that.appVersion,
-            _that.startedAt,
-            _that.lastUsedAt);
+        return $default(_that.id, _that.current, _that.platform, _that.model, _that.osVersion, _that.appVersion,
+            _that.startedAt, _that.lastUsedAt);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -353,15 +331,8 @@ extension ActiveSessionDMPatterns on ActiveSessionDM {
     final _that = this;
     switch (_that) {
       case _ActiveSessionDM() when $default != null:
-        return $default(
-            _that.id,
-            _that.current,
-            _that.platform,
-            _that.model,
-            _that.osVersion,
-            _that.appVersion,
-            _that.startedAt,
-            _that.lastUsedAt);
+        return $default(_that.id, _that.current, _that.platform, _that.model, _that.osVersion, _that.appVersion,
+            _that.startedAt, _that.lastUsedAt);
       case _:
         return null;
     }
@@ -381,8 +352,7 @@ class _ActiveSessionDM extends ActiveSessionDM {
       @JsonKey(name: 'started_at') this.startedAt,
       @JsonKey(name: 'last_used_at') this.lastUsedAt})
       : super._();
-  factory _ActiveSessionDM.fromJson(Map<String, dynamic> json) =>
-      _$ActiveSessionDMFromJson(json);
+  factory _ActiveSessionDM.fromJson(Map<String, dynamic> json) => _$ActiveSessionDMFromJson(json);
 
   @override
   final String id;
@@ -443,23 +413,18 @@ class _ActiveSessionDM extends ActiveSessionDM {
             other is _ActiveSessionDM &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.current, current) || other.current == current) &&
-            (identical(other.platform, platform) ||
-                other.platform == platform) &&
+            (identical(other.platform, platform) || other.platform == platform) &&
             (identical(other.model, model) || other.model == model) &&
-            (identical(other.osVersion, osVersion) ||
-                other.osVersion == osVersion) &&
-            (identical(other.appVersion, appVersion) ||
-                other.appVersion == appVersion) &&
-            (identical(other.startedAt, startedAt) ||
-                other.startedAt == startedAt) &&
-            (identical(other.lastUsedAt, lastUsedAt) ||
-                other.lastUsedAt == lastUsedAt));
+            (identical(other.osVersion, osVersion) || other.osVersion == osVersion) &&
+            (identical(other.appVersion, appVersion) || other.appVersion == appVersion) &&
+            (identical(other.startedAt, startedAt) || other.startedAt == startedAt) &&
+            (identical(other.lastUsedAt, lastUsedAt) || other.lastUsedAt == lastUsedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, current, platform, model,
-      osVersion, appVersion, startedAt, lastUsedAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, current, platform, model, osVersion, appVersion, startedAt, lastUsedAt);
 
   @override
   String toString() {
@@ -468,10 +433,8 @@ class _ActiveSessionDM extends ActiveSessionDM {
 }
 
 /// @nodoc
-abstract mixin class _$ActiveSessionDMCopyWith<$Res>
-    implements $ActiveSessionDMCopyWith<$Res> {
-  factory _$ActiveSessionDMCopyWith(
-          _ActiveSessionDM value, $Res Function(_ActiveSessionDM) _then) =
+abstract mixin class _$ActiveSessionDMCopyWith<$Res> implements $ActiveSessionDMCopyWith<$Res> {
+  factory _$ActiveSessionDMCopyWith(_ActiveSessionDM value, $Res Function(_ActiveSessionDM) _then) =
       __$ActiveSessionDMCopyWithImpl;
   @override
   @useResult
@@ -487,8 +450,7 @@ abstract mixin class _$ActiveSessionDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ActiveSessionDMCopyWithImpl<$Res>
-    implements _$ActiveSessionDMCopyWith<$Res> {
+class __$ActiveSessionDMCopyWithImpl<$Res> implements _$ActiveSessionDMCopyWith<$Res> {
   __$ActiveSessionDMCopyWithImpl(this._self, this._then);
 
   final _ActiveSessionDM _self;
@@ -555,8 +517,7 @@ mixin _$ActiveSessionsDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ActiveSessionsDMCopyWith<ActiveSessionsDM> get copyWith =>
-      _$ActiveSessionsDMCopyWithImpl<ActiveSessionsDM>(
-          this as ActiveSessionsDM, _$identity);
+      _$ActiveSessionsDMCopyWithImpl<ActiveSessionsDM>(this as ActiveSessionsDM, _$identity);
 
   /// Serializes this ActiveSessionsDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -572,8 +533,7 @@ mixin _$ActiveSessionsDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(sessions), max);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(sessions), max);
 
   @override
   String toString() {
@@ -583,16 +543,14 @@ mixin _$ActiveSessionsDM {
 
 /// @nodoc
 abstract mixin class $ActiveSessionsDMCopyWith<$Res> {
-  factory $ActiveSessionsDMCopyWith(
-          ActiveSessionsDM value, $Res Function(ActiveSessionsDM) _then) =
+  factory $ActiveSessionsDMCopyWith(ActiveSessionsDM value, $Res Function(ActiveSessionsDM) _then) =
       _$ActiveSessionsDMCopyWithImpl;
   @useResult
   $Res call({List<ActiveSessionDM> sessions, int max});
 }
 
 /// @nodoc
-class _$ActiveSessionsDMCopyWithImpl<$Res>
-    implements $ActiveSessionsDMCopyWith<$Res> {
+class _$ActiveSessionsDMCopyWithImpl<$Res> implements $ActiveSessionsDMCopyWith<$Res> {
   _$ActiveSessionsDMCopyWithImpl(this._self, this._then);
 
   final ActiveSessionsDM _self;
@@ -779,12 +737,9 @@ extension ActiveSessionsDMPatterns on ActiveSessionsDM {
 /// @nodoc
 @JsonSerializable()
 class _ActiveSessionsDM implements ActiveSessionsDM {
-  const _ActiveSessionsDM(
-      {final List<ActiveSessionDM> sessions = const <ActiveSessionDM>[],
-      this.max = 6})
+  const _ActiveSessionsDM({final List<ActiveSessionDM> sessions = const <ActiveSessionDM>[], this.max = 6})
       : _sessions = sessions;
-  factory _ActiveSessionsDM.fromJson(Map<String, dynamic> json) =>
-      _$ActiveSessionsDMFromJson(json);
+  factory _ActiveSessionsDM.fromJson(Map<String, dynamic> json) => _$ActiveSessionsDMFromJson(json);
 
   final List<ActiveSessionDM> _sessions;
   @override
@@ -825,8 +780,7 @@ class _ActiveSessionsDM implements ActiveSessionsDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_sessions), max);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_sessions), max);
 
   @override
   String toString() {
@@ -835,10 +789,8 @@ class _ActiveSessionsDM implements ActiveSessionsDM {
 }
 
 /// @nodoc
-abstract mixin class _$ActiveSessionsDMCopyWith<$Res>
-    implements $ActiveSessionsDMCopyWith<$Res> {
-  factory _$ActiveSessionsDMCopyWith(
-          _ActiveSessionsDM value, $Res Function(_ActiveSessionsDM) _then) =
+abstract mixin class _$ActiveSessionsDMCopyWith<$Res> implements $ActiveSessionsDMCopyWith<$Res> {
+  factory _$ActiveSessionsDMCopyWith(_ActiveSessionsDM value, $Res Function(_ActiveSessionsDM) _then) =
       __$ActiveSessionsDMCopyWithImpl;
   @override
   @useResult
@@ -846,8 +798,7 @@ abstract mixin class _$ActiveSessionsDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ActiveSessionsDMCopyWithImpl<$Res>
-    implements _$ActiveSessionsDMCopyWith<$Res> {
+class __$ActiveSessionsDMCopyWithImpl<$Res> implements _$ActiveSessionsDMCopyWith<$Res> {
   __$ActiveSessionsDMCopyWithImpl(this._self, this._then);
 
   final _ActiveSessionsDM _self;

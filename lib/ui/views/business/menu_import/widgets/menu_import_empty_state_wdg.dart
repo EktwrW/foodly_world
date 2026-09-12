@@ -53,9 +53,9 @@ class MenuImportEmptyStateWdg extends StatelessWidget {
     final cubit = context.read<ManageMenuCubit>();
 
     final didImport = await di<AppRouter>().appRouter.pushNamed<bool>(
-          AppRoutes.manageMenuImport.name,
-          pathParameters: {AppRoutes.routeIdParam: menuUuid},
-        );
+      AppRoutes.manageMenuImport.name,
+      pathParameters: {AppRoutes.routeIdParam: menuUuid},
+    );
 
     if (didImport == true) {
       // El bulk-import quedó persistido en BE — refrescamos el menu

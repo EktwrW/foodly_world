@@ -34,7 +34,9 @@ abstract class PlaceDM with _$PlaceDM {
     @JsonKey(name: 'place_id') String? placeId,
     String? name,
     @JsonKey(name: 'formatted_address') String? formattedAddress,
-    @JsonKey(name: 'address_components') @Default(<PlaceAddressComponentDM>[]) List<PlaceAddressComponentDM> addressComponents,
+    @JsonKey(name: 'address_components')
+    @Default(<PlaceAddressComponentDM>[])
+    List<PlaceAddressComponentDM> addressComponents,
     PlaceGeometryDM? geometry,
     @JsonKey(name: 'formatted_phone_number') String? formattedPhoneNumber,
     @JsonKey(name: 'international_phone_number') String? internationalPhoneNumber,

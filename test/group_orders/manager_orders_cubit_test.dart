@@ -122,7 +122,8 @@ void main() {
     expect(cubit.state.bucket, isNull);
   });
 
-  test('advanceFulfillment: la orden devuelta reemplaza a la suya en la '
+  test(
+      'advanceFulfillment: la orden devuelta reemplaza a la suya en la '
       'lista al instante y luego re-sincroniza contadores', () async {
     repo.managerOrdersOutcome = okList();
     await cubit.load();
@@ -210,7 +211,8 @@ void main() {
     expect(cubit.state.orders, isEmpty);
   });
 
-  test('parsing F4a: fulfillment desconocido degrada a null (forward-compat) '
+  test(
+      'parsing F4a: fulfillment desconocido degrada a null (forward-compat) '
       'y los campos nuevos viajan', () {
     final order = GroupOrderDM.fromJson(const {
       'uuid': 'x',

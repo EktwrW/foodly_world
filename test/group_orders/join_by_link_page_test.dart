@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/routing/app_routes.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
-import 'package:foodly_world/core/services/dependency_injection_service.dart'
-    show di, LoadingWidgetFoodlyLogo;
+import 'package:foodly_world/core/services/dependency_injection_service.dart' show di, LoadingWidgetFoodlyLogo;
 import 'package:foodly_world/core/services/pending_group_join.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
@@ -124,8 +123,7 @@ void main() {
           GoRoute(
             path: AppRoutes.joinGroupOrder.path,
             name: AppRoutes.joinGroupOrder.name,
-            builder: (_, state) =>
-                JoinByLinkPage(code: state.pathParameters[AppRoutes.routeIdParam] ?? ''),
+            builder: (_, state) => JoinByLinkPage(code: state.pathParameters[AppRoutes.routeIdParam] ?? ''),
           ),
           GoRoute(
             path: AppRoutes.login.path,
@@ -164,8 +162,7 @@ void main() {
 
   /// Deja terminar la transición de ruta para que la página saliente —y su
   /// spinner— se desmonten antes de que acabe el test.
-  Future<void> asentarNavegacion(WidgetTester tester) async =>
-      tester.pump(const Duration(milliseconds: 500));
+  Future<void> asentarNavegacion(WidgetTester tester) async => tester.pump(const Duration(milliseconds: 500));
 
   String ubicacion(GoRouter r) => r.routerDelegate.currentConfiguration.uri.toString();
 
@@ -186,23 +183,20 @@ void main() {
   /// Que el repo hoy no lance no vuelve al catch código muerto — lo alcanzan
   /// un `emit` sobre un cubit cerrado, un fallo del realtime que engancha
   /// `onChange`, o cualquier cosa que se agregue al camino del join.
-  testWidgets('si joinWithCode LANZA, la pantalla muestra el error y no el spinner',
-      (tester) async {
+  testWidgets('si joinWithCode LANZA, la pantalla muestra el error y no el spinner', (tester) async {
     auth.logueado = true;
     cubit.excepcion = StateError('caída de red simulada');
 
     await montar(tester);
     await tester.pump();
 
-    expect(spinner, findsNothing,
-        reason: 'sin el try/catch el logo se queda girando y no hay forma de salir');
+    expect(spinner, findsNothing, reason: 'sin el try/catch el logo se queda girando y no hay forma de salir');
     expect(find.text(S.current.groupOrderJoinFailed), findsOneWidget);
     expect(find.byType(CustomNeumorphicButton), findsOneWidget,
         reason: 'el estado de error existe para ofrecer una salida');
   });
 
-  testWidgets('un throw no se traga la excepción en silencio ni deja la página a medias',
-      (tester) async {
+  testWidgets('un throw no se traga la excepción en silencio ni deja la página a medias', (tester) async {
     auth.logueado = true;
     cubit.excepcion = StateError('caída de red simulada');
     // Un detalle viejo en el cubit no debe filtrarse al cartel: lo que se sabe
@@ -224,8 +218,7 @@ void main() {
   /// había explicado el motivo. Un comensal al que le dicen que su código no
   /// vale vuelve a pedirlo y a escanearlo; uno al que le dicen que la orden se
   /// cerró, no.
-  testWidgets('un failure con motivo del backend muestra ESE motivo, no el genérico',
-      (tester) async {
+  testWidgets('un failure con motivo del backend muestra ESE motivo, no el genérico', (tester) async {
     auth.logueado = true;
     cubit
       ..resultado = false
@@ -338,8 +331,7 @@ void main() {
   /// `AppRouter` manda al login cualquier ruta no pública sin sesión ni
   /// restauración pendiente, y `/join/{code}` no es pública ni navegable por
   /// un invitado. Ver el DEFECTO de más abajo para el otro camino.
-  testWidgets('sin sesión el código queda estacionado (en mayúsculas) y se va al login',
-      (tester) async {
+  testWidgets('sin sesión el código queda estacionado (en mayúsculas) y se va al login', (tester) async {
     auth
       ..hasPendingSessionRestore = true
       ..logueado = false;
@@ -387,8 +379,7 @@ void main() {
   /// capturado y aborta el caso de test antes de poder preguntar nada. De ahí
   /// el `runZonedGuarded`. Que el error escape por ahí es, en sí, la otra
   /// mitad del defecto.
-  testWidgets('DEFECTO: sin restauración pendiente, la salida al login navega durante el build',
-      (tester) async {
+  testWidgets('DEFECTO: sin restauración pendiente, la salida al login navega durante el build', (tester) async {
     auth
       ..hasPendingSessionRestore = false
       ..logueado = false;
@@ -404,8 +395,7 @@ void main() {
     }, (e, _) => errores.add(e));
     FlutterError.onError = manejadorReal;
 
-    expect(errores, isNotEmpty,
-        reason: 'si esto deja de lanzar es porque se arregló la navegación en initState');
+    expect(errores, isNotEmpty, reason: 'si esto deja de lanzar es porque se arregló la navegación en initState');
     expect(errores.map((e) => e.toString()), everyElement(contains('called during build')));
 
     await tester.pump();
@@ -447,8 +437,7 @@ void main() {
   ///
   /// Nada duerme de verdad acá: `tester.pump(duración)` adelanta el reloj
   /// falso del test y dispara los `Future.delayed` de la espera.
-  testWidgets('la espera del cold start aguanta y luego sigue el flujo, no va al login',
-      (tester) async {
+  testWidgets('la espera del cold start aguanta y luego sigue el flujo, no va al login', (tester) async {
     auth
       ..hasPendingSessionRestore = true
       ..logueado = false;

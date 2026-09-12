@@ -21,8 +21,7 @@ mixin _$SmartSearchState implements DiagnosticableTreeMixin {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $SmartSearchStateCopyWith<SmartSearchState> get copyWith =>
-      _$SmartSearchStateCopyWithImpl<SmartSearchState>(
-          this as SmartSearchState, _$identity);
+      _$SmartSearchStateCopyWithImpl<SmartSearchState>(this as SmartSearchState, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -34,9 +33,7 @@ mixin _$SmartSearchState implements DiagnosticableTreeMixin {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is SmartSearchState &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is SmartSearchState && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -50,8 +47,7 @@ mixin _$SmartSearchState implements DiagnosticableTreeMixin {
 
 /// @nodoc
 abstract mixin class $SmartSearchStateCopyWith<$Res> {
-  factory $SmartSearchStateCopyWith(
-          SmartSearchState value, $Res Function(SmartSearchState) _then) =
+  factory $SmartSearchStateCopyWith(SmartSearchState value, $Res Function(SmartSearchState) _then) =
       _$SmartSearchStateCopyWithImpl;
   @useResult
   $Res call({SmartSearchVM vm});
@@ -60,8 +56,7 @@ abstract mixin class $SmartSearchStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SmartSearchStateCopyWithImpl<$Res>
-    implements $SmartSearchStateCopyWith<$Res> {
+class _$SmartSearchStateCopyWithImpl<$Res> implements $SmartSearchStateCopyWith<$Res> {
   _$SmartSearchStateCopyWithImpl(this._self, this._then);
 
   final SmartSearchState _self;
@@ -349,8 +344,7 @@ class _Initial with DiagnosticableTreeMixin implements SmartSearchState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -362,9 +356,7 @@ class _Initial with DiagnosticableTreeMixin implements SmartSearchState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Initial &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Initial && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -377,10 +369,8 @@ class _Initial with DiagnosticableTreeMixin implements SmartSearchState {
 }
 
 /// @nodoc
-abstract mixin class _$InitialCopyWith<$Res>
-    implements $SmartSearchStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
-      __$InitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $SmartSearchStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({SmartSearchVM vm});
@@ -435,8 +425,7 @@ class _Listening with DiagnosticableTreeMixin implements SmartSearchState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ListeningCopyWith<_Listening> get copyWith =>
-      __$ListeningCopyWithImpl<_Listening>(this, _$identity);
+  _$ListeningCopyWith<_Listening> get copyWith => __$ListeningCopyWithImpl<_Listening>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -448,9 +437,7 @@ class _Listening with DiagnosticableTreeMixin implements SmartSearchState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Listening &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Listening && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -463,11 +450,8 @@ class _Listening with DiagnosticableTreeMixin implements SmartSearchState {
 }
 
 /// @nodoc
-abstract mixin class _$ListeningCopyWith<$Res>
-    implements $SmartSearchStateCopyWith<$Res> {
-  factory _$ListeningCopyWith(
-          _Listening value, $Res Function(_Listening) _then) =
-      __$ListeningCopyWithImpl;
+abstract mixin class _$ListeningCopyWith<$Res> implements $SmartSearchStateCopyWith<$Res> {
+  factory _$ListeningCopyWith(_Listening value, $Res Function(_Listening) _then) = __$ListeningCopyWithImpl;
   @override
   @useResult
   $Res call({SmartSearchVM vm});
@@ -522,8 +506,7 @@ class _Recognized with DiagnosticableTreeMixin implements SmartSearchState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$RecognizedCopyWith<_Recognized> get copyWith =>
-      __$RecognizedCopyWithImpl<_Recognized>(this, _$identity);
+  _$RecognizedCopyWith<_Recognized> get copyWith => __$RecognizedCopyWithImpl<_Recognized>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -535,9 +518,7 @@ class _Recognized with DiagnosticableTreeMixin implements SmartSearchState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Recognized &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Recognized && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -550,11 +531,8 @@ class _Recognized with DiagnosticableTreeMixin implements SmartSearchState {
 }
 
 /// @nodoc
-abstract mixin class _$RecognizedCopyWith<$Res>
-    implements $SmartSearchStateCopyWith<$Res> {
-  factory _$RecognizedCopyWith(
-          _Recognized value, $Res Function(_Recognized) _then) =
-      __$RecognizedCopyWithImpl;
+abstract mixin class _$RecognizedCopyWith<$Res> implements $SmartSearchStateCopyWith<$Res> {
+  factory _$RecognizedCopyWith(_Recognized value, $Res Function(_Recognized) _then) = __$RecognizedCopyWithImpl;
   @override
   @useResult
   $Res call({SmartSearchVM vm});
@@ -609,8 +587,7 @@ class _Searching with DiagnosticableTreeMixin implements SmartSearchState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$SearchingCopyWith<_Searching> get copyWith =>
-      __$SearchingCopyWithImpl<_Searching>(this, _$identity);
+  _$SearchingCopyWith<_Searching> get copyWith => __$SearchingCopyWithImpl<_Searching>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -622,9 +599,7 @@ class _Searching with DiagnosticableTreeMixin implements SmartSearchState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Searching &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Searching && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -637,11 +612,8 @@ class _Searching with DiagnosticableTreeMixin implements SmartSearchState {
 }
 
 /// @nodoc
-abstract mixin class _$SearchingCopyWith<$Res>
-    implements $SmartSearchStateCopyWith<$Res> {
-  factory _$SearchingCopyWith(
-          _Searching value, $Res Function(_Searching) _then) =
-      __$SearchingCopyWithImpl;
+abstract mixin class _$SearchingCopyWith<$Res> implements $SmartSearchStateCopyWith<$Res> {
+  factory _$SearchingCopyWith(_Searching value, $Res Function(_Searching) _then) = __$SearchingCopyWithImpl;
   @override
   @useResult
   $Res call({SmartSearchVM vm});
@@ -709,9 +681,7 @@ class _SearchComplete with DiagnosticableTreeMixin implements SmartSearchState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _SearchComplete &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _SearchComplete && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -724,10 +694,8 @@ class _SearchComplete with DiagnosticableTreeMixin implements SmartSearchState {
 }
 
 /// @nodoc
-abstract mixin class _$SearchCompleteCopyWith<$Res>
-    implements $SmartSearchStateCopyWith<$Res> {
-  factory _$SearchCompleteCopyWith(
-          _SearchComplete value, $Res Function(_SearchComplete) _then) =
+abstract mixin class _$SearchCompleteCopyWith<$Res> implements $SmartSearchStateCopyWith<$Res> {
+  factory _$SearchCompleteCopyWith(_SearchComplete value, $Res Function(_SearchComplete) _then) =
       __$SearchCompleteCopyWithImpl;
   @override
   @useResult
@@ -738,8 +706,7 @@ abstract mixin class _$SearchCompleteCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SearchCompleteCopyWithImpl<$Res>
-    implements _$SearchCompleteCopyWith<$Res> {
+class __$SearchCompleteCopyWithImpl<$Res> implements _$SearchCompleteCopyWith<$Res> {
   __$SearchCompleteCopyWithImpl(this._self, this._then);
 
   final _SearchComplete _self;
@@ -785,8 +752,7 @@ class _Error with DiagnosticableTreeMixin implements SmartSearchState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -815,10 +781,8 @@ class _Error with DiagnosticableTreeMixin implements SmartSearchState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $SmartSearchStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $SmartSearchStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({String message, SmartSearchVM vm});

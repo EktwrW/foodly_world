@@ -65,8 +65,7 @@ void main() {
 
         await service.ensureCleanInstall();
 
-        expect(fakeSecure.clearAllCount, 1,
-            reason: 'En primera ejecución debe limpiar el Keychain residual');
+        expect(fakeSecure.clearAllCount, 1, reason: 'En primera ejecución debe limpiar el Keychain residual');
 
         final prefs = await SharedPreferences.getInstance();
         expect(prefs.getBool('foodly_first_launch_done'), true,

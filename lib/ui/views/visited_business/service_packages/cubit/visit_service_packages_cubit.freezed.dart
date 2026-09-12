@@ -16,9 +16,7 @@ T _$identity<T>(T value) => value;
 mixin _$VisitServicePackagesState {
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is VisitServicePackagesState);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is VisitServicePackagesState);
   }
 
   @override
@@ -32,8 +30,7 @@ mixin _$VisitServicePackagesState {
 
 /// @nodoc
 class $VisitServicePackagesStateCopyWith<$Res> {
-  $VisitServicePackagesStateCopyWith(
-      VisitServicePackagesState _, $Res Function(VisitServicePackagesState) __);
+  $VisitServicePackagesStateCopyWith(VisitServicePackagesState _, $Res Function(VisitServicePackagesState) __);
 }
 
 /// Adds pattern-matching-related methods to [VisitServicePackagesState].
@@ -156,9 +153,7 @@ extension VisitServicePackagesStatePatterns on VisitServicePackagesState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(ProfessionalProfileDM? profile,
-            List<ServicePackageDM> packages, bool allowReservations)?
-        loaded,
+    TResult Function(ProfessionalProfileDM? profile, List<ServicePackageDM> packages, bool allowReservations)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -194,8 +189,7 @@ extension VisitServicePackagesStatePatterns on VisitServicePackagesState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(ProfessionalProfileDM? profile,
-            List<ServicePackageDM> packages, bool allowReservations)
+    required TResult Function(ProfessionalProfileDM? profile, List<ServicePackageDM> packages, bool allowReservations)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -228,9 +222,7 @@ extension VisitServicePackagesStatePatterns on VisitServicePackagesState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(ProfessionalProfileDM? profile,
-            List<ServicePackageDM> packages, bool allowReservations)?
-        loaded,
+    TResult? Function(ProfessionalProfileDM? profile, List<ServicePackageDM> packages, bool allowReservations)? loaded,
     TResult? Function(String message)? error,
   }) {
     final _that = this;
@@ -256,8 +248,7 @@ class _Initial implements VisitServicePackagesState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _Initial);
   }
 
   @override
@@ -276,8 +267,7 @@ class _Loading implements VisitServicePackagesState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Loading);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _Loading);
   }
 
   @override
@@ -292,10 +282,7 @@ class _Loading implements VisitServicePackagesState {
 /// @nodoc
 
 class _Loaded implements VisitServicePackagesState {
-  const _Loaded(
-      {this.profile,
-      final List<ServicePackageDM> packages = const [],
-      this.allowReservations = true})
+  const _Loaded({this.profile, final List<ServicePackageDM> packages = const [], this.allowReservations = true})
       : _packages = packages;
 
   final ProfessionalProfileDM? profile;
@@ -321,8 +308,7 @@ class _Loaded implements VisitServicePackagesState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -331,13 +317,12 @@ class _Loaded implements VisitServicePackagesState {
             other is _Loaded &&
             (identical(other.profile, profile) || other.profile == profile) &&
             const DeepCollectionEquality().equals(other._packages, _packages) &&
-            (identical(other.allowReservations, allowReservations) ||
-                other.allowReservations == allowReservations));
+            (identical(other.allowReservations, allowReservations) || other.allowReservations == allowReservations));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, profile,
-      const DeepCollectionEquality().hash(_packages), allowReservations);
+  int get hashCode =>
+      Object.hash(runtimeType, profile, const DeepCollectionEquality().hash(_packages), allowReservations);
 
   @override
   String toString() {
@@ -346,15 +331,10 @@ class _Loaded implements VisitServicePackagesState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res>
-    implements $VisitServicePackagesStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
-      __$LoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $VisitServicePackagesStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
   @useResult
-  $Res call(
-      {ProfessionalProfileDM? profile,
-      List<ServicePackageDM> packages,
-      bool allowReservations});
+  $Res call({ProfessionalProfileDM? profile, List<ServicePackageDM> packages, bool allowReservations});
 
   $ProfessionalProfileDMCopyWith<$Res>? get profile;
 }
@@ -416,8 +396,7 @@ class _Error implements VisitServicePackagesState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -437,10 +416,8 @@ class _Error implements VisitServicePackagesState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $VisitServicePackagesStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $VisitServicePackagesStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @useResult
   $Res call({String message});
 }

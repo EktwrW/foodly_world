@@ -40,8 +40,7 @@ void main() {
       }
       ''';
 
-      final parsed =
-          PlaceAutocompleteResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      final parsed = PlaceAutocompleteResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
 
       expect(parsed.status, ProxyStatusEnum.ok);
       expect(parsed.predictions, hasLength(1));
@@ -58,8 +57,7 @@ void main() {
       // Google devuelve ZERO_RESULTS con "predictions": [] cuando el
       // input no matchea nada. La UI debe mostrar empty state, no error.
       const jsonStr = '{"status": "ZERO_RESULTS", "predictions": []}';
-      final parsed =
-          PlaceAutocompleteResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      final parsed = PlaceAutocompleteResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
 
       expect(parsed.status, ProxyStatusEnum.zeroResults);
       expect(parsed.status.isEmpty, isTrue);
@@ -70,8 +68,7 @@ void main() {
       // Edge case: backend devuelve solo status (p.ej. un UPSTREAM_ERROR
       // que el proxy emitió antes de siquiera intentar la query).
       const jsonStr = '{"status": "UPSTREAM_ERROR"}';
-      final parsed =
-          PlaceAutocompleteResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      final parsed = PlaceAutocompleteResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
 
       expect(parsed.status, ProxyStatusEnum.upstreamError);
       expect(parsed.predictions, isEmpty);
@@ -92,8 +89,7 @@ void main() {
         ]
       }
       ''';
-      final parsed =
-          PlaceAutocompleteResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      final parsed = PlaceAutocompleteResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
       expect(parsed.predictions.first.structuredFormatting, isNull);
     });
 
@@ -155,8 +151,7 @@ void main() {
       }
       ''';
 
-      final parsed =
-          PlaceDetailsResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      final parsed = PlaceDetailsResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
       expect(parsed.status, ProxyStatusEnum.ok);
       expect(parsed.result, isNotNull);
 
@@ -188,13 +183,11 @@ void main() {
       // backend responde 404; pero si algún día se decide devolver
       // 200+status=NOT_FOUND, el parser no debe romper.
       const jsonStr = '{"status": "NOT_FOUND", "result": null}';
-      final parsed =
-          PlaceDetailsResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      final parsed = PlaceDetailsResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
 
       expect(parsed.status, ProxyStatusEnum.notFound);
       expect(parsed.result, isNull);
-      expect(parsed.status.isEmpty, isTrue,
-          reason: 'notFound debe clasificarse como empty, no como error');
+      expect(parsed.status.isEmpty, isTrue, reason: 'notFound debe clasificarse como empty, no como error');
     });
 
     test('result con campos opcionales ausentes no rompe', () {
@@ -213,8 +206,7 @@ void main() {
         }
       }
       ''';
-      final parsed =
-          PlaceDetailsResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      final parsed = PlaceDetailsResponseDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
 
       final r = parsed.result!;
       expect(r.name, isNull);

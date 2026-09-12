@@ -6,8 +6,7 @@ part of 'user_session_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_UserSessionDM _$UserSessionDMFromJson(Map<String, dynamic> json) =>
-    _UserSessionDM(
+_UserSessionDM _$UserSessionDMFromJson(Map<String, dynamic> json) => _UserSessionDM(
       user: UserDM.fromJson(json['user'] as Map<String, dynamic>),
       welcomeMessage: json['message'] as String?,
       tokedCreatedAt: json['token_created_at'] as String?,
@@ -17,8 +16,7 @@ _UserSessionDM _$UserSessionDMFromJson(Map<String, dynamic> json) =>
       accessToken: json['access_token'] as String?,
     );
 
-Map<String, dynamic> _$UserSessionDMToJson(_UserSessionDM instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$UserSessionDMToJson(_UserSessionDM instance) => <String, dynamic>{
       'user': instance.user.toJson(),
       if (instance.welcomeMessage case final value?) 'message': value,
       if (instance.tokedCreatedAt case final value?) 'token_created_at': value,

@@ -27,8 +27,7 @@ mixin _$PromotionsVM implements DiagnosticableTreeMixin {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PromotionsVMCopyWith<PromotionsVM> get copyWith =>
-      _$PromotionsVMCopyWithImpl<PromotionsVM>(
-          this as PromotionsVM, _$identity);
+      _$PromotionsVMCopyWithImpl<PromotionsVM>(this as PromotionsVM, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -39,10 +38,8 @@ mixin _$PromotionsVM implements DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('businessDM', businessDM))
       ..add(DiagnosticsProperty('indexView', indexView))
       ..add(DiagnosticsProperty('controller', controller))
-      ..add(DiagnosticsProperty(
-          'activePromosScrollController', activePromosScrollController))
-      ..add(DiagnosticsProperty(
-          'upcomingPromosScrollController', upcomingPromosScrollController));
+      ..add(DiagnosticsProperty('activePromosScrollController', activePromosScrollController))
+      ..add(DiagnosticsProperty('upcomingPromosScrollController', upcomingPromosScrollController));
   }
 
   @override
@@ -50,36 +47,20 @@ mixin _$PromotionsVM implements DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is PromotionsVM &&
-            const DeepCollectionEquality()
-                .equals(other.promotions, promotions) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            (identical(other.businessDM, businessDM) ||
-                other.businessDM == businessDM) &&
-            (identical(other.indexView, indexView) ||
-                other.indexView == indexView) &&
-            (identical(other.controller, controller) ||
-                other.controller == controller) &&
-            (identical(other.activePromosScrollController,
-                    activePromosScrollController) ||
-                other.activePromosScrollController ==
-                    activePromosScrollController) &&
-            (identical(other.upcomingPromosScrollController,
-                    upcomingPromosScrollController) ||
-                other.upcomingPromosScrollController ==
-                    upcomingPromosScrollController));
+            const DeepCollectionEquality().equals(other.promotions, promotions) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            (identical(other.businessDM, businessDM) || other.businessDM == businessDM) &&
+            (identical(other.indexView, indexView) || other.indexView == indexView) &&
+            (identical(other.controller, controller) || other.controller == controller) &&
+            (identical(other.activePromosScrollController, activePromosScrollController) ||
+                other.activePromosScrollController == activePromosScrollController) &&
+            (identical(other.upcomingPromosScrollController, upcomingPromosScrollController) ||
+                other.upcomingPromosScrollController == upcomingPromosScrollController));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(promotions),
-      businessUuid,
-      businessDM,
-      indexView,
-      controller,
-      activePromosScrollController,
-      upcomingPromosScrollController);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(promotions), businessUuid,
+      businessDM, indexView, controller, activePromosScrollController, upcomingPromosScrollController);
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -89,9 +70,7 @@ mixin _$PromotionsVM implements DiagnosticableTreeMixin {
 
 /// @nodoc
 abstract mixin class $PromotionsVMCopyWith<$Res> {
-  factory $PromotionsVMCopyWith(
-          PromotionsVM value, $Res Function(PromotionsVM) _then) =
-      _$PromotionsVMCopyWithImpl;
+  factory $PromotionsVMCopyWith(PromotionsVM value, $Res Function(PromotionsVM) _then) = _$PromotionsVMCopyWithImpl;
   @useResult
   $Res call(
       {List<PromotionDM> promotions,
@@ -279,14 +258,8 @@ extension PromotionsVMPatterns on PromotionsVM {
     final _that = this;
     switch (_that) {
       case _PromotionsVM() when $default != null:
-        return $default(
-            _that.promotions,
-            _that.businessUuid,
-            _that.businessDM,
-            _that.indexView,
-            _that.controller,
-            _that.activePromosScrollController,
-            _that.upcomingPromosScrollController);
+        return $default(_that.promotions, _that.businessUuid, _that.businessDM, _that.indexView, _that.controller,
+            _that.activePromosScrollController, _that.upcomingPromosScrollController);
       case _:
         return orElse();
     }
@@ -320,14 +293,8 @@ extension PromotionsVMPatterns on PromotionsVM {
     final _that = this;
     switch (_that) {
       case _PromotionsVM():
-        return $default(
-            _that.promotions,
-            _that.businessUuid,
-            _that.businessDM,
-            _that.indexView,
-            _that.controller,
-            _that.activePromosScrollController,
-            _that.upcomingPromosScrollController);
+        return $default(_that.promotions, _that.businessUuid, _that.businessDM, _that.indexView, _that.controller,
+            _that.activePromosScrollController, _that.upcomingPromosScrollController);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -360,14 +327,8 @@ extension PromotionsVMPatterns on PromotionsVM {
     final _that = this;
     switch (_that) {
       case _PromotionsVM() when $default != null:
-        return $default(
-            _that.promotions,
-            _that.businessUuid,
-            _that.businessDM,
-            _that.indexView,
-            _that.controller,
-            _that.activePromosScrollController,
-            _that.upcomingPromosScrollController);
+        return $default(_that.promotions, _that.businessUuid, _that.businessDM, _that.indexView, _that.controller,
+            _that.activePromosScrollController, _that.upcomingPromosScrollController);
       case _:
         return null;
     }
@@ -417,8 +378,7 @@ class _PromotionsVM extends PromotionsVM with DiagnosticableTreeMixin {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PromotionsVMCopyWith<_PromotionsVM> get copyWith =>
-      __$PromotionsVMCopyWithImpl<_PromotionsVM>(this, _$identity);
+  _$PromotionsVMCopyWith<_PromotionsVM> get copyWith => __$PromotionsVMCopyWithImpl<_PromotionsVM>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -429,10 +389,8 @@ class _PromotionsVM extends PromotionsVM with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('businessDM', businessDM))
       ..add(DiagnosticsProperty('indexView', indexView))
       ..add(DiagnosticsProperty('controller', controller))
-      ..add(DiagnosticsProperty(
-          'activePromosScrollController', activePromosScrollController))
-      ..add(DiagnosticsProperty(
-          'upcomingPromosScrollController', upcomingPromosScrollController));
+      ..add(DiagnosticsProperty('activePromosScrollController', activePromosScrollController))
+      ..add(DiagnosticsProperty('upcomingPromosScrollController', upcomingPromosScrollController));
   }
 
   @override
@@ -440,36 +398,20 @@ class _PromotionsVM extends PromotionsVM with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _PromotionsVM &&
-            const DeepCollectionEquality()
-                .equals(other._promotions, _promotions) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            (identical(other.businessDM, businessDM) ||
-                other.businessDM == businessDM) &&
-            (identical(other.indexView, indexView) ||
-                other.indexView == indexView) &&
-            (identical(other.controller, controller) ||
-                other.controller == controller) &&
-            (identical(other.activePromosScrollController,
-                    activePromosScrollController) ||
-                other.activePromosScrollController ==
-                    activePromosScrollController) &&
-            (identical(other.upcomingPromosScrollController,
-                    upcomingPromosScrollController) ||
-                other.upcomingPromosScrollController ==
-                    upcomingPromosScrollController));
+            const DeepCollectionEquality().equals(other._promotions, _promotions) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            (identical(other.businessDM, businessDM) || other.businessDM == businessDM) &&
+            (identical(other.indexView, indexView) || other.indexView == indexView) &&
+            (identical(other.controller, controller) || other.controller == controller) &&
+            (identical(other.activePromosScrollController, activePromosScrollController) ||
+                other.activePromosScrollController == activePromosScrollController) &&
+            (identical(other.upcomingPromosScrollController, upcomingPromosScrollController) ||
+                other.upcomingPromosScrollController == upcomingPromosScrollController));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_promotions),
-      businessUuid,
-      businessDM,
-      indexView,
-      controller,
-      activePromosScrollController,
-      upcomingPromosScrollController);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_promotions), businessUuid,
+      businessDM, indexView, controller, activePromosScrollController, upcomingPromosScrollController);
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -478,11 +420,8 @@ class _PromotionsVM extends PromotionsVM with DiagnosticableTreeMixin {
 }
 
 /// @nodoc
-abstract mixin class _$PromotionsVMCopyWith<$Res>
-    implements $PromotionsVMCopyWith<$Res> {
-  factory _$PromotionsVMCopyWith(
-          _PromotionsVM value, $Res Function(_PromotionsVM) _then) =
-      __$PromotionsVMCopyWithImpl;
+abstract mixin class _$PromotionsVMCopyWith<$Res> implements $PromotionsVMCopyWith<$Res> {
+  factory _$PromotionsVMCopyWith(_PromotionsVM value, $Res Function(_PromotionsVM) _then) = __$PromotionsVMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -499,8 +438,7 @@ abstract mixin class _$PromotionsVMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PromotionsVMCopyWithImpl<$Res>
-    implements _$PromotionsVMCopyWith<$Res> {
+class __$PromotionsVMCopyWithImpl<$Res> implements _$PromotionsVMCopyWith<$Res> {
   __$PromotionsVMCopyWithImpl(this._self, this._then);
 
   final _PromotionsVM _self;

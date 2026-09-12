@@ -11,8 +11,7 @@ CategoryDTO _$CategoryDTOFromJson(Map<String, dynamic> json) => CategoryDTO(
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$CategoryDTOToJson(CategoryDTO instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CategoryDTOToJson(CategoryDTO instance) => <String, dynamic>{
       if (instance.businessMenuId case final value?) 'business_menu_id': value,
       'name': instance.name,
     };

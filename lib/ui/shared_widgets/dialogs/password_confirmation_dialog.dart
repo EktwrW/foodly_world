@@ -150,8 +150,7 @@ class _PasswordConfirmationDialogState extends State<PasswordConfirmationDialog>
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Icon(LineAwesome.exclamation_circle_solid,
-                        size: 14, color: FoodlyThemes.error),
+                    const Icon(LineAwesome.exclamation_circle_solid, size: 14, color: FoodlyThemes.error),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(

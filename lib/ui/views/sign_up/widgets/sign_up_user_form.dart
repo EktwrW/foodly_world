@@ -115,8 +115,7 @@ class SignUpUserForm extends StatelessWidget {
         FoodlyPrimaryInputText(
           controller: vm.emailController!.controller!,
           focusNode: vm.emailController?.focusNode,
-          secondaryFocusNode:
-              cubit.isGoogleSignIn ? vm.placesFocusNode : vm.passwordController?.focusNode,
+          secondaryFocusNode: cubit.isGoogleSignIn ? vm.placesFocusNode : vm.passwordController?.focusNode,
           inputTextType: FoodlyInputType.email,
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,

@@ -339,7 +339,8 @@ class MenuImportCubit extends Cubit<MenuImportState> {
   static const _genericPickerError = 'No pudimos abrir el selector de fotos. Intentá de nuevo.';
   static const _noPhotosSelected = 'Seleccioná al menos una foto del menú.';
   static const _uploadError = 'No pudimos subir las fotos. Verificá tu conexión y volvé a intentarlo.';
-  static const _noContentParsed = 'No pudimos detectar items en las fotos. Probá con fotos más nítidas o con mejor iluminación.';
+  static const _noContentParsed =
+      'No pudimos detectar items en las fotos. Probá con fotos más nítidas o con mejor iluminación.';
   static const _nothingToImport = 'No hay items para importar. Agregá al menos uno antes de confirmar.';
   static const _bulkImportError = 'No pudimos guardar el menú. Intentá de nuevo en unos segundos.';
 }

@@ -17,8 +17,7 @@ abstract class ManagerOrderCountsDM with _$ManagerOrderCountsDM {
     @Default(0) int delivered,
   }) = _ManagerOrderCountsDM;
 
-  factory ManagerOrderCountsDM.fromJson(Map<String, dynamic> json) =>
-      _$ManagerOrderCountsDMFromJson(json);
+  factory ManagerOrderCountsDM.fromJson(Map<String, dynamic> json) => _$ManagerOrderCountsDMFromJson(json);
 }
 
 @freezed
@@ -30,8 +29,7 @@ abstract class ManagerOrdersResponseDM with _$ManagerOrdersResponseDM {
     ManagerOrdersMetaDM? meta,
   }) = _ManagerOrdersResponseDM;
 
-  factory ManagerOrdersResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$ManagerOrdersResponseDMFromJson(json);
+  factory ManagerOrdersResponseDM.fromJson(Map<String, dynamic> json) => _$ManagerOrdersResponseDMFromJson(json);
 }
 
 /// F4a.1 — página de historial con keyset pagination por confirmed_at.
@@ -44,8 +42,7 @@ abstract class ManagerHistoryResponseDM with _$ManagerHistoryResponseDM {
     @JsonKey(name: 'next_before') String? nextBefore,
   }) = _ManagerHistoryResponseDM;
 
-  factory ManagerHistoryResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$ManagerHistoryResponseDMFromJson(json);
+  factory ManagerHistoryResponseDM.fromJson(Map<String, dynamic> json) => _$ManagerHistoryResponseDMFromJson(json);
 }
 
 /// F4b — respuesta del cambio de modo de cobro del negocio.
@@ -56,8 +53,7 @@ abstract class PaymentModeResponseDM with _$PaymentModeResponseDM {
     @JsonKey(name: 'group_payment_mode') @Default('per_round') String groupPaymentMode,
   }) = _PaymentModeResponseDM;
 
-  factory PaymentModeResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$PaymentModeResponseDMFromJson(json);
+  factory PaymentModeResponseDM.fromJson(Map<String, dynamic> json) => _$PaymentModeResponseDMFromJson(json);
 }
 
 @freezed
@@ -68,6 +64,5 @@ abstract class ManagerOrdersMetaDM with _$ManagerOrdersMetaDM {
     @Default(0) int total,
   }) = _ManagerOrdersMetaDM;
 
-  factory ManagerOrdersMetaDM.fromJson(Map<String, dynamic> json) =>
-      _$ManagerOrdersMetaDMFromJson(json);
+  factory ManagerOrdersMetaDM.fromJson(Map<String, dynamic> json) => _$ManagerOrdersMetaDMFromJson(json);
 }

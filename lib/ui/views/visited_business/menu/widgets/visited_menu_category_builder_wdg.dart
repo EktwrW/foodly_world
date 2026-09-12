@@ -129,32 +129,32 @@ class _VisitedMenuCategoryPageState extends State<VisitedMenuCategoryPage> with 
 
   Widget _construirCarta(VisitedMenuCubit cubit) {
     return NotificationListener<ScrollNotification>(
-              onNotification: (notification) {
-                if (notification is ScrollStartNotification) {
-                  widget.onScrollStart();
-                } else if (notification is ScrollEndNotification) {
-                  widget.onScrollEnd();
-                }
-                return true;
-              },
-              child: ListView.builder(
-                controller: _scrollController,
-                key: PageStorageKey('menu_category_${widget.menuCategory.name}'),
-                // No usar controller aquí para evitar conflictos con NestedScrollView
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemCount: widget.categories?.length ?? 0, padding: EdgeInsets.zero,
-                itemBuilder: (context, index) {
-                  final subCategory = widget.categories?[index];
-                  final isLastSubCategory = index == ((widget.categories?.length ?? 1000) - 1);
+      onNotification: (notification) {
+        if (notification is ScrollStartNotification) {
+          widget.onScrollStart();
+        } else if (notification is ScrollEndNotification) {
+          widget.onScrollEnd();
+        }
+        return true;
+      },
+      child: ListView.builder(
+        controller: _scrollController,
+        key: PageStorageKey('menu_category_${widget.menuCategory.name}'),
+        // No usar controller aquí para evitar conflictos con NestedScrollView
+        physics: const AlwaysScrollableScrollPhysics(),
+        itemCount: widget.categories?.length ?? 0, padding: EdgeInsets.zero,
+        itemBuilder: (context, index) {
+          final subCategory = widget.categories?[index];
+          final isLastSubCategory = index == ((widget.categories?.length ?? 1000) - 1);
 
-                  return SubCategoryWdg(
-                    key: _indice.claveDe(subCategory?.uuid ?? ''),
-                    menuCategory: widget.menuCategory,
-                    cubit: cubit,
-                    subCategory: subCategory,
-                    isLastSubCategory: isLastSubCategory,
-                  );
-                },
+          return SubCategoryWdg(
+            key: _indice.claveDe(subCategory?.uuid ?? ''),
+            menuCategory: widget.menuCategory,
+            cubit: cubit,
+            subCategory: subCategory,
+            isLastSubCategory: isLastSubCategory,
+          );
+        },
       ),
     );
   }

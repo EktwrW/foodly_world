@@ -103,8 +103,7 @@ class MonthCalendar extends StatelessWidget {
               final entries = entriesForDate(cell.date);
               final fullyBlocked = isFullyBlocked(cell.date);
               final partial = hasPartialBlocks(cell.date);
-              final hasAuto =
-                  entries.any((e) => e.isAutoReservation);
+              final hasAuto = entries.any((e) => e.isAutoReservation);
 
               return _DayCell(
                 cell: cell,
@@ -190,16 +189,12 @@ class _DayCell extends StatelessWidget {
 
   bool get _isToday {
     final now = DateTime.now();
-    return cell.date.year == now.year &&
-        cell.date.month == now.month &&
-        cell.date.day == now.day;
+    return cell.date.year == now.year && cell.date.month == now.month && cell.date.day == now.day;
   }
 
   @override
   Widget build(BuildContext context) {
-    final textColor = cell.isCurrentMonth
-        ? (fullyBlocked ? Colors.red.shade700 : Colors.black87)
-        : Colors.black26;
+    final textColor = cell.isCurrentMonth ? (fullyBlocked ? Colors.red.shade700 : Colors.black87) : Colors.black26;
 
     return InkWell(
       onTap: onTap,
@@ -223,8 +218,7 @@ class _DayCell extends StatelessWidget {
                   '${cell.date.day}',
                   style: TextStyle(
                     color: textColor,
-                    fontWeight:
-                        _isToday ? FontWeight.w700 : FontWeight.w500,
+                    fontWeight: _isToday ? FontWeight.w700 : FontWeight.w500,
                     fontSize: 13,
                   ),
                 ),
@@ -233,8 +227,7 @@ class _DayCell extends StatelessWidget {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                     decoration: BoxDecoration(
                       color: _accent(),
                       borderRadius: BorderRadius.circular(8),

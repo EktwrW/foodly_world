@@ -25,8 +25,7 @@ mixin _$GroupOrderVM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $GroupOrderVMCopyWith<GroupOrderVM> get copyWith =>
-      _$GroupOrderVMCopyWithImpl<GroupOrderVM>(
-          this as GroupOrderVM, _$identity);
+      _$GroupOrderVMCopyWithImpl<GroupOrderVM>(this as GroupOrderVM, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -35,17 +34,13 @@ mixin _$GroupOrderVM {
             other is GroupOrderVM &&
             (identical(other.order, order) || other.order == order) &&
             (identical(other.myShare, myShare) || other.myShare == myShare) &&
-            (identical(other.myParticipantUuid, myParticipantUuid) ||
-                other.myParticipantUuid == myParticipantUuid) &&
-            (identical(other.isPaying, isPaying) ||
-                other.isPaying == isPaying) &&
-            (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+            (identical(other.myParticipantUuid, myParticipantUuid) || other.myParticipantUuid == myParticipantUuid) &&
+            (identical(other.isPaying, isPaying) || other.isPaying == isPaying) &&
+            (identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, order, myShare, myParticipantUuid, isPaying, errorMessage);
+  int get hashCode => Object.hash(runtimeType, order, myShare, myParticipantUuid, isPaying, errorMessage);
 
   @override
   String toString() {
@@ -55,16 +50,9 @@ mixin _$GroupOrderVM {
 
 /// @nodoc
 abstract mixin class $GroupOrderVMCopyWith<$Res> {
-  factory $GroupOrderVMCopyWith(
-          GroupOrderVM value, $Res Function(GroupOrderVM) _then) =
-      _$GroupOrderVMCopyWithImpl;
+  factory $GroupOrderVMCopyWith(GroupOrderVM value, $Res Function(GroupOrderVM) _then) = _$GroupOrderVMCopyWithImpl;
   @useResult
-  $Res call(
-      {GroupOrderDM? order,
-      double myShare,
-      String? myParticipantUuid,
-      bool isPaying,
-      String? errorMessage});
+  $Res call({GroupOrderDM? order, double myShare, String? myParticipantUuid, bool isPaying, String? errorMessage});
 
   $GroupOrderDMCopyWith<$Res>? get order;
 }
@@ -219,16 +207,15 @@ extension GroupOrderVMPatterns on GroupOrderVM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(GroupOrderDM? order, double myShare,
-            String? myParticipantUuid, bool isPaying, String? errorMessage)?
+    TResult Function(
+            GroupOrderDM? order, double myShare, String? myParticipantUuid, bool isPaying, String? errorMessage)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _GroupOrderVM() when $default != null:
-        return $default(_that.order, _that.myShare, _that.myParticipantUuid,
-            _that.isPaying, _that.errorMessage);
+        return $default(_that.order, _that.myShare, _that.myParticipantUuid, _that.isPaying, _that.errorMessage);
       case _:
         return orElse();
     }
@@ -249,15 +236,14 @@ extension GroupOrderVMPatterns on GroupOrderVM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(GroupOrderDM? order, double myShare,
-            String? myParticipantUuid, bool isPaying, String? errorMessage)
+    TResult Function(
+            GroupOrderDM? order, double myShare, String? myParticipantUuid, bool isPaying, String? errorMessage)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _GroupOrderVM():
-        return $default(_that.order, _that.myShare, _that.myParticipantUuid,
-            _that.isPaying, _that.errorMessage);
+        return $default(_that.order, _that.myShare, _that.myParticipantUuid, _that.isPaying, _that.errorMessage);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -277,15 +263,14 @@ extension GroupOrderVMPatterns on GroupOrderVM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(GroupOrderDM? order, double myShare,
-            String? myParticipantUuid, bool isPaying, String? errorMessage)?
+    TResult? Function(
+            GroupOrderDM? order, double myShare, String? myParticipantUuid, bool isPaying, String? errorMessage)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _GroupOrderVM() when $default != null:
-        return $default(_that.order, _that.myShare, _that.myParticipantUuid,
-            _that.isPaying, _that.errorMessage);
+        return $default(_that.order, _that.myShare, _that.myParticipantUuid, _that.isPaying, _that.errorMessage);
       case _:
         return null;
     }
@@ -295,12 +280,7 @@ extension GroupOrderVMPatterns on GroupOrderVM {
 /// @nodoc
 
 class _GroupOrderVM extends GroupOrderVM {
-  const _GroupOrderVM(
-      {this.order,
-      this.myShare = 0,
-      this.myParticipantUuid,
-      this.isPaying = false,
-      this.errorMessage})
+  const _GroupOrderVM({this.order, this.myShare = 0, this.myParticipantUuid, this.isPaying = false, this.errorMessage})
       : super._();
 
   @override
@@ -321,8 +301,7 @@ class _GroupOrderVM extends GroupOrderVM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$GroupOrderVMCopyWith<_GroupOrderVM> get copyWith =>
-      __$GroupOrderVMCopyWithImpl<_GroupOrderVM>(this, _$identity);
+  _$GroupOrderVMCopyWith<_GroupOrderVM> get copyWith => __$GroupOrderVMCopyWithImpl<_GroupOrderVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -331,17 +310,13 @@ class _GroupOrderVM extends GroupOrderVM {
             other is _GroupOrderVM &&
             (identical(other.order, order) || other.order == order) &&
             (identical(other.myShare, myShare) || other.myShare == myShare) &&
-            (identical(other.myParticipantUuid, myParticipantUuid) ||
-                other.myParticipantUuid == myParticipantUuid) &&
-            (identical(other.isPaying, isPaying) ||
-                other.isPaying == isPaying) &&
-            (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+            (identical(other.myParticipantUuid, myParticipantUuid) || other.myParticipantUuid == myParticipantUuid) &&
+            (identical(other.isPaying, isPaying) || other.isPaying == isPaying) &&
+            (identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, order, myShare, myParticipantUuid, isPaying, errorMessage);
+  int get hashCode => Object.hash(runtimeType, order, myShare, myParticipantUuid, isPaying, errorMessage);
 
   @override
   String toString() {
@@ -350,27 +325,18 @@ class _GroupOrderVM extends GroupOrderVM {
 }
 
 /// @nodoc
-abstract mixin class _$GroupOrderVMCopyWith<$Res>
-    implements $GroupOrderVMCopyWith<$Res> {
-  factory _$GroupOrderVMCopyWith(
-          _GroupOrderVM value, $Res Function(_GroupOrderVM) _then) =
-      __$GroupOrderVMCopyWithImpl;
+abstract mixin class _$GroupOrderVMCopyWith<$Res> implements $GroupOrderVMCopyWith<$Res> {
+  factory _$GroupOrderVMCopyWith(_GroupOrderVM value, $Res Function(_GroupOrderVM) _then) = __$GroupOrderVMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {GroupOrderDM? order,
-      double myShare,
-      String? myParticipantUuid,
-      bool isPaying,
-      String? errorMessage});
+  $Res call({GroupOrderDM? order, double myShare, String? myParticipantUuid, bool isPaying, String? errorMessage});
 
   @override
   $GroupOrderDMCopyWith<$Res>? get order;
 }
 
 /// @nodoc
-class __$GroupOrderVMCopyWithImpl<$Res>
-    implements _$GroupOrderVMCopyWith<$Res> {
+class __$GroupOrderVMCopyWithImpl<$Res> implements _$GroupOrderVMCopyWith<$Res> {
   __$GroupOrderVMCopyWithImpl(this._self, this._then);
 
   final _GroupOrderVM _self;

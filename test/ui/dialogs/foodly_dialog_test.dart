@@ -90,10 +90,8 @@ void main() {
         for (final inset in insets.entries) {
           const contenido = SizedBox(height: 120, width: double.infinity);
 
-          final antes = await anchoDelDialogo(
-              tester, ancho, Dialog(insetPadding: inset.value, child: contenido));
-          final ahora = await anchoDelDialogo(
-              tester, ancho, FoodlyDialog(insetPadding: inset.value, child: contenido));
+          final antes = await anchoDelDialogo(tester, ancho, Dialog(insetPadding: inset.value, child: contenido));
+          final ahora = await anchoDelDialogo(tester, ancho, FoodlyDialog(insetPadding: inset.value, child: contenido));
 
           expect(ahora, antes, reason: '${inset.key} cambia a $ancho px');
         }

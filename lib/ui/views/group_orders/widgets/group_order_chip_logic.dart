@@ -95,9 +95,7 @@ class GroupOrderChipLogic {
   }) {
     final centerX = current.dx + chip.width / 2;
     final snapLeft = centerX <= screen.width / 2;
-    final x = snapLeft
-        ? safeArea.left + edgeMargin
-        : screen.width - safeArea.right - edgeMargin - chip.width;
+    final x = snapLeft ? safeArea.left + edgeMargin : screen.width - safeArea.right - edgeMargin - chip.width;
 
     return clamp(
       desired: Offset(x, current.dy),

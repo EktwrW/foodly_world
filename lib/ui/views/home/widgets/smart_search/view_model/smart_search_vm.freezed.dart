@@ -33,38 +33,26 @@ mixin _$SmartSearchVM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $SmartSearchVMCopyWith<SmartSearchVM> get copyWith =>
-      _$SmartSearchVMCopyWithImpl<SmartSearchVM>(
-          this as SmartSearchVM, _$identity);
+      _$SmartSearchVMCopyWithImpl<SmartSearchVM>(this as SmartSearchVM, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is SmartSearchVM &&
-            (identical(other.isInitialized, isInitialized) ||
-                other.isInitialized == isInitialized) &&
-            (identical(other.isListening, isListening) ||
-                other.isListening == isListening) &&
-            (identical(other.recognizedText, recognizedText) ||
-                other.recognizedText == recognizedText) &&
-            const DeepCollectionEquality()
-                .equals(other.searchResults, searchResults) &&
-            (identical(other.viewMode, viewMode) ||
-                other.viewMode == viewMode) &&
-            (identical(other.smartSearchMode, smartSearchMode) ||
-                other.smartSearchMode == smartSearchMode) &&
-            (identical(other.inputController, inputController) ||
-                other.inputController == inputController) &&
-            (identical(other.isBottomBarHidden, isBottomBarHidden) ||
-                other.isBottomBarHidden == isBottomBarHidden) &&
+            (identical(other.isInitialized, isInitialized) || other.isInitialized == isInitialized) &&
+            (identical(other.isListening, isListening) || other.isListening == isListening) &&
+            (identical(other.recognizedText, recognizedText) || other.recognizedText == recognizedText) &&
+            const DeepCollectionEquality().equals(other.searchResults, searchResults) &&
+            (identical(other.viewMode, viewMode) || other.viewMode == viewMode) &&
+            (identical(other.smartSearchMode, smartSearchMode) || other.smartSearchMode == smartSearchMode) &&
+            (identical(other.inputController, inputController) || other.inputController == inputController) &&
+            (identical(other.isBottomBarHidden, isBottomBarHidden) || other.isBottomBarHidden == isBottomBarHidden) &&
             (identical(other.micPermissionDenied, micPermissionDenied) ||
                 other.micPermissionDenied == micPermissionDenied) &&
-            (identical(other.sessionId, sessionId) ||
-                other.sessionId == sessionId) &&
-            (identical(other.platform, platform) ||
-                other.platform == platform) &&
-            (identical(other.deviceInfo, deviceInfo) ||
-                other.deviceInfo == deviceInfo));
+            (identical(other.sessionId, sessionId) || other.sessionId == sessionId) &&
+            (identical(other.platform, platform) || other.platform == platform) &&
+            (identical(other.deviceInfo, deviceInfo) || other.deviceInfo == deviceInfo));
   }
 
   @override
@@ -91,9 +79,7 @@ mixin _$SmartSearchVM {
 
 /// @nodoc
 abstract mixin class $SmartSearchVMCopyWith<$Res> {
-  factory $SmartSearchVMCopyWith(
-          SmartSearchVM value, $Res Function(SmartSearchVM) _then) =
-      _$SmartSearchVMCopyWithImpl;
+  factory $SmartSearchVMCopyWith(SmartSearchVM value, $Res Function(SmartSearchVM) _then) = _$SmartSearchVMCopyWithImpl;
   @useResult
   $Res call(
       {bool isInitialized,
@@ -113,8 +99,7 @@ abstract mixin class $SmartSearchVMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SmartSearchVMCopyWithImpl<$Res>
-    implements $SmartSearchVMCopyWith<$Res> {
+class _$SmartSearchVMCopyWithImpl<$Res> implements $SmartSearchVMCopyWith<$Res> {
   _$SmartSearchVMCopyWithImpl(this._self, this._then);
 
   final SmartSearchVM _self;
@@ -502,30 +487,19 @@ class _SmartSearchVM extends SmartSearchVM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _SmartSearchVM &&
-            (identical(other.isInitialized, isInitialized) ||
-                other.isInitialized == isInitialized) &&
-            (identical(other.isListening, isListening) ||
-                other.isListening == isListening) &&
-            (identical(other.recognizedText, recognizedText) ||
-                other.recognizedText == recognizedText) &&
-            const DeepCollectionEquality()
-                .equals(other._searchResults, _searchResults) &&
-            (identical(other.viewMode, viewMode) ||
-                other.viewMode == viewMode) &&
-            (identical(other.smartSearchMode, smartSearchMode) ||
-                other.smartSearchMode == smartSearchMode) &&
-            (identical(other.inputController, inputController) ||
-                other.inputController == inputController) &&
-            (identical(other.isBottomBarHidden, isBottomBarHidden) ||
-                other.isBottomBarHidden == isBottomBarHidden) &&
+            (identical(other.isInitialized, isInitialized) || other.isInitialized == isInitialized) &&
+            (identical(other.isListening, isListening) || other.isListening == isListening) &&
+            (identical(other.recognizedText, recognizedText) || other.recognizedText == recognizedText) &&
+            const DeepCollectionEquality().equals(other._searchResults, _searchResults) &&
+            (identical(other.viewMode, viewMode) || other.viewMode == viewMode) &&
+            (identical(other.smartSearchMode, smartSearchMode) || other.smartSearchMode == smartSearchMode) &&
+            (identical(other.inputController, inputController) || other.inputController == inputController) &&
+            (identical(other.isBottomBarHidden, isBottomBarHidden) || other.isBottomBarHidden == isBottomBarHidden) &&
             (identical(other.micPermissionDenied, micPermissionDenied) ||
                 other.micPermissionDenied == micPermissionDenied) &&
-            (identical(other.sessionId, sessionId) ||
-                other.sessionId == sessionId) &&
-            (identical(other.platform, platform) ||
-                other.platform == platform) &&
-            (identical(other.deviceInfo, deviceInfo) ||
-                other.deviceInfo == deviceInfo));
+            (identical(other.sessionId, sessionId) || other.sessionId == sessionId) &&
+            (identical(other.platform, platform) || other.platform == platform) &&
+            (identical(other.deviceInfo, deviceInfo) || other.deviceInfo == deviceInfo));
   }
 
   @override
@@ -551,10 +525,8 @@ class _SmartSearchVM extends SmartSearchVM {
 }
 
 /// @nodoc
-abstract mixin class _$SmartSearchVMCopyWith<$Res>
-    implements $SmartSearchVMCopyWith<$Res> {
-  factory _$SmartSearchVMCopyWith(
-          _SmartSearchVM value, $Res Function(_SmartSearchVM) _then) =
+abstract mixin class _$SmartSearchVMCopyWith<$Res> implements $SmartSearchVMCopyWith<$Res> {
+  factory _$SmartSearchVMCopyWith(_SmartSearchVM value, $Res Function(_SmartSearchVM) _then) =
       __$SmartSearchVMCopyWithImpl;
   @override
   @useResult
@@ -577,8 +549,7 @@ abstract mixin class _$SmartSearchVMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SmartSearchVMCopyWithImpl<$Res>
-    implements _$SmartSearchVMCopyWith<$Res> {
+class __$SmartSearchVMCopyWithImpl<$Res> implements _$SmartSearchVMCopyWith<$Res> {
   __$SmartSearchVMCopyWithImpl(this._self, this._then);
 
   final _SmartSearchVM _self;

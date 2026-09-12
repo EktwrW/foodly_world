@@ -26,8 +26,7 @@ mixin _$PlacePredictionDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PlacePredictionDMCopyWith<PlacePredictionDM> get copyWith =>
-      _$PlacePredictionDMCopyWithImpl<PlacePredictionDM>(
-          this as PlacePredictionDM, _$identity);
+      _$PlacePredictionDMCopyWithImpl<PlacePredictionDM>(this as PlacePredictionDM, _$identity);
 
   /// Serializes this PlacePredictionDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -38,8 +37,7 @@ mixin _$PlacePredictionDM {
         (other.runtimeType == runtimeType &&
             other is PlacePredictionDM &&
             (identical(other.placeId, placeId) || other.placeId == placeId) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.description, description) || other.description == description) &&
             (identical(other.structuredFormatting, structuredFormatting) ||
                 other.structuredFormatting == structuredFormatting) &&
             const DeepCollectionEquality().equals(other.types, types));
@@ -47,8 +45,8 @@ mixin _$PlacePredictionDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, placeId, description,
-      structuredFormatting, const DeepCollectionEquality().hash(types));
+  int get hashCode =>
+      Object.hash(runtimeType, placeId, description, structuredFormatting, const DeepCollectionEquality().hash(types));
 
   @override
   String toString() {
@@ -58,23 +56,20 @@ mixin _$PlacePredictionDM {
 
 /// @nodoc
 abstract mixin class $PlacePredictionDMCopyWith<$Res> {
-  factory $PlacePredictionDMCopyWith(
-          PlacePredictionDM value, $Res Function(PlacePredictionDM) _then) =
+  factory $PlacePredictionDMCopyWith(PlacePredictionDM value, $Res Function(PlacePredictionDM) _then) =
       _$PlacePredictionDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'place_id') String placeId,
       String description,
-      @JsonKey(name: 'structured_formatting')
-      PlaceStructuredFormattingDM? structuredFormatting,
+      @JsonKey(name: 'structured_formatting') PlaceStructuredFormattingDM? structuredFormatting,
       List<String> types});
 
   $PlaceStructuredFormattingDMCopyWith<$Res>? get structuredFormatting;
 }
 
 /// @nodoc
-class _$PlacePredictionDMCopyWithImpl<$Res>
-    implements $PlacePredictionDMCopyWith<$Res> {
+class _$PlacePredictionDMCopyWithImpl<$Res> implements $PlacePredictionDMCopyWith<$Res> {
   _$PlacePredictionDMCopyWithImpl(this._self, this._then);
 
   final PlacePredictionDM _self;
@@ -119,8 +114,7 @@ class _$PlacePredictionDMCopyWithImpl<$Res>
       return null;
     }
 
-    return $PlaceStructuredFormattingDMCopyWith<$Res>(
-        _self.structuredFormatting!, (value) {
+    return $PlaceStructuredFormattingDMCopyWith<$Res>(_self.structuredFormatting!, (value) {
       return _then(_self.copyWith(structuredFormatting: value));
     });
   }
@@ -222,8 +216,7 @@ extension PlacePredictionDMPatterns on PlacePredictionDM {
     TResult Function(
             @JsonKey(name: 'place_id') String placeId,
             String description,
-            @JsonKey(name: 'structured_formatting')
-            PlaceStructuredFormattingDM? structuredFormatting,
+            @JsonKey(name: 'structured_formatting') PlaceStructuredFormattingDM? structuredFormatting,
             List<String> types)?
         $default, {
     required TResult orElse(),
@@ -231,8 +224,7 @@ extension PlacePredictionDMPatterns on PlacePredictionDM {
     final _that = this;
     switch (_that) {
       case _PlacePredictionDM() when $default != null:
-        return $default(_that.placeId, _that.description,
-            _that.structuredFormatting, _that.types);
+        return $default(_that.placeId, _that.description, _that.structuredFormatting, _that.types);
       case _:
         return orElse();
     }
@@ -256,16 +248,14 @@ extension PlacePredictionDMPatterns on PlacePredictionDM {
     TResult Function(
             @JsonKey(name: 'place_id') String placeId,
             String description,
-            @JsonKey(name: 'structured_formatting')
-            PlaceStructuredFormattingDM? structuredFormatting,
+            @JsonKey(name: 'structured_formatting') PlaceStructuredFormattingDM? structuredFormatting,
             List<String> types)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PlacePredictionDM():
-        return $default(_that.placeId, _that.description,
-            _that.structuredFormatting, _that.types);
+        return $default(_that.placeId, _that.description, _that.structuredFormatting, _that.types);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -288,16 +278,14 @@ extension PlacePredictionDMPatterns on PlacePredictionDM {
     TResult? Function(
             @JsonKey(name: 'place_id') String placeId,
             String description,
-            @JsonKey(name: 'structured_formatting')
-            PlaceStructuredFormattingDM? structuredFormatting,
+            @JsonKey(name: 'structured_formatting') PlaceStructuredFormattingDM? structuredFormatting,
             List<String> types)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PlacePredictionDM() when $default != null:
-        return $default(_that.placeId, _that.description,
-            _that.structuredFormatting, _that.types);
+        return $default(_that.placeId, _that.description, _that.structuredFormatting, _that.types);
       case _:
         return null;
     }
@@ -313,8 +301,7 @@ class _PlacePredictionDM implements PlacePredictionDM {
       @JsonKey(name: 'structured_formatting') this.structuredFormatting,
       final List<String> types = const <String>[]})
       : _types = types;
-  factory _PlacePredictionDM.fromJson(Map<String, dynamic> json) =>
-      _$PlacePredictionDMFromJson(json);
+  factory _PlacePredictionDM.fromJson(Map<String, dynamic> json) => _$PlacePredictionDMFromJson(json);
 
   @override
   @JsonKey(name: 'place_id')
@@ -354,8 +341,7 @@ class _PlacePredictionDM implements PlacePredictionDM {
         (other.runtimeType == runtimeType &&
             other is _PlacePredictionDM &&
             (identical(other.placeId, placeId) || other.placeId == placeId) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.description, description) || other.description == description) &&
             (identical(other.structuredFormatting, structuredFormatting) ||
                 other.structuredFormatting == structuredFormatting) &&
             const DeepCollectionEquality().equals(other._types, _types));
@@ -363,8 +349,8 @@ class _PlacePredictionDM implements PlacePredictionDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, placeId, description,
-      structuredFormatting, const DeepCollectionEquality().hash(_types));
+  int get hashCode =>
+      Object.hash(runtimeType, placeId, description, structuredFormatting, const DeepCollectionEquality().hash(_types));
 
   @override
   String toString() {
@@ -373,18 +359,15 @@ class _PlacePredictionDM implements PlacePredictionDM {
 }
 
 /// @nodoc
-abstract mixin class _$PlacePredictionDMCopyWith<$Res>
-    implements $PlacePredictionDMCopyWith<$Res> {
-  factory _$PlacePredictionDMCopyWith(
-          _PlacePredictionDM value, $Res Function(_PlacePredictionDM) _then) =
+abstract mixin class _$PlacePredictionDMCopyWith<$Res> implements $PlacePredictionDMCopyWith<$Res> {
+  factory _$PlacePredictionDMCopyWith(_PlacePredictionDM value, $Res Function(_PlacePredictionDM) _then) =
       __$PlacePredictionDMCopyWithImpl;
   @override
   @useResult
   $Res call(
       {@JsonKey(name: 'place_id') String placeId,
       String description,
-      @JsonKey(name: 'structured_formatting')
-      PlaceStructuredFormattingDM? structuredFormatting,
+      @JsonKey(name: 'structured_formatting') PlaceStructuredFormattingDM? structuredFormatting,
       List<String> types});
 
   @override
@@ -392,8 +375,7 @@ abstract mixin class _$PlacePredictionDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PlacePredictionDMCopyWithImpl<$Res>
-    implements _$PlacePredictionDMCopyWith<$Res> {
+class __$PlacePredictionDMCopyWithImpl<$Res> implements _$PlacePredictionDMCopyWith<$Res> {
   __$PlacePredictionDMCopyWithImpl(this._self, this._then);
 
   final _PlacePredictionDM _self;
@@ -438,8 +420,7 @@ class __$PlacePredictionDMCopyWithImpl<$Res>
       return null;
     }
 
-    return $PlaceStructuredFormattingDMCopyWith<$Res>(
-        _self.structuredFormatting!, (value) {
+    return $PlaceStructuredFormattingDMCopyWith<$Res>(_self.structuredFormatting!, (value) {
       return _then(_self.copyWith(structuredFormatting: value));
     });
   }
@@ -456,9 +437,8 @@ mixin _$PlaceStructuredFormattingDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $PlaceStructuredFormattingDMCopyWith<PlaceStructuredFormattingDM>
-      get copyWith => _$PlaceStructuredFormattingDMCopyWithImpl<
-              PlaceStructuredFormattingDM>(
+  $PlaceStructuredFormattingDMCopyWith<PlaceStructuredFormattingDM> get copyWith =>
+      _$PlaceStructuredFormattingDMCopyWithImpl<PlaceStructuredFormattingDM>(
           this as PlaceStructuredFormattingDM, _$identity);
 
   /// Serializes this PlaceStructuredFormattingDM to a JSON map.
@@ -469,10 +449,8 @@ mixin _$PlaceStructuredFormattingDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is PlaceStructuredFormattingDM &&
-            (identical(other.mainText, mainText) ||
-                other.mainText == mainText) &&
-            (identical(other.secondaryText, secondaryText) ||
-                other.secondaryText == secondaryText));
+            (identical(other.mainText, mainText) || other.mainText == mainText) &&
+            (identical(other.secondaryText, secondaryText) || other.secondaryText == secondaryText));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -488,18 +466,14 @@ mixin _$PlaceStructuredFormattingDM {
 /// @nodoc
 abstract mixin class $PlaceStructuredFormattingDMCopyWith<$Res> {
   factory $PlaceStructuredFormattingDMCopyWith(
-          PlaceStructuredFormattingDM value,
-          $Res Function(PlaceStructuredFormattingDM) _then) =
+          PlaceStructuredFormattingDM value, $Res Function(PlaceStructuredFormattingDM) _then) =
       _$PlaceStructuredFormattingDMCopyWithImpl;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'main_text') String? mainText,
-      @JsonKey(name: 'secondary_text') String? secondaryText});
+  $Res call({@JsonKey(name: 'main_text') String? mainText, @JsonKey(name: 'secondary_text') String? secondaryText});
 }
 
 /// @nodoc
-class _$PlaceStructuredFormattingDMCopyWithImpl<$Res>
-    implements $PlaceStructuredFormattingDMCopyWith<$Res> {
+class _$PlaceStructuredFormattingDMCopyWithImpl<$Res> implements $PlaceStructuredFormattingDMCopyWith<$Res> {
   _$PlaceStructuredFormattingDMCopyWithImpl(this._self, this._then);
 
   final PlaceStructuredFormattingDM _self;
@@ -619,8 +593,8 @@ extension PlaceStructuredFormattingDMPatterns on PlaceStructuredFormattingDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'main_text') String? mainText,
-            @JsonKey(name: 'secondary_text') String? secondaryText)?
+    TResult Function(
+            @JsonKey(name: 'main_text') String? mainText, @JsonKey(name: 'secondary_text') String? secondaryText)?
         $default, {
     required TResult orElse(),
   }) {
@@ -648,8 +622,8 @@ extension PlaceStructuredFormattingDMPatterns on PlaceStructuredFormattingDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'main_text') String? mainText,
-            @JsonKey(name: 'secondary_text') String? secondaryText)
+    TResult Function(
+            @JsonKey(name: 'main_text') String? mainText, @JsonKey(name: 'secondary_text') String? secondaryText)
         $default,
   ) {
     final _that = this;
@@ -675,8 +649,8 @@ extension PlaceStructuredFormattingDMPatterns on PlaceStructuredFormattingDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(@JsonKey(name: 'main_text') String? mainText,
-            @JsonKey(name: 'secondary_text') String? secondaryText)?
+    TResult? Function(
+            @JsonKey(name: 'main_text') String? mainText, @JsonKey(name: 'secondary_text') String? secondaryText)?
         $default,
   ) {
     final _that = this;
@@ -693,8 +667,7 @@ extension PlaceStructuredFormattingDMPatterns on PlaceStructuredFormattingDM {
 @JsonSerializable()
 class _PlaceStructuredFormattingDM implements PlaceStructuredFormattingDM {
   const _PlaceStructuredFormattingDM(
-      {@JsonKey(name: 'main_text') this.mainText,
-      @JsonKey(name: 'secondary_text') this.secondaryText});
+      {@JsonKey(name: 'main_text') this.mainText, @JsonKey(name: 'secondary_text') this.secondaryText});
   factory _PlaceStructuredFormattingDM.fromJson(Map<String, dynamic> json) =>
       _$PlaceStructuredFormattingDMFromJson(json);
 
@@ -710,9 +683,8 @@ class _PlaceStructuredFormattingDM implements PlaceStructuredFormattingDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PlaceStructuredFormattingDMCopyWith<_PlaceStructuredFormattingDM>
-      get copyWith => __$PlaceStructuredFormattingDMCopyWithImpl<
-          _PlaceStructuredFormattingDM>(this, _$identity);
+  _$PlaceStructuredFormattingDMCopyWith<_PlaceStructuredFormattingDM> get copyWith =>
+      __$PlaceStructuredFormattingDMCopyWithImpl<_PlaceStructuredFormattingDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -726,10 +698,8 @@ class _PlaceStructuredFormattingDM implements PlaceStructuredFormattingDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _PlaceStructuredFormattingDM &&
-            (identical(other.mainText, mainText) ||
-                other.mainText == mainText) &&
-            (identical(other.secondaryText, secondaryText) ||
-                other.secondaryText == secondaryText));
+            (identical(other.mainText, mainText) || other.mainText == mainText) &&
+            (identical(other.secondaryText, secondaryText) || other.secondaryText == secondaryText));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -743,22 +713,17 @@ class _PlaceStructuredFormattingDM implements PlaceStructuredFormattingDM {
 }
 
 /// @nodoc
-abstract mixin class _$PlaceStructuredFormattingDMCopyWith<$Res>
-    implements $PlaceStructuredFormattingDMCopyWith<$Res> {
+abstract mixin class _$PlaceStructuredFormattingDMCopyWith<$Res> implements $PlaceStructuredFormattingDMCopyWith<$Res> {
   factory _$PlaceStructuredFormattingDMCopyWith(
-          _PlaceStructuredFormattingDM value,
-          $Res Function(_PlaceStructuredFormattingDM) _then) =
+          _PlaceStructuredFormattingDM value, $Res Function(_PlaceStructuredFormattingDM) _then) =
       __$PlaceStructuredFormattingDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: 'main_text') String? mainText,
-      @JsonKey(name: 'secondary_text') String? secondaryText});
+  $Res call({@JsonKey(name: 'main_text') String? mainText, @JsonKey(name: 'secondary_text') String? secondaryText});
 }
 
 /// @nodoc
-class __$PlaceStructuredFormattingDMCopyWithImpl<$Res>
-    implements _$PlaceStructuredFormattingDMCopyWith<$Res> {
+class __$PlaceStructuredFormattingDMCopyWithImpl<$Res> implements _$PlaceStructuredFormattingDMCopyWith<$Res> {
   __$PlaceStructuredFormattingDMCopyWithImpl(this._self, this._then);
 
   final _PlaceStructuredFormattingDM _self;

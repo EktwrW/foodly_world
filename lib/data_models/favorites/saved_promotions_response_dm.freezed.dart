@@ -32,8 +32,7 @@ mixin _$SavedPromoBusinessDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $SavedPromoBusinessDMCopyWith<SavedPromoBusinessDM> get copyWith =>
-      _$SavedPromoBusinessDMCopyWithImpl<SavedPromoBusinessDM>(
-          this as SavedPromoBusinessDM, _$identity);
+      _$SavedPromoBusinessDMCopyWithImpl<SavedPromoBusinessDM>(this as SavedPromoBusinessDM, _$identity);
 
   /// Serializes this SavedPromoBusinessDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -46,21 +45,17 @@ mixin _$SavedPromoBusinessDM {
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.logo, logo) || other.logo == logo) &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId) &&
-            (identical(other.categoryName, categoryName) ||
-                other.categoryName == categoryName) &&
-            (identical(other.categoryImagePath, categoryImagePath) ||
-                other.categoryImagePath == categoryImagePath) &&
+            (identical(other.categoryId, categoryId) || other.categoryId == categoryId) &&
+            (identical(other.categoryName, categoryName) || other.categoryName == categoryName) &&
+            (identical(other.categoryImagePath, categoryImagePath) || other.categoryImagePath == categoryImagePath) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.hoursDisplay, hoursDisplay) ||
-                other.hoursDisplay == hoursDisplay));
+            (identical(other.hoursDisplay, hoursDisplay) || other.hoursDisplay == hoursDisplay));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, uuid, name, logo, categoryId,
-      categoryName, categoryImagePath, status, hoursDisplay);
+  int get hashCode =>
+      Object.hash(runtimeType, uuid, name, logo, categoryId, categoryName, categoryImagePath, status, hoursDisplay);
 
   @override
   String toString() {
@@ -70,8 +65,7 @@ mixin _$SavedPromoBusinessDM {
 
 /// @nodoc
 abstract mixin class $SavedPromoBusinessDMCopyWith<$Res> {
-  factory $SavedPromoBusinessDMCopyWith(SavedPromoBusinessDM value,
-          $Res Function(SavedPromoBusinessDM) _then) =
+  factory $SavedPromoBusinessDMCopyWith(SavedPromoBusinessDM value, $Res Function(SavedPromoBusinessDM) _then) =
       _$SavedPromoBusinessDMCopyWithImpl;
   @useResult
   $Res call(
@@ -86,8 +80,7 @@ abstract mixin class $SavedPromoBusinessDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SavedPromoBusinessDMCopyWithImpl<$Res>
-    implements $SavedPromoBusinessDMCopyWith<$Res> {
+class _$SavedPromoBusinessDMCopyWithImpl<$Res> implements $SavedPromoBusinessDMCopyWith<$Res> {
   _$SavedPromoBusinessDMCopyWithImpl(this._self, this._then);
 
   final SavedPromoBusinessDM _self;
@@ -252,15 +245,8 @@ extension SavedPromoBusinessDMPatterns on SavedPromoBusinessDM {
     final _that = this;
     switch (_that) {
       case _SavedPromoBusinessDM() when $default != null:
-        return $default(
-            _that.uuid,
-            _that.name,
-            _that.logo,
-            _that.categoryId,
-            _that.categoryName,
-            _that.categoryImagePath,
-            _that.status,
-            _that.hoursDisplay);
+        return $default(_that.uuid, _that.name, _that.logo, _that.categoryId, _that.categoryName,
+            _that.categoryImagePath, _that.status, _that.hoursDisplay);
       case _:
         return orElse();
     }
@@ -295,15 +281,8 @@ extension SavedPromoBusinessDMPatterns on SavedPromoBusinessDM {
     final _that = this;
     switch (_that) {
       case _SavedPromoBusinessDM():
-        return $default(
-            _that.uuid,
-            _that.name,
-            _that.logo,
-            _that.categoryId,
-            _that.categoryName,
-            _that.categoryImagePath,
-            _that.status,
-            _that.hoursDisplay);
+        return $default(_that.uuid, _that.name, _that.logo, _that.categoryId, _that.categoryName,
+            _that.categoryImagePath, _that.status, _that.hoursDisplay);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -337,15 +316,8 @@ extension SavedPromoBusinessDMPatterns on SavedPromoBusinessDM {
     final _that = this;
     switch (_that) {
       case _SavedPromoBusinessDM() when $default != null:
-        return $default(
-            _that.uuid,
-            _that.name,
-            _that.logo,
-            _that.categoryId,
-            _that.categoryName,
-            _that.categoryImagePath,
-            _that.status,
-            _that.hoursDisplay);
+        return $default(_that.uuid, _that.name, _that.logo, _that.categoryId, _that.categoryName,
+            _that.categoryImagePath, _that.status, _that.hoursDisplay);
       case _:
         return null;
     }
@@ -365,8 +337,7 @@ class _SavedPromoBusinessDM extends SavedPromoBusinessDM {
       this.status = 'closed',
       @JsonKey(name: 'hours_display') this.hoursDisplay})
       : super._();
-  factory _SavedPromoBusinessDM.fromJson(Map<String, dynamic> json) =>
-      _$SavedPromoBusinessDMFromJson(json);
+  factory _SavedPromoBusinessDM.fromJson(Map<String, dynamic> json) => _$SavedPromoBusinessDMFromJson(json);
 
   @override
   final String uuid;
@@ -397,8 +368,7 @@ class _SavedPromoBusinessDM extends SavedPromoBusinessDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$SavedPromoBusinessDMCopyWith<_SavedPromoBusinessDM> get copyWith =>
-      __$SavedPromoBusinessDMCopyWithImpl<_SavedPromoBusinessDM>(
-          this, _$identity);
+      __$SavedPromoBusinessDMCopyWithImpl<_SavedPromoBusinessDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -415,21 +385,17 @@ class _SavedPromoBusinessDM extends SavedPromoBusinessDM {
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.logo, logo) || other.logo == logo) &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId) &&
-            (identical(other.categoryName, categoryName) ||
-                other.categoryName == categoryName) &&
-            (identical(other.categoryImagePath, categoryImagePath) ||
-                other.categoryImagePath == categoryImagePath) &&
+            (identical(other.categoryId, categoryId) || other.categoryId == categoryId) &&
+            (identical(other.categoryName, categoryName) || other.categoryName == categoryName) &&
+            (identical(other.categoryImagePath, categoryImagePath) || other.categoryImagePath == categoryImagePath) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.hoursDisplay, hoursDisplay) ||
-                other.hoursDisplay == hoursDisplay));
+            (identical(other.hoursDisplay, hoursDisplay) || other.hoursDisplay == hoursDisplay));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, uuid, name, logo, categoryId,
-      categoryName, categoryImagePath, status, hoursDisplay);
+  int get hashCode =>
+      Object.hash(runtimeType, uuid, name, logo, categoryId, categoryName, categoryImagePath, status, hoursDisplay);
 
   @override
   String toString() {
@@ -438,10 +404,8 @@ class _SavedPromoBusinessDM extends SavedPromoBusinessDM {
 }
 
 /// @nodoc
-abstract mixin class _$SavedPromoBusinessDMCopyWith<$Res>
-    implements $SavedPromoBusinessDMCopyWith<$Res> {
-  factory _$SavedPromoBusinessDMCopyWith(_SavedPromoBusinessDM value,
-          $Res Function(_SavedPromoBusinessDM) _then) =
+abstract mixin class _$SavedPromoBusinessDMCopyWith<$Res> implements $SavedPromoBusinessDMCopyWith<$Res> {
+  factory _$SavedPromoBusinessDMCopyWith(_SavedPromoBusinessDM value, $Res Function(_SavedPromoBusinessDM) _then) =
       __$SavedPromoBusinessDMCopyWithImpl;
   @override
   @useResult
@@ -457,8 +421,7 @@ abstract mixin class _$SavedPromoBusinessDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SavedPromoBusinessDMCopyWithImpl<$Res>
-    implements _$SavedPromoBusinessDMCopyWith<$Res> {
+class __$SavedPromoBusinessDMCopyWithImpl<$Res> implements _$SavedPromoBusinessDMCopyWith<$Res> {
   __$SavedPromoBusinessDMCopyWithImpl(this._self, this._then);
 
   final _SavedPromoBusinessDM _self;
@@ -526,8 +489,7 @@ mixin _$SavedPromotionsResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $SavedPromotionsResponseDMCopyWith<SavedPromotionsResponseDM> get copyWith =>
-      _$SavedPromotionsResponseDMCopyWithImpl<SavedPromotionsResponseDM>(
-          this as SavedPromotionsResponseDM, _$identity);
+      _$SavedPromotionsResponseDMCopyWithImpl<SavedPromotionsResponseDM>(this as SavedPromotionsResponseDM, _$identity);
 
   /// Serializes this SavedPromotionsResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -538,18 +500,14 @@ mixin _$SavedPromotionsResponseDM {
         (other.runtimeType == runtimeType &&
             other is SavedPromotionsResponseDM &&
             const DeepCollectionEquality().equals(other.data, data) &&
-            const DeepCollectionEquality()
-                .equals(other.businesses, businesses) &&
+            const DeepCollectionEquality().equals(other.businesses, businesses) &&
             (identical(other.meta, meta) || other.meta == meta));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(data),
-      const DeepCollectionEquality().hash(businesses),
-      meta);
+      runtimeType, const DeepCollectionEquality().hash(data), const DeepCollectionEquality().hash(businesses), meta);
 
   @override
   String toString() {
@@ -559,21 +517,17 @@ mixin _$SavedPromotionsResponseDM {
 
 /// @nodoc
 abstract mixin class $SavedPromotionsResponseDMCopyWith<$Res> {
-  factory $SavedPromotionsResponseDMCopyWith(SavedPromotionsResponseDM value,
-          $Res Function(SavedPromotionsResponseDM) _then) =
+  factory $SavedPromotionsResponseDMCopyWith(
+          SavedPromotionsResponseDM value, $Res Function(SavedPromotionsResponseDM) _then) =
       _$SavedPromotionsResponseDMCopyWithImpl;
   @useResult
-  $Res call(
-      {List<NearbyPromotionDM> data,
-      List<SavedPromoBusinessDM> businesses,
-      SavedPromosMeta? meta});
+  $Res call({List<NearbyPromotionDM> data, List<SavedPromoBusinessDM> businesses, SavedPromosMeta? meta});
 
   $SavedPromosMetaCopyWith<$Res>? get meta;
 }
 
 /// @nodoc
-class _$SavedPromotionsResponseDMCopyWithImpl<$Res>
-    implements $SavedPromotionsResponseDMCopyWith<$Res> {
+class _$SavedPromotionsResponseDMCopyWithImpl<$Res> implements $SavedPromotionsResponseDMCopyWith<$Res> {
   _$SavedPromotionsResponseDMCopyWithImpl(this._self, this._then);
 
   final SavedPromotionsResponseDM _self;
@@ -712,8 +666,7 @@ extension SavedPromotionsResponseDMPatterns on SavedPromotionsResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(List<NearbyPromotionDM> data,
-            List<SavedPromoBusinessDM> businesses, SavedPromosMeta? meta)?
+    TResult Function(List<NearbyPromotionDM> data, List<SavedPromoBusinessDM> businesses, SavedPromosMeta? meta)?
         $default, {
     required TResult orElse(),
   }) {
@@ -741,8 +694,7 @@ extension SavedPromotionsResponseDMPatterns on SavedPromotionsResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(List<NearbyPromotionDM> data,
-            List<SavedPromoBusinessDM> businesses, SavedPromosMeta? meta)
+    TResult Function(List<NearbyPromotionDM> data, List<SavedPromoBusinessDM> businesses, SavedPromosMeta? meta)
         $default,
   ) {
     final _that = this;
@@ -768,8 +720,7 @@ extension SavedPromotionsResponseDMPatterns on SavedPromotionsResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(List<NearbyPromotionDM> data,
-            List<SavedPromoBusinessDM> businesses, SavedPromosMeta? meta)?
+    TResult? Function(List<NearbyPromotionDM> data, List<SavedPromoBusinessDM> businesses, SavedPromosMeta? meta)?
         $default,
   ) {
     final _that = this;
@@ -791,8 +742,7 @@ class _SavedPromotionsResponseDM implements SavedPromotionsResponseDM {
       this.meta})
       : _data = data,
         _businesses = businesses;
-  factory _SavedPromotionsResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$SavedPromotionsResponseDMFromJson(json);
+  factory _SavedPromotionsResponseDM.fromJson(Map<String, dynamic> json) => _$SavedPromotionsResponseDMFromJson(json);
 
   final List<NearbyPromotionDM> _data;
   @override
@@ -820,10 +770,8 @@ class _SavedPromotionsResponseDM implements SavedPromotionsResponseDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$SavedPromotionsResponseDMCopyWith<_SavedPromotionsResponseDM>
-      get copyWith =>
-          __$SavedPromotionsResponseDMCopyWithImpl<_SavedPromotionsResponseDM>(
-              this, _$identity);
+  _$SavedPromotionsResponseDMCopyWith<_SavedPromotionsResponseDM> get copyWith =>
+      __$SavedPromotionsResponseDMCopyWithImpl<_SavedPromotionsResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -838,18 +786,14 @@ class _SavedPromotionsResponseDM implements SavedPromotionsResponseDM {
         (other.runtimeType == runtimeType &&
             other is _SavedPromotionsResponseDM &&
             const DeepCollectionEquality().equals(other._data, _data) &&
-            const DeepCollectionEquality()
-                .equals(other._businesses, _businesses) &&
+            const DeepCollectionEquality().equals(other._businesses, _businesses) &&
             (identical(other.meta, meta) || other.meta == meta));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_data),
-      const DeepCollectionEquality().hash(_businesses),
-      meta);
+      runtimeType, const DeepCollectionEquality().hash(_data), const DeepCollectionEquality().hash(_businesses), meta);
 
   @override
   String toString() {
@@ -858,25 +802,20 @@ class _SavedPromotionsResponseDM implements SavedPromotionsResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$SavedPromotionsResponseDMCopyWith<$Res>
-    implements $SavedPromotionsResponseDMCopyWith<$Res> {
-  factory _$SavedPromotionsResponseDMCopyWith(_SavedPromotionsResponseDM value,
-          $Res Function(_SavedPromotionsResponseDM) _then) =
+abstract mixin class _$SavedPromotionsResponseDMCopyWith<$Res> implements $SavedPromotionsResponseDMCopyWith<$Res> {
+  factory _$SavedPromotionsResponseDMCopyWith(
+          _SavedPromotionsResponseDM value, $Res Function(_SavedPromotionsResponseDM) _then) =
       __$SavedPromotionsResponseDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {List<NearbyPromotionDM> data,
-      List<SavedPromoBusinessDM> businesses,
-      SavedPromosMeta? meta});
+  $Res call({List<NearbyPromotionDM> data, List<SavedPromoBusinessDM> businesses, SavedPromosMeta? meta});
 
   @override
   $SavedPromosMetaCopyWith<$Res>? get meta;
 }
 
 /// @nodoc
-class __$SavedPromotionsResponseDMCopyWithImpl<$Res>
-    implements _$SavedPromotionsResponseDMCopyWith<$Res> {
+class __$SavedPromotionsResponseDMCopyWithImpl<$Res> implements _$SavedPromotionsResponseDMCopyWith<$Res> {
   __$SavedPromotionsResponseDMCopyWithImpl(this._self, this._then);
 
   final _SavedPromotionsResponseDM _self;
@@ -931,8 +870,7 @@ mixin _$SavedPromosMeta {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $SavedPromosMetaCopyWith<SavedPromosMeta> get copyWith =>
-      _$SavedPromosMetaCopyWithImpl<SavedPromosMeta>(
-          this as SavedPromosMeta, _$identity);
+      _$SavedPromosMetaCopyWithImpl<SavedPromosMeta>(this as SavedPromosMeta, _$identity);
 
   /// Serializes this SavedPromosMeta to a JSON map.
   Map<String, dynamic> toJson();
@@ -957,16 +895,14 @@ mixin _$SavedPromosMeta {
 
 /// @nodoc
 abstract mixin class $SavedPromosMetaCopyWith<$Res> {
-  factory $SavedPromosMetaCopyWith(
-          SavedPromosMeta value, $Res Function(SavedPromosMeta) _then) =
+  factory $SavedPromosMetaCopyWith(SavedPromosMeta value, $Res Function(SavedPromosMeta) _then) =
       _$SavedPromosMetaCopyWithImpl;
   @useResult
   $Res call({int total});
 }
 
 /// @nodoc
-class _$SavedPromosMetaCopyWithImpl<$Res>
-    implements $SavedPromosMetaCopyWith<$Res> {
+class _$SavedPromosMetaCopyWithImpl<$Res> implements $SavedPromosMetaCopyWith<$Res> {
   _$SavedPromosMetaCopyWithImpl(this._self, this._then);
 
   final SavedPromosMeta _self;
@@ -1149,8 +1085,7 @@ extension SavedPromosMetaPatterns on SavedPromosMeta {
 @JsonSerializable()
 class _SavedPromosMeta implements SavedPromosMeta {
   const _SavedPromosMeta({this.total = 0});
-  factory _SavedPromosMeta.fromJson(Map<String, dynamic> json) =>
-      _$SavedPromosMetaFromJson(json);
+  factory _SavedPromosMeta.fromJson(Map<String, dynamic> json) => _$SavedPromosMetaFromJson(json);
 
   @override
   @JsonKey()
@@ -1190,10 +1125,8 @@ class _SavedPromosMeta implements SavedPromosMeta {
 }
 
 /// @nodoc
-abstract mixin class _$SavedPromosMetaCopyWith<$Res>
-    implements $SavedPromosMetaCopyWith<$Res> {
-  factory _$SavedPromosMetaCopyWith(
-          _SavedPromosMeta value, $Res Function(_SavedPromosMeta) _then) =
+abstract mixin class _$SavedPromosMetaCopyWith<$Res> implements $SavedPromosMetaCopyWith<$Res> {
+  factory _$SavedPromosMetaCopyWith(_SavedPromosMeta value, $Res Function(_SavedPromosMeta) _then) =
       __$SavedPromosMetaCopyWithImpl;
   @override
   @useResult
@@ -1201,8 +1134,7 @@ abstract mixin class _$SavedPromosMetaCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SavedPromosMetaCopyWithImpl<$Res>
-    implements _$SavedPromosMetaCopyWith<$Res> {
+class __$SavedPromosMetaCopyWithImpl<$Res> implements _$SavedPromosMetaCopyWith<$Res> {
   __$SavedPromosMetaCopyWithImpl(this._self, this._then);
 
   final _SavedPromosMeta _self;

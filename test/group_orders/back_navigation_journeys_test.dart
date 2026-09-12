@@ -304,7 +304,9 @@ void main() {
     test('llegando por el QR sin pasar por el negocio, se termina en casa', () {
       // Cold start por deep link: no hay negocio en el historial, pero el
       // fallback resuelve el padre desde LAST_VISITED_BUSINESS_UUID.
-      final s = _Sesion(qr)..ir(_orden)..ir(_menu);
+      final s = _Sesion(qr)
+        ..ir(_orden)
+        ..ir(_menu);
 
       expect(s.atrasVarias(3).last, anyOf(_home, _negocio));
     });

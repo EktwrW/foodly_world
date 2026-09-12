@@ -191,8 +191,7 @@ class _BusinessClient implements BusinessClient {
     try {
       _value = _result.data!
           .map(
-            (dynamic i) =>
-                BusinessCoverImageDM.fromJson(i as Map<String, dynamic>),
+            (dynamic i) => BusinessCoverImageDM.fromJson(i as Map<String, dynamic>),
           )
           .toList();
     } on Object catch (e, s) {
@@ -1889,8 +1888,7 @@ class _BusinessClient implements BusinessClient {
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
-        !(requestOptions.responseType == ResponseType.bytes ||
-            requestOptions.responseType == ResponseType.stream)) {
+        !(requestOptions.responseType == ResponseType.bytes || requestOptions.responseType == ResponseType.stream)) {
       if (T == String) {
         requestOptions.responseType = ResponseType.plain;
       } else {

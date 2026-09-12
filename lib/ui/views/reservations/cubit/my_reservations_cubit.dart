@@ -97,9 +97,7 @@ class MyReservationsCubit extends Cubit<MyReservationsState> {
     return result.when(
       success: (response) {
         if (response.reservation != null) {
-          final updated = _vm.reservations
-              .map((r) => r.reservationUuid == uuid ? response.reservation! : r)
-              .toList();
+          final updated = _vm.reservations.map((r) => r.reservationUuid == uuid ? response.reservation! : r).toList();
           _vm = _vm.copyWith(reservations: updated);
         }
         emit(MyReservationsState.loaded(_vm));
@@ -121,9 +119,7 @@ class MyReservationsCubit extends Cubit<MyReservationsState> {
     return result.when(
       success: (response) {
         if (response.reservation != null) {
-          final updated = _vm.reservations
-              .map((r) => r.reservationUuid == uuid ? response.reservation! : r)
-              .toList();
+          final updated = _vm.reservations.map((r) => r.reservationUuid == uuid ? response.reservation! : r).toList();
           _vm = _vm.copyWith(reservations: updated);
         }
         // service.booking_succeeded — fired the moment the customer
@@ -160,9 +156,7 @@ class MyReservationsCubit extends Cubit<MyReservationsState> {
     return result.when(
       success: (response) {
         if (response.reservation != null) {
-          final updated = _vm.reservations
-              .map((r) => r.reservationUuid == uuid ? response.reservation! : r)
-              .toList();
+          final updated = _vm.reservations.map((r) => r.reservationUuid == uuid ? response.reservation! : r).toList();
           _vm = _vm.copyWith(reservations: updated);
         }
         emit(MyReservationsState.loaded(_vm));

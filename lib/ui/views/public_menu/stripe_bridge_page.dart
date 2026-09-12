@@ -45,17 +45,13 @@ class StripeBridgePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  completed
-                      ? S.current.stripeBridgeReturnTitle
-                      : S.current.stripeBridgeRefreshTitle,
+                  completed ? S.current.stripeBridgeReturnTitle : S.current.stripeBridgeRefreshTitle,
                   textAlign: TextAlign.center,
                   style: FoodlyTextStyles.sectionsTitle,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  completed
-                      ? S.current.stripeBridgeReturnBody
-                      : S.current.stripeBridgeRefreshBody,
+                  completed ? S.current.stripeBridgeReturnBody : S.current.stripeBridgeRefreshBody,
                   textAlign: TextAlign.center,
                   style: FoodlyTextStyles.caption,
                 ),

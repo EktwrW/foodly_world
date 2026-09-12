@@ -19,8 +19,7 @@ void main() {
         home: Scaffold(
           body: Builder(
             builder: (context) => ElevatedButton(
-              onPressed: () =>
-                  ScaffoldMessenger.of(context).showSnackBar(wdg.getSnackBar(context)),
+              onPressed: () => ScaffoldMessenger.of(context).showSnackBar(wdg.getSnackBar(context)),
               child: const Text('go'),
             ),
           ),
@@ -39,11 +38,13 @@ void main() {
   });
 
   testWidgets('con icon: gana el explícito, sin tocar el color del tipo', (tester) async {
-    await pump(tester, const SnackBarWdg(
-      content: Text('x'),
-      type: SnackBarType.success,
-      icon: FontAwesome.user_plus_solid,
-    ));
+    await pump(
+        tester,
+        const SnackBarWdg(
+          content: Text('x'),
+          type: SnackBarType.success,
+          icon: FontAwesome.user_plus_solid,
+        ));
     expect(iconOf(tester), FontAwesome.user_plus_solid);
   });
 
@@ -53,11 +54,13 @@ void main() {
   });
 
   testWidgets('type action CON icon lo muestra: pedirlo es decir "este sí"', (tester) async {
-    await pump(tester, const SnackBarWdg(
-      content: Text('x'),
-      type: SnackBarType.action,
-      icon: FontAwesome.user_plus_solid,
-    ));
+    await pump(
+        tester,
+        const SnackBarWdg(
+          content: Text('x'),
+          type: SnackBarType.action,
+          icon: FontAwesome.user_plus_solid,
+        ));
     expect(iconOf(tester), FontAwesome.user_plus_solid);
   });
 }

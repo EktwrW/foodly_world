@@ -183,8 +183,7 @@ void main() {
         final result = await service.silentRefresh();
 
         expect(result, false);
-        expect(fakeMeRepo.refreshTokenCalls, 0,
-            reason: 'No tiene sentido pegar al BE sin refresh token');
+        expect(fakeMeRepo.refreshTokenCalls, 0, reason: 'No tiene sentido pegar al BE sin refresh token');
       },
     );
 
@@ -199,8 +198,7 @@ void main() {
         expect(fakeMeRepo.refreshTokenCalls, 1);
         expect(service.userSessionDM?.accessToken, 'NEW-access',
             reason: 'La sesión activa debe quedar con el access token nuevo');
-        expect(fakeSecure.storedAccessToken, 'NEW-access',
-            reason: 'Los tokens nuevos deben persistirse al Keychain');
+        expect(fakeSecure.storedAccessToken, 'NEW-access', reason: 'Los tokens nuevos deben persistirse al Keychain');
       },
     );
 
@@ -250,8 +248,7 @@ void main() {
         firstCallCompleter.complete();
         final results = await Future.wait([firstFuture, secondFuture, thirdFuture]);
 
-        expect(results, [true, true, true],
-            reason: 'Un refresco exitoso es exitoso para TODOS los que lo esperaron.');
+        expect(results, [true, true, true], reason: 'Un refresco exitoso es exitoso para TODOS los que lo esperaron.');
         expect(fakeMeRepo.refreshTokenCalls, 1);
       },
     );
@@ -328,8 +325,7 @@ void main() {
 
         expect(r1, true);
         expect(r2, true);
-        expect(fakeMeRepo.refreshTokenCalls, 2,
-            reason: 'Refresh A termina → guard libera → refresh B puede correr');
+        expect(fakeMeRepo.refreshTokenCalls, 2, reason: 'Refresh A termina → guard libera → refresh B puede correr');
       },
     );
   });
@@ -353,8 +349,7 @@ void main() {
         expect(restored.refreshToken, 'kc-refresh');
         expect(restored.tokenType, 'Bearer');
         expect(restored.tokedCreatedAt, '2026-05-06T10:00:00Z');
-        expect(fakeSecure.saveTokensCalls, 0,
-            reason: 'Keychain ya tiene tokens — no re-savear');
+        expect(fakeSecure.saveTokensCalls, 0, reason: 'Keychain ya tiene tokens — no re-savear');
       },
     );
 
@@ -373,10 +368,8 @@ void main() {
         final restored = await service.restoreTokensFromSecureStorage(legacySession);
 
         expect(restored, isNotNull);
-        expect(restored!.accessToken, 'legacy-access',
-            reason: 'En migration, devolvemos la session as-is');
-        expect(fakeSecure.saveTokensCalls, 1,
-            reason: 'La migración debe persistir los tokens al Keychain');
+        expect(restored!.accessToken, 'legacy-access', reason: 'En migration, devolvemos la session as-is');
+        expect(fakeSecure.saveTokensCalls, 1, reason: 'La migración debe persistir los tokens al Keychain');
         expect(fakeSecure.storedAccessToken, 'legacy-access',
             reason: 'Tras migration, el Keychain queda con los tokens legacy');
       },
@@ -409,8 +402,7 @@ void main() {
 
         final restored = await service.restoreTokensFromSecureStorage(emptyTokenSession);
 
-        expect(restored, isNull,
-            reason: 'Empty string no debe disparar el migration path');
+        expect(restored, isNull, reason: 'Empty string no debe disparar el migration path');
       },
     );
   });
@@ -461,14 +453,10 @@ void main() {
 
         service.notifyTokenExpired();
 
-        expect(service.isLoggedIn, false,
-            reason: 'La sesión debe limpiarse');
-        expect(service.forceToLogin, true,
-            reason: 'El flag debe levantarse para que el GoRouter rediriga a /login');
-        expect(fakeSecure.clearAllCalls, 1,
-            reason: 'Los tokens del Keychain deben limpiarse junto con la sesión');
+        expect(service.isLoggedIn, false, reason: 'La sesión debe limpiarse');
+        expect(service.forceToLogin, true, reason: 'El flag debe levantarse para que el GoRouter rediriga a /login');
+        expect(fakeSecure.clearAllCalls, 1, reason: 'Los tokens del Keychain deben limpiarse junto con la sesión');
       },
     );
   });
 }
-

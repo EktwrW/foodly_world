@@ -431,8 +431,7 @@ class AuthSessionService {
   /// page (bug 2026-05-22). El acceso es lazy — crea el [Completer] si aún no
   /// existe — para tolerar que `initializeLocalAuth` lo espere antes de que
   /// `initializeSessionOrClear` haya arrancado.
-  Future<bool> get sessionRestoreVerdict =>
-      (_sessionRestoreVerdict ??= Completer<bool>()).future;
+  Future<bool> get sessionRestoreVerdict => (_sessionRestoreVerdict ??= Completer<bool>()).future;
 
   /// Completa el veredicto de [sessionRestoreVerdict] de forma idempotente:
   /// es seguro llamarlo más de una vez — los `complete` posteriores se ignoran.

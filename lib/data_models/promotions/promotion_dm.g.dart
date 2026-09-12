@@ -6,23 +6,18 @@ part of 'promotion_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Base64Converter _$Base64ConverterFromJson(Map<String, dynamic> json) =>
-    Base64Converter();
+Base64Converter _$Base64ConverterFromJson(Map<String, dynamic> json) => Base64Converter();
 
-Map<String, dynamic> _$Base64ConverterToJson(Base64Converter instance) =>
-    <String, dynamic>{};
+Map<String, dynamic> _$Base64ConverterToJson(Base64Converter instance) => <String, dynamic>{};
 
-_PromotionsResponse _$PromotionsResponseFromJson(Map<String, dynamic> json) =>
-    _PromotionsResponse(
+_PromotionsResponse _$PromotionsResponseFromJson(Map<String, dynamic> json) => _PromotionsResponse(
       promotions: (json['business_promotions'] as List<dynamic>)
           .map((e) => PromotionDM.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$PromotionsResponseToJson(_PromotionsResponse instance) =>
-    <String, dynamic>{
-      'business_promotions':
-          instance.promotions.map((e) => e.toJson()).toList(),
+Map<String, dynamic> _$PromotionsResponseToJson(_PromotionsResponse instance) => <String, dynamic>{
+      'business_promotions': instance.promotions.map((e) => e.toJson()).toList(),
     };
 
 _PromotionDM _$PromotionDMFromJson(Map<String, dynamic> json) => _PromotionDM(
@@ -31,46 +26,32 @@ _PromotionDM _$PromotionDMFromJson(Map<String, dynamic> json) => _PromotionDM(
       title: json['title'] as String,
       subTitle: json['sub_title'] as String? ?? '',
       description: json['description'] as String,
-      createdAt: json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-      updatedAt: json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+      createdAt: json['created_at'] == null ? null : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null ? null : DateTime.parse(json['updated_at'] as String),
       startDate: DateTime.parse(json['start_date'] as String),
       expireDate: DateTime.parse(json['expire_date'] as String),
-      business: json['business'] == null
-          ? null
-          : BusinessDM.fromJson(json['business'] as Map<String, dynamic>),
-      versions: (json['versions'] as List<dynamic>?)
-              ?.map((e) => $enumDecode(_$VersionEnumMap, e))
-              .toList() ??
+      business: json['business'] == null ? null : BusinessDM.fromJson(json['business'] as Map<String, dynamic>),
+      versions: (json['versions'] as List<dynamic>?)?.map((e) => $enumDecode(_$VersionEnumMap, e)).toList() ??
           const [Version.regular],
-      prices: json['prices'] == null
-          ? null
-          : Prices.fromJson(json['prices'] as Map<String, dynamic>),
+      prices: json['prices'] == null ? null : Prices.fromJson(json['prices'] as Map<String, dynamic>),
       favoritesCount: (json['favorites_count'] as num?)?.toInt() ?? 0,
       mediaLink: json['media_link'] as String?,
       promoMedia: (json['business_promo_reference_media'] as List<dynamic>?)
               ?.map((e) => PromoMediaDM.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      promoDays: PromoDaysDM.fromJson(
-          json['promo_active_days'] as Map<String, dynamic>),
+      promoDays: PromoDaysDM.fromJson(json['promo_active_days'] as Map<String, dynamic>),
       followersLength: (json['followers_length'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$PromotionDMToJson(_PromotionDM instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PromotionDMToJson(_PromotionDM instance) => <String, dynamic>{
       'id': instance.id,
       'uuid': instance.uuid,
       'title': instance.title,
       'sub_title': instance.subTitle,
       'description': instance.description,
-      if (instance.createdAt?.toIso8601String() case final value?)
-        'created_at': value,
-      if (instance.updatedAt?.toIso8601String() case final value?)
-        'updated_at': value,
+      if (instance.createdAt?.toIso8601String() case final value?) 'created_at': value,
+      if (instance.updatedAt?.toIso8601String() case final value?) 'updated_at': value,
       'start_date': instance.startDate.toIso8601String(),
       'expire_date': instance.expireDate.toIso8601String(),
       if (instance.business?.toJson() case final value?) 'business': value,
@@ -78,8 +59,7 @@ Map<String, dynamic> _$PromotionDMToJson(_PromotionDM instance) =>
       if (instance.prices?.toJson() case final value?) 'prices': value,
       'favorites_count': instance.favoritesCount,
       if (instance.mediaLink case final value?) 'media_link': value,
-      'business_promo_reference_media':
-          instance.promoMedia.map((e) => e.toJson()).toList(),
+      'business_promo_reference_media': instance.promoMedia.map((e) => e.toJson()).toList(),
       'promo_active_days': instance.promoDays.toJson(),
       'followers_length': instance.followersLength,
     };
@@ -90,8 +70,7 @@ const _$VersionEnumMap = {
   Version.big: 'big',
 };
 
-_PromoMediaDM _$PromoMediaDMFromJson(Map<String, dynamic> json) =>
-    _PromoMediaDM(
+_PromoMediaDM _$PromoMediaDMFromJson(Map<String, dynamic> json) => _PromoMediaDM(
       id: (json['id'] as num).toInt(),
       uuid: json['uuid'] as String,
       mediaUrl: json['business_promo_media_url'] as String,
@@ -99,8 +78,7 @@ _PromoMediaDM _$PromoMediaDMFromJson(Map<String, dynamic> json) =>
       mediaType: $enumDecode(_$MediaTypeEnumMap, json['media_type']),
     );
 
-Map<String, dynamic> _$PromoMediaDMToJson(_PromoMediaDM instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PromoMediaDMToJson(_PromoMediaDM instance) => <String, dynamic>{
       'id': instance.id,
       'uuid': instance.uuid,
       'business_promo_media_url': instance.mediaUrl,
@@ -124,8 +102,7 @@ _PromoDaysDM _$PromoDaysDMFromJson(Map<String, dynamic> json) => _PromoDaysDM(
       saturday: json['day_6'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$PromoDaysDMToJson(_PromoDaysDM instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PromoDaysDMToJson(_PromoDaysDM instance) => <String, dynamic>{
       'day_0': instance.sunday,
       'day_1': instance.monday,
       'day_2': instance.tuesday,
@@ -135,35 +112,26 @@ Map<String, dynamic> _$PromoDaysDMToJson(_PromoDaysDM instance) =>
       'day_6': instance.saturday,
     };
 
-_PromoGenerationResponse _$PromoGenerationResponseFromJson(
-        Map<String, dynamic> json) =>
-    _PromoGenerationResponse(
+_PromoGenerationResponse _$PromoGenerationResponseFromJson(Map<String, dynamic> json) => _PromoGenerationResponse(
       title: json['title'] as String,
       subtitle: json['subtitle'] as String,
       description: json['description'] as String,
-      imageBytes:
-          const Base64Converter().fromJson(json['imageBytes'] as String?),
+      imageBytes: const Base64Converter().fromJson(json['imageBytes'] as String?),
     );
 
-Map<String, dynamic> _$PromoGenerationResponseToJson(
-        _PromoGenerationResponse instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PromoGenerationResponseToJson(_PromoGenerationResponse instance) => <String, dynamic>{
       'title': instance.title,
       'subtitle': instance.subtitle,
       'description': instance.description,
-      if (const Base64Converter().toJson(instance.imageBytes) case final value?)
-        'imageBytes': value,
+      if (const Base64Converter().toJson(instance.imageBytes) case final value?) 'imageBytes': value,
     };
 
-_PromoMediaResponse _$PromoMediaResponseFromJson(Map<String, dynamic> json) =>
-    _PromoMediaResponse(
+_PromoMediaResponse _$PromoMediaResponseFromJson(Map<String, dynamic> json) => _PromoMediaResponse(
       promoMedia: (json['business_promo_reference_media'] as List<dynamic>)
           .map((e) => PromoMediaDM.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$PromoMediaResponseToJson(_PromoMediaResponse instance) =>
-    <String, dynamic>{
-      'business_promo_reference_media':
-          instance.promoMedia.map((e) => e.toJson()).toList(),
+Map<String, dynamic> _$PromoMediaResponseToJson(_PromoMediaResponse instance) => <String, dynamic>{
+      'business_promo_reference_media': instance.promoMedia.map((e) => e.toJson()).toList(),
     };

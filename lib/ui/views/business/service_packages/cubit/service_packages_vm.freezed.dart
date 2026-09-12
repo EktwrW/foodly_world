@@ -26,35 +26,24 @@ mixin _$ServicePackagesVM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ServicePackagesVMCopyWith<ServicePackagesVM> get copyWith =>
-      _$ServicePackagesVMCopyWithImpl<ServicePackagesVM>(
-          this as ServicePackagesVM, _$identity);
+      _$ServicePackagesVMCopyWithImpl<ServicePackagesVM>(this as ServicePackagesVM, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ServicePackagesVM &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
             (identical(other.profile, profile) || other.profile == profile) &&
             const DeepCollectionEquality().equals(other.packages, packages) &&
-            (identical(other.isSavingProfile, isSavingProfile) ||
-                other.isSavingProfile == isSavingProfile) &&
-            (identical(other.isSavingPackage, isSavingPackage) ||
-                other.isSavingPackage == isSavingPackage) &&
-            (identical(other.isReordering, isReordering) ||
-                other.isReordering == isReordering));
+            (identical(other.isSavingProfile, isSavingProfile) || other.isSavingProfile == isSavingProfile) &&
+            (identical(other.isSavingPackage, isSavingPackage) || other.isSavingPackage == isSavingPackage) &&
+            (identical(other.isReordering, isReordering) || other.isReordering == isReordering));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      businessUuid,
-      profile,
-      const DeepCollectionEquality().hash(packages),
-      isSavingProfile,
-      isSavingPackage,
-      isReordering);
+  int get hashCode => Object.hash(runtimeType, businessUuid, profile, const DeepCollectionEquality().hash(packages),
+      isSavingProfile, isSavingPackage, isReordering);
 
   @override
   String toString() {
@@ -64,8 +53,7 @@ mixin _$ServicePackagesVM {
 
 /// @nodoc
 abstract mixin class $ServicePackagesVMCopyWith<$Res> {
-  factory $ServicePackagesVMCopyWith(
-          ServicePackagesVM value, $Res Function(ServicePackagesVM) _then) =
+  factory $ServicePackagesVMCopyWith(ServicePackagesVM value, $Res Function(ServicePackagesVM) _then) =
       _$ServicePackagesVMCopyWithImpl;
   @useResult
   $Res call(
@@ -80,8 +68,7 @@ abstract mixin class $ServicePackagesVMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ServicePackagesVMCopyWithImpl<$Res>
-    implements $ServicePackagesVMCopyWith<$Res> {
+class _$ServicePackagesVMCopyWithImpl<$Res> implements $ServicePackagesVMCopyWith<$Res> {
   _$ServicePackagesVMCopyWithImpl(this._self, this._then);
 
   final ServicePackagesVM _self;
@@ -235,21 +222,16 @@ extension ServicePackagesVMPatterns on ServicePackagesVM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            String? businessUuid,
-            ProfessionalProfileDM? profile,
-            List<ServicePackageDM> packages,
-            bool isSavingProfile,
-            bool isSavingPackage,
-            bool isReordering)?
+    TResult Function(String? businessUuid, ProfessionalProfileDM? profile, List<ServicePackageDM> packages,
+            bool isSavingProfile, bool isSavingPackage, bool isReordering)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _ServicePackagesVM() when $default != null:
-        return $default(_that.businessUuid, _that.profile, _that.packages,
-            _that.isSavingProfile, _that.isSavingPackage, _that.isReordering);
+        return $default(_that.businessUuid, _that.profile, _that.packages, _that.isSavingProfile, _that.isSavingPackage,
+            _that.isReordering);
       case _:
         return orElse();
     }
@@ -270,20 +252,15 @@ extension ServicePackagesVMPatterns on ServicePackagesVM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            String? businessUuid,
-            ProfessionalProfileDM? profile,
-            List<ServicePackageDM> packages,
-            bool isSavingProfile,
-            bool isSavingPackage,
-            bool isReordering)
+    TResult Function(String? businessUuid, ProfessionalProfileDM? profile, List<ServicePackageDM> packages,
+            bool isSavingProfile, bool isSavingPackage, bool isReordering)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ServicePackagesVM():
-        return $default(_that.businessUuid, _that.profile, _that.packages,
-            _that.isSavingProfile, _that.isSavingPackage, _that.isReordering);
+        return $default(_that.businessUuid, _that.profile, _that.packages, _that.isSavingProfile, _that.isSavingPackage,
+            _that.isReordering);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -303,20 +280,15 @@ extension ServicePackagesVMPatterns on ServicePackagesVM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            String? businessUuid,
-            ProfessionalProfileDM? profile,
-            List<ServicePackageDM> packages,
-            bool isSavingProfile,
-            bool isSavingPackage,
-            bool isReordering)?
+    TResult? Function(String? businessUuid, ProfessionalProfileDM? profile, List<ServicePackageDM> packages,
+            bool isSavingProfile, bool isSavingPackage, bool isReordering)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ServicePackagesVM() when $default != null:
-        return $default(_that.businessUuid, _that.profile, _that.packages,
-            _that.isSavingProfile, _that.isSavingPackage, _that.isReordering);
+        return $default(_that.businessUuid, _that.profile, _that.packages, _that.isSavingProfile, _that.isSavingPackage,
+            _that.isReordering);
       case _:
         return null;
     }
@@ -371,27 +343,17 @@ class _ServicePackagesVM implements ServicePackagesVM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ServicePackagesVM &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
             (identical(other.profile, profile) || other.profile == profile) &&
             const DeepCollectionEquality().equals(other._packages, _packages) &&
-            (identical(other.isSavingProfile, isSavingProfile) ||
-                other.isSavingProfile == isSavingProfile) &&
-            (identical(other.isSavingPackage, isSavingPackage) ||
-                other.isSavingPackage == isSavingPackage) &&
-            (identical(other.isReordering, isReordering) ||
-                other.isReordering == isReordering));
+            (identical(other.isSavingProfile, isSavingProfile) || other.isSavingProfile == isSavingProfile) &&
+            (identical(other.isSavingPackage, isSavingPackage) || other.isSavingPackage == isSavingPackage) &&
+            (identical(other.isReordering, isReordering) || other.isReordering == isReordering));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      businessUuid,
-      profile,
-      const DeepCollectionEquality().hash(_packages),
-      isSavingProfile,
-      isSavingPackage,
-      isReordering);
+  int get hashCode => Object.hash(runtimeType, businessUuid, profile, const DeepCollectionEquality().hash(_packages),
+      isSavingProfile, isSavingPackage, isReordering);
 
   @override
   String toString() {
@@ -400,10 +362,8 @@ class _ServicePackagesVM implements ServicePackagesVM {
 }
 
 /// @nodoc
-abstract mixin class _$ServicePackagesVMCopyWith<$Res>
-    implements $ServicePackagesVMCopyWith<$Res> {
-  factory _$ServicePackagesVMCopyWith(
-          _ServicePackagesVM value, $Res Function(_ServicePackagesVM) _then) =
+abstract mixin class _$ServicePackagesVMCopyWith<$Res> implements $ServicePackagesVMCopyWith<$Res> {
+  factory _$ServicePackagesVMCopyWith(_ServicePackagesVM value, $Res Function(_ServicePackagesVM) _then) =
       __$ServicePackagesVMCopyWithImpl;
   @override
   @useResult
@@ -420,8 +380,7 @@ abstract mixin class _$ServicePackagesVMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ServicePackagesVMCopyWithImpl<$Res>
-    implements _$ServicePackagesVMCopyWith<$Res> {
+class __$ServicePackagesVMCopyWithImpl<$Res> implements _$ServicePackagesVMCopyWith<$Res> {
   __$ServicePackagesVMCopyWithImpl(this._self, this._then);
 
   final _ServicePackagesVM _self;

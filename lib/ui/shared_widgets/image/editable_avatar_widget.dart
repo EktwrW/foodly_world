@@ -65,7 +65,9 @@ class _EditableAvatarWdgState extends State<EditableAvatarWdg> {
                 Bootstrap.camera,
                 style: ui.NeumorphicStyle(
                   shape: ui.NeumorphicShape.concave,
-                  color: !widget.enabled ? ui.NeumorphicColors.embossMaxWhiteColor : ui.NeumorphicColors.decorationMaxWhiteColor,
+                  color: !widget.enabled
+                      ? ui.NeumorphicColors.embossMaxWhiteColor
+                      : ui.NeumorphicColors.decorationMaxWhiteColor,
                   depth: widget.enabled ? 2 : 0,
                 ),
                 size: widget.size.longestSide / 3.5,

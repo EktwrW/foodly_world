@@ -64,7 +64,8 @@ void main() {
       expect(find.byType(ActiveGroupOrderChip), findsOneWidget);
     });
 
-    testWidgets('navegar a la orden lo oculta; volver al menú lo re-muestra '
+    testWidgets(
+        'navegar a la orden lo oculta; volver al menú lo re-muestra '
         '(escucha cambios de ruta, incl. pops)', (tester) async {
       final source = _FakeOrderSource(openOrder);
       final location = ValueNotifier('/visit-menu/m1');
@@ -93,7 +94,8 @@ void main() {
       expect(topLeft.dx, GroupOrderChipLogic.edgeMargin);
     });
 
-    testWidgets('es un Draggable NATIVO: durante el gesto el feedback sigue '
+    testWidgets(
+        'es un Draggable NATIVO: durante el gesto el feedback sigue '
         'al dedo y el hijo queda como fantasma', (tester) async {
       final source = _FakeOrderSource(openOrder);
       final location = ValueNotifier('/visit-menu/m1');
@@ -125,7 +127,8 @@ void main() {
       expect(find.byType(ActiveGroupOrderChip), findsOneWidget);
     });
 
-    testWidgets('drop a la derecha: clampea, imanta al borde DERECHO y '
+    testWidgets(
+        'drop a la derecha: clampea, imanta al borde DERECHO y '
         'persiste la posición', (tester) async {
       final source = _FakeOrderSource(openOrder);
       final location = ValueNotifier('/visit-menu/m1');
@@ -145,7 +148,8 @@ void main() {
       expect(GroupOrderChipPositionStore.offset.value, isNotNull);
     });
 
-    testWidgets('drop en la mitad izquierda: vuelve a imantar al borde '
+    testWidgets(
+        'drop en la mitad izquierda: vuelve a imantar al borde '
         'IZQUIERDO conservando la altura', (tester) async {
       final source = _FakeOrderSource(openOrder);
       final location = ValueNotifier('/visit-menu/m1');
@@ -176,7 +180,8 @@ void main() {
       expect(after.dy, GroupOrderChipLogic.edgeMargin);
     });
 
-    testWidgets('la posición arrastrada sobrevive a ocultarse y re-mostrarse '
+    testWidgets(
+        'la posición arrastrada sobrevive a ocultarse y re-mostrarse '
         '(persiste en el store de sesión)', (tester) async {
       final source = _FakeOrderSource(openOrder);
       final location = ValueNotifier('/visit-menu/m1');
@@ -220,7 +225,8 @@ void main() {
       expect(find.byType(ActiveGroupOrderChip), findsNothing);
     });
 
-    testWidgets('e2e r6: abrir la PÁGINA de la orden oculta el chip aunque '
+    testWidgets(
+        'e2e r6: abrir la PÁGINA de la orden oculta el chip aunque '
         'la URI no cambie; cerrarla lo re-muestra', (tester) async {
       final source = _FakeOrderSource(openOrder);
       final location = ValueNotifier('/visit-menu/m1'); // URI quieta a propósito
@@ -254,7 +260,8 @@ void main() {
     // Importa especialmente porque el chip y el FAB del menú abren la orden
     // con `pushNamed`: ahí la URI no cambia y el marcador es el ÚNICO
     // mecanismo que puede ocultarlo.
-    testWidgets('la página que marca su visibilidad en initState (durante el '
+    testWidgets(
+        'la página que marca su visibilidad en initState (durante el '
         'build) igual oculta el chip', (tester) async {
       final source = _FakeOrderSource(openOrder);
       final location = ValueNotifier('/visit-menu/m1'); // URI quieta (pushNamed)

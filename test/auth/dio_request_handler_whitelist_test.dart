@@ -280,10 +280,8 @@ void main() {
 
         await _runRequest(options);
 
-        expect(spy.silentRefreshCalls, 1,
-            reason: 'Pre-flight check debe intentar refresh antes de pegar al BE');
-        expect(spy.notifyTokenExpiredCalls, 0,
-            reason: 'Refresh exitoso no debe disparar el modal "sesión expirada"');
+        expect(spy.silentRefreshCalls, 1, reason: 'Pre-flight check debe intentar refresh antes de pegar al BE');
+        expect(spy.notifyTokenExpiredCalls, 0, reason: 'Refresh exitoso no debe disparar el modal "sesión expirada"');
       },
     );
 
@@ -309,8 +307,7 @@ void main() {
         );
 
         expect(spy.silentRefreshCalls, 1);
-        expect(spy.notifyTokenExpiredCalls, 1,
-            reason: 'Refresh fallido debe escalar a "sesión expirada"');
+        expect(spy.notifyTokenExpiredCalls, 1, reason: 'Refresh fallido debe escalar a "sesión expirada"');
       },
     );
 
@@ -331,8 +328,7 @@ void main() {
           onTimeout: () => RequestOptions(),
         );
 
-        expect(spy.silentRefreshCalls, 0,
-            reason: 'Sin refresh token no se debe intentar refresh');
+        expect(spy.silentRefreshCalls, 0, reason: 'Sin refresh token no se debe intentar refresh');
         expect(spy.notifyTokenExpiredCalls, 1);
       },
     );

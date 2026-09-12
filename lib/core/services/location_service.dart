@@ -35,6 +35,7 @@ class LocationService {
     if (before == null) return true;
     return Geolocator.distanceBetween(before.latitude, before.longitude, after.latitude, after.longitude) >= meters;
   }
+
   bool get mustFetchLocation => !_hasBeenInitialized;
   bool get hasLocationData => _locationDM.position != null;
 

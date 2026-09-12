@@ -49,8 +49,7 @@ void main() {
   final yesterday = today0.subtract(const Duration(days: 1)).add(const Duration(hours: 21));
   final older = today0.subtract(const Duration(days: 3)).add(const Duration(hours: 13));
 
-  const host = GroupOrderParticipantDM(
-      uuid: 'p1', displayName: 'Hector', role: GroupParticipantRole.host);
+  const host = GroupOrderParticipantDM(uuid: 'p1', displayName: 'Hector', role: GroupParticipantRole.host);
 
   GroupOrderDM order(String uuid, DateTime confirmedAt, {double total = 20}) => GroupOrderDM(
         uuid: uuid,
@@ -61,8 +60,7 @@ void main() {
         confirmedAt: confirmedAt,
         participants: const [host],
         items: const [
-          GroupOrderItemDM(
-              uuid: 'i1', name: 'Sashimi', unitPricePreview: 10, quantity: 2, participantUuid: 'p1'),
+          GroupOrderItemDM(uuid: 'i1', name: 'Sashimi', unitPricePreview: 10, quantity: 2, participantUuid: 'p1'),
         ],
       );
 
@@ -76,7 +74,8 @@ void main() {
         businessUuid: 'biz-1',
       );
 
-  testWidgets('headers por día: "AYER" + fecha formateada, con resumen '
+  testWidgets(
+      'headers por día: "AYER" + fecha formateada, con resumen '
       'N órdenes · total; tarjetas debajo', (tester) async {
     final repo = _FakeRepo()
       ..outcomes.add(ApiResult.success(ManagerHistoryResponseDM(
@@ -96,9 +95,8 @@ void main() {
     expect(find.text(S.current.managerHistoryTitle), findsOneWidget);
     expect(find.text(S.current.managerHistoryYesterday.toUpperCase()), findsOneWidget);
     // El día viejo usa la fecha formateada en el locale activo.
-    final olderLabel = DateFormat.MMMEd(Intl.getCurrentLocale())
-        .format(DateTime(older.year, older.month, older.day))
-        .toUpperCase();
+    final olderLabel =
+        DateFormat.MMMEd(Intl.getCurrentLocale()).format(DateTime(older.year, older.month, older.day)).toUpperCase();
     expect(find.text(olderLabel), findsOneWidget);
 
     // Resumen de cada día: 2 órdenes · €42.50 y 1 órdenes · €40.00.
@@ -108,7 +106,8 @@ void main() {
     expect(find.byType(ManagerOrderCard), findsNWidgets(3));
   });
 
-  testWidgets('tap en una tarjeta abre el sheet de SOLO LECTURA con '
+  testWidgets(
+      'tap en una tarjeta abre el sheet de SOLO LECTURA con '
       'comensales, ítems y total', (tester) async {
     final repo = _FakeRepo()
       ..outcomes.add(ApiResult.success(ManagerHistoryResponseDM(
@@ -136,8 +135,7 @@ void main() {
     final repo = _FakeRepo()
       ..outcomes.add(ApiResult.success(ManagerHistoryResponseDM(
         orders: [
-          for (var i = 0; i < 12; i++)
-            order('o$i', yesterday.subtract(Duration(minutes: i * 10))),
+          for (var i = 0; i < 12; i++) order('o$i', yesterday.subtract(Duration(minutes: i * 10))),
         ],
         hasMore: true,
         nextBefore: 'cursor-1',
@@ -162,8 +160,7 @@ void main() {
   });
 
   testWidgets('sin órdenes pasadas muestra el empty state', (tester) async {
-    final repo = _FakeRepo()
-      ..outcomes.add(const ApiResult.success(ManagerHistoryResponseDM()));
+    final repo = _FakeRepo()..outcomes.add(const ApiResult.success(ManagerHistoryResponseDM()));
     final cubit = buildCubit(repo);
     addTearDown(cubit.close);
 

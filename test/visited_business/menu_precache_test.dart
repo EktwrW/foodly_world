@@ -29,7 +29,10 @@ void main() {
         uuid: 'menu',
         businessUuid: 'biz',
         foodCategories: [
-          CategoryDM(name: 'Pizzas', uuid: 'c1', items: [for (var i = 0; i < platos; i++) plato(i, foto: 'https://cdn/food-$i.jpg')]),
+          CategoryDM(
+              name: 'Pizzas',
+              uuid: 'c1',
+              items: [for (var i = 0; i < platos; i++) plato(i, foto: 'https://cdn/food-$i.jpg')]),
         ],
         drinkCategories: [
           CategoryDM(name: 'Bebidas', uuid: 'c2', items: [for (var i = 0; i < bebidas; i++) bebida(i)]),
@@ -65,7 +68,10 @@ void main() {
       businessUuid: 'biz',
       foodCategories: [
         CategoryDM(name: 'Sin fotos', uuid: 'c0', items: [for (var i = 0; i < 20; i++) plato(i)]),
-        CategoryDM(name: 'Con fotos', uuid: 'c1', items: [for (var i = 0; i < 4; i++) plato(50 + i, foto: 'https://cdn/f-$i.jpg')]),
+        CategoryDM(
+            name: 'Con fotos',
+            uuid: 'c1',
+            items: [for (var i = 0; i < 4; i++) plato(50 + i, foto: 'https://cdn/f-$i.jpg')]),
       ],
     );
 

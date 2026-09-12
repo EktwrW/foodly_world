@@ -36,46 +36,35 @@ mixin _$VisitBusinessVM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $VisitBusinessVMCopyWith<VisitBusinessVM> get copyWith =>
-      _$VisitBusinessVMCopyWithImpl<VisitBusinessVM>(
-          this as VisitBusinessVM, _$identity);
+      _$VisitBusinessVMCopyWithImpl<VisitBusinessVM>(this as VisitBusinessVM, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is VisitBusinessVM &&
-            (identical(other.currentBusiness, currentBusiness) ||
-                other.currentBusiness == currentBusiness) &&
-            const DeepCollectionEquality()
-                .equals(other.currentBusinessReviews, currentBusinessReviews) &&
+            (identical(other.currentBusiness, currentBusiness) || other.currentBusiness == currentBusiness) &&
+            const DeepCollectionEquality().equals(other.currentBusinessReviews, currentBusinessReviews) &&
             const DeepCollectionEquality().equals(other.markers, markers) &&
-            (identical(other.mapController, mapController) ||
-                other.mapController == mapController) &&
+            (identical(other.mapController, mapController) || other.mapController == mapController) &&
             (identical(other.reviewTextController, reviewTextController) ||
                 other.reviewTextController == reviewTextController) &&
             (identical(other.currentReviewStars, currentReviewStars) ||
                 other.currentReviewStars == currentReviewStars) &&
             (identical(other.dateOfVisitForReview, dateOfVisitForReview) ||
                 other.dateOfVisitForReview == dateOfVisitForReview) &&
-            const DeepCollectionEquality()
-                .equals(other.reviewPhotoPaths, reviewPhotoPaths) &&
-            (identical(other.editingReview, editingReview) ||
-                other.editingReview == editingReview) &&
-            (identical(other.reviewsMeta, reviewsMeta) ||
-                other.reviewsMeta == reviewsMeta) &&
+            const DeepCollectionEquality().equals(other.reviewPhotoPaths, reviewPhotoPaths) &&
+            (identical(other.editingReview, editingReview) || other.editingReview == editingReview) &&
+            (identical(other.reviewsMeta, reviewsMeta) || other.reviewsMeta == reviewsMeta) &&
             (identical(other.isLoadingMoreReviews, isLoadingMoreReviews) ||
                 other.isLoadingMoreReviews == isLoadingMoreReviews) &&
             (identical(other.reservationDateTime, reservationDateTime) ||
                 other.reservationDateTime == reservationDateTime) &&
-            (identical(other.reservationTime, reservationTime) ||
-                other.reservationTime == reservationTime) &&
-            (identical(other.reservationSize, reservationSize) ||
-                other.reservationSize == reservationSize) &&
-            (identical(other.specialRequestsController,
-                    specialRequestsController) ||
+            (identical(other.reservationTime, reservationTime) || other.reservationTime == reservationTime) &&
+            (identical(other.reservationSize, reservationSize) || other.reservationSize == reservationSize) &&
+            (identical(other.specialRequestsController, specialRequestsController) ||
                 other.specialRequestsController == specialRequestsController) &&
-            (identical(
-                    other.isSubmittingReservation, isSubmittingReservation) ||
+            (identical(other.isSubmittingReservation, isSubmittingReservation) ||
                 other.isSubmittingReservation == isSubmittingReservation));
   }
 
@@ -107,8 +96,7 @@ mixin _$VisitBusinessVM {
 
 /// @nodoc
 abstract mixin class $VisitBusinessVMCopyWith<$Res> {
-  factory $VisitBusinessVMCopyWith(
-          VisitBusinessVM value, $Res Function(VisitBusinessVM) _then) =
+  factory $VisitBusinessVMCopyWith(VisitBusinessVM value, $Res Function(VisitBusinessVM) _then) =
       _$VisitBusinessVMCopyWithImpl;
   @useResult
   $Res call(
@@ -135,8 +123,7 @@ abstract mixin class $VisitBusinessVMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$VisitBusinessVMCopyWithImpl<$Res>
-    implements $VisitBusinessVMCopyWith<$Res> {
+class _$VisitBusinessVMCopyWithImpl<$Res> implements $VisitBusinessVMCopyWith<$Res> {
   _$VisitBusinessVMCopyWithImpl(this._self, this._then);
 
   final VisitBusinessVM _self;
@@ -564,8 +551,7 @@ class _VisitBusinessVM extends VisitBusinessVM {
   List<ReviewDM>? get currentBusinessReviews {
     final value = _currentBusinessReviews;
     if (value == null) return null;
-    if (_currentBusinessReviews is EqualUnmodifiableListView)
-      return _currentBusinessReviews;
+    if (_currentBusinessReviews is EqualUnmodifiableListView) return _currentBusinessReviews;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -591,8 +577,7 @@ class _VisitBusinessVM extends VisitBusinessVM {
   @override
   @JsonKey()
   List<String> get reviewPhotoPaths {
-    if (_reviewPhotoPaths is EqualUnmodifiableListView)
-      return _reviewPhotoPaths;
+    if (_reviewPhotoPaths is EqualUnmodifiableListView) return _reviewPhotoPaths;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_reviewPhotoPaths);
   }
@@ -629,38 +614,28 @@ class _VisitBusinessVM extends VisitBusinessVM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _VisitBusinessVM &&
-            (identical(other.currentBusiness, currentBusiness) ||
-                other.currentBusiness == currentBusiness) &&
-            const DeepCollectionEquality().equals(
-                other._currentBusinessReviews, _currentBusinessReviews) &&
+            (identical(other.currentBusiness, currentBusiness) || other.currentBusiness == currentBusiness) &&
+            const DeepCollectionEquality().equals(other._currentBusinessReviews, _currentBusinessReviews) &&
             const DeepCollectionEquality().equals(other._markers, _markers) &&
-            (identical(other.mapController, mapController) ||
-                other.mapController == mapController) &&
+            (identical(other.mapController, mapController) || other.mapController == mapController) &&
             (identical(other.reviewTextController, reviewTextController) ||
                 other.reviewTextController == reviewTextController) &&
             (identical(other.currentReviewStars, currentReviewStars) ||
                 other.currentReviewStars == currentReviewStars) &&
             (identical(other.dateOfVisitForReview, dateOfVisitForReview) ||
                 other.dateOfVisitForReview == dateOfVisitForReview) &&
-            const DeepCollectionEquality()
-                .equals(other._reviewPhotoPaths, _reviewPhotoPaths) &&
-            (identical(other.editingReview, editingReview) ||
-                other.editingReview == editingReview) &&
-            (identical(other.reviewsMeta, reviewsMeta) ||
-                other.reviewsMeta == reviewsMeta) &&
+            const DeepCollectionEquality().equals(other._reviewPhotoPaths, _reviewPhotoPaths) &&
+            (identical(other.editingReview, editingReview) || other.editingReview == editingReview) &&
+            (identical(other.reviewsMeta, reviewsMeta) || other.reviewsMeta == reviewsMeta) &&
             (identical(other.isLoadingMoreReviews, isLoadingMoreReviews) ||
                 other.isLoadingMoreReviews == isLoadingMoreReviews) &&
             (identical(other.reservationDateTime, reservationDateTime) ||
                 other.reservationDateTime == reservationDateTime) &&
-            (identical(other.reservationTime, reservationTime) ||
-                other.reservationTime == reservationTime) &&
-            (identical(other.reservationSize, reservationSize) ||
-                other.reservationSize == reservationSize) &&
-            (identical(other.specialRequestsController,
-                    specialRequestsController) ||
+            (identical(other.reservationTime, reservationTime) || other.reservationTime == reservationTime) &&
+            (identical(other.reservationSize, reservationSize) || other.reservationSize == reservationSize) &&
+            (identical(other.specialRequestsController, specialRequestsController) ||
                 other.specialRequestsController == specialRequestsController) &&
-            (identical(
-                    other.isSubmittingReservation, isSubmittingReservation) ||
+            (identical(other.isSubmittingReservation, isSubmittingReservation) ||
                 other.isSubmittingReservation == isSubmittingReservation));
   }
 
@@ -691,10 +666,8 @@ class _VisitBusinessVM extends VisitBusinessVM {
 }
 
 /// @nodoc
-abstract mixin class _$VisitBusinessVMCopyWith<$Res>
-    implements $VisitBusinessVMCopyWith<$Res> {
-  factory _$VisitBusinessVMCopyWith(
-          _VisitBusinessVM value, $Res Function(_VisitBusinessVM) _then) =
+abstract mixin class _$VisitBusinessVMCopyWith<$Res> implements $VisitBusinessVMCopyWith<$Res> {
+  factory _$VisitBusinessVMCopyWith(_VisitBusinessVM value, $Res Function(_VisitBusinessVM) _then) =
       __$VisitBusinessVMCopyWithImpl;
   @override
   @useResult
@@ -725,8 +698,7 @@ abstract mixin class _$VisitBusinessVMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$VisitBusinessVMCopyWithImpl<$Res>
-    implements _$VisitBusinessVMCopyWith<$Res> {
+class __$VisitBusinessVMCopyWithImpl<$Res> implements _$VisitBusinessVMCopyWith<$Res> {
   __$VisitBusinessVMCopyWithImpl(this._self, this._then);
 
   final _VisitBusinessVM _self;

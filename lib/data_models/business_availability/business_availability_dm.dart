@@ -51,8 +51,7 @@ abstract class BusinessAvailabilityDM with _$BusinessAvailabilityDM {
     @JsonKey(name: 'created_at') DateTime? createdAt,
   }) = _BusinessAvailabilityDM;
 
-  factory BusinessAvailabilityDM.fromJson(Map<String, dynamic> json) =>
-      _$BusinessAvailabilityDMFromJson(json);
+  factory BusinessAvailabilityDM.fromJson(Map<String, dynamic> json) => _$BusinessAvailabilityDMFromJson(json);
 
   // ── Semantic helpers ──────────────────────────────────────────
 
@@ -64,8 +63,7 @@ abstract class BusinessAvailabilityDM with _$BusinessAvailabilityDM {
   /// UI — the manager has to cancel the underlying reservation instead.
   bool get isReadOnly => isAutoReservation;
 
-  bool get isPartial =>
-      !isFullDay && startTime != null && endTime != null;
+  bool get isPartial => !isFullDay && startTime != null && endTime != null;
 }
 
 /// Response shape of `GET /business-availability/business/{businessUuid}`
@@ -86,44 +84,38 @@ abstract class BusinessAvailabilityResponseDM with _$BusinessAvailabilityRespons
 /// Response shape of `POST /business-availability/store` and
 /// `PATCH /business-availability/update/{uuid}`.
 @freezed
-abstract class BusinessAvailabilityCreateResponseDM
-    with _$BusinessAvailabilityCreateResponseDM {
+abstract class BusinessAvailabilityCreateResponseDM with _$BusinessAvailabilityCreateResponseDM {
   const factory BusinessAvailabilityCreateResponseDM({
     @Default(false) bool success,
     BusinessAvailabilityDM? availability,
   }) = _BusinessAvailabilityCreateResponseDM;
 
-  factory BusinessAvailabilityCreateResponseDM.fromJson(
-          Map<String, dynamic> json) =>
+  factory BusinessAvailabilityCreateResponseDM.fromJson(Map<String, dynamic> json) =>
       _$BusinessAvailabilityCreateResponseDMFromJson(json);
 }
 
 /// Response shape of `POST /business-availability/bulk`.
 @freezed
-abstract class BusinessAvailabilityBulkResponseDM
-    with _$BusinessAvailabilityBulkResponseDM {
+abstract class BusinessAvailabilityBulkResponseDM with _$BusinessAvailabilityBulkResponseDM {
   const factory BusinessAvailabilityBulkResponseDM({
     @Default(false) bool success,
     @Default(0) int count,
     @Default([]) List<BusinessAvailabilityDM> availability,
   }) = _BusinessAvailabilityBulkResponseDM;
 
-  factory BusinessAvailabilityBulkResponseDM.fromJson(
-          Map<String, dynamic> json) =>
+  factory BusinessAvailabilityBulkResponseDM.fromJson(Map<String, dynamic> json) =>
       _$BusinessAvailabilityBulkResponseDMFromJson(json);
 }
 
 /// Response shape of `DELETE /business-availability/destroy/{uuid}`.
 @freezed
-abstract class BusinessAvailabilityActionResponseDM
-    with _$BusinessAvailabilityActionResponseDM {
+abstract class BusinessAvailabilityActionResponseDM with _$BusinessAvailabilityActionResponseDM {
   const factory BusinessAvailabilityActionResponseDM({
     @Default(false) bool success,
     @Default('') String message,
   }) = _BusinessAvailabilityActionResponseDM;
 
-  factory BusinessAvailabilityActionResponseDM.fromJson(
-          Map<String, dynamic> json) =>
+  factory BusinessAvailabilityActionResponseDM.fromJson(Map<String, dynamic> json) =>
       _$BusinessAvailabilityActionResponseDMFromJson(json);
 }
 
@@ -141,33 +133,28 @@ abstract class PublicAvailabilitySlotDM with _$PublicAvailabilitySlotDM {
     @JsonKey(name: 'end_time') String? endTime,
   }) = _PublicAvailabilitySlotDM;
 
-  factory PublicAvailabilitySlotDM.fromJson(Map<String, dynamic> json) =>
-      _$PublicAvailabilitySlotDMFromJson(json);
+  factory PublicAvailabilitySlotDM.fromJson(Map<String, dynamic> json) => _$PublicAvailabilitySlotDMFromJson(json);
 
-  bool get isPartial =>
-      !isFullDay && startTime != null && endTime != null;
+  bool get isPartial => !isFullDay && startTime != null && endTime != null;
 }
 
 /// Response shape of `GET /public/business-availability/{businessUuid}`.
 @freezed
-abstract class PublicBusinessAvailabilityResponseDM
-    with _$PublicBusinessAvailabilityResponseDM {
+abstract class PublicBusinessAvailabilityResponseDM with _$PublicBusinessAvailabilityResponseDM {
   const factory PublicBusinessAvailabilityResponseDM({
     String? from,
     String? to,
     @Default([]) List<PublicAvailabilitySlotDM> availability,
   }) = _PublicBusinessAvailabilityResponseDM;
 
-  factory PublicBusinessAvailabilityResponseDM.fromJson(
-          Map<String, dynamic> json) =>
+  factory PublicBusinessAvailabilityResponseDM.fromJson(Map<String, dynamic> json) =>
       _$PublicBusinessAvailabilityResponseDMFromJson(json);
 }
 
 /// Bulk-create entry payload (client → BE). One row of the `entries[]`
 /// array sent to `POST /business-availability/bulk`.
 @freezed
-abstract class BusinessAvailabilityBulkEntryDM
-    with _$BusinessAvailabilityBulkEntryDM {
+abstract class BusinessAvailabilityBulkEntryDM with _$BusinessAvailabilityBulkEntryDM {
   const factory BusinessAvailabilityBulkEntryDM({
     required String date,
     @JsonKey(name: 'is_full_day') required bool isFullDay,

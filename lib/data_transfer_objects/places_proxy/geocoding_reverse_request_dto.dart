@@ -32,8 +32,7 @@ class GeocodingReverseRequestDTO {
     this.region,
   });
 
-  factory GeocodingReverseRequestDTO.fromJson(Map<String, dynamic> json) =>
-      _$GeocodingReverseRequestDTOFromJson(json);
+  factory GeocodingReverseRequestDTO.fromJson(Map<String, dynamic> json) => _$GeocodingReverseRequestDTOFromJson(json);
 
   Map<String, dynamic> toJson() => _$GeocodingReverseRequestDTOToJson(this);
 }

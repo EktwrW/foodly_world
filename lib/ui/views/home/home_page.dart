@@ -344,9 +344,8 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
         shape: const CircleBorder(),
         child: FoodlyIsoIconBehavior(
           height: 26,
-          version: indexValue == FoodlyNavigationRail.paginaPrincipal
-              ? FoodlyLogoVersion.original
-              : FoodlyLogoVersion.black,
+          version:
+              indexValue == FoodlyNavigationRail.paginaPrincipal ? FoodlyLogoVersion.original : FoodlyLogoVersion.black,
         ),
       );
 

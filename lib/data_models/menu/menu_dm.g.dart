@@ -6,28 +6,22 @@ part of 'menu_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_MenuResponse _$MenuResponseFromJson(Map<String, dynamic> json) =>
-    _MenuResponse(
+_MenuResponse _$MenuResponseFromJson(Map<String, dynamic> json) => _MenuResponse(
       menuDM: MenuDM.fromJson(json['menu'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$MenuResponseToJson(_MenuResponse instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$MenuResponseToJson(_MenuResponse instance) => <String, dynamic>{
       'menu': instance.menuDM.toJson(),
     };
 
 _MenuDM _$MenuDMFromJson(Map<String, dynamic> json) => _MenuDM(
       uuid: json['uuid'] as String,
       id: (json['id'] as num?)?.toInt(),
-      business: json['business'] == null
-          ? null
-          : BusinessDM.fromJson(json['business'] as Map<String, dynamic>),
+      business: json['business'] == null ? null : BusinessDM.fromJson(json['business'] as Map<String, dynamic>),
       businessUuid: json['business_uuid'] as String,
       businessId: (json['business_id'] as num?)?.toInt(),
       businessName: json['business_name'] as String?,
-      lastUpdate: json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+      lastUpdate: json['updated_at'] == null ? null : DateTime.parse(json['updated_at'] as String),
       foodCategories: (json['business_food_categories'] as List<dynamic>?)
               ?.map((e) => CategoryDM.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -50,12 +44,9 @@ Map<String, dynamic> _$MenuDMToJson(_MenuDM instance) => <String, dynamic>{
       'business_uuid': instance.businessUuid,
       if (instance.businessId case final value?) 'business_id': value,
       if (instance.businessName case final value?) 'business_name': value,
-      if (instance.lastUpdate?.toIso8601String() case final value?)
-        'updated_at': value,
-      'business_food_categories':
-          instance.foodCategories.map((e) => e.toJson()).toList(),
-      'business_drink_categories':
-          instance.drinkCategories.map((e) => e.toJson()).toList(),
+      if (instance.lastUpdate?.toIso8601String() case final value?) 'updated_at': value,
+      'business_food_categories': instance.foodCategories.map((e) => e.toJson()).toList(),
+      'business_drink_categories': instance.drinkCategories.map((e) => e.toJson()).toList(),
       'business_combos': instance.combos.map((e) => e.toJson()).toList(),
       'followers_length': instance.followersLength,
     };
@@ -65,13 +56,10 @@ _CategoryDM _$CategoryDMFromJson(Map<String, dynamic> json) => _CategoryDM(
       uuid: json['uuid'] as String,
       id: (json['id'] as num?)?.toInt(),
       sortOrder: (json['sort_order'] as num?)?.toInt() ?? 0,
-      items: (json['items'] as List<dynamic>)
-          .map((e) => ItemDM.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      items: (json['items'] as List<dynamic>).map((e) => ItemDM.fromJson(e as Map<String, dynamic>)).toList(),
     );
 
-Map<String, dynamic> _$CategoryDMToJson(_CategoryDM instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CategoryDMToJson(_CategoryDM instance) => <String, dynamic>{
       'name': instance.name,
       'uuid': instance.uuid,
       if (instance.id case final value?) 'id': value,

@@ -69,11 +69,12 @@ class MenuSectionIndex extends StatelessWidget {
                 ),
               ),
             ),
-          for (var i = 0; i < secciones.length; i++) _EntradaDelIndice(
-            texto: secciones[i],
-            activa: i == seccionActual,
-            onTap: () => onSeleccion(i),
-          ),
+          for (var i = 0; i < secciones.length; i++)
+            _EntradaDelIndice(
+              texto: secciones[i],
+              activa: i == seccionActual,
+              onTap: () => onSeleccion(i),
+            ),
         ],
       ),
     );

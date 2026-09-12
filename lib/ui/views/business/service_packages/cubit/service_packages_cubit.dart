@@ -143,9 +143,7 @@ class ServicePackagesCubit extends Cubit<ServicePackagesState> {
       success: (response) {
         final updated = response.servicePackage;
         if (updated != null) {
-          final list = _vm.packages
-              .map((p) => p.uuid == uuid ? updated : p)
-              .toList();
+          final list = _vm.packages.map((p) => p.uuid == uuid ? updated : p).toList();
           _vm = _vm.copyWith(packages: list, isSavingPackage: false);
         }
         emit(ServicePackagesState.saved(_vm, response.message));

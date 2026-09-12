@@ -32,8 +32,7 @@ mixin _$BusinessCoverImageDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $BusinessCoverImageDMCopyWith<BusinessCoverImageDM> get copyWith =>
-      _$BusinessCoverImageDMCopyWithImpl<BusinessCoverImageDM>(
-          this as BusinessCoverImageDM, _$identity);
+      _$BusinessCoverImageDMCopyWithImpl<BusinessCoverImageDM>(this as BusinessCoverImageDM, _$identity);
 
   /// Serializes this BusinessCoverImageDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -46,18 +45,14 @@ mixin _$BusinessCoverImageDM {
             (identical(other.intId, intId) || other.intId == intId) &&
             (identical(other.imageId, imageId) || other.imageId == imageId) &&
             (identical(other.url, url) || other.url == url) &&
-            (identical(other.businessId, businessId) ||
-                other.businessId == businessId) &&
-            (identical(other.dateCreated, dateCreated) ||
-                other.dateCreated == dateCreated) &&
-            (identical(other.dateUpdated, dateUpdated) ||
-                other.dateUpdated == dateUpdated));
+            (identical(other.businessId, businessId) || other.businessId == businessId) &&
+            (identical(other.dateCreated, dateCreated) || other.dateCreated == dateCreated) &&
+            (identical(other.dateUpdated, dateUpdated) || other.dateUpdated == dateUpdated));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, intId, imageId, url, businessId, dateCreated, dateUpdated);
+  int get hashCode => Object.hash(runtimeType, intId, imageId, url, businessId, dateCreated, dateUpdated);
 
   @override
   String toString() {
@@ -67,8 +62,7 @@ mixin _$BusinessCoverImageDM {
 
 /// @nodoc
 abstract mixin class $BusinessCoverImageDMCopyWith<$Res> {
-  factory $BusinessCoverImageDMCopyWith(BusinessCoverImageDM value,
-          $Res Function(BusinessCoverImageDM) _then) =
+  factory $BusinessCoverImageDMCopyWith(BusinessCoverImageDM value, $Res Function(BusinessCoverImageDM) _then) =
       _$BusinessCoverImageDMCopyWithImpl;
   @useResult
   $Res call(
@@ -81,8 +75,7 @@ abstract mixin class $BusinessCoverImageDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BusinessCoverImageDMCopyWithImpl<$Res>
-    implements $BusinessCoverImageDMCopyWith<$Res> {
+class _$BusinessCoverImageDMCopyWithImpl<$Res> implements $BusinessCoverImageDMCopyWith<$Res> {
   _$BusinessCoverImageDMCopyWithImpl(this._self, this._then);
 
   final BusinessCoverImageDM _self;
@@ -226,8 +219,7 @@ extension BusinessCoverImageDMPatterns on BusinessCoverImageDM {
             @JsonKey(name: 'id', fromJson: _intFromJson) int? intId,
             @JsonKey(name: 'business_image_uuid') String? imageId,
             @JsonKey(name: 'business_image_path') String? url,
-            @JsonKey(name: 'business_id', fromJson: _intFromJson)
-            int? businessId,
+            @JsonKey(name: 'business_id', fromJson: _intFromJson) int? businessId,
             @JsonKey(name: 'created_at') DateTime? dateCreated,
             @JsonKey(name: 'updated_at') DateTime? dateUpdated)?
         $default, {
@@ -236,8 +228,7 @@ extension BusinessCoverImageDMPatterns on BusinessCoverImageDM {
     final _that = this;
     switch (_that) {
       case _BusinessCoverImageDM() when $default != null:
-        return $default(_that.intId, _that.imageId, _that.url, _that.businessId,
-            _that.dateCreated, _that.dateUpdated);
+        return $default(_that.intId, _that.imageId, _that.url, _that.businessId, _that.dateCreated, _that.dateUpdated);
       case _:
         return orElse();
     }
@@ -262,8 +253,7 @@ extension BusinessCoverImageDMPatterns on BusinessCoverImageDM {
             @JsonKey(name: 'id', fromJson: _intFromJson) int? intId,
             @JsonKey(name: 'business_image_uuid') String? imageId,
             @JsonKey(name: 'business_image_path') String? url,
-            @JsonKey(name: 'business_id', fromJson: _intFromJson)
-            int? businessId,
+            @JsonKey(name: 'business_id', fromJson: _intFromJson) int? businessId,
             @JsonKey(name: 'created_at') DateTime? dateCreated,
             @JsonKey(name: 'updated_at') DateTime? dateUpdated)
         $default,
@@ -271,8 +261,7 @@ extension BusinessCoverImageDMPatterns on BusinessCoverImageDM {
     final _that = this;
     switch (_that) {
       case _BusinessCoverImageDM():
-        return $default(_that.intId, _that.imageId, _that.url, _that.businessId,
-            _that.dateCreated, _that.dateUpdated);
+        return $default(_that.intId, _that.imageId, _that.url, _that.businessId, _that.dateCreated, _that.dateUpdated);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -296,8 +285,7 @@ extension BusinessCoverImageDMPatterns on BusinessCoverImageDM {
             @JsonKey(name: 'id', fromJson: _intFromJson) int? intId,
             @JsonKey(name: 'business_image_uuid') String? imageId,
             @JsonKey(name: 'business_image_path') String? url,
-            @JsonKey(name: 'business_id', fromJson: _intFromJson)
-            int? businessId,
+            @JsonKey(name: 'business_id', fromJson: _intFromJson) int? businessId,
             @JsonKey(name: 'created_at') DateTime? dateCreated,
             @JsonKey(name: 'updated_at') DateTime? dateUpdated)?
         $default,
@@ -305,8 +293,7 @@ extension BusinessCoverImageDMPatterns on BusinessCoverImageDM {
     final _that = this;
     switch (_that) {
       case _BusinessCoverImageDM() when $default != null:
-        return $default(_that.intId, _that.imageId, _that.url, _that.businessId,
-            _that.dateCreated, _that.dateUpdated);
+        return $default(_that.intId, _that.imageId, _that.url, _that.businessId, _that.dateCreated, _that.dateUpdated);
       case _:
         return null;
     }
@@ -324,8 +311,7 @@ class _BusinessCoverImageDM extends BusinessCoverImageDM {
       @JsonKey(name: 'created_at') this.dateCreated,
       @JsonKey(name: 'updated_at') this.dateUpdated})
       : super._();
-  factory _BusinessCoverImageDM.fromJson(Map<String, dynamic> json) =>
-      _$BusinessCoverImageDMFromJson(json);
+  factory _BusinessCoverImageDM.fromJson(Map<String, dynamic> json) => _$BusinessCoverImageDMFromJson(json);
 
   @override
   @JsonKey(name: 'id', fromJson: _intFromJson)
@@ -352,8 +338,7 @@ class _BusinessCoverImageDM extends BusinessCoverImageDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$BusinessCoverImageDMCopyWith<_BusinessCoverImageDM> get copyWith =>
-      __$BusinessCoverImageDMCopyWithImpl<_BusinessCoverImageDM>(
-          this, _$identity);
+      __$BusinessCoverImageDMCopyWithImpl<_BusinessCoverImageDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -370,18 +355,14 @@ class _BusinessCoverImageDM extends BusinessCoverImageDM {
             (identical(other.intId, intId) || other.intId == intId) &&
             (identical(other.imageId, imageId) || other.imageId == imageId) &&
             (identical(other.url, url) || other.url == url) &&
-            (identical(other.businessId, businessId) ||
-                other.businessId == businessId) &&
-            (identical(other.dateCreated, dateCreated) ||
-                other.dateCreated == dateCreated) &&
-            (identical(other.dateUpdated, dateUpdated) ||
-                other.dateUpdated == dateUpdated));
+            (identical(other.businessId, businessId) || other.businessId == businessId) &&
+            (identical(other.dateCreated, dateCreated) || other.dateCreated == dateCreated) &&
+            (identical(other.dateUpdated, dateUpdated) || other.dateUpdated == dateUpdated));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, intId, imageId, url, businessId, dateCreated, dateUpdated);
+  int get hashCode => Object.hash(runtimeType, intId, imageId, url, businessId, dateCreated, dateUpdated);
 
   @override
   String toString() {
@@ -390,10 +371,8 @@ class _BusinessCoverImageDM extends BusinessCoverImageDM {
 }
 
 /// @nodoc
-abstract mixin class _$BusinessCoverImageDMCopyWith<$Res>
-    implements $BusinessCoverImageDMCopyWith<$Res> {
-  factory _$BusinessCoverImageDMCopyWith(_BusinessCoverImageDM value,
-          $Res Function(_BusinessCoverImageDM) _then) =
+abstract mixin class _$BusinessCoverImageDMCopyWith<$Res> implements $BusinessCoverImageDMCopyWith<$Res> {
+  factory _$BusinessCoverImageDMCopyWith(_BusinessCoverImageDM value, $Res Function(_BusinessCoverImageDM) _then) =
       __$BusinessCoverImageDMCopyWithImpl;
   @override
   @useResult
@@ -407,8 +386,7 @@ abstract mixin class _$BusinessCoverImageDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$BusinessCoverImageDMCopyWithImpl<$Res>
-    implements _$BusinessCoverImageDMCopyWith<$Res> {
+class __$BusinessCoverImageDMCopyWithImpl<$Res> implements _$BusinessCoverImageDMCopyWith<$Res> {
   __$BusinessCoverImageDMCopyWithImpl(this._self, this._then);
 
   final _BusinessCoverImageDM _self;

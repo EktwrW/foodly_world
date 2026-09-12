@@ -380,7 +380,9 @@ class _YoutubeThumbnail extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          CachedNetworkImage(cacheManager: FoodlyImageCache.manager, imageUrl: 'https://img.youtube.com/vi/$videoId/hqdefault.jpg',
+          CachedNetworkImage(
+            cacheManager: FoodlyImageCache.manager,
+            imageUrl: 'https://img.youtube.com/vi/$videoId/hqdefault.jpg',
             fit: BoxFit.cover,
             errorWidget: (_, __, ___) => const ColoredBox(
               color: Colors.black87,

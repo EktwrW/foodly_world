@@ -97,9 +97,8 @@ class PlacesProxyRepo {
     PlaceAutocompleteRequestDTO body,
   ) async {
     try {
-      final response = _authSession.isLoggedIn
-          ? await _client.autocomplete(body)
-          : await _client.autocompletePublic(body);
+      final response =
+          _authSession.isLoggedIn ? await _client.autocomplete(body) : await _client.autocompletePublic(body);
       return ApiResult.success(response);
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));

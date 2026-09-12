@@ -75,7 +75,8 @@ class ReservationsDonut extends StatelessWidget {
                 children: [
                   Container(width: 8, height: 8, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
                   const SizedBox(width: 4),
-                  Text('${AnalyticsLabelHelper.reservationStatus(item.label)} (${item.value})', style: FoodlyTextStyles.caption.copyWith(fontSize: 10)),
+                  Text('${AnalyticsLabelHelper.reservationStatus(item.label)} (${item.value})',
+                      style: FoodlyTextStyles.caption.copyWith(fontSize: 10)),
                 ],
               );
             }).toList(),

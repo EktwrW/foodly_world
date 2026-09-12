@@ -111,7 +111,11 @@ class _LinkPreviewCardState extends State<LinkPreviewCard> {
         });
       }
     } catch (_) {
-      if (mounted) setState(() { _loading = false; _error = true; });
+      if (mounted)
+        setState(() {
+          _loading = false;
+          _error = true;
+        });
     }
   }
 
@@ -210,7 +214,9 @@ class _LinkPreviewCardState extends State<LinkPreviewCard> {
           SizedBox(
             width: 60,
             height: 60,
-            child: CachedNetworkImage(cacheManager: FoodlyImageCache.manager, imageUrl: _metadata!.image!,
+            child: CachedNetworkImage(
+              cacheManager: FoodlyImageCache.manager,
+              imageUrl: _metadata!.image!,
               fit: BoxFit.cover,
               errorWidget: (_, __, ___) => const Icon(Icons.link, size: 24),
             ),
@@ -224,7 +230,9 @@ class _LinkPreviewCardState extends State<LinkPreviewCard> {
               children: [
                 Text(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: FoodlyTextStyles.captionBold),
                 const SizedBox(height: 2),
-                Text(_domain, maxLines: 1, overflow: TextOverflow.ellipsis,
+                Text(_domain,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: FoodlyTextStyles.caption.copyWith(color: Colors.grey.shade500, fontSize: 11)),
               ],
             ),
@@ -248,7 +256,9 @@ class _LinkPreviewCardState extends State<LinkPreviewCard> {
             constraints: const BoxConstraints(maxHeight: 160),
             child: SizedBox(
               width: double.infinity,
-              child: CachedNetworkImage(cacheManager: FoodlyImageCache.manager, imageUrl: _metadata!.image!,
+              child: CachedNetworkImage(
+                cacheManager: FoodlyImageCache.manager,
+                imageUrl: _metadata!.image!,
                 fit: BoxFit.cover,
                 errorWidget: (_, __, ___) => const SizedBox.shrink(),
               ),
@@ -262,7 +272,9 @@ class _LinkPreviewCardState extends State<LinkPreviewCard> {
               Text(title, maxLines: 2, overflow: TextOverflow.ellipsis, style: FoodlyTextStyles.labelBold),
               if (desc != null && desc.isNotEmpty) ...[
                 const SizedBox(height: 4),
-                Text(desc, maxLines: 2, overflow: TextOverflow.ellipsis,
+                Text(desc,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: FoodlyTextStyles.caption.copyWith(color: Colors.black54)),
               ],
               const SizedBox(height: 6),
@@ -271,7 +283,9 @@ class _LinkPreviewCardState extends State<LinkPreviewCard> {
                   Icon(Icons.language, size: 14, color: Colors.grey.shade500),
                   const SizedBox(width: 4),
                   Expanded(
-                    child: Text(_domain, maxLines: 1, overflow: TextOverflow.ellipsis,
+                    child: Text(_domain,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: FoodlyTextStyles.caption.copyWith(color: Colors.grey.shade500, fontSize: 11)),
                   ),
                 ],

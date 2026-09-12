@@ -482,32 +482,32 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
 }
 
 // Future<void> fetchPlaceDetails(String placeId) async {
-  //   final String url = 'https://maps.googleapis.com/maps/api/place/details/json';
-  //   final _dio = Dio();
+//   final String url = 'https://maps.googleapis.com/maps/api/place/details/json';
+//   final _dio = Dio();
 
-  //   try {
-  //     final response = await _dio.get(url, queryParameters: {
-  //       'place_id': placeId,
-  //       'key': 'AIzaSyDQd8kLET9EaWLZH4MeBDLMhsL_sN0RDyY',
-  //       'fields': 'name,opening_hours',
-  //     });
+//   try {
+//     final response = await _dio.get(url, queryParameters: {
+//       'place_id': placeId,
+//       'key': 'AIzaSyDQd8kLET9EaWLZH4MeBDLMhsL_sN0RDyY',
+//       'fields': 'name,opening_hours',
+//     });
 
-  //     if (response.statusCode == 200) {
-  //       var openingHours = response.data['result']['opening_hours'];
-  //       if (openingHours != null) {
-  //         log('openingHours: $openingHours');
-  //         print('openingHours: $openingHours');
-  //         // Acceso a 'weekday_text' dentro de 'opening_hours'
-  //         var weekdayText = openingHours['weekday_text'];
-  //         log('Horario de apertura: $weekdayText');
-  //         print('Horario de apertura: $weekdayText');
-  //       } else {
-  //         log('Los horarios de apertura no están disponibles.');
-  //       }
-  //     } else {
-  //       log('Error al obtener los datos del lugar: ${response.statusCode}');
-  //     }
-  //   } on DioException catch (e) {
-  //     log('DioError al obtener los datos del lugar: $e');
-  //   }
-  // }
+//     if (response.statusCode == 200) {
+//       var openingHours = response.data['result']['opening_hours'];
+//       if (openingHours != null) {
+//         log('openingHours: $openingHours');
+//         print('openingHours: $openingHours');
+//         // Acceso a 'weekday_text' dentro de 'opening_hours'
+//         var weekdayText = openingHours['weekday_text'];
+//         log('Horario de apertura: $weekdayText');
+//         print('Horario de apertura: $weekdayText');
+//       } else {
+//         log('Los horarios de apertura no están disponibles.');
+//       }
+//     } else {
+//       log('Error al obtener los datos del lugar: ${response.statusCode}');
+//     }
+//   } on DioException catch (e) {
+//     log('DioError al obtener los datos del lugar: $e');
+//   }
+// }

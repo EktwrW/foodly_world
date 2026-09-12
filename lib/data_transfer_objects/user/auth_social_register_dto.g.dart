@@ -6,9 +6,7 @@ part of 'auth_social_register_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AuthSocialRegisterDTO _$AuthSocialRegisterDTOFromJson(
-        Map<String, dynamic> json) =>
-    AuthSocialRegisterDTO(
+AuthSocialRegisterDTO _$AuthSocialRegisterDTOFromJson(Map<String, dynamic> json) => AuthSocialRegisterDTO(
       name: json['name'] as String,
       lastName: json['last_name'] as String?,
       email: json['email'] as String,
@@ -19,9 +17,7 @@ AuthSocialRegisterDTO _$AuthSocialRegisterDTOFromJson(
       roleId: (json['role_id'] as num?)?.toInt() ?? 4,
     );
 
-Map<String, dynamic> _$AuthSocialRegisterDTOToJson(
-        AuthSocialRegisterDTO instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AuthSocialRegisterDTOToJson(AuthSocialRegisterDTO instance) => <String, dynamic>{
       'name': instance.name,
       if (instance.lastName case final value?) 'last_name': value,
       'email': instance.email,

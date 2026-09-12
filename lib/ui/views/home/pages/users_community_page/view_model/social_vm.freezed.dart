@@ -35,44 +35,31 @@ mixin _$SocialVM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $SocialVMCopyWith<SocialVM> get copyWith =>
-      _$SocialVMCopyWithImpl<SocialVM>(this as SocialVM, _$identity);
+  $SocialVMCopyWith<SocialVM> get copyWith => _$SocialVMCopyWithImpl<SocialVM>(this as SocialVM, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is SocialVM &&
-            (identical(other.currentView, currentView) ||
-                other.currentView == currentView) &&
+            (identical(other.currentView, currentView) || other.currentView == currentView) &&
             const DeepCollectionEquality().equals(other.posts, posts) &&
-            (identical(other.postsMeta, postsMeta) ||
-                other.postsMeta == postsMeta) &&
+            (identical(other.postsMeta, postsMeta) || other.postsMeta == postsMeta) &&
             (identical(other.isLoadingMorePosts, isLoadingMorePosts) ||
                 other.isLoadingMorePosts == isLoadingMorePosts) &&
-            (identical(other.isCreatingPost, isCreatingPost) ||
-                other.isCreatingPost == isCreatingPost) &&
-            (identical(other.feedFilter, feedFilter) ||
-                other.feedFilter == feedFilter) &&
-            const DeepCollectionEquality()
-                .equals(other.nearbyUsers, nearbyUsers) &&
-            (identical(other.usersMeta, usersMeta) ||
-                other.usersMeta == usersMeta) &&
+            (identical(other.isCreatingPost, isCreatingPost) || other.isCreatingPost == isCreatingPost) &&
+            (identical(other.feedFilter, feedFilter) || other.feedFilter == feedFilter) &&
+            const DeepCollectionEquality().equals(other.nearbyUsers, nearbyUsers) &&
+            (identical(other.usersMeta, usersMeta) || other.usersMeta == usersMeta) &&
             (identical(other.isLoadingMoreUsers, isLoadingMoreUsers) ||
                 other.isLoadingMoreUsers == isLoadingMoreUsers) &&
-            (identical(other.isLoadingUsers, isLoadingUsers) ||
-                other.isLoadingUsers == isLoadingUsers) &&
-            (identical(other.userSortMode, userSortMode) ||
-                other.userSortMode == userSortMode) &&
+            (identical(other.isLoadingUsers, isLoadingUsers) || other.isLoadingUsers == isLoadingUsers) &&
+            (identical(other.userSortMode, userSortMode) || other.userSortMode == userSortMode) &&
             const DeepCollectionEquality().equals(other.buzzItems, buzzItems) &&
-            (identical(other.buzzMeta, buzzMeta) ||
-                other.buzzMeta == buzzMeta) &&
-            (identical(other.isLoadingMoreBuzz, isLoadingMoreBuzz) ||
-                other.isLoadingMoreBuzz == isLoadingMoreBuzz) &&
-            (identical(other.isLoadingBuzz, isLoadingBuzz) ||
-                other.isLoadingBuzz == isLoadingBuzz) &&
-            (identical(other.floatingButtonKey, floatingButtonKey) ||
-                other.floatingButtonKey == floatingButtonKey));
+            (identical(other.buzzMeta, buzzMeta) || other.buzzMeta == buzzMeta) &&
+            (identical(other.isLoadingMoreBuzz, isLoadingMoreBuzz) || other.isLoadingMoreBuzz == isLoadingMoreBuzz) &&
+            (identical(other.isLoadingBuzz, isLoadingBuzz) || other.isLoadingBuzz == isLoadingBuzz) &&
+            (identical(other.floatingButtonKey, floatingButtonKey) || other.floatingButtonKey == floatingButtonKey));
   }
 
   @override
@@ -103,8 +90,7 @@ mixin _$SocialVM {
 
 /// @nodoc
 abstract mixin class $SocialVMCopyWith<$Res> {
-  factory $SocialVMCopyWith(SocialVM value, $Res Function(SocialVM) _then) =
-      _$SocialVMCopyWithImpl;
+  factory $SocialVMCopyWith(SocialVM value, $Res Function(SocialVM) _then) = _$SocialVMCopyWithImpl;
   @useResult
   $Res call(
       {SocialPageViews currentView,
@@ -624,45 +610,31 @@ class _SocialVM extends SocialVM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$SocialVMCopyWith<_SocialVM> get copyWith =>
-      __$SocialVMCopyWithImpl<_SocialVM>(this, _$identity);
+  _$SocialVMCopyWith<_SocialVM> get copyWith => __$SocialVMCopyWithImpl<_SocialVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _SocialVM &&
-            (identical(other.currentView, currentView) ||
-                other.currentView == currentView) &&
+            (identical(other.currentView, currentView) || other.currentView == currentView) &&
             const DeepCollectionEquality().equals(other._posts, _posts) &&
-            (identical(other.postsMeta, postsMeta) ||
-                other.postsMeta == postsMeta) &&
+            (identical(other.postsMeta, postsMeta) || other.postsMeta == postsMeta) &&
             (identical(other.isLoadingMorePosts, isLoadingMorePosts) ||
                 other.isLoadingMorePosts == isLoadingMorePosts) &&
-            (identical(other.isCreatingPost, isCreatingPost) ||
-                other.isCreatingPost == isCreatingPost) &&
-            (identical(other.feedFilter, feedFilter) ||
-                other.feedFilter == feedFilter) &&
-            const DeepCollectionEquality()
-                .equals(other._nearbyUsers, _nearbyUsers) &&
-            (identical(other.usersMeta, usersMeta) ||
-                other.usersMeta == usersMeta) &&
+            (identical(other.isCreatingPost, isCreatingPost) || other.isCreatingPost == isCreatingPost) &&
+            (identical(other.feedFilter, feedFilter) || other.feedFilter == feedFilter) &&
+            const DeepCollectionEquality().equals(other._nearbyUsers, _nearbyUsers) &&
+            (identical(other.usersMeta, usersMeta) || other.usersMeta == usersMeta) &&
             (identical(other.isLoadingMoreUsers, isLoadingMoreUsers) ||
                 other.isLoadingMoreUsers == isLoadingMoreUsers) &&
-            (identical(other.isLoadingUsers, isLoadingUsers) ||
-                other.isLoadingUsers == isLoadingUsers) &&
-            (identical(other.userSortMode, userSortMode) ||
-                other.userSortMode == userSortMode) &&
-            const DeepCollectionEquality()
-                .equals(other._buzzItems, _buzzItems) &&
-            (identical(other.buzzMeta, buzzMeta) ||
-                other.buzzMeta == buzzMeta) &&
-            (identical(other.isLoadingMoreBuzz, isLoadingMoreBuzz) ||
-                other.isLoadingMoreBuzz == isLoadingMoreBuzz) &&
-            (identical(other.isLoadingBuzz, isLoadingBuzz) ||
-                other.isLoadingBuzz == isLoadingBuzz) &&
-            (identical(other.floatingButtonKey, floatingButtonKey) ||
-                other.floatingButtonKey == floatingButtonKey));
+            (identical(other.isLoadingUsers, isLoadingUsers) || other.isLoadingUsers == isLoadingUsers) &&
+            (identical(other.userSortMode, userSortMode) || other.userSortMode == userSortMode) &&
+            const DeepCollectionEquality().equals(other._buzzItems, _buzzItems) &&
+            (identical(other.buzzMeta, buzzMeta) || other.buzzMeta == buzzMeta) &&
+            (identical(other.isLoadingMoreBuzz, isLoadingMoreBuzz) || other.isLoadingMoreBuzz == isLoadingMoreBuzz) &&
+            (identical(other.isLoadingBuzz, isLoadingBuzz) || other.isLoadingBuzz == isLoadingBuzz) &&
+            (identical(other.floatingButtonKey, floatingButtonKey) || other.floatingButtonKey == floatingButtonKey));
   }
 
   @override
@@ -692,10 +664,8 @@ class _SocialVM extends SocialVM {
 }
 
 /// @nodoc
-abstract mixin class _$SocialVMCopyWith<$Res>
-    implements $SocialVMCopyWith<$Res> {
-  factory _$SocialVMCopyWith(_SocialVM value, $Res Function(_SocialVM) _then) =
-      __$SocialVMCopyWithImpl;
+abstract mixin class _$SocialVMCopyWith<$Res> implements $SocialVMCopyWith<$Res> {
+  factory _$SocialVMCopyWith(_SocialVM value, $Res Function(_SocialVM) _then) = __$SocialVMCopyWithImpl;
   @override
   @useResult
   $Res call(

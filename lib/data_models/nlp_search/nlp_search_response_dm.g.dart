@@ -6,57 +6,42 @@ part of 'nlp_search_response_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_NlpSearchResponseDM _$NlpSearchResponseDMFromJson(Map<String, dynamic> json) =>
-    _NlpSearchResponseDM(
-      business: (json['business'] as List<dynamic>?)
-              ?.map((e) => BusinessDM.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
-      nlpInfo: json['nlp_info'] == null
-          ? null
-          : NlpInfoDM.fromJson(json['nlp_info'] as Map<String, dynamic>),
+_NlpSearchResponseDM _$NlpSearchResponseDMFromJson(Map<String, dynamic> json) => _NlpSearchResponseDM(
+      business:
+          (json['business'] as List<dynamic>?)?.map((e) => BusinessDM.fromJson(e as Map<String, dynamic>)).toList() ??
+              const [],
+      nlpInfo: json['nlp_info'] == null ? null : NlpInfoDM.fromJson(json['nlp_info'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$NlpSearchResponseDMToJson(
-        _NlpSearchResponseDM instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$NlpSearchResponseDMToJson(_NlpSearchResponseDM instance) => <String, dynamic>{
       'business': instance.business.map((e) => e.toJson()).toList(),
       if (instance.nlpInfo?.toJson() case final value?) 'nlp_info': value,
     };
 
 _NlpInfoDM _$NlpInfoDMFromJson(Map<String, dynamic> json) => _NlpInfoDM(
-      detectedCategories: (json['detected_categories'] as List<dynamic>?)
-              ?.map((e) => (e as num).toInt())
-              .toList() ??
-          const [],
-      extractedKeywords: (json['extracted_keywords'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
+      detectedCategories:
+          (json['detected_categories'] as List<dynamic>?)?.map((e) => (e as num).toInt()).toList() ?? const [],
+      extractedKeywords: (json['extracted_keywords'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
       confidence: (json['confidence'] as num?)?.toDouble() ?? 0.0,
-      timeFilter: json['time_filter'] == null
-          ? null
-          : TimeFilterDM.fromJson(json['time_filter'] as Map<String, dynamic>),
+      timeFilter:
+          json['time_filter'] == null ? null : TimeFilterDM.fromJson(json['time_filter'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$NlpInfoDMToJson(_NlpInfoDM instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$NlpInfoDMToJson(_NlpInfoDM instance) => <String, dynamic>{
       'detected_categories': instance.detectedCategories,
       'extracted_keywords': instance.extractedKeywords,
       'confidence': instance.confidence,
       if (instance.timeFilter?.toJson() case final value?) 'time_filter': value,
     };
 
-_TimeFilterDM _$TimeFilterDMFromJson(Map<String, dynamic> json) =>
-    _TimeFilterDM(
+_TimeFilterDM _$TimeFilterDMFromJson(Map<String, dynamic> json) => _TimeFilterDM(
       from: json['from'] as String?,
       to: json['to'] as String?,
       dayOfWeek: (json['day_of_week'] as num?)?.toInt(),
       mealTime: json['meal_time'] as String?,
     );
 
-Map<String, dynamic> _$TimeFilterDMToJson(_TimeFilterDM instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$TimeFilterDMToJson(_TimeFilterDM instance) => <String, dynamic>{
       if (instance.from case final value?) 'from': value,
       if (instance.to case final value?) 'to': value,
       if (instance.dayOfWeek case final value?) 'day_of_week': value,

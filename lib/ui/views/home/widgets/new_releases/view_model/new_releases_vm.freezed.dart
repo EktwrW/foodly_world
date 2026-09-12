@@ -23,24 +23,20 @@ mixin _$NewReleasesVM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $NewReleasesVMCopyWith<NewReleasesVM> get copyWith =>
-      _$NewReleasesVMCopyWithImpl<NewReleasesVM>(
-          this as NewReleasesVM, _$identity);
+      _$NewReleasesVMCopyWithImpl<NewReleasesVM>(this as NewReleasesVM, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is NewReleasesVM &&
-            const DeepCollectionEquality()
-                .equals(other.businesses, businesses) &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
+            const DeepCollectionEquality().equals(other.businesses, businesses) &&
+            (identical(other.isLoading, isLoading) || other.isLoading == isLoading) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(businesses), isLoading, error);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(businesses), isLoading, error);
 
   @override
   String toString() {
@@ -50,16 +46,13 @@ mixin _$NewReleasesVM {
 
 /// @nodoc
 abstract mixin class $NewReleasesVMCopyWith<$Res> {
-  factory $NewReleasesVMCopyWith(
-          NewReleasesVM value, $Res Function(NewReleasesVM) _then) =
-      _$NewReleasesVMCopyWithImpl;
+  factory $NewReleasesVMCopyWith(NewReleasesVM value, $Res Function(NewReleasesVM) _then) = _$NewReleasesVMCopyWithImpl;
   @useResult
   $Res call({List<BusinessDM> businesses, bool isLoading, String? error});
 }
 
 /// @nodoc
-class _$NewReleasesVMCopyWithImpl<$Res>
-    implements $NewReleasesVMCopyWith<$Res> {
+class _$NewReleasesVMCopyWithImpl<$Res> implements $NewReleasesVMCopyWith<$Res> {
   _$NewReleasesVMCopyWithImpl(this._self, this._then);
 
   final NewReleasesVM _self;
@@ -184,9 +177,7 @@ extension NewReleasesVMPatterns on NewReleasesVM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            List<BusinessDM> businesses, bool isLoading, String? error)?
-        $default, {
+    TResult Function(List<BusinessDM> businesses, bool isLoading, String? error)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -213,8 +204,7 @@ extension NewReleasesVMPatterns on NewReleasesVM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(List<BusinessDM> businesses, bool isLoading, String? error)
-        $default,
+    TResult Function(List<BusinessDM> businesses, bool isLoading, String? error) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -239,9 +229,7 @@ extension NewReleasesVMPatterns on NewReleasesVM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            List<BusinessDM> businesses, bool isLoading, String? error)?
-        $default,
+    TResult? Function(List<BusinessDM> businesses, bool isLoading, String? error)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -256,10 +244,7 @@ extension NewReleasesVMPatterns on NewReleasesVM {
 /// @nodoc
 
 class _NewReleasesVM implements NewReleasesVM {
-  const _NewReleasesVM(
-      {final List<BusinessDM> businesses = const [],
-      this.isLoading = false,
-      this.error})
+  const _NewReleasesVM({final List<BusinessDM> businesses = const [], this.isLoading = false, this.error})
       : _businesses = businesses;
 
   final List<BusinessDM> _businesses;
@@ -290,16 +275,13 @@ class _NewReleasesVM implements NewReleasesVM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _NewReleasesVM &&
-            const DeepCollectionEquality()
-                .equals(other._businesses, _businesses) &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
+            const DeepCollectionEquality().equals(other._businesses, _businesses) &&
+            (identical(other.isLoading, isLoading) || other.isLoading == isLoading) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_businesses), isLoading, error);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_businesses), isLoading, error);
 
   @override
   String toString() {
@@ -308,10 +290,8 @@ class _NewReleasesVM implements NewReleasesVM {
 }
 
 /// @nodoc
-abstract mixin class _$NewReleasesVMCopyWith<$Res>
-    implements $NewReleasesVMCopyWith<$Res> {
-  factory _$NewReleasesVMCopyWith(
-          _NewReleasesVM value, $Res Function(_NewReleasesVM) _then) =
+abstract mixin class _$NewReleasesVMCopyWith<$Res> implements $NewReleasesVMCopyWith<$Res> {
+  factory _$NewReleasesVMCopyWith(_NewReleasesVM value, $Res Function(_NewReleasesVM) _then) =
       __$NewReleasesVMCopyWithImpl;
   @override
   @useResult
@@ -319,8 +299,7 @@ abstract mixin class _$NewReleasesVMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$NewReleasesVMCopyWithImpl<$Res>
-    implements _$NewReleasesVMCopyWith<$Res> {
+class __$NewReleasesVMCopyWithImpl<$Res> implements _$NewReleasesVMCopyWith<$Res> {
   __$NewReleasesVMCopyWithImpl(this._self, this._then);
 
   final _NewReleasesVM _self;

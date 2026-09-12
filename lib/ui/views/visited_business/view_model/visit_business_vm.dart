@@ -34,7 +34,11 @@ abstract class VisitBusinessVM with _$VisitBusinessVM {
   bool get canLoadMoreReviews => reviewsMeta != null && reviewsMeta!.currentPage < reviewsMeta!.lastPage;
 
   bool get canSubmitReservation =>
-      reservationDateTime != null && reservationTime != null && reservationSize != null && reservationSize! > 0 && !isSubmittingReservation;
+      reservationDateTime != null &&
+      reservationTime != null &&
+      reservationSize != null &&
+      reservationSize! > 0 &&
+      !isSubmittingReservation;
 
   bool get canSubmitReview {
     final hasBasicFields = currentReviewStars != null && currentReviewStars! > 0 && dateOfVisitForReview != null;

@@ -22,23 +22,19 @@ mixin _$MainDrawerVM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $MainDrawerVMCopyWith<MainDrawerVM> get copyWith =>
-      _$MainDrawerVMCopyWithImpl<MainDrawerVM>(
-          this as MainDrawerVM, _$identity);
+      _$MainDrawerVMCopyWithImpl<MainDrawerVM>(this as MainDrawerVM, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is MainDrawerVM &&
-            (identical(other.sidebarController, sidebarController) ||
-                other.sidebarController == sidebarController) &&
-            const DeepCollectionEquality()
-                .equals(other.indexHistory, indexHistory));
+            (identical(other.sidebarController, sidebarController) || other.sidebarController == sidebarController) &&
+            const DeepCollectionEquality().equals(other.indexHistory, indexHistory));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, sidebarController,
-      const DeepCollectionEquality().hash(indexHistory));
+  int get hashCode => Object.hash(runtimeType, sidebarController, const DeepCollectionEquality().hash(indexHistory));
 
   @override
   String toString() {
@@ -48,9 +44,7 @@ mixin _$MainDrawerVM {
 
 /// @nodoc
 abstract mixin class $MainDrawerVMCopyWith<$Res> {
-  factory $MainDrawerVMCopyWith(
-          MainDrawerVM value, $Res Function(MainDrawerVM) _then) =
-      _$MainDrawerVMCopyWithImpl;
+  factory $MainDrawerVMCopyWith(MainDrawerVM value, $Res Function(MainDrawerVM) _then) = _$MainDrawerVMCopyWithImpl;
   @useResult
   $Res call({SidebarXController sidebarController, List<int> indexHistory});
 }
@@ -176,9 +170,7 @@ extension MainDrawerVMPatterns on MainDrawerVM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            SidebarXController sidebarController, List<int> indexHistory)?
-        $default, {
+    TResult Function(SidebarXController sidebarController, List<int> indexHistory)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -205,9 +197,7 @@ extension MainDrawerVMPatterns on MainDrawerVM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            SidebarXController sidebarController, List<int> indexHistory)
-        $default,
+    TResult Function(SidebarXController sidebarController, List<int> indexHistory) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -232,9 +222,7 @@ extension MainDrawerVMPatterns on MainDrawerVM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            SidebarXController sidebarController, List<int> indexHistory)?
-        $default,
+    TResult? Function(SidebarXController sidebarController, List<int> indexHistory)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -249,9 +237,7 @@ extension MainDrawerVMPatterns on MainDrawerVM {
 /// @nodoc
 
 class _MainDrawerVM extends MainDrawerVM {
-  const _MainDrawerVM(
-      {required this.sidebarController,
-      final List<int> indexHistory = const [0]})
+  const _MainDrawerVM({required this.sidebarController, final List<int> indexHistory = const [0]})
       : _indexHistory = indexHistory,
         super._();
 
@@ -271,23 +257,19 @@ class _MainDrawerVM extends MainDrawerVM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$MainDrawerVMCopyWith<_MainDrawerVM> get copyWith =>
-      __$MainDrawerVMCopyWithImpl<_MainDrawerVM>(this, _$identity);
+  _$MainDrawerVMCopyWith<_MainDrawerVM> get copyWith => __$MainDrawerVMCopyWithImpl<_MainDrawerVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _MainDrawerVM &&
-            (identical(other.sidebarController, sidebarController) ||
-                other.sidebarController == sidebarController) &&
-            const DeepCollectionEquality()
-                .equals(other._indexHistory, _indexHistory));
+            (identical(other.sidebarController, sidebarController) || other.sidebarController == sidebarController) &&
+            const DeepCollectionEquality().equals(other._indexHistory, _indexHistory));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, sidebarController,
-      const DeepCollectionEquality().hash(_indexHistory));
+  int get hashCode => Object.hash(runtimeType, sidebarController, const DeepCollectionEquality().hash(_indexHistory));
 
   @override
   String toString() {
@@ -296,19 +278,15 @@ class _MainDrawerVM extends MainDrawerVM {
 }
 
 /// @nodoc
-abstract mixin class _$MainDrawerVMCopyWith<$Res>
-    implements $MainDrawerVMCopyWith<$Res> {
-  factory _$MainDrawerVMCopyWith(
-          _MainDrawerVM value, $Res Function(_MainDrawerVM) _then) =
-      __$MainDrawerVMCopyWithImpl;
+abstract mixin class _$MainDrawerVMCopyWith<$Res> implements $MainDrawerVMCopyWith<$Res> {
+  factory _$MainDrawerVMCopyWith(_MainDrawerVM value, $Res Function(_MainDrawerVM) _then) = __$MainDrawerVMCopyWithImpl;
   @override
   @useResult
   $Res call({SidebarXController sidebarController, List<int> indexHistory});
 }
 
 /// @nodoc
-class __$MainDrawerVMCopyWithImpl<$Res>
-    implements _$MainDrawerVMCopyWith<$Res> {
+class __$MainDrawerVMCopyWithImpl<$Res> implements _$MainDrawerVMCopyWith<$Res> {
   __$MainDrawerVMCopyWithImpl(this._self, this._then);
 
   final _MainDrawerVM _self;

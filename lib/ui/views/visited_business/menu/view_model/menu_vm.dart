@@ -34,7 +34,8 @@ abstract class MenuVM with _$MenuVM {
         MenuCategory.food: menuDM?.foodCategories,
         MenuCategory.drinks: menuDM?.drinkCategories,
         MenuCategory.combos: [
-          CategoryDM(items: menuDM?.combos ?? [], name: MenuCategory.combos.textWith(combosLabel: combosLabel), uuid: '')
+          CategoryDM(
+              items: menuDM?.combos ?? [], name: MenuCategory.combos.textWith(combosLabel: combosLabel), uuid: '')
         ],
       };
 

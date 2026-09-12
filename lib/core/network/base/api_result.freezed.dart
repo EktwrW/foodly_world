@@ -16,8 +16,7 @@ T _$identity<T>(T value) => value;
 mixin _$ApiResult<T> {
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is ApiResult<T>);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is ApiResult<T>);
   }
 
   @override
@@ -216,8 +215,7 @@ class _Success<T> implements ApiResult<T> {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$SuccessCopyWith<T, _Success<T>> get copyWith =>
-      __$SuccessCopyWithImpl<T, _Success<T>>(this, _$identity);
+  _$SuccessCopyWith<T, _Success<T>> get copyWith => __$SuccessCopyWithImpl<T, _Success<T>>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -228,8 +226,7 @@ class _Success<T> implements ApiResult<T> {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
 
   @override
   String toString() {
@@ -238,11 +235,8 @@ class _Success<T> implements ApiResult<T> {
 }
 
 /// @nodoc
-abstract mixin class _$SuccessCopyWith<T, $Res>
-    implements $ApiResultCopyWith<T, $Res> {
-  factory _$SuccessCopyWith(
-          _Success<T> value, $Res Function(_Success<T>) _then) =
-      __$SuccessCopyWithImpl;
+abstract mixin class _$SuccessCopyWith<T, $Res> implements $ApiResultCopyWith<T, $Res> {
+  factory _$SuccessCopyWith(_Success<T> value, $Res Function(_Success<T>) _then) = __$SuccessCopyWithImpl;
   @useResult
   $Res call({T data});
 }
@@ -280,8 +274,7 @@ class _Error<T> implements ApiResult<T> {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<T, _Error<T>> get copyWith =>
-      __$ErrorCopyWithImpl<T, _Error<T>>(this, _$identity);
+  _$ErrorCopyWith<T, _Error<T>> get copyWith => __$ErrorCopyWithImpl<T, _Error<T>>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -301,10 +294,8 @@ class _Error<T> implements ApiResult<T> {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<T, $Res>
-    implements $ApiResultCopyWith<T, $Res> {
-  factory _$ErrorCopyWith(_Error<T> value, $Res Function(_Error<T>) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<T, $Res> implements $ApiResultCopyWith<T, $Res> {
+  factory _$ErrorCopyWith(_Error<T> value, $Res Function(_Error<T>) _then) = __$ErrorCopyWithImpl;
   @useResult
   $Res call({AppRequestException error});
 }

@@ -56,9 +56,7 @@ class AppRequestException implements Exception {
         if (raw is Map) {
           return {
             for (final e in raw.entries)
-              '${e.key}': e.value is List
-                  ? List<String>.from(e.value.map((v) => '$v'))
-                  : ['${e.value}'],
+              '${e.key}': e.value is List ? List<String>.from(e.value.map((v) => '$v')) : ['${e.value}'],
           };
         }
       }
@@ -98,9 +96,7 @@ class AppRequestException implements Exception {
       // la app). Se traduce y se dice el tiempo concreto.
       if (dio.response?.statusCode == 429) {
         final secs = retryAfterSeconds;
-        return secs != null && secs > 0
-            ? S.current.tooManyAttemptsIn(secs)
-            : S.current.tooManyAttempts;
+        return secs != null && secs > 0 ? S.current.tooManyAttemptsIn(secs) : S.current.tooManyAttempts;
       }
 
       final data = dio.response?.data;

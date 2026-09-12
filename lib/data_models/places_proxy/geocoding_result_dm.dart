@@ -20,7 +20,9 @@ abstract class GeocodingResultDM with _$GeocodingResultDM {
   const factory GeocodingResultDM({
     @JsonKey(name: 'place_id') String? placeId,
     @JsonKey(name: 'formatted_address') String? formattedAddress,
-    @JsonKey(name: 'address_components') @Default(<PlaceAddressComponentDM>[]) List<PlaceAddressComponentDM> addressComponents,
+    @JsonKey(name: 'address_components')
+    @Default(<PlaceAddressComponentDM>[])
+    List<PlaceAddressComponentDM> addressComponents,
     PlaceGeometryDM? geometry,
     @Default(<String>[]) List<String> types,
   }) = _GeocodingResultDM;

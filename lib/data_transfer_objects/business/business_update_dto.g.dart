@@ -6,68 +6,50 @@ part of 'business_update_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_BusinessUpdateDTO _$BusinessUpdateDTOFromJson(Map<String, dynamic> json) =>
-    _BusinessUpdateDTO(
+_BusinessUpdateDTO _$BusinessUpdateDTOFromJson(Map<String, dynamic> json) => _BusinessUpdateDTO(
       businessName: json['business_name'] as String?,
       businessAboutUs: json['business_about_us'] as String?,
       businessAdditionalInfo: json['business_additional_info'] as String?,
-      businessServices: (json['business_services'] as List<dynamic>?)
-          ?.map((e) => $enumDecode(_$BusinessServicesEnumMap, e))
-          .toList(),
+      businessServices:
+          (json['business_services'] as List<dynamic>?)?.map((e) => $enumDecode(_$BusinessServicesEnumMap, e)).toList(),
       businessEmail: json['business_email'] as String?,
       businessPhone: json['business_phone'] as String?,
       businessAddress: json['business_address'] as String?,
       businessZipcode: json['business_zipcode'] as String?,
       businessCity: json['business_city'] as String?,
-      businessCountry: $enumDecodeNullable(
-          _$FoodlyCountriesEnumMap, json['business_country']),
+      businessCountry: $enumDecodeNullable(_$FoodlyCountriesEnumMap, json['business_country']),
       businessWebsite: json['business_website'] as String?,
       businessLatitude: (json['business_latitude'] as num?)?.toDouble(),
       businessLongitude: (json['business_longitude'] as num?)?.toDouble(),
-      category:
-          $enumDecodeNullable(_$FoodlyCategoriesEnumMap, json['category_id']),
+      category: $enumDecodeNullable(_$FoodlyCategoriesEnumMap, json['category_id']),
       businessDays: json['business_opening_hours'] == null
           ? null
-          : BusinessDays.fromJson(
-              json['business_opening_hours'] as Map<String, dynamic>),
+          : BusinessDays.fromJson(json['business_opening_hours'] as Map<String, dynamic>),
       allowReservations: json['allow_reservations'] as bool?,
       reservationSizeLimit: (json['reservation_size_limit'] as num?)?.toInt(),
       menuEnabled: json['menu_enabled'] as bool?,
       combosLabel: json['combos_label'] as String?,
     );
 
-Map<String, dynamic> _$BusinessUpdateDTOToJson(_BusinessUpdateDTO instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BusinessUpdateDTOToJson(_BusinessUpdateDTO instance) => <String, dynamic>{
       if (instance.businessName case final value?) 'business_name': value,
-      if (instance.businessAboutUs case final value?)
-        'business_about_us': value,
-      if (instance.businessAdditionalInfo case final value?)
-        'business_additional_info': value,
-      if (instance.businessServices
-              ?.map((e) => _$BusinessServicesEnumMap[e]!)
-              .toList()
-          case final value?)
+      if (instance.businessAboutUs case final value?) 'business_about_us': value,
+      if (instance.businessAdditionalInfo case final value?) 'business_additional_info': value,
+      if (instance.businessServices?.map((e) => _$BusinessServicesEnumMap[e]!).toList() case final value?)
         'business_services': value,
       if (instance.businessEmail case final value?) 'business_email': value,
       if (instance.businessPhone case final value?) 'business_phone': value,
       if (instance.businessAddress case final value?) 'business_address': value,
       if (instance.businessZipcode case final value?) 'business_zipcode': value,
       if (instance.businessCity case final value?) 'business_city': value,
-      if (_$FoodlyCountriesEnumMap[instance.businessCountry] case final value?)
-        'business_country': value,
+      if (_$FoodlyCountriesEnumMap[instance.businessCountry] case final value?) 'business_country': value,
       if (instance.businessWebsite case final value?) 'business_website': value,
-      if (instance.businessLatitude case final value?)
-        'business_latitude': value,
-      if (instance.businessLongitude case final value?)
-        'business_longitude': value,
-      if (_$FoodlyCategoriesEnumMap[instance.category] case final value?)
-        'category_id': value,
-      if (instance.businessDays?.toJson() case final value?)
-        'business_opening_hours': value,
-      if (instance.allowReservations case final value?)
-        'allow_reservations': value,
-      if (instance.reservationSizeLimit case final value?)
-        'reservation_size_limit': value,
+      if (instance.businessLatitude case final value?) 'business_latitude': value,
+      if (instance.businessLongitude case final value?) 'business_longitude': value,
+      if (_$FoodlyCategoriesEnumMap[instance.category] case final value?) 'category_id': value,
+      if (instance.businessDays?.toJson() case final value?) 'business_opening_hours': value,
+      if (instance.allowReservations case final value?) 'allow_reservations': value,
+      if (instance.reservationSizeLimit case final value?) 'reservation_size_limit': value,
       if (instance.menuEnabled case final value?) 'menu_enabled': value,
       if (instance.combosLabel case final value?) 'combos_label': value,
     };

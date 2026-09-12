@@ -52,9 +52,7 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
         // flotante está oyendo el mismo canal y pidiendo la misma orden en el
         // mismo tick. Las lecturas que siguen a una mutación propia NO pueden
         // coalescer (ver `getGroupOrder`).
-        _realtime
-            ?.watch(uuid, onTouched: () => _refetchSilently(uuid, coalesce: true))
-            .then((sub) => _sub = sub);
+        _realtime?.watch(uuid, onTouched: () => _refetchSilently(uuid, coalesce: true)).then((sub) => _sub = sub);
       },
       failure: _onError,
     );

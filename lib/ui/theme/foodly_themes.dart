@@ -25,6 +25,7 @@ class FoodlyThemes {
   /// valiendo `secondaryFoodly`: ahí no hay nada que leer.
   static const secondaryFoodlyText = Color(0xFF855C68);
   static const tertiaryFoodly = Color(0xFF14C45D);
+
   /// `secondaryFoodlyText` no alcanza sobre fondos teñidos: sobre el extremo
   /// oscuro del degradado del appbar (#E6CBE0) da 3,75:1, por debajo del 4,5:1
   /// que pide la WCAG a 13px. Este es el mismo tono, más oscuro: 5,0:1 ahí y

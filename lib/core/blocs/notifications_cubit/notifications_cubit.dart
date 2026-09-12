@@ -38,8 +38,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   NotificationDM? _pendingReservationNotification;
 
   /// Getter for the pending reservation notification (read by UI).
-  NotificationDM? get pendingReservationNotification =>
-      _pendingReservationNotification;
+  NotificationDM? get pendingReservationNotification => _pendingReservationNotification;
 
   /// Called by the UI after it has shown the proactive dialog.
   void clearPendingReservationNotification() {
@@ -128,9 +127,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
           //
           // Lo filtrado NO desaparece: sigue en la campana, sin leer y contando
           // en el badge.
-          if (n.deservesProactiveDialog() &&
-              !n.isRead &&
-              !_dialogShownForIds.contains(n.id)) {
+          if (n.deservesProactiveDialog() && !n.isRead && !_dialogShownForIds.contains(n.id)) {
             _pendingReservationNotification = n;
             _dialogShownForIds.add(n.id);
             _logger.i('NotificationsCubit: SET pendingReservationNotification id=${n.id}');
@@ -405,10 +402,15 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     final lp = uri.path.toLowerCase();
     if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
     final completer = Completer<void>();
-    final stream = CachedNetworkImageProvider(url, cacheManager: FoodlyImageCache.manager).resolve(const ImageConfiguration());
+    final stream =
+        CachedNetworkImageProvider(url, cacheManager: FoodlyImageCache.manager).resolve(const ImageConfiguration());
     stream.addListener(ImageStreamListener(
-      (_, __) { if (!completer.isCompleted) completer.complete(); },
-      onError: (_, __) { if (!completer.isCompleted) completer.complete(); },
+      (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
+      onError: (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
     ));
     return completer.future;
   }

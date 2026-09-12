@@ -78,8 +78,7 @@ class _FakeRepo implements GroupOrderRepo {
 void main() {
   setUpAll(() async => S.load(const Locale('es')));
 
-  const host = GroupOrderParticipantDM(
-      uuid: 'p1', displayName: 'Hector', role: GroupParticipantRole.host);
+  const host = GroupOrderParticipantDM(uuid: 'p1', displayName: 'Hector', role: GroupParticipantRole.host);
 
   const order = GroupOrderDM(
     uuid: 'o1',
@@ -120,8 +119,7 @@ void main() {
       );
 
   group('ManagerOrdersPage', () {
-    testWidgets('chips con contadores + tarjeta con ronda, mesa, total y badge',
-        (tester) async {
+    testWidgets('chips con contadores + tarjeta con ronda, mesa, total y badge', (tester) async {
       final repo = _FakeRepo()
         ..listOutcome = const ApiResult.success(ManagerOrdersResponseDM(
           orders: [order],
@@ -160,7 +158,8 @@ void main() {
     /// `takeException(), isNull` a ese tamaño estaría midiendo el resto de la
     /// pantalla y no el selector. Cuando esos tres estén limpios, este test
     /// puede volver a 320dp y afirmar el desborde de verdad.
-    testWidgets('el selector muestra los cinco buckets y se lleva el ancho '
+    testWidgets(
+        'el selector muestra los cinco buckets y se lleva el ancho '
         'disponible', (tester) async {
       final repo = _FakeRepo()
         ..listOutcome = const ApiResult.success(ManagerOrdersResponseDM(
@@ -198,8 +197,7 @@ void main() {
     });
 
     testWidgets('tap en un segmento manda el bucket al repo', (tester) async {
-      final repo = _FakeRepo()
-        ..listOutcome = const ApiResult.success(ManagerOrdersResponseDM(orders: [order]));
+      final repo = _FakeRepo()..listOutcome = const ApiResult.success(ManagerOrdersResponseDM(orders: [order]));
       final cubit = buildCubit(repo);
       addTearDown(cubit.close);
 
@@ -214,8 +212,7 @@ void main() {
     });
 
     testWidgets('sin órdenes muestra el empty state', (tester) async {
-      final repo = _FakeRepo()
-        ..listOutcome = const ApiResult.success(ManagerOrdersResponseDM());
+      final repo = _FakeRepo()..listOutcome = const ApiResult.success(ManagerOrdersResponseDM());
       final cubit = buildCubit(repo);
       addTearDown(cubit.close);
 
@@ -252,7 +249,8 @@ void main() {
       expect(repo.lastDelivered, isTrue);
     });
 
-    testWidgets('con estado LISTA e ítems sin tildar, ENTREGADA está '
+    testWidgets(
+        'con estado LISTA e ítems sin tildar, ENTREGADA está '
         'HABILITADA y auto-tilda (decisión Hector: cero fricción)', (tester) async {
       final ready = order.copyWith(fulfillmentStatus: GroupFulfillmentStatus.ready);
       final repo = _FakeRepo()
@@ -273,10 +271,10 @@ void main() {
       expect(find.text(S.current.managerDeliverAllAndClose), findsNothing);
     });
 
-    testWidgets('Audit F4a: el detalle NO se cierra cuando la orden sale de '
+    testWidgets(
+        'Audit F4a: el detalle NO se cierra cuando la orden sale de '
         'la lista filtrada — conserva la última copia', (tester) async {
-      final repo = _FakeRepo()
-        ..listOutcome = const ApiResult.success(ManagerOrdersResponseDM(orders: [order]));
+      final repo = _FakeRepo()..listOutcome = const ApiResult.success(ManagerOrdersResponseDM(orders: [order]));
       final cubit = buildCubit(repo);
       addTearDown(cubit.close);
       await cubit.load();
@@ -295,9 +293,9 @@ void main() {
       expect(find.byType(ManagerOrderDetailPage), findsOneWidget);
     });
 
-    testWidgets('e2e F4b: "entregar todo de una" hace UNA sola llamada — sin '
-        'advance redundante (daba 409 y modal de error tras acción OK)',
-        (tester) async {
+    testWidgets(
+        'e2e F4b: "entregar todo de una" hace UNA sola llamada — sin '
+        'advance redundante (daba 409 y modal de error tras acción OK)', (tester) async {
       final repo = _FakeRepo()
         ..listOutcome = const ApiResult.success(ManagerOrdersResponseDM(orders: [order]))
         ..actionOutcome = const ApiResult.success(GroupOrderResponseDM(groupOrder: order));
@@ -312,19 +310,16 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(repo.deliverAllCalls, 1);
-      expect(repo.fulfillmentCalls, 0,
-          reason: 'el BE ya auto-entrega: llamar advance después es redundante');
+      expect(repo.fulfillmentCalls, 0, reason: 'el BE ya auto-entrega: llamar advance después es redundante');
       // Y por lo tanto NO hay error en pantalla tras una acción exitosa.
       expect(find.text(S.current.managerGenericError), findsNothing);
     });
 
-    testWidgets('acción FALLIDA sí muestra el error (el fake puede fallar)',
-        (tester) async {
+    testWidgets('acción FALLIDA sí muestra el error (el fake puede fallar)', (tester) async {
       final ready = order.copyWith(fulfillmentStatus: GroupFulfillmentStatus.ready);
       final repo = _FakeRepo()
         ..listOutcome = ApiResult.success(ManagerOrdersResponseDM(orders: [ready]))
-        ..fulfillmentOutcome =
-            const ApiResult.failure(AppRequestException(error: 'conflicto 409'));
+        ..fulfillmentOutcome = const ApiResult.failure(AppRequestException(error: 'conflicto 409'));
       final cubit = buildCubit(repo);
       addTearDown(cubit.close);
       await cubit.load();
@@ -339,7 +334,8 @@ void main() {
       expect(cubit.state.error, isNotNull, reason: 'el fallo debe llegar a la UI');
     });
 
-    testWidgets('e2e F4b: con ítems de una tanda NUEVA sin servir, la orden '
+    testWidgets(
+        'e2e F4b: con ítems de una tanda NUEVA sin servir, la orden '
         'no se ve terminada y el checklist responde', (tester) async {
       // Orden marcada ENTREGADA que recibió un ítem nuevo (tanda 2).
       final revivida = order.copyWith(
@@ -393,8 +389,7 @@ void main() {
           ),
         ],
       );
-      final repo = _FakeRepo()
-        ..listOutcome = ApiResult.success(ManagerOrdersResponseDM(orders: [done]));
+      final repo = _FakeRepo()..listOutcome = ApiResult.success(ManagerOrdersResponseDM(orders: [done]));
       final cubit = buildCubit(repo);
       addTearDown(cubit.close);
       await cubit.load();

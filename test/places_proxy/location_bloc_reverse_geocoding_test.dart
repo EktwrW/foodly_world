@@ -87,12 +87,10 @@ void main() {
       );
 
       expect(merged.country, 'Portugal');
-      expect(merged.countryCode, 'PT',
-          reason: 'countryCode debe tomarse de short_name, NO long_name');
+      expect(merged.countryCode, 'PT', reason: 'countryCode debe tomarse de short_name, NO long_name');
       expect(merged.state, 'Castelo Branco');
       expect(merged.city, 'Covilhã');
-      expect(merged.address, 'Rua da Alegria',
-          reason: 'address debe tomarse de long_name del `route`');
+      expect(merged.address, 'Rua da Alegria', reason: 'address debe tomarse de long_name del `route`');
       expect(merged.zipCode, '6200-123');
     });
 
@@ -160,8 +158,7 @@ void main() {
 
       final merged = applyReverseGeocodingToLocation(empty, base);
 
-      expect(merged, base,
-          reason: 'con results vacío el DM debe quedar exactamente igual al base');
+      expect(merged, base, reason: 'con results vacío el DM debe quedar exactamente igual al base');
     });
 
     test('address_components con tipo desconocido se ignoran sin romper el merge', () {

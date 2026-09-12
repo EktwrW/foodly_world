@@ -18,13 +18,11 @@ mixin _$GroupOrderItemDM {
   @JsonKey(name: 'participant_uuid')
   String? get participantUuid;
   @JsonKey(name: 'name_snapshot')
-  String
-      get name; // Tamaño elegido por el comensal. null = regular, que es la versión por
+  String get name; // Tamaño elegido por el comensal. null = regular, que es la versión por
 // defecto y no se muestra: sólo mediana y grande dicen algo. Un valor
 // desconocido cae a null en vez de romper la orden entera.
   @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-  Version?
-      get version; // Precio congelado en el lock; antes del lock se usa el preview.
+  Version? get version; // Precio congelado en el lock; antes del lock se usa el preview.
   @JsonKey(name: 'unit_price_at_lock', fromJson: _money)
   double get unitPriceAtLock;
   @JsonKey(name: 'unit_price_preview', fromJson: _money)
@@ -33,14 +31,12 @@ mixin _$GroupOrderItemDM {
   bool get shared;
   String? get notes; // F4a: tilde de entrega del manager (checklist parcial).
   @JsonKey(name: 'delivered_at')
-  DateTime?
-      get deliveredAt; // F4b (cuenta abierta): tanda enviada a cocina. sentAt null = sigue en
+  DateTime? get deliveredAt; // F4b (cuenta abierta): tanda enviada a cocina. sentAt null = sigue en
 // el carrito (editable) y es lo que habilita "Enviar orden".
   @JsonKey(name: 'batch_no')
   int? get batchNo;
   @JsonKey(name: 'sent_at')
-  DateTime?
-      get sentAt; // F4b.1: el negocio anuló el ítem (plato devuelto/mal preparado): sigue
+  DateTime? get sentAt; // F4b.1: el negocio anuló el ítem (plato devuelto/mal preparado): sigue
 // visible con su motivo, pero NO se cobra.
   @JsonKey(name: 'voided_at')
   DateTime? get voidedAt;
@@ -52,8 +48,7 @@ mixin _$GroupOrderItemDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $GroupOrderItemDMCopyWith<GroupOrderItemDM> get copyWith =>
-      _$GroupOrderItemDMCopyWithImpl<GroupOrderItemDM>(
-          this as GroupOrderItemDM, _$identity);
+      _$GroupOrderItemDMCopyWithImpl<GroupOrderItemDM>(this as GroupOrderItemDM, _$identity);
 
   /// Serializes this GroupOrderItemDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -64,46 +59,25 @@ mixin _$GroupOrderItemDM {
         (other.runtimeType == runtimeType &&
             other is GroupOrderItemDM &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.participantUuid, participantUuid) ||
-                other.participantUuid == participantUuid) &&
+            (identical(other.participantUuid, participantUuid) || other.participantUuid == participantUuid) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.version, version) || other.version == version) &&
-            (identical(other.unitPriceAtLock, unitPriceAtLock) ||
-                other.unitPriceAtLock == unitPriceAtLock) &&
-            (identical(other.unitPricePreview, unitPricePreview) ||
-                other.unitPricePreview == unitPricePreview) &&
-            (identical(other.quantity, quantity) ||
-                other.quantity == quantity) &&
+            (identical(other.unitPriceAtLock, unitPriceAtLock) || other.unitPriceAtLock == unitPriceAtLock) &&
+            (identical(other.unitPricePreview, unitPricePreview) || other.unitPricePreview == unitPricePreview) &&
+            (identical(other.quantity, quantity) || other.quantity == quantity) &&
             (identical(other.shared, shared) || other.shared == shared) &&
             (identical(other.notes, notes) || other.notes == notes) &&
-            (identical(other.deliveredAt, deliveredAt) ||
-                other.deliveredAt == deliveredAt) &&
+            (identical(other.deliveredAt, deliveredAt) || other.deliveredAt == deliveredAt) &&
             (identical(other.batchNo, batchNo) || other.batchNo == batchNo) &&
             (identical(other.sentAt, sentAt) || other.sentAt == sentAt) &&
-            (identical(other.voidedAt, voidedAt) ||
-                other.voidedAt == voidedAt) &&
-            (identical(other.voidedReason, voidedReason) ||
-                other.voidedReason == voidedReason));
+            (identical(other.voidedAt, voidedAt) || other.voidedAt == voidedAt) &&
+            (identical(other.voidedReason, voidedReason) || other.voidedReason == voidedReason));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      uuid,
-      participantUuid,
-      name,
-      version,
-      unitPriceAtLock,
-      unitPricePreview,
-      quantity,
-      shared,
-      notes,
-      deliveredAt,
-      batchNo,
-      sentAt,
-      voidedAt,
-      voidedReason);
+  int get hashCode => Object.hash(runtimeType, uuid, participantUuid, name, version, unitPriceAtLock, unitPricePreview,
+      quantity, shared, notes, deliveredAt, batchNo, sentAt, voidedAt, voidedReason);
 
   @override
   String toString() {
@@ -113,20 +87,16 @@ mixin _$GroupOrderItemDM {
 
 /// @nodoc
 abstract mixin class $GroupOrderItemDMCopyWith<$Res> {
-  factory $GroupOrderItemDMCopyWith(
-          GroupOrderItemDM value, $Res Function(GroupOrderItemDM) _then) =
+  factory $GroupOrderItemDMCopyWith(GroupOrderItemDM value, $Res Function(GroupOrderItemDM) _then) =
       _$GroupOrderItemDMCopyWithImpl;
   @useResult
   $Res call(
       {String uuid,
       @JsonKey(name: 'participant_uuid') String? participantUuid,
       @JsonKey(name: 'name_snapshot') String name,
-      @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-      Version? version,
-      @JsonKey(name: 'unit_price_at_lock', fromJson: _money)
-      double unitPriceAtLock,
-      @JsonKey(name: 'unit_price_preview', fromJson: _money)
-      double unitPricePreview,
+      @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) Version? version,
+      @JsonKey(name: 'unit_price_at_lock', fromJson: _money) double unitPriceAtLock,
+      @JsonKey(name: 'unit_price_preview', fromJson: _money) double unitPricePreview,
       int quantity,
       bool shared,
       String? notes,
@@ -138,8 +108,7 @@ abstract mixin class $GroupOrderItemDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$GroupOrderItemDMCopyWithImpl<$Res>
-    implements $GroupOrderItemDMCopyWith<$Res> {
+class _$GroupOrderItemDMCopyWithImpl<$Res> implements $GroupOrderItemDMCopyWith<$Res> {
   _$GroupOrderItemDMCopyWithImpl(this._self, this._then);
 
   final GroupOrderItemDM _self;
@@ -323,12 +292,9 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             String uuid,
             @JsonKey(name: 'participant_uuid') String? participantUuid,
             @JsonKey(name: 'name_snapshot') String name,
-            @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-            Version? version,
-            @JsonKey(name: 'unit_price_at_lock', fromJson: _money)
-            double unitPriceAtLock,
-            @JsonKey(name: 'unit_price_preview', fromJson: _money)
-            double unitPricePreview,
+            @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) Version? version,
+            @JsonKey(name: 'unit_price_at_lock', fromJson: _money) double unitPriceAtLock,
+            @JsonKey(name: 'unit_price_preview', fromJson: _money) double unitPricePreview,
             int quantity,
             bool shared,
             String? notes,
@@ -382,12 +348,9 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             String uuid,
             @JsonKey(name: 'participant_uuid') String? participantUuid,
             @JsonKey(name: 'name_snapshot') String name,
-            @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-            Version? version,
-            @JsonKey(name: 'unit_price_at_lock', fromJson: _money)
-            double unitPriceAtLock,
-            @JsonKey(name: 'unit_price_preview', fromJson: _money)
-            double unitPricePreview,
+            @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) Version? version,
+            @JsonKey(name: 'unit_price_at_lock', fromJson: _money) double unitPriceAtLock,
+            @JsonKey(name: 'unit_price_preview', fromJson: _money) double unitPricePreview,
             int quantity,
             bool shared,
             String? notes,
@@ -439,12 +402,9 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             String uuid,
             @JsonKey(name: 'participant_uuid') String? participantUuid,
             @JsonKey(name: 'name_snapshot') String name,
-            @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-            Version? version,
-            @JsonKey(name: 'unit_price_at_lock', fromJson: _money)
-            double unitPriceAtLock,
-            @JsonKey(name: 'unit_price_preview', fromJson: _money)
-            double unitPricePreview,
+            @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) Version? version,
+            @JsonKey(name: 'unit_price_at_lock', fromJson: _money) double unitPriceAtLock,
+            @JsonKey(name: 'unit_price_preview', fromJson: _money) double unitPricePreview,
             int quantity,
             bool shared,
             String? notes,
@@ -486,12 +446,9 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
       {required this.uuid,
       @JsonKey(name: 'participant_uuid') this.participantUuid,
       @JsonKey(name: 'name_snapshot') this.name = '',
-      @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-      this.version,
-      @JsonKey(name: 'unit_price_at_lock', fromJson: _money)
-      this.unitPriceAtLock = 0,
-      @JsonKey(name: 'unit_price_preview', fromJson: _money)
-      this.unitPricePreview = 0,
+      @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) this.version,
+      @JsonKey(name: 'unit_price_at_lock', fromJson: _money) this.unitPriceAtLock = 0,
+      @JsonKey(name: 'unit_price_preview', fromJson: _money) this.unitPricePreview = 0,
       this.quantity = 1,
       this.shared = false,
       this.notes,
@@ -501,8 +458,7 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
       @JsonKey(name: 'voided_at') this.voidedAt,
       @JsonKey(name: 'voided_reason') this.voidedReason})
       : super._();
-  factory _GroupOrderItemDM.fromJson(Map<String, dynamic> json) =>
-      _$GroupOrderItemDMFromJson(json);
+  factory _GroupOrderItemDM.fromJson(Map<String, dynamic> json) => _$GroupOrderItemDMFromJson(json);
 
   @override
   final String uuid;
@@ -576,46 +532,25 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
         (other.runtimeType == runtimeType &&
             other is _GroupOrderItemDM &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.participantUuid, participantUuid) ||
-                other.participantUuid == participantUuid) &&
+            (identical(other.participantUuid, participantUuid) || other.participantUuid == participantUuid) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.version, version) || other.version == version) &&
-            (identical(other.unitPriceAtLock, unitPriceAtLock) ||
-                other.unitPriceAtLock == unitPriceAtLock) &&
-            (identical(other.unitPricePreview, unitPricePreview) ||
-                other.unitPricePreview == unitPricePreview) &&
-            (identical(other.quantity, quantity) ||
-                other.quantity == quantity) &&
+            (identical(other.unitPriceAtLock, unitPriceAtLock) || other.unitPriceAtLock == unitPriceAtLock) &&
+            (identical(other.unitPricePreview, unitPricePreview) || other.unitPricePreview == unitPricePreview) &&
+            (identical(other.quantity, quantity) || other.quantity == quantity) &&
             (identical(other.shared, shared) || other.shared == shared) &&
             (identical(other.notes, notes) || other.notes == notes) &&
-            (identical(other.deliveredAt, deliveredAt) ||
-                other.deliveredAt == deliveredAt) &&
+            (identical(other.deliveredAt, deliveredAt) || other.deliveredAt == deliveredAt) &&
             (identical(other.batchNo, batchNo) || other.batchNo == batchNo) &&
             (identical(other.sentAt, sentAt) || other.sentAt == sentAt) &&
-            (identical(other.voidedAt, voidedAt) ||
-                other.voidedAt == voidedAt) &&
-            (identical(other.voidedReason, voidedReason) ||
-                other.voidedReason == voidedReason));
+            (identical(other.voidedAt, voidedAt) || other.voidedAt == voidedAt) &&
+            (identical(other.voidedReason, voidedReason) || other.voidedReason == voidedReason));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      uuid,
-      participantUuid,
-      name,
-      version,
-      unitPriceAtLock,
-      unitPricePreview,
-      quantity,
-      shared,
-      notes,
-      deliveredAt,
-      batchNo,
-      sentAt,
-      voidedAt,
-      voidedReason);
+  int get hashCode => Object.hash(runtimeType, uuid, participantUuid, name, version, unitPriceAtLock, unitPricePreview,
+      quantity, shared, notes, deliveredAt, batchNo, sentAt, voidedAt, voidedReason);
 
   @override
   String toString() {
@@ -624,10 +559,8 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
 }
 
 /// @nodoc
-abstract mixin class _$GroupOrderItemDMCopyWith<$Res>
-    implements $GroupOrderItemDMCopyWith<$Res> {
-  factory _$GroupOrderItemDMCopyWith(
-          _GroupOrderItemDM value, $Res Function(_GroupOrderItemDM) _then) =
+abstract mixin class _$GroupOrderItemDMCopyWith<$Res> implements $GroupOrderItemDMCopyWith<$Res> {
+  factory _$GroupOrderItemDMCopyWith(_GroupOrderItemDM value, $Res Function(_GroupOrderItemDM) _then) =
       __$GroupOrderItemDMCopyWithImpl;
   @override
   @useResult
@@ -635,12 +568,9 @@ abstract mixin class _$GroupOrderItemDMCopyWith<$Res>
       {String uuid,
       @JsonKey(name: 'participant_uuid') String? participantUuid,
       @JsonKey(name: 'name_snapshot') String name,
-      @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-      Version? version,
-      @JsonKey(name: 'unit_price_at_lock', fromJson: _money)
-      double unitPriceAtLock,
-      @JsonKey(name: 'unit_price_preview', fromJson: _money)
-      double unitPricePreview,
+      @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) Version? version,
+      @JsonKey(name: 'unit_price_at_lock', fromJson: _money) double unitPriceAtLock,
+      @JsonKey(name: 'unit_price_preview', fromJson: _money) double unitPricePreview,
       int quantity,
       bool shared,
       String? notes,
@@ -652,8 +582,7 @@ abstract mixin class _$GroupOrderItemDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$GroupOrderItemDMCopyWithImpl<$Res>
-    implements _$GroupOrderItemDMCopyWith<$Res> {
+class __$GroupOrderItemDMCopyWithImpl<$Res> implements _$GroupOrderItemDMCopyWith<$Res> {
   __$GroupOrderItemDMCopyWithImpl(this._self, this._then);
 
   final _GroupOrderItemDM _self;
@@ -753,8 +682,7 @@ mixin _$GroupOrderParticipantDM {
   @JsonKey(name: 'amount_due', fromJson: _money)
   double get amountDue;
   @JsonKey(name: 'amount_paid', fromJson: _money)
-  double
-      get amountPaid; // "Yo invito" (F2b): uuid del participante que cubrió su pago; null = pagó él mismo.
+  double get amountPaid; // "Yo invito" (F2b): uuid del participante que cubrió su pago; null = pagó él mismo.
   @JsonKey(name: 'paid_by_participant_uuid')
   String? get paidByParticipantUuid;
 
@@ -763,8 +691,7 @@ mixin _$GroupOrderParticipantDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $GroupOrderParticipantDMCopyWith<GroupOrderParticipantDM> get copyWith =>
-      _$GroupOrderParticipantDMCopyWithImpl<GroupOrderParticipantDM>(
-          this as GroupOrderParticipantDM, _$identity);
+      _$GroupOrderParticipantDMCopyWithImpl<GroupOrderParticipantDM>(this as GroupOrderParticipantDM, _$identity);
 
   /// Serializes this GroupOrderParticipantDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -775,25 +702,20 @@ mixin _$GroupOrderParticipantDM {
         (other.runtimeType == runtimeType &&
             other is GroupOrderParticipantDM &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.displayName, displayName) ||
-                other.displayName == displayName) &&
-            (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl) &&
+            (identical(other.displayName, displayName) || other.displayName == displayName) &&
+            (identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl) &&
             (identical(other.role, role) || other.role == role) &&
-            (identical(other.paymentStatus, paymentStatus) ||
-                other.paymentStatus == paymentStatus) &&
-            (identical(other.amountDue, amountDue) ||
-                other.amountDue == amountDue) &&
-            (identical(other.amountPaid, amountPaid) ||
-                other.amountPaid == amountPaid) &&
+            (identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus) &&
+            (identical(other.amountDue, amountDue) || other.amountDue == amountDue) &&
+            (identical(other.amountPaid, amountPaid) || other.amountPaid == amountPaid) &&
             (identical(other.paidByParticipantUuid, paidByParticipantUuid) ||
                 other.paidByParticipantUuid == paidByParticipantUuid));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, uuid, displayName, avatarUrl,
-      role, paymentStatus, amountDue, amountPaid, paidByParticipantUuid);
+  int get hashCode => Object.hash(
+      runtimeType, uuid, displayName, avatarUrl, role, paymentStatus, amountDue, amountPaid, paidByParticipantUuid);
 
   @override
   String toString() {
@@ -803,8 +725,8 @@ mixin _$GroupOrderParticipantDM {
 
 /// @nodoc
 abstract mixin class $GroupOrderParticipantDMCopyWith<$Res> {
-  factory $GroupOrderParticipantDMCopyWith(GroupOrderParticipantDM value,
-          $Res Function(GroupOrderParticipantDM) _then) =
+  factory $GroupOrderParticipantDMCopyWith(
+          GroupOrderParticipantDM value, $Res Function(GroupOrderParticipantDM) _then) =
       _$GroupOrderParticipantDMCopyWithImpl;
   @useResult
   $Res call(
@@ -815,13 +737,11 @@ abstract mixin class $GroupOrderParticipantDMCopyWith<$Res> {
       @JsonKey(name: 'payment_status') GroupPaymentStatus paymentStatus,
       @JsonKey(name: 'amount_due', fromJson: _money) double amountDue,
       @JsonKey(name: 'amount_paid', fromJson: _money) double amountPaid,
-      @JsonKey(name: 'paid_by_participant_uuid')
-      String? paidByParticipantUuid});
+      @JsonKey(name: 'paid_by_participant_uuid') String? paidByParticipantUuid});
 }
 
 /// @nodoc
-class _$GroupOrderParticipantDMCopyWithImpl<$Res>
-    implements $GroupOrderParticipantDMCopyWith<$Res> {
+class _$GroupOrderParticipantDMCopyWithImpl<$Res> implements $GroupOrderParticipantDMCopyWith<$Res> {
   _$GroupOrderParticipantDMCopyWithImpl(this._self, this._then);
 
   final GroupOrderParticipantDM _self;
@@ -979,23 +899,15 @@ extension GroupOrderParticipantDMPatterns on GroupOrderParticipantDM {
             @JsonKey(name: 'payment_status') GroupPaymentStatus paymentStatus,
             @JsonKey(name: 'amount_due', fromJson: _money) double amountDue,
             @JsonKey(name: 'amount_paid', fromJson: _money) double amountPaid,
-            @JsonKey(name: 'paid_by_participant_uuid')
-            String? paidByParticipantUuid)?
+            @JsonKey(name: 'paid_by_participant_uuid') String? paidByParticipantUuid)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _GroupOrderParticipantDM() when $default != null:
-        return $default(
-            _that.uuid,
-            _that.displayName,
-            _that.avatarUrl,
-            _that.role,
-            _that.paymentStatus,
-            _that.amountDue,
-            _that.amountPaid,
-            _that.paidByParticipantUuid);
+        return $default(_that.uuid, _that.displayName, _that.avatarUrl, _that.role, _that.paymentStatus,
+            _that.amountDue, _that.amountPaid, _that.paidByParticipantUuid);
       case _:
         return orElse();
     }
@@ -1024,22 +936,14 @@ extension GroupOrderParticipantDMPatterns on GroupOrderParticipantDM {
             @JsonKey(name: 'payment_status') GroupPaymentStatus paymentStatus,
             @JsonKey(name: 'amount_due', fromJson: _money) double amountDue,
             @JsonKey(name: 'amount_paid', fromJson: _money) double amountPaid,
-            @JsonKey(name: 'paid_by_participant_uuid')
-            String? paidByParticipantUuid)
+            @JsonKey(name: 'paid_by_participant_uuid') String? paidByParticipantUuid)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _GroupOrderParticipantDM():
-        return $default(
-            _that.uuid,
-            _that.displayName,
-            _that.avatarUrl,
-            _that.role,
-            _that.paymentStatus,
-            _that.amountDue,
-            _that.amountPaid,
-            _that.paidByParticipantUuid);
+        return $default(_that.uuid, _that.displayName, _that.avatarUrl, _that.role, _that.paymentStatus,
+            _that.amountDue, _that.amountPaid, _that.paidByParticipantUuid);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -1067,22 +971,14 @@ extension GroupOrderParticipantDMPatterns on GroupOrderParticipantDM {
             @JsonKey(name: 'payment_status') GroupPaymentStatus paymentStatus,
             @JsonKey(name: 'amount_due', fromJson: _money) double amountDue,
             @JsonKey(name: 'amount_paid', fromJson: _money) double amountPaid,
-            @JsonKey(name: 'paid_by_participant_uuid')
-            String? paidByParticipantUuid)?
+            @JsonKey(name: 'paid_by_participant_uuid') String? paidByParticipantUuid)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _GroupOrderParticipantDM() when $default != null:
-        return $default(
-            _that.uuid,
-            _that.displayName,
-            _that.avatarUrl,
-            _that.role,
-            _that.paymentStatus,
-            _that.amountDue,
-            _that.amountPaid,
-            _that.paidByParticipantUuid);
+        return $default(_that.uuid, _that.displayName, _that.avatarUrl, _that.role, _that.paymentStatus,
+            _that.amountDue, _that.amountPaid, _that.paidByParticipantUuid);
       case _:
         return null;
     }
@@ -1097,14 +993,12 @@ class _GroupOrderParticipantDM extends GroupOrderParticipantDM {
       @JsonKey(name: 'display_name') this.displayName = '',
       @JsonKey(name: 'avatar_url') this.avatarUrl,
       this.role = GroupParticipantRole.member,
-      @JsonKey(name: 'payment_status')
-      this.paymentStatus = GroupPaymentStatus.pending,
+      @JsonKey(name: 'payment_status') this.paymentStatus = GroupPaymentStatus.pending,
       @JsonKey(name: 'amount_due', fromJson: _money) this.amountDue = 0,
       @JsonKey(name: 'amount_paid', fromJson: _money) this.amountPaid = 0,
       @JsonKey(name: 'paid_by_participant_uuid') this.paidByParticipantUuid})
       : super._();
-  factory _GroupOrderParticipantDM.fromJson(Map<String, dynamic> json) =>
-      _$GroupOrderParticipantDMFromJson(json);
+  factory _GroupOrderParticipantDM.fromJson(Map<String, dynamic> json) => _$GroupOrderParticipantDMFromJson(json);
 
   @override
   final String uuid;
@@ -1137,8 +1031,7 @@ class _GroupOrderParticipantDM extends GroupOrderParticipantDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$GroupOrderParticipantDMCopyWith<_GroupOrderParticipantDM> get copyWith =>
-      __$GroupOrderParticipantDMCopyWithImpl<_GroupOrderParticipantDM>(
-          this, _$identity);
+      __$GroupOrderParticipantDMCopyWithImpl<_GroupOrderParticipantDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1153,25 +1046,20 @@ class _GroupOrderParticipantDM extends GroupOrderParticipantDM {
         (other.runtimeType == runtimeType &&
             other is _GroupOrderParticipantDM &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.displayName, displayName) ||
-                other.displayName == displayName) &&
-            (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl) &&
+            (identical(other.displayName, displayName) || other.displayName == displayName) &&
+            (identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl) &&
             (identical(other.role, role) || other.role == role) &&
-            (identical(other.paymentStatus, paymentStatus) ||
-                other.paymentStatus == paymentStatus) &&
-            (identical(other.amountDue, amountDue) ||
-                other.amountDue == amountDue) &&
-            (identical(other.amountPaid, amountPaid) ||
-                other.amountPaid == amountPaid) &&
+            (identical(other.paymentStatus, paymentStatus) || other.paymentStatus == paymentStatus) &&
+            (identical(other.amountDue, amountDue) || other.amountDue == amountDue) &&
+            (identical(other.amountPaid, amountPaid) || other.amountPaid == amountPaid) &&
             (identical(other.paidByParticipantUuid, paidByParticipantUuid) ||
                 other.paidByParticipantUuid == paidByParticipantUuid));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, uuid, displayName, avatarUrl,
-      role, paymentStatus, amountDue, amountPaid, paidByParticipantUuid);
+  int get hashCode => Object.hash(
+      runtimeType, uuid, displayName, avatarUrl, role, paymentStatus, amountDue, amountPaid, paidByParticipantUuid);
 
   @override
   String toString() {
@@ -1180,10 +1068,9 @@ class _GroupOrderParticipantDM extends GroupOrderParticipantDM {
 }
 
 /// @nodoc
-abstract mixin class _$GroupOrderParticipantDMCopyWith<$Res>
-    implements $GroupOrderParticipantDMCopyWith<$Res> {
-  factory _$GroupOrderParticipantDMCopyWith(_GroupOrderParticipantDM value,
-          $Res Function(_GroupOrderParticipantDM) _then) =
+abstract mixin class _$GroupOrderParticipantDMCopyWith<$Res> implements $GroupOrderParticipantDMCopyWith<$Res> {
+  factory _$GroupOrderParticipantDMCopyWith(
+          _GroupOrderParticipantDM value, $Res Function(_GroupOrderParticipantDM) _then) =
       __$GroupOrderParticipantDMCopyWithImpl;
   @override
   @useResult
@@ -1195,13 +1082,11 @@ abstract mixin class _$GroupOrderParticipantDMCopyWith<$Res>
       @JsonKey(name: 'payment_status') GroupPaymentStatus paymentStatus,
       @JsonKey(name: 'amount_due', fromJson: _money) double amountDue,
       @JsonKey(name: 'amount_paid', fromJson: _money) double amountPaid,
-      @JsonKey(name: 'paid_by_participant_uuid')
-      String? paidByParticipantUuid});
+      @JsonKey(name: 'paid_by_participant_uuid') String? paidByParticipantUuid});
 }
 
 /// @nodoc
-class __$GroupOrderParticipantDMCopyWithImpl<$Res>
-    implements _$GroupOrderParticipantDMCopyWith<$Res> {
+class __$GroupOrderParticipantDMCopyWithImpl<$Res> implements _$GroupOrderParticipantDMCopyWith<$Res> {
   __$GroupOrderParticipantDMCopyWithImpl(this._self, this._then);
 
   final _GroupOrderParticipantDM _self;
@@ -1263,26 +1148,21 @@ mixin _$GroupOrderDM {
   String get uuid;
   GroupOrderStatus get status;
   @JsonKey(name: 'business_uuid')
-  String?
-      get businessUuid; // Uuid del MENÚ del negocio: /visit-menu/:id lo necesita para aterrizar
+  String? get businessUuid; // Uuid del MENÚ del negocio: /visit-menu/:id lo necesita para aterrizar
 // en el menú tras unirse (la ruta NO lleva el uuid del negocio).
   @JsonKey(name: 'business_menu_uuid')
   String? get businessMenuUuid;
   @JsonKey(name: 'business_name')
   String get businessName;
   @JsonKey(name: 'business_logo')
-  String?
-      get businessLogo; // País del NEGOCIO de la orden — lo piden Apple Pay y Google Pay como
+  String? get businessLogo; // País del NEGOCIO de la orden — lo piden Apple Pay y Google Pay como
 // `merchantCountryCode`. Viene en la orden y no de la sesión: quien paga
 // es el comensal, y el restaurante no es suyo.
-  @JsonKey(
-      name: 'business_country',
-      unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+  @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
   FoodlyCountries? get businessCountry;
   String get currency;
   @JsonKey(name: 'split_mode')
-  GroupSplitMode
-      get splitMode; // Tarifa fija por transacción a cargo del comensal (plataforma de pagos).
+  GroupSplitMode get splitMode; // Tarifa fija por transacción a cargo del comensal (plataforma de pagos).
 // La UI SIEMPRE la muestra en el desglose antes de pagar.
   @JsonKey(name: 'payer_fixed_fee', fromJson: _money)
   double get payerFixedFee;
@@ -1294,9 +1174,7 @@ mixin _$GroupOrderDM {
   double get totalPaid; // F4a "Órdenes en vivo": fulfillment + rondas + mesa.
   @JsonKey(name: 'confirmed_at')
   DateTime? get confirmedAt;
-  @JsonKey(
-      name: 'fulfillment_status',
-      unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+  @JsonKey(name: 'fulfillment_status', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
   GroupFulfillmentStatus? get fulfillmentStatus;
   @JsonKey(name: 'round_number')
   int get roundNumber;
@@ -1321,27 +1199,23 @@ mixin _$GroupOrderDM {
   @JsonKey(name: 'business_offers_mb_way')
   bool get offersMbWay;
   @JsonKey(name: 'business_offers_bizum')
-  bool
-      get offersBizum; // F4b: modo de cobro del NEGOCIO (per_round | open_tab) + marca de
+  bool get offersBizum; // F4b: modo de cobro del NEGOCIO (per_round | open_tab) + marca de
 // "cuenta pedida" — de acá sale el CTA mutante del cliente.
   @JsonKey(name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound)
   GroupPaymentMode get paymentMode;
   @JsonKey(name: 'bill_requested_at')
-  DateTime?
-      get billRequestedAt; // F4b: la mesa avisó que paga en el mostrador. Campo propio y no
+  DateTime? get billRequestedAt; // F4b: la mesa avisó que paga en el mostrador. Campo propio y no
 // `billRequestedAt` porque ese arrastra el lock, el reparto y el
 // checkout — pagar en caja no necesita nada de eso.
   @JsonKey(name: 'cash_requested_at')
-  DateTime?
-      get cashRequestedAt; // F4b: cómo terminó una cuenta que NO se cobró por Foodly
+  DateTime? get cashRequestedAt; // F4b: cómo terminó una cuenta que NO se cobró por Foodly
 // (paid_offline | unpaid | abandoned). null = ciclo normal de pago.
   @JsonKey(name: 'closed_reason')
   String? get closedReason;
   @JsonKey(name: 'closed_at')
   DateTime? get closedAt;
   @JsonKey(name: 'lock_expires_at')
-  DateTime?
-      get lockExpiresAt; // Ventana de gracia tras vencer el deadline (F2b §A.2); null = sin gracia.
+  DateTime? get lockExpiresAt; // Ventana de gracia tras vencer el deadline (F2b §A.2); null = sin gracia.
   @JsonKey(name: 'grace_ends_at')
   DateTime? get graceEndsAt;
   List<GroupOrderParticipantDM> get participants;
@@ -1352,8 +1226,7 @@ mixin _$GroupOrderDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $GroupOrderDMCopyWith<GroupOrderDM> get copyWith =>
-      _$GroupOrderDMCopyWithImpl<GroupOrderDM>(
-          this as GroupOrderDM, _$identity);
+      _$GroupOrderDMCopyWithImpl<GroupOrderDM>(this as GroupOrderDM, _$identity);
 
   /// Serializes this GroupOrderDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1365,58 +1238,33 @@ mixin _$GroupOrderDM {
             other is GroupOrderDM &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            (identical(other.businessMenuUuid, businessMenuUuid) ||
-                other.businessMenuUuid == businessMenuUuid) &&
-            (identical(other.businessName, businessName) ||
-                other.businessName == businessName) &&
-            (identical(other.businessLogo, businessLogo) ||
-                other.businessLogo == businessLogo) &&
-            (identical(other.businessCountry, businessCountry) ||
-                other.businessCountry == businessCountry) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
-            (identical(other.splitMode, splitMode) ||
-                other.splitMode == splitMode) &&
-            (identical(other.payerFixedFee, payerFixedFee) ||
-                other.payerFixedFee == payerFixedFee) &&
-            (identical(other.subtotal, subtotal) ||
-                other.subtotal == subtotal) &&
-            (identical(other.totalAmount, totalAmount) ||
-                other.totalAmount == totalAmount) &&
-            (identical(other.totalPaid, totalPaid) ||
-                other.totalPaid == totalPaid) &&
-            (identical(other.confirmedAt, confirmedAt) ||
-                other.confirmedAt == confirmedAt) &&
-            (identical(other.fulfillmentStatus, fulfillmentStatus) ||
-                other.fulfillmentStatus == fulfillmentStatus) &&
-            (identical(other.roundNumber, roundNumber) ||
-                other.roundNumber == roundNumber) &&
-            (identical(other.tableLabel, tableLabel) ||
-                other.tableLabel == tableLabel) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            (identical(other.businessMenuUuid, businessMenuUuid) || other.businessMenuUuid == businessMenuUuid) &&
+            (identical(other.businessName, businessName) || other.businessName == businessName) &&
+            (identical(other.businessLogo, businessLogo) || other.businessLogo == businessLogo) &&
+            (identical(other.businessCountry, businessCountry) || other.businessCountry == businessCountry) &&
+            (identical(other.currency, currency) || other.currency == currency) &&
+            (identical(other.splitMode, splitMode) || other.splitMode == splitMode) &&
+            (identical(other.payerFixedFee, payerFixedFee) || other.payerFixedFee == payerFixedFee) &&
+            (identical(other.subtotal, subtotal) || other.subtotal == subtotal) &&
+            (identical(other.totalAmount, totalAmount) || other.totalAmount == totalAmount) &&
+            (identical(other.totalPaid, totalPaid) || other.totalPaid == totalPaid) &&
+            (identical(other.confirmedAt, confirmedAt) || other.confirmedAt == confirmedAt) &&
+            (identical(other.fulfillmentStatus, fulfillmentStatus) || other.fulfillmentStatus == fulfillmentStatus) &&
+            (identical(other.roundNumber, roundNumber) || other.roundNumber == roundNumber) &&
+            (identical(other.tableLabel, tableLabel) || other.tableLabel == tableLabel) &&
             (identical(other.businessTableService, businessTableService) ||
                 other.businessTableService == businessTableService) &&
-            (identical(other.offersMbWay, offersMbWay) ||
-                other.offersMbWay == offersMbWay) &&
-            (identical(other.offersBizum, offersBizum) ||
-                other.offersBizum == offersBizum) &&
-            (identical(other.paymentMode, paymentMode) ||
-                other.paymentMode == paymentMode) &&
-            (identical(other.billRequestedAt, billRequestedAt) ||
-                other.billRequestedAt == billRequestedAt) &&
-            (identical(other.cashRequestedAt, cashRequestedAt) ||
-                other.cashRequestedAt == cashRequestedAt) &&
-            (identical(other.closedReason, closedReason) ||
-                other.closedReason == closedReason) &&
-            (identical(other.closedAt, closedAt) ||
-                other.closedAt == closedAt) &&
-            (identical(other.lockExpiresAt, lockExpiresAt) ||
-                other.lockExpiresAt == lockExpiresAt) &&
-            (identical(other.graceEndsAt, graceEndsAt) ||
-                other.graceEndsAt == graceEndsAt) &&
-            const DeepCollectionEquality()
-                .equals(other.participants, participants) &&
+            (identical(other.offersMbWay, offersMbWay) || other.offersMbWay == offersMbWay) &&
+            (identical(other.offersBizum, offersBizum) || other.offersBizum == offersBizum) &&
+            (identical(other.paymentMode, paymentMode) || other.paymentMode == paymentMode) &&
+            (identical(other.billRequestedAt, billRequestedAt) || other.billRequestedAt == billRequestedAt) &&
+            (identical(other.cashRequestedAt, cashRequestedAt) || other.cashRequestedAt == cashRequestedAt) &&
+            (identical(other.closedReason, closedReason) || other.closedReason == closedReason) &&
+            (identical(other.closedAt, closedAt) || other.closedAt == closedAt) &&
+            (identical(other.lockExpiresAt, lockExpiresAt) || other.lockExpiresAt == lockExpiresAt) &&
+            (identical(other.graceEndsAt, graceEndsAt) || other.graceEndsAt == graceEndsAt) &&
+            const DeepCollectionEquality().equals(other.participants, participants) &&
             const DeepCollectionEquality().equals(other.items, items));
   }
 
@@ -1463,9 +1311,7 @@ mixin _$GroupOrderDM {
 
 /// @nodoc
 abstract mixin class $GroupOrderDMCopyWith<$Res> {
-  factory $GroupOrderDMCopyWith(
-          GroupOrderDM value, $Res Function(GroupOrderDM) _then) =
-      _$GroupOrderDMCopyWithImpl;
+  factory $GroupOrderDMCopyWith(GroupOrderDM value, $Res Function(GroupOrderDM) _then) = _$GroupOrderDMCopyWithImpl;
   @useResult
   $Res call(
       {String uuid,
@@ -1474,9 +1320,7 @@ abstract mixin class $GroupOrderDMCopyWith<$Res> {
       @JsonKey(name: 'business_menu_uuid') String? businessMenuUuid,
       @JsonKey(name: 'business_name') String businessName,
       @JsonKey(name: 'business_logo') String? businessLogo,
-      @JsonKey(
-          name: 'business_country',
-          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
       FoodlyCountries? businessCountry,
       String currency,
       @JsonKey(name: 'split_mode') GroupSplitMode splitMode,
@@ -1485,18 +1329,14 @@ abstract mixin class $GroupOrderDMCopyWith<$Res> {
       @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
       @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
       @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
-      @JsonKey(
-          name: 'fulfillment_status',
-          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      @JsonKey(name: 'fulfillment_status', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
       GroupFulfillmentStatus? fulfillmentStatus,
       @JsonKey(name: 'round_number') int roundNumber,
       @JsonKey(name: 'table_label') String? tableLabel,
       @JsonKey(name: 'business_table_service') bool businessTableService,
       @JsonKey(name: 'business_offers_mb_way') bool offersMbWay,
       @JsonKey(name: 'business_offers_bizum') bool offersBizum,
-      @JsonKey(
-          name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound)
-      GroupPaymentMode paymentMode,
+      @JsonKey(name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound) GroupPaymentMode paymentMode,
       @JsonKey(name: 'bill_requested_at') DateTime? billRequestedAt,
       @JsonKey(name: 'cash_requested_at') DateTime? cashRequestedAt,
       @JsonKey(name: 'closed_reason') String? closedReason,
@@ -1770,31 +1610,23 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(name: 'business_menu_uuid') String? businessMenuUuid,
             @JsonKey(name: 'business_name') String businessName,
             @JsonKey(name: 'business_logo') String? businessLogo,
-            @JsonKey(
-                name: 'business_country',
-                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
             FoodlyCountries? businessCountry,
             String currency,
             @JsonKey(name: 'split_mode') GroupSplitMode splitMode,
-            @JsonKey(name: 'payer_fixed_fee', fromJson: _money)
-            double payerFixedFee,
+            @JsonKey(name: 'payer_fixed_fee', fromJson: _money) double payerFixedFee,
             @JsonKey(fromJson: _money) double subtotal,
             @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
             @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
             @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
-            @JsonKey(
-                name: 'fulfillment_status',
-                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            @JsonKey(name: 'fulfillment_status', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
             GroupFulfillmentStatus? fulfillmentStatus,
             @JsonKey(name: 'round_number') int roundNumber,
             @JsonKey(name: 'table_label') String? tableLabel,
             @JsonKey(name: 'business_table_service') bool businessTableService,
             @JsonKey(name: 'business_offers_mb_way') bool offersMbWay,
             @JsonKey(name: 'business_offers_bizum') bool offersBizum,
-            @JsonKey(
-                name: 'payment_mode',
-                unknownEnumValue: GroupPaymentMode.perRound)
-            GroupPaymentMode paymentMode,
+            @JsonKey(name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound) GroupPaymentMode paymentMode,
             @JsonKey(name: 'bill_requested_at') DateTime? billRequestedAt,
             @JsonKey(name: 'cash_requested_at') DateTime? cashRequestedAt,
             @JsonKey(name: 'closed_reason') String? closedReason,
@@ -1866,31 +1698,23 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(name: 'business_menu_uuid') String? businessMenuUuid,
             @JsonKey(name: 'business_name') String businessName,
             @JsonKey(name: 'business_logo') String? businessLogo,
-            @JsonKey(
-                name: 'business_country',
-                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
             FoodlyCountries? businessCountry,
             String currency,
             @JsonKey(name: 'split_mode') GroupSplitMode splitMode,
-            @JsonKey(name: 'payer_fixed_fee', fromJson: _money)
-            double payerFixedFee,
+            @JsonKey(name: 'payer_fixed_fee', fromJson: _money) double payerFixedFee,
             @JsonKey(fromJson: _money) double subtotal,
             @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
             @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
             @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
-            @JsonKey(
-                name: 'fulfillment_status',
-                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            @JsonKey(name: 'fulfillment_status', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
             GroupFulfillmentStatus? fulfillmentStatus,
             @JsonKey(name: 'round_number') int roundNumber,
             @JsonKey(name: 'table_label') String? tableLabel,
             @JsonKey(name: 'business_table_service') bool businessTableService,
             @JsonKey(name: 'business_offers_mb_way') bool offersMbWay,
             @JsonKey(name: 'business_offers_bizum') bool offersBizum,
-            @JsonKey(
-                name: 'payment_mode',
-                unknownEnumValue: GroupPaymentMode.perRound)
-            GroupPaymentMode paymentMode,
+            @JsonKey(name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound) GroupPaymentMode paymentMode,
             @JsonKey(name: 'bill_requested_at') DateTime? billRequestedAt,
             @JsonKey(name: 'cash_requested_at') DateTime? cashRequestedAt,
             @JsonKey(name: 'closed_reason') String? closedReason,
@@ -1960,31 +1784,23 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(name: 'business_menu_uuid') String? businessMenuUuid,
             @JsonKey(name: 'business_name') String businessName,
             @JsonKey(name: 'business_logo') String? businessLogo,
-            @JsonKey(
-                name: 'business_country',
-                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
             FoodlyCountries? businessCountry,
             String currency,
             @JsonKey(name: 'split_mode') GroupSplitMode splitMode,
-            @JsonKey(name: 'payer_fixed_fee', fromJson: _money)
-            double payerFixedFee,
+            @JsonKey(name: 'payer_fixed_fee', fromJson: _money) double payerFixedFee,
             @JsonKey(fromJson: _money) double subtotal,
             @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
             @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
             @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
-            @JsonKey(
-                name: 'fulfillment_status',
-                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            @JsonKey(name: 'fulfillment_status', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
             GroupFulfillmentStatus? fulfillmentStatus,
             @JsonKey(name: 'round_number') int roundNumber,
             @JsonKey(name: 'table_label') String? tableLabel,
             @JsonKey(name: 'business_table_service') bool businessTableService,
             @JsonKey(name: 'business_offers_mb_way') bool offersMbWay,
             @JsonKey(name: 'business_offers_bizum') bool offersBizum,
-            @JsonKey(
-                name: 'payment_mode',
-                unknownEnumValue: GroupPaymentMode.perRound)
-            GroupPaymentMode paymentMode,
+            @JsonKey(name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound) GroupPaymentMode paymentMode,
             @JsonKey(name: 'bill_requested_at') DateTime? billRequestedAt,
             @JsonKey(name: 'cash_requested_at') DateTime? cashRequestedAt,
             @JsonKey(name: 'closed_reason') String? closedReason,
@@ -2044,30 +1860,21 @@ class _GroupOrderDM extends GroupOrderDM {
       @JsonKey(name: 'business_menu_uuid') this.businessMenuUuid,
       @JsonKey(name: 'business_name') this.businessName = '',
       @JsonKey(name: 'business_logo') this.businessLogo,
-      @JsonKey(
-          name: 'business_country',
-          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-      this.businessCountry,
+      @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue) this.businessCountry,
       this.currency = 'EUR',
       @JsonKey(name: 'split_mode') this.splitMode = GroupSplitMode.byItems,
-      @JsonKey(name: 'payer_fixed_fee', fromJson: _money)
-      this.payerFixedFee = 0.25,
+      @JsonKey(name: 'payer_fixed_fee', fromJson: _money) this.payerFixedFee = 0.25,
       @JsonKey(fromJson: _money) this.subtotal = 0,
       @JsonKey(name: 'total_amount', fromJson: _money) this.totalAmount = 0,
       @JsonKey(name: 'total_paid', fromJson: _money) this.totalPaid = 0,
       @JsonKey(name: 'confirmed_at') this.confirmedAt,
-      @JsonKey(
-          name: 'fulfillment_status',
-          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-      this.fulfillmentStatus,
+      @JsonKey(name: 'fulfillment_status', unknownEnumValue: JsonKey.nullForUndefinedEnumValue) this.fulfillmentStatus,
       @JsonKey(name: 'round_number') this.roundNumber = 1,
       @JsonKey(name: 'table_label') this.tableLabel,
-      @JsonKey(name: 'business_table_service')
-      this.businessTableService = false,
+      @JsonKey(name: 'business_table_service') this.businessTableService = false,
       @JsonKey(name: 'business_offers_mb_way') this.offersMbWay = false,
       @JsonKey(name: 'business_offers_bizum') this.offersBizum = false,
-      @JsonKey(
-          name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound)
+      @JsonKey(name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound)
       this.paymentMode = GroupPaymentMode.perRound,
       @JsonKey(name: 'bill_requested_at') this.billRequestedAt,
       @JsonKey(name: 'cash_requested_at') this.cashRequestedAt,
@@ -2075,14 +1882,12 @@ class _GroupOrderDM extends GroupOrderDM {
       @JsonKey(name: 'closed_at') this.closedAt,
       @JsonKey(name: 'lock_expires_at') this.lockExpiresAt,
       @JsonKey(name: 'grace_ends_at') this.graceEndsAt,
-      final List<GroupOrderParticipantDM> participants =
-          const <GroupOrderParticipantDM>[],
+      final List<GroupOrderParticipantDM> participants = const <GroupOrderParticipantDM>[],
       final List<GroupOrderItemDM> items = const <GroupOrderItemDM>[]})
       : _participants = participants,
         _items = items,
         super._();
-  factory _GroupOrderDM.fromJson(Map<String, dynamic> json) =>
-      _$GroupOrderDMFromJson(json);
+  factory _GroupOrderDM.fromJson(Map<String, dynamic> json) => _$GroupOrderDMFromJson(json);
 
   @override
   final String uuid;
@@ -2107,9 +1912,7 @@ class _GroupOrderDM extends GroupOrderDM {
 // `merchantCountryCode`. Viene en la orden y no de la sesión: quien paga
 // es el comensal, y el restaurante no es suyo.
   @override
-  @JsonKey(
-      name: 'business_country',
-      unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+  @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
   final FoodlyCountries? businessCountry;
   @override
   @JsonKey()
@@ -2136,9 +1939,7 @@ class _GroupOrderDM extends GroupOrderDM {
   @JsonKey(name: 'confirmed_at')
   final DateTime? confirmedAt;
   @override
-  @JsonKey(
-      name: 'fulfillment_status',
-      unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+  @JsonKey(name: 'fulfillment_status', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
   final GroupFulfillmentStatus? fulfillmentStatus;
   @override
   @JsonKey(name: 'round_number')
@@ -2221,8 +2022,7 @@ class _GroupOrderDM extends GroupOrderDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$GroupOrderDMCopyWith<_GroupOrderDM> get copyWith =>
-      __$GroupOrderDMCopyWithImpl<_GroupOrderDM>(this, _$identity);
+  _$GroupOrderDMCopyWith<_GroupOrderDM> get copyWith => __$GroupOrderDMCopyWithImpl<_GroupOrderDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -2238,58 +2038,33 @@ class _GroupOrderDM extends GroupOrderDM {
             other is _GroupOrderDM &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            (identical(other.businessMenuUuid, businessMenuUuid) ||
-                other.businessMenuUuid == businessMenuUuid) &&
-            (identical(other.businessName, businessName) ||
-                other.businessName == businessName) &&
-            (identical(other.businessLogo, businessLogo) ||
-                other.businessLogo == businessLogo) &&
-            (identical(other.businessCountry, businessCountry) ||
-                other.businessCountry == businessCountry) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
-            (identical(other.splitMode, splitMode) ||
-                other.splitMode == splitMode) &&
-            (identical(other.payerFixedFee, payerFixedFee) ||
-                other.payerFixedFee == payerFixedFee) &&
-            (identical(other.subtotal, subtotal) ||
-                other.subtotal == subtotal) &&
-            (identical(other.totalAmount, totalAmount) ||
-                other.totalAmount == totalAmount) &&
-            (identical(other.totalPaid, totalPaid) ||
-                other.totalPaid == totalPaid) &&
-            (identical(other.confirmedAt, confirmedAt) ||
-                other.confirmedAt == confirmedAt) &&
-            (identical(other.fulfillmentStatus, fulfillmentStatus) ||
-                other.fulfillmentStatus == fulfillmentStatus) &&
-            (identical(other.roundNumber, roundNumber) ||
-                other.roundNumber == roundNumber) &&
-            (identical(other.tableLabel, tableLabel) ||
-                other.tableLabel == tableLabel) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            (identical(other.businessMenuUuid, businessMenuUuid) || other.businessMenuUuid == businessMenuUuid) &&
+            (identical(other.businessName, businessName) || other.businessName == businessName) &&
+            (identical(other.businessLogo, businessLogo) || other.businessLogo == businessLogo) &&
+            (identical(other.businessCountry, businessCountry) || other.businessCountry == businessCountry) &&
+            (identical(other.currency, currency) || other.currency == currency) &&
+            (identical(other.splitMode, splitMode) || other.splitMode == splitMode) &&
+            (identical(other.payerFixedFee, payerFixedFee) || other.payerFixedFee == payerFixedFee) &&
+            (identical(other.subtotal, subtotal) || other.subtotal == subtotal) &&
+            (identical(other.totalAmount, totalAmount) || other.totalAmount == totalAmount) &&
+            (identical(other.totalPaid, totalPaid) || other.totalPaid == totalPaid) &&
+            (identical(other.confirmedAt, confirmedAt) || other.confirmedAt == confirmedAt) &&
+            (identical(other.fulfillmentStatus, fulfillmentStatus) || other.fulfillmentStatus == fulfillmentStatus) &&
+            (identical(other.roundNumber, roundNumber) || other.roundNumber == roundNumber) &&
+            (identical(other.tableLabel, tableLabel) || other.tableLabel == tableLabel) &&
             (identical(other.businessTableService, businessTableService) ||
                 other.businessTableService == businessTableService) &&
-            (identical(other.offersMbWay, offersMbWay) ||
-                other.offersMbWay == offersMbWay) &&
-            (identical(other.offersBizum, offersBizum) ||
-                other.offersBizum == offersBizum) &&
-            (identical(other.paymentMode, paymentMode) ||
-                other.paymentMode == paymentMode) &&
-            (identical(other.billRequestedAt, billRequestedAt) ||
-                other.billRequestedAt == billRequestedAt) &&
-            (identical(other.cashRequestedAt, cashRequestedAt) ||
-                other.cashRequestedAt == cashRequestedAt) &&
-            (identical(other.closedReason, closedReason) ||
-                other.closedReason == closedReason) &&
-            (identical(other.closedAt, closedAt) ||
-                other.closedAt == closedAt) &&
-            (identical(other.lockExpiresAt, lockExpiresAt) ||
-                other.lockExpiresAt == lockExpiresAt) &&
-            (identical(other.graceEndsAt, graceEndsAt) ||
-                other.graceEndsAt == graceEndsAt) &&
-            const DeepCollectionEquality()
-                .equals(other._participants, _participants) &&
+            (identical(other.offersMbWay, offersMbWay) || other.offersMbWay == offersMbWay) &&
+            (identical(other.offersBizum, offersBizum) || other.offersBizum == offersBizum) &&
+            (identical(other.paymentMode, paymentMode) || other.paymentMode == paymentMode) &&
+            (identical(other.billRequestedAt, billRequestedAt) || other.billRequestedAt == billRequestedAt) &&
+            (identical(other.cashRequestedAt, cashRequestedAt) || other.cashRequestedAt == cashRequestedAt) &&
+            (identical(other.closedReason, closedReason) || other.closedReason == closedReason) &&
+            (identical(other.closedAt, closedAt) || other.closedAt == closedAt) &&
+            (identical(other.lockExpiresAt, lockExpiresAt) || other.lockExpiresAt == lockExpiresAt) &&
+            (identical(other.graceEndsAt, graceEndsAt) || other.graceEndsAt == graceEndsAt) &&
+            const DeepCollectionEquality().equals(other._participants, _participants) &&
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
@@ -2335,11 +2110,8 @@ class _GroupOrderDM extends GroupOrderDM {
 }
 
 /// @nodoc
-abstract mixin class _$GroupOrderDMCopyWith<$Res>
-    implements $GroupOrderDMCopyWith<$Res> {
-  factory _$GroupOrderDMCopyWith(
-          _GroupOrderDM value, $Res Function(_GroupOrderDM) _then) =
-      __$GroupOrderDMCopyWithImpl;
+abstract mixin class _$GroupOrderDMCopyWith<$Res> implements $GroupOrderDMCopyWith<$Res> {
+  factory _$GroupOrderDMCopyWith(_GroupOrderDM value, $Res Function(_GroupOrderDM) _then) = __$GroupOrderDMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -2349,9 +2121,7 @@ abstract mixin class _$GroupOrderDMCopyWith<$Res>
       @JsonKey(name: 'business_menu_uuid') String? businessMenuUuid,
       @JsonKey(name: 'business_name') String businessName,
       @JsonKey(name: 'business_logo') String? businessLogo,
-      @JsonKey(
-          name: 'business_country',
-          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
       FoodlyCountries? businessCountry,
       String currency,
       @JsonKey(name: 'split_mode') GroupSplitMode splitMode,
@@ -2360,18 +2130,14 @@ abstract mixin class _$GroupOrderDMCopyWith<$Res>
       @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
       @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
       @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
-      @JsonKey(
-          name: 'fulfillment_status',
-          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      @JsonKey(name: 'fulfillment_status', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
       GroupFulfillmentStatus? fulfillmentStatus,
       @JsonKey(name: 'round_number') int roundNumber,
       @JsonKey(name: 'table_label') String? tableLabel,
       @JsonKey(name: 'business_table_service') bool businessTableService,
       @JsonKey(name: 'business_offers_mb_way') bool offersMbWay,
       @JsonKey(name: 'business_offers_bizum') bool offersBizum,
-      @JsonKey(
-          name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound)
-      GroupPaymentMode paymentMode,
+      @JsonKey(name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound) GroupPaymentMode paymentMode,
       @JsonKey(name: 'bill_requested_at') DateTime? billRequestedAt,
       @JsonKey(name: 'cash_requested_at') DateTime? cashRequestedAt,
       @JsonKey(name: 'closed_reason') String? closedReason,
@@ -2383,8 +2149,7 @@ abstract mixin class _$GroupOrderDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$GroupOrderDMCopyWithImpl<$Res>
-    implements _$GroupOrderDMCopyWith<$Res> {
+class __$GroupOrderDMCopyWithImpl<$Res> implements _$GroupOrderDMCopyWith<$Res> {
   __$GroupOrderDMCopyWithImpl(this._self, this._then);
 
   final _GroupOrderDM _self;
@@ -2561,8 +2326,7 @@ mixin _$GroupOrderResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $GroupOrderResponseDMCopyWith<GroupOrderResponseDM> get copyWith =>
-      _$GroupOrderResponseDMCopyWithImpl<GroupOrderResponseDM>(
-          this as GroupOrderResponseDM, _$identity);
+      _$GroupOrderResponseDMCopyWithImpl<GroupOrderResponseDM>(this as GroupOrderResponseDM, _$identity);
 
   /// Serializes this GroupOrderResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -2573,17 +2337,14 @@ mixin _$GroupOrderResponseDM {
         (other.runtimeType == runtimeType &&
             other is GroupOrderResponseDM &&
             (identical(other.success, success) || other.success == success) &&
-            (identical(other.groupOrder, groupOrder) ||
-                other.groupOrder == groupOrder) &&
+            (identical(other.groupOrder, groupOrder) || other.groupOrder == groupOrder) &&
             (identical(other.myShare, myShare) || other.myShare == myShare) &&
-            (identical(other.myParticipantUuid, myParticipantUuid) ||
-                other.myParticipantUuid == myParticipantUuid));
+            (identical(other.myParticipantUuid, myParticipantUuid) || other.myParticipantUuid == myParticipantUuid));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, success, groupOrder, myShare, myParticipantUuid);
+  int get hashCode => Object.hash(runtimeType, success, groupOrder, myShare, myParticipantUuid);
 
   @override
   String toString() {
@@ -2593,8 +2354,7 @@ mixin _$GroupOrderResponseDM {
 
 /// @nodoc
 abstract mixin class $GroupOrderResponseDMCopyWith<$Res> {
-  factory $GroupOrderResponseDMCopyWith(GroupOrderResponseDM value,
-          $Res Function(GroupOrderResponseDM) _then) =
+  factory $GroupOrderResponseDMCopyWith(GroupOrderResponseDM value, $Res Function(GroupOrderResponseDM) _then) =
       _$GroupOrderResponseDMCopyWithImpl;
   @useResult
   $Res call(
@@ -2607,8 +2367,7 @@ abstract mixin class $GroupOrderResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$GroupOrderResponseDMCopyWithImpl<$Res>
-    implements $GroupOrderResponseDMCopyWith<$Res> {
+class _$GroupOrderResponseDMCopyWithImpl<$Res> implements $GroupOrderResponseDMCopyWith<$Res> {
   _$GroupOrderResponseDMCopyWithImpl(this._self, this._then);
 
   final GroupOrderResponseDM _self;
@@ -2759,8 +2518,7 @@ extension GroupOrderResponseDMPatterns on GroupOrderResponseDM {
     final _that = this;
     switch (_that) {
       case _GroupOrderResponseDM() when $default != null:
-        return $default(_that.success, _that.groupOrder, _that.myShare,
-            _that.myParticipantUuid);
+        return $default(_that.success, _that.groupOrder, _that.myShare, _that.myParticipantUuid);
       case _:
         return orElse();
     }
@@ -2791,8 +2549,7 @@ extension GroupOrderResponseDMPatterns on GroupOrderResponseDM {
     final _that = this;
     switch (_that) {
       case _GroupOrderResponseDM():
-        return $default(_that.success, _that.groupOrder, _that.myShare,
-            _that.myParticipantUuid);
+        return $default(_that.success, _that.groupOrder, _that.myShare, _that.myParticipantUuid);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -2822,8 +2579,7 @@ extension GroupOrderResponseDMPatterns on GroupOrderResponseDM {
     final _that = this;
     switch (_that) {
       case _GroupOrderResponseDM() when $default != null:
-        return $default(_that.success, _that.groupOrder, _that.myShare,
-            _that.myParticipantUuid);
+        return $default(_that.success, _that.groupOrder, _that.myShare, _that.myParticipantUuid);
       case _:
         return null;
     }
@@ -2838,8 +2594,7 @@ class _GroupOrderResponseDM implements GroupOrderResponseDM {
       @JsonKey(name: 'group_order') required this.groupOrder,
       @JsonKey(name: 'my_share', fromJson: _money) this.myShare = 0,
       @JsonKey(name: 'my_participant_uuid') this.myParticipantUuid});
-  factory _GroupOrderResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$GroupOrderResponseDMFromJson(json);
+  factory _GroupOrderResponseDM.fromJson(Map<String, dynamic> json) => _$GroupOrderResponseDMFromJson(json);
 
   @override
   @JsonKey()
@@ -2860,8 +2615,7 @@ class _GroupOrderResponseDM implements GroupOrderResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$GroupOrderResponseDMCopyWith<_GroupOrderResponseDM> get copyWith =>
-      __$GroupOrderResponseDMCopyWithImpl<_GroupOrderResponseDM>(
-          this, _$identity);
+      __$GroupOrderResponseDMCopyWithImpl<_GroupOrderResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -2876,17 +2630,14 @@ class _GroupOrderResponseDM implements GroupOrderResponseDM {
         (other.runtimeType == runtimeType &&
             other is _GroupOrderResponseDM &&
             (identical(other.success, success) || other.success == success) &&
-            (identical(other.groupOrder, groupOrder) ||
-                other.groupOrder == groupOrder) &&
+            (identical(other.groupOrder, groupOrder) || other.groupOrder == groupOrder) &&
             (identical(other.myShare, myShare) || other.myShare == myShare) &&
-            (identical(other.myParticipantUuid, myParticipantUuid) ||
-                other.myParticipantUuid == myParticipantUuid));
+            (identical(other.myParticipantUuid, myParticipantUuid) || other.myParticipantUuid == myParticipantUuid));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, success, groupOrder, myShare, myParticipantUuid);
+  int get hashCode => Object.hash(runtimeType, success, groupOrder, myShare, myParticipantUuid);
 
   @override
   String toString() {
@@ -2895,10 +2646,8 @@ class _GroupOrderResponseDM implements GroupOrderResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$GroupOrderResponseDMCopyWith<$Res>
-    implements $GroupOrderResponseDMCopyWith<$Res> {
-  factory _$GroupOrderResponseDMCopyWith(_GroupOrderResponseDM value,
-          $Res Function(_GroupOrderResponseDM) _then) =
+abstract mixin class _$GroupOrderResponseDMCopyWith<$Res> implements $GroupOrderResponseDMCopyWith<$Res> {
+  factory _$GroupOrderResponseDMCopyWith(_GroupOrderResponseDM value, $Res Function(_GroupOrderResponseDM) _then) =
       __$GroupOrderResponseDMCopyWithImpl;
   @override
   @useResult
@@ -2913,8 +2662,7 @@ abstract mixin class _$GroupOrderResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$GroupOrderResponseDMCopyWithImpl<$Res>
-    implements _$GroupOrderResponseDMCopyWith<$Res> {
+class __$GroupOrderResponseDMCopyWithImpl<$Res> implements _$GroupOrderResponseDMCopyWith<$Res> {
   __$GroupOrderResponseDMCopyWithImpl(this._self, this._then);
 
   final _GroupOrderResponseDM _self;
@@ -2972,8 +2720,7 @@ mixin _$GroupOrdersListResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $GroupOrdersListResponseDMCopyWith<GroupOrdersListResponseDM> get copyWith =>
-      _$GroupOrdersListResponseDMCopyWithImpl<GroupOrdersListResponseDM>(
-          this as GroupOrdersListResponseDM, _$identity);
+      _$GroupOrdersListResponseDMCopyWithImpl<GroupOrdersListResponseDM>(this as GroupOrdersListResponseDM, _$identity);
 
   /// Serializes this GroupOrdersListResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -2984,14 +2731,12 @@ mixin _$GroupOrdersListResponseDM {
         (other.runtimeType == runtimeType &&
             other is GroupOrdersListResponseDM &&
             (identical(other.success, success) || other.success == success) &&
-            const DeepCollectionEquality()
-                .equals(other.groupOrders, groupOrders));
+            const DeepCollectionEquality().equals(other.groupOrders, groupOrders));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, success, const DeepCollectionEquality().hash(groupOrders));
+  int get hashCode => Object.hash(runtimeType, success, const DeepCollectionEquality().hash(groupOrders));
 
   @override
   String toString() {
@@ -3001,18 +2746,15 @@ mixin _$GroupOrdersListResponseDM {
 
 /// @nodoc
 abstract mixin class $GroupOrdersListResponseDMCopyWith<$Res> {
-  factory $GroupOrdersListResponseDMCopyWith(GroupOrdersListResponseDM value,
-          $Res Function(GroupOrdersListResponseDM) _then) =
+  factory $GroupOrdersListResponseDMCopyWith(
+          GroupOrdersListResponseDM value, $Res Function(GroupOrdersListResponseDM) _then) =
       _$GroupOrdersListResponseDMCopyWithImpl;
   @useResult
-  $Res call(
-      {bool success,
-      @JsonKey(name: 'group_orders') List<GroupOrderDM> groupOrders});
+  $Res call({bool success, @JsonKey(name: 'group_orders') List<GroupOrderDM> groupOrders});
 }
 
 /// @nodoc
-class _$GroupOrdersListResponseDMCopyWithImpl<$Res>
-    implements $GroupOrdersListResponseDMCopyWith<$Res> {
+class _$GroupOrdersListResponseDMCopyWithImpl<$Res> implements $GroupOrdersListResponseDMCopyWith<$Res> {
   _$GroupOrdersListResponseDMCopyWithImpl(this._self, this._then);
 
   final GroupOrdersListResponseDM _self;
@@ -3132,9 +2874,7 @@ extension GroupOrdersListResponseDMPatterns on GroupOrdersListResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(bool success,
-            @JsonKey(name: 'group_orders') List<GroupOrderDM> groupOrders)?
-        $default, {
+    TResult Function(bool success, @JsonKey(name: 'group_orders') List<GroupOrderDM> groupOrders)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -3161,9 +2901,7 @@ extension GroupOrdersListResponseDMPatterns on GroupOrdersListResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(bool success,
-            @JsonKey(name: 'group_orders') List<GroupOrderDM> groupOrders)
-        $default,
+    TResult Function(bool success, @JsonKey(name: 'group_orders') List<GroupOrderDM> groupOrders) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -3188,9 +2926,7 @@ extension GroupOrdersListResponseDMPatterns on GroupOrdersListResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(bool success,
-            @JsonKey(name: 'group_orders') List<GroupOrderDM> groupOrders)?
-        $default,
+    TResult? Function(bool success, @JsonKey(name: 'group_orders') List<GroupOrderDM> groupOrders)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -3207,11 +2943,9 @@ extension GroupOrdersListResponseDMPatterns on GroupOrdersListResponseDM {
 class _GroupOrdersListResponseDM implements GroupOrdersListResponseDM {
   const _GroupOrdersListResponseDM(
       {this.success = true,
-      @JsonKey(name: 'group_orders')
-      final List<GroupOrderDM> groupOrders = const <GroupOrderDM>[]})
+      @JsonKey(name: 'group_orders') final List<GroupOrderDM> groupOrders = const <GroupOrderDM>[]})
       : _groupOrders = groupOrders;
-  factory _GroupOrdersListResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$GroupOrdersListResponseDMFromJson(json);
+  factory _GroupOrdersListResponseDM.fromJson(Map<String, dynamic> json) => _$GroupOrdersListResponseDMFromJson(json);
 
   @override
   @JsonKey()
@@ -3230,10 +2964,8 @@ class _GroupOrdersListResponseDM implements GroupOrdersListResponseDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$GroupOrdersListResponseDMCopyWith<_GroupOrdersListResponseDM>
-      get copyWith =>
-          __$GroupOrdersListResponseDMCopyWithImpl<_GroupOrdersListResponseDM>(
-              this, _$identity);
+  _$GroupOrdersListResponseDMCopyWith<_GroupOrdersListResponseDM> get copyWith =>
+      __$GroupOrdersListResponseDMCopyWithImpl<_GroupOrdersListResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -3248,14 +2980,12 @@ class _GroupOrdersListResponseDM implements GroupOrdersListResponseDM {
         (other.runtimeType == runtimeType &&
             other is _GroupOrdersListResponseDM &&
             (identical(other.success, success) || other.success == success) &&
-            const DeepCollectionEquality()
-                .equals(other._groupOrders, _groupOrders));
+            const DeepCollectionEquality().equals(other._groupOrders, _groupOrders));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, success, const DeepCollectionEquality().hash(_groupOrders));
+  int get hashCode => Object.hash(runtimeType, success, const DeepCollectionEquality().hash(_groupOrders));
 
   @override
   String toString() {
@@ -3264,21 +2994,17 @@ class _GroupOrdersListResponseDM implements GroupOrdersListResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$GroupOrdersListResponseDMCopyWith<$Res>
-    implements $GroupOrdersListResponseDMCopyWith<$Res> {
-  factory _$GroupOrdersListResponseDMCopyWith(_GroupOrdersListResponseDM value,
-          $Res Function(_GroupOrdersListResponseDM) _then) =
+abstract mixin class _$GroupOrdersListResponseDMCopyWith<$Res> implements $GroupOrdersListResponseDMCopyWith<$Res> {
+  factory _$GroupOrdersListResponseDMCopyWith(
+          _GroupOrdersListResponseDM value, $Res Function(_GroupOrdersListResponseDM) _then) =
       __$GroupOrdersListResponseDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {bool success,
-      @JsonKey(name: 'group_orders') List<GroupOrderDM> groupOrders});
+  $Res call({bool success, @JsonKey(name: 'group_orders') List<GroupOrderDM> groupOrders});
 }
 
 /// @nodoc
-class __$GroupOrdersListResponseDMCopyWithImpl<$Res>
-    implements _$GroupOrdersListResponseDMCopyWith<$Res> {
+class __$GroupOrdersListResponseDMCopyWithImpl<$Res> implements _$GroupOrdersListResponseDMCopyWith<$Res> {
   __$GroupOrdersListResponseDMCopyWithImpl(this._self, this._then);
 
   final _GroupOrdersListResponseDM _self;
@@ -3317,8 +3043,7 @@ mixin _$PayIntentResponseDM {
   @JsonKey(name: 'transaction_uuid')
   String? get transactionUuid;
   @JsonKey(fromJson: _money)
-  double
-      get amount; // Propina (F2c §B.2), tarifa del comensal y total cobrado (base+tip+fee).
+  double get amount; // Propina (F2c §B.2), tarifa del comensal y total cobrado (base+tip+fee).
   @JsonKey(name: 'tip_amount', fromJson: _money)
   double get tipAmount;
   @JsonKey(name: 'service_fee_amount', fromJson: _money)
@@ -3334,8 +3059,7 @@ mixin _$PayIntentResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PayIntentResponseDMCopyWith<PayIntentResponseDM> get copyWith =>
-      _$PayIntentResponseDMCopyWithImpl<PayIntentResponseDM>(
-          this as PayIntentResponseDM, _$identity);
+      _$PayIntentResponseDMCopyWithImpl<PayIntentResponseDM>(this as PayIntentResponseDM, _$identity);
 
   /// Serializes this PayIntentResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -3345,38 +3069,21 @@ mixin _$PayIntentResponseDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is PayIntentResponseDM &&
-            (identical(other.clientSecret, clientSecret) ||
-                other.clientSecret == clientSecret) &&
-            (identical(other.checkoutUrl, checkoutUrl) ||
-                other.checkoutUrl == checkoutUrl) &&
-            (identical(other.transactionUuid, transactionUuid) ||
-                other.transactionUuid == transactionUuid) &&
+            (identical(other.clientSecret, clientSecret) || other.clientSecret == clientSecret) &&
+            (identical(other.checkoutUrl, checkoutUrl) || other.checkoutUrl == checkoutUrl) &&
+            (identical(other.transactionUuid, transactionUuid) || other.transactionUuid == transactionUuid) &&
             (identical(other.amount, amount) || other.amount == amount) &&
-            (identical(other.tipAmount, tipAmount) ||
-                other.tipAmount == tipAmount) &&
-            (identical(other.serviceFeeAmount, serviceFeeAmount) ||
-                other.serviceFeeAmount == serviceFeeAmount) &&
-            (identical(other.totalCharged, totalCharged) ||
-                other.totalCharged == totalCharged) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
-            const DeepCollectionEquality().equals(
-                other.coveredParticipantUuids, coveredParticipantUuids));
+            (identical(other.tipAmount, tipAmount) || other.tipAmount == tipAmount) &&
+            (identical(other.serviceFeeAmount, serviceFeeAmount) || other.serviceFeeAmount == serviceFeeAmount) &&
+            (identical(other.totalCharged, totalCharged) || other.totalCharged == totalCharged) &&
+            (identical(other.currency, currency) || other.currency == currency) &&
+            const DeepCollectionEquality().equals(other.coveredParticipantUuids, coveredParticipantUuids));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      clientSecret,
-      checkoutUrl,
-      transactionUuid,
-      amount,
-      tipAmount,
-      serviceFeeAmount,
-      totalCharged,
-      currency,
-      const DeepCollectionEquality().hash(coveredParticipantUuids));
+  int get hashCode => Object.hash(runtimeType, clientSecret, checkoutUrl, transactionUuid, amount, tipAmount,
+      serviceFeeAmount, totalCharged, currency, const DeepCollectionEquality().hash(coveredParticipantUuids));
 
   @override
   String toString() {
@@ -3386,8 +3093,7 @@ mixin _$PayIntentResponseDM {
 
 /// @nodoc
 abstract mixin class $PayIntentResponseDMCopyWith<$Res> {
-  factory $PayIntentResponseDMCopyWith(
-          PayIntentResponseDM value, $Res Function(PayIntentResponseDM) _then) =
+  factory $PayIntentResponseDMCopyWith(PayIntentResponseDM value, $Res Function(PayIntentResponseDM) _then) =
       _$PayIntentResponseDMCopyWithImpl;
   @useResult
   $Res call(
@@ -3396,17 +3102,14 @@ abstract mixin class $PayIntentResponseDMCopyWith<$Res> {
       @JsonKey(name: 'transaction_uuid') String? transactionUuid,
       @JsonKey(fromJson: _money) double amount,
       @JsonKey(name: 'tip_amount', fromJson: _money) double tipAmount,
-      @JsonKey(name: 'service_fee_amount', fromJson: _money)
-      double serviceFeeAmount,
+      @JsonKey(name: 'service_fee_amount', fromJson: _money) double serviceFeeAmount,
       @JsonKey(name: 'total_charged', fromJson: _money) double totalCharged,
       String currency,
-      @JsonKey(name: 'covered_participant_uuids')
-      List<String> coveredParticipantUuids});
+      @JsonKey(name: 'covered_participant_uuids') List<String> coveredParticipantUuids});
 }
 
 /// @nodoc
-class _$PayIntentResponseDMCopyWithImpl<$Res>
-    implements $PayIntentResponseDMCopyWith<$Res> {
+class _$PayIntentResponseDMCopyWithImpl<$Res> implements $PayIntentResponseDMCopyWith<$Res> {
   _$PayIntentResponseDMCopyWithImpl(this._self, this._then);
 
   final PayIntentResponseDM _self;
@@ -3567,29 +3270,18 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
             @JsonKey(name: 'transaction_uuid') String? transactionUuid,
             @JsonKey(fromJson: _money) double amount,
             @JsonKey(name: 'tip_amount', fromJson: _money) double tipAmount,
-            @JsonKey(name: 'service_fee_amount', fromJson: _money)
-            double serviceFeeAmount,
-            @JsonKey(name: 'total_charged', fromJson: _money)
-            double totalCharged,
+            @JsonKey(name: 'service_fee_amount', fromJson: _money) double serviceFeeAmount,
+            @JsonKey(name: 'total_charged', fromJson: _money) double totalCharged,
             String currency,
-            @JsonKey(name: 'covered_participant_uuids')
-            List<String> coveredParticipantUuids)?
+            @JsonKey(name: 'covered_participant_uuids') List<String> coveredParticipantUuids)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _PayIntentResponseDM() when $default != null:
-        return $default(
-            _that.clientSecret,
-            _that.checkoutUrl,
-            _that.transactionUuid,
-            _that.amount,
-            _that.tipAmount,
-            _that.serviceFeeAmount,
-            _that.totalCharged,
-            _that.currency,
-            _that.coveredParticipantUuids);
+        return $default(_that.clientSecret, _that.checkoutUrl, _that.transactionUuid, _that.amount, _that.tipAmount,
+            _that.serviceFeeAmount, _that.totalCharged, _that.currency, _that.coveredParticipantUuids);
       case _:
         return orElse();
     }
@@ -3616,28 +3308,17 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
             @JsonKey(name: 'transaction_uuid') String? transactionUuid,
             @JsonKey(fromJson: _money) double amount,
             @JsonKey(name: 'tip_amount', fromJson: _money) double tipAmount,
-            @JsonKey(name: 'service_fee_amount', fromJson: _money)
-            double serviceFeeAmount,
-            @JsonKey(name: 'total_charged', fromJson: _money)
-            double totalCharged,
+            @JsonKey(name: 'service_fee_amount', fromJson: _money) double serviceFeeAmount,
+            @JsonKey(name: 'total_charged', fromJson: _money) double totalCharged,
             String currency,
-            @JsonKey(name: 'covered_participant_uuids')
-            List<String> coveredParticipantUuids)
+            @JsonKey(name: 'covered_participant_uuids') List<String> coveredParticipantUuids)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PayIntentResponseDM():
-        return $default(
-            _that.clientSecret,
-            _that.checkoutUrl,
-            _that.transactionUuid,
-            _that.amount,
-            _that.tipAmount,
-            _that.serviceFeeAmount,
-            _that.totalCharged,
-            _that.currency,
-            _that.coveredParticipantUuids);
+        return $default(_that.clientSecret, _that.checkoutUrl, _that.transactionUuid, _that.amount, _that.tipAmount,
+            _that.serviceFeeAmount, _that.totalCharged, _that.currency, _that.coveredParticipantUuids);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -3663,28 +3344,17 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
             @JsonKey(name: 'transaction_uuid') String? transactionUuid,
             @JsonKey(fromJson: _money) double amount,
             @JsonKey(name: 'tip_amount', fromJson: _money) double tipAmount,
-            @JsonKey(name: 'service_fee_amount', fromJson: _money)
-            double serviceFeeAmount,
-            @JsonKey(name: 'total_charged', fromJson: _money)
-            double totalCharged,
+            @JsonKey(name: 'service_fee_amount', fromJson: _money) double serviceFeeAmount,
+            @JsonKey(name: 'total_charged', fromJson: _money) double totalCharged,
             String currency,
-            @JsonKey(name: 'covered_participant_uuids')
-            List<String> coveredParticipantUuids)?
+            @JsonKey(name: 'covered_participant_uuids') List<String> coveredParticipantUuids)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PayIntentResponseDM() when $default != null:
-        return $default(
-            _that.clientSecret,
-            _that.checkoutUrl,
-            _that.transactionUuid,
-            _that.amount,
-            _that.tipAmount,
-            _that.serviceFeeAmount,
-            _that.totalCharged,
-            _that.currency,
-            _that.coveredParticipantUuids);
+        return $default(_that.clientSecret, _that.checkoutUrl, _that.transactionUuid, _that.amount, _that.tipAmount,
+            _that.serviceFeeAmount, _that.totalCharged, _that.currency, _that.coveredParticipantUuids);
       case _:
         return null;
     }
@@ -3700,15 +3370,12 @@ class _PayIntentResponseDM implements PayIntentResponseDM {
       @JsonKey(name: 'transaction_uuid') this.transactionUuid,
       @JsonKey(fromJson: _money) this.amount = 0,
       @JsonKey(name: 'tip_amount', fromJson: _money) this.tipAmount = 0,
-      @JsonKey(name: 'service_fee_amount', fromJson: _money)
-      this.serviceFeeAmount = 0,
+      @JsonKey(name: 'service_fee_amount', fromJson: _money) this.serviceFeeAmount = 0,
       @JsonKey(name: 'total_charged', fromJson: _money) this.totalCharged = 0,
       this.currency = 'EUR',
-      @JsonKey(name: 'covered_participant_uuids')
-      final List<String> coveredParticipantUuids = const <String>[]})
+      @JsonKey(name: 'covered_participant_uuids') final List<String> coveredParticipantUuids = const <String>[]})
       : _coveredParticipantUuids = coveredParticipantUuids;
-  factory _PayIntentResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$PayIntentResponseDMFromJson(json);
+  factory _PayIntentResponseDM.fromJson(Map<String, dynamic> json) => _$PayIntentResponseDMFromJson(json);
 
   @override
   @JsonKey(name: 'client_secret')
@@ -3744,8 +3411,7 @@ class _PayIntentResponseDM implements PayIntentResponseDM {
   @override
   @JsonKey(name: 'covered_participant_uuids')
   List<String> get coveredParticipantUuids {
-    if (_coveredParticipantUuids is EqualUnmodifiableListView)
-      return _coveredParticipantUuids;
+    if (_coveredParticipantUuids is EqualUnmodifiableListView) return _coveredParticipantUuids;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_coveredParticipantUuids);
   }
@@ -3756,8 +3422,7 @@ class _PayIntentResponseDM implements PayIntentResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$PayIntentResponseDMCopyWith<_PayIntentResponseDM> get copyWith =>
-      __$PayIntentResponseDMCopyWithImpl<_PayIntentResponseDM>(
-          this, _$identity);
+      __$PayIntentResponseDMCopyWithImpl<_PayIntentResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -3771,38 +3436,21 @@ class _PayIntentResponseDM implements PayIntentResponseDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _PayIntentResponseDM &&
-            (identical(other.clientSecret, clientSecret) ||
-                other.clientSecret == clientSecret) &&
-            (identical(other.checkoutUrl, checkoutUrl) ||
-                other.checkoutUrl == checkoutUrl) &&
-            (identical(other.transactionUuid, transactionUuid) ||
-                other.transactionUuid == transactionUuid) &&
+            (identical(other.clientSecret, clientSecret) || other.clientSecret == clientSecret) &&
+            (identical(other.checkoutUrl, checkoutUrl) || other.checkoutUrl == checkoutUrl) &&
+            (identical(other.transactionUuid, transactionUuid) || other.transactionUuid == transactionUuid) &&
             (identical(other.amount, amount) || other.amount == amount) &&
-            (identical(other.tipAmount, tipAmount) ||
-                other.tipAmount == tipAmount) &&
-            (identical(other.serviceFeeAmount, serviceFeeAmount) ||
-                other.serviceFeeAmount == serviceFeeAmount) &&
-            (identical(other.totalCharged, totalCharged) ||
-                other.totalCharged == totalCharged) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
-            const DeepCollectionEquality().equals(
-                other._coveredParticipantUuids, _coveredParticipantUuids));
+            (identical(other.tipAmount, tipAmount) || other.tipAmount == tipAmount) &&
+            (identical(other.serviceFeeAmount, serviceFeeAmount) || other.serviceFeeAmount == serviceFeeAmount) &&
+            (identical(other.totalCharged, totalCharged) || other.totalCharged == totalCharged) &&
+            (identical(other.currency, currency) || other.currency == currency) &&
+            const DeepCollectionEquality().equals(other._coveredParticipantUuids, _coveredParticipantUuids));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      clientSecret,
-      checkoutUrl,
-      transactionUuid,
-      amount,
-      tipAmount,
-      serviceFeeAmount,
-      totalCharged,
-      currency,
-      const DeepCollectionEquality().hash(_coveredParticipantUuids));
+  int get hashCode => Object.hash(runtimeType, clientSecret, checkoutUrl, transactionUuid, amount, tipAmount,
+      serviceFeeAmount, totalCharged, currency, const DeepCollectionEquality().hash(_coveredParticipantUuids));
 
   @override
   String toString() {
@@ -3811,10 +3459,8 @@ class _PayIntentResponseDM implements PayIntentResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$PayIntentResponseDMCopyWith<$Res>
-    implements $PayIntentResponseDMCopyWith<$Res> {
-  factory _$PayIntentResponseDMCopyWith(_PayIntentResponseDM value,
-          $Res Function(_PayIntentResponseDM) _then) =
+abstract mixin class _$PayIntentResponseDMCopyWith<$Res> implements $PayIntentResponseDMCopyWith<$Res> {
+  factory _$PayIntentResponseDMCopyWith(_PayIntentResponseDM value, $Res Function(_PayIntentResponseDM) _then) =
       __$PayIntentResponseDMCopyWithImpl;
   @override
   @useResult
@@ -3824,17 +3470,14 @@ abstract mixin class _$PayIntentResponseDMCopyWith<$Res>
       @JsonKey(name: 'transaction_uuid') String? transactionUuid,
       @JsonKey(fromJson: _money) double amount,
       @JsonKey(name: 'tip_amount', fromJson: _money) double tipAmount,
-      @JsonKey(name: 'service_fee_amount', fromJson: _money)
-      double serviceFeeAmount,
+      @JsonKey(name: 'service_fee_amount', fromJson: _money) double serviceFeeAmount,
       @JsonKey(name: 'total_charged', fromJson: _money) double totalCharged,
       String currency,
-      @JsonKey(name: 'covered_participant_uuids')
-      List<String> coveredParticipantUuids});
+      @JsonKey(name: 'covered_participant_uuids') List<String> coveredParticipantUuids});
 }
 
 /// @nodoc
-class __$PayIntentResponseDMCopyWithImpl<$Res>
-    implements _$PayIntentResponseDMCopyWith<$Res> {
+class __$PayIntentResponseDMCopyWithImpl<$Res> implements _$PayIntentResponseDMCopyWith<$Res> {
   __$PayIntentResponseDMCopyWithImpl(this._self, this._then);
 
   final _PayIntentResponseDM _self;
@@ -3900,8 +3543,7 @@ class __$PayIntentResponseDMCopyWithImpl<$Res>
 mixin _$GroupInviteResponseDM {
   bool get success;
   @JsonKey(name: 'invite_token')
-  String?
-      get inviteToken; // Código corto tipeable (F3a): lo comparte el host con la mesa.
+  String? get inviteToken; // Código corto tipeable (F3a): lo comparte el host con la mesa.
   @JsonKey(name: 'invite_code')
   String? get inviteCode;
   @JsonKey(name: 'invite_url')
@@ -3912,8 +3554,7 @@ mixin _$GroupInviteResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $GroupInviteResponseDMCopyWith<GroupInviteResponseDM> get copyWith =>
-      _$GroupInviteResponseDMCopyWithImpl<GroupInviteResponseDM>(
-          this as GroupInviteResponseDM, _$identity);
+      _$GroupInviteResponseDMCopyWithImpl<GroupInviteResponseDM>(this as GroupInviteResponseDM, _$identity);
 
   /// Serializes this GroupInviteResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -3924,18 +3565,14 @@ mixin _$GroupInviteResponseDM {
         (other.runtimeType == runtimeType &&
             other is GroupInviteResponseDM &&
             (identical(other.success, success) || other.success == success) &&
-            (identical(other.inviteToken, inviteToken) ||
-                other.inviteToken == inviteToken) &&
-            (identical(other.inviteCode, inviteCode) ||
-                other.inviteCode == inviteCode) &&
-            (identical(other.inviteUrl, inviteUrl) ||
-                other.inviteUrl == inviteUrl));
+            (identical(other.inviteToken, inviteToken) || other.inviteToken == inviteToken) &&
+            (identical(other.inviteCode, inviteCode) || other.inviteCode == inviteCode) &&
+            (identical(other.inviteUrl, inviteUrl) || other.inviteUrl == inviteUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, success, inviteToken, inviteCode, inviteUrl);
+  int get hashCode => Object.hash(runtimeType, success, inviteToken, inviteCode, inviteUrl);
 
   @override
   String toString() {
@@ -3945,8 +3582,7 @@ mixin _$GroupInviteResponseDM {
 
 /// @nodoc
 abstract mixin class $GroupInviteResponseDMCopyWith<$Res> {
-  factory $GroupInviteResponseDMCopyWith(GroupInviteResponseDM value,
-          $Res Function(GroupInviteResponseDM) _then) =
+  factory $GroupInviteResponseDMCopyWith(GroupInviteResponseDM value, $Res Function(GroupInviteResponseDM) _then) =
       _$GroupInviteResponseDMCopyWithImpl;
   @useResult
   $Res call(
@@ -3957,8 +3593,7 @@ abstract mixin class $GroupInviteResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$GroupInviteResponseDMCopyWithImpl<$Res>
-    implements $GroupInviteResponseDMCopyWith<$Res> {
+class _$GroupInviteResponseDMCopyWithImpl<$Res> implements $GroupInviteResponseDMCopyWith<$Res> {
   _$GroupInviteResponseDMCopyWithImpl(this._self, this._then);
 
   final GroupInviteResponseDM _self;
@@ -4088,19 +3723,15 @@ extension GroupInviteResponseDMPatterns on GroupInviteResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            bool success,
-            @JsonKey(name: 'invite_token') String? inviteToken,
-            @JsonKey(name: 'invite_code') String? inviteCode,
-            @JsonKey(name: 'invite_url') String? inviteUrl)?
+    TResult Function(bool success, @JsonKey(name: 'invite_token') String? inviteToken,
+            @JsonKey(name: 'invite_code') String? inviteCode, @JsonKey(name: 'invite_url') String? inviteUrl)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _GroupInviteResponseDM() when $default != null:
-        return $default(_that.success, _that.inviteToken, _that.inviteCode,
-            _that.inviteUrl);
+        return $default(_that.success, _that.inviteToken, _that.inviteCode, _that.inviteUrl);
       case _:
         return orElse();
     }
@@ -4121,18 +3752,14 @@ extension GroupInviteResponseDMPatterns on GroupInviteResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            bool success,
-            @JsonKey(name: 'invite_token') String? inviteToken,
-            @JsonKey(name: 'invite_code') String? inviteCode,
-            @JsonKey(name: 'invite_url') String? inviteUrl)
+    TResult Function(bool success, @JsonKey(name: 'invite_token') String? inviteToken,
+            @JsonKey(name: 'invite_code') String? inviteCode, @JsonKey(name: 'invite_url') String? inviteUrl)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _GroupInviteResponseDM():
-        return $default(_that.success, _that.inviteToken, _that.inviteCode,
-            _that.inviteUrl);
+        return $default(_that.success, _that.inviteToken, _that.inviteCode, _that.inviteUrl);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -4152,18 +3779,14 @@ extension GroupInviteResponseDMPatterns on GroupInviteResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            bool success,
-            @JsonKey(name: 'invite_token') String? inviteToken,
-            @JsonKey(name: 'invite_code') String? inviteCode,
-            @JsonKey(name: 'invite_url') String? inviteUrl)?
+    TResult? Function(bool success, @JsonKey(name: 'invite_token') String? inviteToken,
+            @JsonKey(name: 'invite_code') String? inviteCode, @JsonKey(name: 'invite_url') String? inviteUrl)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _GroupInviteResponseDM() when $default != null:
-        return $default(_that.success, _that.inviteToken, _that.inviteCode,
-            _that.inviteUrl);
+        return $default(_that.success, _that.inviteToken, _that.inviteCode, _that.inviteUrl);
       case _:
         return null;
     }
@@ -4178,8 +3801,7 @@ class _GroupInviteResponseDM implements GroupInviteResponseDM {
       @JsonKey(name: 'invite_token') this.inviteToken,
       @JsonKey(name: 'invite_code') this.inviteCode,
       @JsonKey(name: 'invite_url') this.inviteUrl});
-  factory _GroupInviteResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$GroupInviteResponseDMFromJson(json);
+  factory _GroupInviteResponseDM.fromJson(Map<String, dynamic> json) => _$GroupInviteResponseDMFromJson(json);
 
   @override
   @JsonKey()
@@ -4201,8 +3823,7 @@ class _GroupInviteResponseDM implements GroupInviteResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$GroupInviteResponseDMCopyWith<_GroupInviteResponseDM> get copyWith =>
-      __$GroupInviteResponseDMCopyWithImpl<_GroupInviteResponseDM>(
-          this, _$identity);
+      __$GroupInviteResponseDMCopyWithImpl<_GroupInviteResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -4217,18 +3838,14 @@ class _GroupInviteResponseDM implements GroupInviteResponseDM {
         (other.runtimeType == runtimeType &&
             other is _GroupInviteResponseDM &&
             (identical(other.success, success) || other.success == success) &&
-            (identical(other.inviteToken, inviteToken) ||
-                other.inviteToken == inviteToken) &&
-            (identical(other.inviteCode, inviteCode) ||
-                other.inviteCode == inviteCode) &&
-            (identical(other.inviteUrl, inviteUrl) ||
-                other.inviteUrl == inviteUrl));
+            (identical(other.inviteToken, inviteToken) || other.inviteToken == inviteToken) &&
+            (identical(other.inviteCode, inviteCode) || other.inviteCode == inviteCode) &&
+            (identical(other.inviteUrl, inviteUrl) || other.inviteUrl == inviteUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, success, inviteToken, inviteCode, inviteUrl);
+  int get hashCode => Object.hash(runtimeType, success, inviteToken, inviteCode, inviteUrl);
 
   @override
   String toString() {
@@ -4237,10 +3854,8 @@ class _GroupInviteResponseDM implements GroupInviteResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$GroupInviteResponseDMCopyWith<$Res>
-    implements $GroupInviteResponseDMCopyWith<$Res> {
-  factory _$GroupInviteResponseDMCopyWith(_GroupInviteResponseDM value,
-          $Res Function(_GroupInviteResponseDM) _then) =
+abstract mixin class _$GroupInviteResponseDMCopyWith<$Res> implements $GroupInviteResponseDMCopyWith<$Res> {
+  factory _$GroupInviteResponseDMCopyWith(_GroupInviteResponseDM value, $Res Function(_GroupInviteResponseDM) _then) =
       __$GroupInviteResponseDMCopyWithImpl;
   @override
   @useResult
@@ -4252,8 +3867,7 @@ abstract mixin class _$GroupInviteResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$GroupInviteResponseDMCopyWithImpl<$Res>
-    implements _$GroupInviteResponseDMCopyWith<$Res> {
+class __$GroupInviteResponseDMCopyWithImpl<$Res> implements _$GroupInviteResponseDMCopyWith<$Res> {
   __$GroupInviteResponseDMCopyWithImpl(this._self, this._then);
 
   final _GroupInviteResponseDM _self;

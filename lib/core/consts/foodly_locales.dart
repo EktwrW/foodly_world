@@ -28,9 +28,7 @@ class FoodlyLocales {
   static String get deviceLocaleTag {
     final locale = WidgetsBinding.instance.platformDispatcher.locale;
     final country = locale.countryCode;
-    return (country != null && country.isNotEmpty)
-        ? '${locale.languageCode}-$country'
-        : locale.languageCode;
+    return (country != null && country.isNotEmpty) ? '${locale.languageCode}-$country' : locale.languageCode;
   }
 
   static final supportedLocales = [

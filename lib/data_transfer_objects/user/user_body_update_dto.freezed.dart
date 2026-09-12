@@ -54,8 +54,7 @@ mixin _$UserBodyUpdateDTO {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $UserBodyUpdateDTOCopyWith<UserBodyUpdateDTO> get copyWith =>
-      _$UserBodyUpdateDTOCopyWithImpl<UserBodyUpdateDTO>(
-          this as UserBodyUpdateDTO, _$identity);
+      _$UserBodyUpdateDTOCopyWithImpl<UserBodyUpdateDTO>(this as UserBodyUpdateDTO, _$identity);
 
   /// Serializes this UserBodyUpdateDTO to a JSON map.
   Map<String, dynamic> toJson();
@@ -65,55 +64,29 @@ mixin _$UserBodyUpdateDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is UserBodyUpdateDTO &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.firstName, firstName) ||
-                other.firstName == firstName) &&
-            (identical(other.lastName, lastName) ||
-                other.lastName == lastName) &&
+            (identical(other.userName, userName) || other.userName == userName) &&
+            (identical(other.firstName, firstName) || other.firstName == firstName) &&
+            (identical(other.lastName, lastName) || other.lastName == lastName) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(other.newPassword, newPassword) ||
-                other.newPassword == newPassword) &&
+            (identical(other.password, password) || other.password == password) &&
+            (identical(other.newPassword, newPassword) || other.newPassword == newPassword) &&
             (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.phoneCountryCode, phoneCountryCode) ||
-                other.phoneCountryCode == phoneCountryCode) &&
-            (identical(other.dateOfBirth, dateOfBirth) ||
-                other.dateOfBirth == dateOfBirth) &&
+            (identical(other.phoneCountryCode, phoneCountryCode) || other.phoneCountryCode == phoneCountryCode) &&
+            (identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth) &&
             (identical(other.zipCode, zipCode) || other.zipCode == zipCode) &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.city, city) || other.city == city) &&
             (identical(other.country, country) || other.country == country) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.roleId, roleId) || other.roleId == roleId) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude));
+            (identical(other.latitude, latitude) || other.latitude == latitude) &&
+            (identical(other.longitude, longitude) || other.longitude == longitude));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      userName,
-      firstName,
-      lastName,
-      email,
-      password,
-      newPassword,
-      phone,
-      phoneCountryCode,
-      dateOfBirth,
-      zipCode,
-      address,
-      city,
-      country,
-      gender,
-      roleId,
-      latitude,
-      longitude);
+  int get hashCode => Object.hash(runtimeType, userName, firstName, lastName, email, password, newPassword, phone,
+      phoneCountryCode, dateOfBirth, zipCode, address, city, country, gender, roleId, latitude, longitude);
 
   @override
   String toString() {
@@ -123,8 +96,7 @@ mixin _$UserBodyUpdateDTO {
 
 /// @nodoc
 abstract mixin class $UserBodyUpdateDTOCopyWith<$Res> {
-  factory $UserBodyUpdateDTOCopyWith(
-          UserBodyUpdateDTO value, $Res Function(UserBodyUpdateDTO) _then) =
+  factory $UserBodyUpdateDTOCopyWith(UserBodyUpdateDTO value, $Res Function(UserBodyUpdateDTO) _then) =
       _$UserBodyUpdateDTOCopyWithImpl;
   @useResult
   $Res call(
@@ -148,8 +120,7 @@ abstract mixin class $UserBodyUpdateDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserBodyUpdateDTOCopyWithImpl<$Res>
-    implements $UserBodyUpdateDTOCopyWith<$Res> {
+class _$UserBodyUpdateDTOCopyWithImpl<$Res> implements $UserBodyUpdateDTOCopyWith<$Res> {
   _$UserBodyUpdateDTOCopyWithImpl(this._self, this._then);
 
   final UserBodyUpdateDTO _self;
@@ -534,8 +505,7 @@ class _UserBodyUpdateDTO implements UserBodyUpdateDTO {
       @JsonKey(name: 'role_id') this.roleId,
       @JsonKey(name: 'latitude') this.latitude,
       @JsonKey(name: 'longitude') this.longitude});
-  factory _UserBodyUpdateDTO.fromJson(Map<String, dynamic> json) =>
-      _$UserBodyUpdateDTOFromJson(json);
+  factory _UserBodyUpdateDTO.fromJson(Map<String, dynamic> json) => _$UserBodyUpdateDTOFromJson(json);
 
   @override
   @JsonKey(name: 'username')
@@ -609,55 +579,29 @@ class _UserBodyUpdateDTO implements UserBodyUpdateDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _UserBodyUpdateDTO &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.firstName, firstName) ||
-                other.firstName == firstName) &&
-            (identical(other.lastName, lastName) ||
-                other.lastName == lastName) &&
+            (identical(other.userName, userName) || other.userName == userName) &&
+            (identical(other.firstName, firstName) || other.firstName == firstName) &&
+            (identical(other.lastName, lastName) || other.lastName == lastName) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(other.newPassword, newPassword) ||
-                other.newPassword == newPassword) &&
+            (identical(other.password, password) || other.password == password) &&
+            (identical(other.newPassword, newPassword) || other.newPassword == newPassword) &&
             (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.phoneCountryCode, phoneCountryCode) ||
-                other.phoneCountryCode == phoneCountryCode) &&
-            (identical(other.dateOfBirth, dateOfBirth) ||
-                other.dateOfBirth == dateOfBirth) &&
+            (identical(other.phoneCountryCode, phoneCountryCode) || other.phoneCountryCode == phoneCountryCode) &&
+            (identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth) &&
             (identical(other.zipCode, zipCode) || other.zipCode == zipCode) &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.city, city) || other.city == city) &&
             (identical(other.country, country) || other.country == country) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.roleId, roleId) || other.roleId == roleId) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude));
+            (identical(other.latitude, latitude) || other.latitude == latitude) &&
+            (identical(other.longitude, longitude) || other.longitude == longitude));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      userName,
-      firstName,
-      lastName,
-      email,
-      password,
-      newPassword,
-      phone,
-      phoneCountryCode,
-      dateOfBirth,
-      zipCode,
-      address,
-      city,
-      country,
-      gender,
-      roleId,
-      latitude,
-      longitude);
+  int get hashCode => Object.hash(runtimeType, userName, firstName, lastName, email, password, newPassword, phone,
+      phoneCountryCode, dateOfBirth, zipCode, address, city, country, gender, roleId, latitude, longitude);
 
   @override
   String toString() {
@@ -666,10 +610,8 @@ class _UserBodyUpdateDTO implements UserBodyUpdateDTO {
 }
 
 /// @nodoc
-abstract mixin class _$UserBodyUpdateDTOCopyWith<$Res>
-    implements $UserBodyUpdateDTOCopyWith<$Res> {
-  factory _$UserBodyUpdateDTOCopyWith(
-          _UserBodyUpdateDTO value, $Res Function(_UserBodyUpdateDTO) _then) =
+abstract mixin class _$UserBodyUpdateDTOCopyWith<$Res> implements $UserBodyUpdateDTOCopyWith<$Res> {
+  factory _$UserBodyUpdateDTOCopyWith(_UserBodyUpdateDTO value, $Res Function(_UserBodyUpdateDTO) _then) =
       __$UserBodyUpdateDTOCopyWithImpl;
   @override
   @useResult
@@ -694,8 +636,7 @@ abstract mixin class _$UserBodyUpdateDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$UserBodyUpdateDTOCopyWithImpl<$Res>
-    implements _$UserBodyUpdateDTOCopyWith<$Res> {
+class __$UserBodyUpdateDTOCopyWithImpl<$Res> implements _$UserBodyUpdateDTOCopyWith<$Res> {
   __$UserBodyUpdateDTOCopyWithImpl(this._self, this._then);
 
   final _UserBodyUpdateDTO _self;

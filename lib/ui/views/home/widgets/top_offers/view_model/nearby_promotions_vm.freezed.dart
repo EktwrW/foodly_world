@@ -26,35 +26,24 @@ mixin _$NearbyPromotionsVM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $NearbyPromotionsVMCopyWith<NearbyPromotionsVM> get copyWith =>
-      _$NearbyPromotionsVMCopyWithImpl<NearbyPromotionsVM>(
-          this as NearbyPromotionsVM, _$identity);
+      _$NearbyPromotionsVMCopyWithImpl<NearbyPromotionsVM>(this as NearbyPromotionsVM, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is NearbyPromotionsVM &&
-            const DeepCollectionEquality()
-                .equals(other.promotions, promotions) &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
-            (identical(other.isLoadingMore, isLoadingMore) ||
-                other.isLoadingMore == isLoadingMore) &&
+            const DeepCollectionEquality().equals(other.promotions, promotions) &&
+            (identical(other.isLoading, isLoading) || other.isLoading == isLoading) &&
+            (identical(other.isLoadingMore, isLoadingMore) || other.isLoadingMore == isLoadingMore) &&
             (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
+            (identical(other.currentPage, currentPage) || other.currentPage == currentPage) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(promotions),
-      isLoading,
-      isLoadingMore,
-      hasMore,
-      currentPage,
-      error);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(promotions), isLoading,
+      isLoadingMore, hasMore, currentPage, error);
 
   @override
   String toString() {
@@ -64,8 +53,7 @@ mixin _$NearbyPromotionsVM {
 
 /// @nodoc
 abstract mixin class $NearbyPromotionsVMCopyWith<$Res> {
-  factory $NearbyPromotionsVMCopyWith(
-          NearbyPromotionsVM value, $Res Function(NearbyPromotionsVM) _then) =
+  factory $NearbyPromotionsVMCopyWith(NearbyPromotionsVM value, $Res Function(NearbyPromotionsVM) _then) =
       _$NearbyPromotionsVMCopyWithImpl;
   @useResult
   $Res call(
@@ -78,8 +66,7 @@ abstract mixin class $NearbyPromotionsVMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NearbyPromotionsVMCopyWithImpl<$Res>
-    implements $NearbyPromotionsVMCopyWith<$Res> {
+class _$NearbyPromotionsVMCopyWithImpl<$Res> implements $NearbyPromotionsVMCopyWith<$Res> {
   _$NearbyPromotionsVMCopyWithImpl(this._self, this._then);
 
   final NearbyPromotionsVM _self;
@@ -219,16 +206,16 @@ extension NearbyPromotionsVMPatterns on NearbyPromotionsVM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(List<NearbyPromotionDM> promotions, bool isLoading,
-            bool isLoadingMore, bool hasMore, int currentPage, String? error)?
+    TResult Function(List<NearbyPromotionDM> promotions, bool isLoading, bool isLoadingMore, bool hasMore,
+            int currentPage, String? error)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _NearbyPromotionsVM() when $default != null:
-        return $default(_that.promotions, _that.isLoading, _that.isLoadingMore,
-            _that.hasMore, _that.currentPage, _that.error);
+        return $default(
+            _that.promotions, _that.isLoading, _that.isLoadingMore, _that.hasMore, _that.currentPage, _that.error);
       case _:
         return orElse();
     }
@@ -249,15 +236,15 @@ extension NearbyPromotionsVMPatterns on NearbyPromotionsVM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(List<NearbyPromotionDM> promotions, bool isLoading,
-            bool isLoadingMore, bool hasMore, int currentPage, String? error)
+    TResult Function(List<NearbyPromotionDM> promotions, bool isLoading, bool isLoadingMore, bool hasMore,
+            int currentPage, String? error)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _NearbyPromotionsVM():
-        return $default(_that.promotions, _that.isLoading, _that.isLoadingMore,
-            _that.hasMore, _that.currentPage, _that.error);
+        return $default(
+            _that.promotions, _that.isLoading, _that.isLoadingMore, _that.hasMore, _that.currentPage, _that.error);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -277,15 +264,15 @@ extension NearbyPromotionsVMPatterns on NearbyPromotionsVM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(List<NearbyPromotionDM> promotions, bool isLoading,
-            bool isLoadingMore, bool hasMore, int currentPage, String? error)?
+    TResult? Function(List<NearbyPromotionDM> promotions, bool isLoading, bool isLoadingMore, bool hasMore,
+            int currentPage, String? error)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _NearbyPromotionsVM() when $default != null:
-        return $default(_that.promotions, _that.isLoading, _that.isLoadingMore,
-            _that.hasMore, _that.currentPage, _that.error);
+        return $default(
+            _that.promotions, _that.isLoading, _that.isLoadingMore, _that.hasMore, _that.currentPage, _that.error);
       case _:
         return null;
     }
@@ -341,27 +328,17 @@ class _NearbyPromotionsVM implements NearbyPromotionsVM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _NearbyPromotionsVM &&
-            const DeepCollectionEquality()
-                .equals(other._promotions, _promotions) &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
-            (identical(other.isLoadingMore, isLoadingMore) ||
-                other.isLoadingMore == isLoadingMore) &&
+            const DeepCollectionEquality().equals(other._promotions, _promotions) &&
+            (identical(other.isLoading, isLoading) || other.isLoading == isLoading) &&
+            (identical(other.isLoadingMore, isLoadingMore) || other.isLoadingMore == isLoadingMore) &&
             (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
+            (identical(other.currentPage, currentPage) || other.currentPage == currentPage) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_promotions),
-      isLoading,
-      isLoadingMore,
-      hasMore,
-      currentPage,
-      error);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_promotions), isLoading,
+      isLoadingMore, hasMore, currentPage, error);
 
   @override
   String toString() {
@@ -370,10 +347,8 @@ class _NearbyPromotionsVM implements NearbyPromotionsVM {
 }
 
 /// @nodoc
-abstract mixin class _$NearbyPromotionsVMCopyWith<$Res>
-    implements $NearbyPromotionsVMCopyWith<$Res> {
-  factory _$NearbyPromotionsVMCopyWith(
-          _NearbyPromotionsVM value, $Res Function(_NearbyPromotionsVM) _then) =
+abstract mixin class _$NearbyPromotionsVMCopyWith<$Res> implements $NearbyPromotionsVMCopyWith<$Res> {
+  factory _$NearbyPromotionsVMCopyWith(_NearbyPromotionsVM value, $Res Function(_NearbyPromotionsVM) _then) =
       __$NearbyPromotionsVMCopyWithImpl;
   @override
   @useResult
@@ -387,8 +362,7 @@ abstract mixin class _$NearbyPromotionsVMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$NearbyPromotionsVMCopyWithImpl<$Res>
-    implements _$NearbyPromotionsVMCopyWith<$Res> {
+class __$NearbyPromotionsVMCopyWithImpl<$Res> implements _$NearbyPromotionsVMCopyWith<$Res> {
   __$NearbyPromotionsVMCopyWithImpl(this._self, this._then);
 
   final _NearbyPromotionsVM _self;

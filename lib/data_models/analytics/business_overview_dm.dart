@@ -15,9 +15,7 @@ List<FunnelStepDM> parseFunnelSteps(dynamic raw) {
     return raw.map((e) => FunnelStepDM.fromJson(e as Map<String, dynamic>)).toList();
   }
   if (raw is Map) {
-    return raw.entries
-        .map((e) => FunnelStepDM(label: e.key as String, value: (e.value as num).toInt()))
-        .toList();
+    return raw.entries.map((e) => FunnelStepDM(label: e.key as String, value: (e.value as num).toInt())).toList();
   }
   return const [];
 }
@@ -29,9 +27,7 @@ List<BreakdownItemDM> parseBreakdownMapOrList(dynamic raw) {
     return raw.map((e) => BreakdownItemDM.fromJson(e as Map<String, dynamic>)).toList();
   }
   if (raw is Map) {
-    return raw.entries
-        .map((e) => BreakdownItemDM(label: e.key as String, value: (e.value as num).toInt()))
-        .toList();
+    return raw.entries.map((e) => BreakdownItemDM(label: e.key as String, value: (e.value as num).toInt())).toList();
   }
   return const [];
 }
@@ -58,8 +54,7 @@ abstract class BusinessOverviewResponseDM with _$BusinessOverviewResponseDM {
     BusinessOverviewDataDM? data,
   }) = _BusinessOverviewResponseDM;
 
-  factory BusinessOverviewResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$BusinessOverviewResponseDMFromJson(json);
+  factory BusinessOverviewResponseDM.fromJson(Map<String, dynamic> json) => _$BusinessOverviewResponseDMFromJson(json);
 }
 
 @freezed
@@ -71,8 +66,7 @@ abstract class BusinessOverviewDataDM with _$BusinessOverviewDataDM {
     BreakdownsDM? breakdowns,
   }) = _BusinessOverviewDataDM;
 
-  factory BusinessOverviewDataDM.fromJson(Map<String, dynamic> json) =>
-      _$BusinessOverviewDataDMFromJson(json);
+  factory BusinessOverviewDataDM.fromJson(Map<String, dynamic> json) => _$BusinessOverviewDataDMFromJson(json);
 }
 
 // ─── KPIs ───────────────────────────────────────────────────────────────────
@@ -122,8 +116,7 @@ abstract class FunnelConversionDM with _$FunnelConversionDM {
     @JsonKey(name: 'cta_to_reservation_rate') @Default(0.0) double ctaToReservationRate,
   }) = _FunnelConversionDM;
 
-  factory FunnelConversionDM.fromJson(Map<String, dynamic> json) =>
-      _$FunnelConversionDMFromJson(json);
+  factory FunnelConversionDM.fromJson(Map<String, dynamic> json) => _$FunnelConversionDMFromJson(json);
 }
 
 // ─── Daily Series ───────────────────────────────────────────────────────────
@@ -137,8 +130,7 @@ abstract class DailySeriesDM with _$DailySeriesDM {
     @JsonKey(name: 'events_daily') @Default([]) List<DailyPointDM> eventsDaily,
   }) = _DailySeriesDM;
 
-  factory DailySeriesDM.fromJson(Map<String, dynamic> json) =>
-      _$DailySeriesDMFromJson(json);
+  factory DailySeriesDM.fromJson(Map<String, dynamic> json) => _$DailySeriesDMFromJson(json);
 }
 
 @freezed
@@ -156,12 +148,13 @@ abstract class DailyPointDM with _$DailyPointDM {
 @freezed
 abstract class BreakdownsDM with _$BreakdownsDM {
   const factory BreakdownsDM({
-    @JsonKey(name: 'reservations_by_status', fromJson: parseBreakdownMapOrList) @Default([]) List<BreakdownItemDM> reservationsByStatus,
+    @JsonKey(name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
+    @Default([])
+    List<BreakdownItemDM> reservationsByStatus,
     @JsonKey(name: 'top_event_types', fromJson: parseEventTypes) @Default([]) List<BreakdownItemDM> topEventTypes,
   }) = _BreakdownsDM;
 
-  factory BreakdownsDM.fromJson(Map<String, dynamic> json) =>
-      _$BreakdownsDMFromJson(json);
+  factory BreakdownsDM.fromJson(Map<String, dynamic> json) => _$BreakdownsDMFromJson(json);
 }
 
 @freezed
@@ -171,6 +164,5 @@ abstract class BreakdownItemDM with _$BreakdownItemDM {
     @Default(0) int value,
   }) = _BreakdownItemDM;
 
-  factory BreakdownItemDM.fromJson(Map<String, dynamic> json) =>
-      _$BreakdownItemDMFromJson(json);
+  factory BreakdownItemDM.fromJson(Map<String, dynamic> json) => _$BreakdownItemDMFromJson(json);
 }

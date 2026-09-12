@@ -495,7 +495,8 @@ class UserProfileCubit extends Cubit<UserProfileState> {
     final lp = uri.path.toLowerCase();
     if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
     final completer = Completer<void>();
-    final stream = CachedNetworkImageProvider(url, cacheManager: FoodlyImageCache.manager).resolve(const ImageConfiguration());
+    final stream =
+        CachedNetworkImageProvider(url, cacheManager: FoodlyImageCache.manager).resolve(const ImageConfiguration());
     stream.addListener(ImageStreamListener(
       (_, __) {
         if (!completer.isCompleted) completer.complete();

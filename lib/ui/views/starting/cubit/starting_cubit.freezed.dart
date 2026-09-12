@@ -21,8 +21,7 @@ mixin _$StartingState implements DiagnosticableTreeMixin {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is StartingState);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is StartingState);
   }
 
   @override
@@ -294,8 +293,7 @@ class _Initial with DiagnosticableTreeMixin implements StartingState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _Initial);
   }
 
   @override
@@ -318,8 +316,7 @@ class _Loading with DiagnosticableTreeMixin implements StartingState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadingCopyWith<_Loading> get copyWith =>
-      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+  _$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -331,9 +328,7 @@ class _Loading with DiagnosticableTreeMixin implements StartingState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loading &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loading && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -346,10 +341,8 @@ class _Loading with DiagnosticableTreeMixin implements StartingState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadingCopyWith<$Res>
-    implements $StartingStateCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
-      __$LoadingCopyWithImpl;
+abstract mixin class _$LoadingCopyWith<$Res> implements $StartingStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
   @useResult
   $Res call({StartingVM vm});
 
@@ -399,8 +392,7 @@ class _Welcome with DiagnosticableTreeMixin implements StartingState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$WelcomeCopyWith<_Welcome> get copyWith =>
-      __$WelcomeCopyWithImpl<_Welcome>(this, _$identity);
+  _$WelcomeCopyWith<_Welcome> get copyWith => __$WelcomeCopyWithImpl<_Welcome>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -412,9 +404,7 @@ class _Welcome with DiagnosticableTreeMixin implements StartingState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Welcome &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Welcome && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -427,10 +417,8 @@ class _Welcome with DiagnosticableTreeMixin implements StartingState {
 }
 
 /// @nodoc
-abstract mixin class _$WelcomeCopyWith<$Res>
-    implements $StartingStateCopyWith<$Res> {
-  factory _$WelcomeCopyWith(_Welcome value, $Res Function(_Welcome) _then) =
-      __$WelcomeCopyWithImpl;
+abstract mixin class _$WelcomeCopyWith<$Res> implements $StartingStateCopyWith<$Res> {
+  factory _$WelcomeCopyWith(_Welcome value, $Res Function(_Welcome) _then) = __$WelcomeCopyWithImpl;
   @useResult
   $Res call({StartingVM vm});
 
@@ -480,8 +468,7 @@ class _IsNewUser with DiagnosticableTreeMixin implements StartingState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$IsNewUserCopyWith<_IsNewUser> get copyWith =>
-      __$IsNewUserCopyWithImpl<_IsNewUser>(this, _$identity);
+  _$IsNewUserCopyWith<_IsNewUser> get copyWith => __$IsNewUserCopyWithImpl<_IsNewUser>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -493,9 +480,7 @@ class _IsNewUser with DiagnosticableTreeMixin implements StartingState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _IsNewUser &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _IsNewUser && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -508,11 +493,8 @@ class _IsNewUser with DiagnosticableTreeMixin implements StartingState {
 }
 
 /// @nodoc
-abstract mixin class _$IsNewUserCopyWith<$Res>
-    implements $StartingStateCopyWith<$Res> {
-  factory _$IsNewUserCopyWith(
-          _IsNewUser value, $Res Function(_IsNewUser) _then) =
-      __$IsNewUserCopyWithImpl;
+abstract mixin class _$IsNewUserCopyWith<$Res> implements $StartingStateCopyWith<$Res> {
+  factory _$IsNewUserCopyWith(_IsNewUser value, $Res Function(_IsNewUser) _then) = __$IsNewUserCopyWithImpl;
   @useResult
   $Res call({StartingVM vm});
 
@@ -590,10 +572,8 @@ class _UserAuthenticated with DiagnosticableTreeMixin implements StartingState {
 }
 
 /// @nodoc
-abstract mixin class _$UserAuthenticatedCopyWith<$Res>
-    implements $StartingStateCopyWith<$Res> {
-  factory _$UserAuthenticatedCopyWith(
-          _UserAuthenticated value, $Res Function(_UserAuthenticated) _then) =
+abstract mixin class _$UserAuthenticatedCopyWith<$Res> implements $StartingStateCopyWith<$Res> {
+  factory _$UserAuthenticatedCopyWith(_UserAuthenticated value, $Res Function(_UserAuthenticated) _then) =
       __$UserAuthenticatedCopyWithImpl;
   @useResult
   $Res call({StartingVM vm});
@@ -602,8 +582,7 @@ abstract mixin class _$UserAuthenticatedCopyWith<$Res>
 }
 
 /// @nodoc
-class __$UserAuthenticatedCopyWithImpl<$Res>
-    implements _$UserAuthenticatedCopyWith<$Res> {
+class __$UserAuthenticatedCopyWithImpl<$Res> implements _$UserAuthenticatedCopyWith<$Res> {
   __$UserAuthenticatedCopyWithImpl(this._self, this._then);
 
   final _UserAuthenticated _self;
@@ -646,8 +625,7 @@ class _Error with DiagnosticableTreeMixin implements StartingState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -676,10 +654,8 @@ class _Error with DiagnosticableTreeMixin implements StartingState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $StartingStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $StartingStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @useResult
   $Res call({String msg, StartingVM vm});
 

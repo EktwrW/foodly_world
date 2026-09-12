@@ -62,13 +62,11 @@ void main() {
   );
 
   /// Toda orden que llega al panel tiene comensales y nombre de negocio.
-  GroupOrderDM listable(GroupOrderDM o) =>
-      o.copyWith(participants: const [host], businessName: 'The Bar Restaurant');
+  GroupOrderDM listable(GroupOrderDM o) => o.copyWith(participants: const [host], businessName: 'The Bar Restaurant');
 
   /// Pinta el DETALLE tal como lo abre el manager desde la lista.
   Future<void> pumpDetail(WidgetTester tester, GroupOrderDM order) async {
-    final repo = _FakeRepo()
-      ..listOutcome = ApiResult.success(ManagerOrdersResponseDM(orders: [order]));
+    final repo = _FakeRepo()..listOutcome = ApiResult.success(ManagerOrdersResponseDM(orders: [order]));
     final cubit = ManagerOrdersCubit(
       repo: repo,
       logger: Logger(level: Level.off),
@@ -121,8 +119,7 @@ void main() {
           fulfillment: ff,
         ));
 
-    testWidgets('1· primera tanda en cocina: invita a tildar y ofrece avanzar',
-        (tester) async {
+    testWidgets('1· primera tanda en cocina: invita a tildar y ofrece avanzar', (tester) async {
       await pumpDetail(tester, tab(ff: GroupFulfillmentStatus.preparing));
 
       expect(find.text(S.current.managerItemsDelivered(0, 1)), findsOneWidget);
@@ -146,7 +143,8 @@ void main() {
           reason: 'El postre que el comensal todavía no envió: 0/1, no 0/2.');
     });
 
-    testWidgets('3· servida y sin cobrar: POR PAGAR en la tarjeta, cerrable en '
+    testWidgets(
+        '3· servida y sin cobrar: POR PAGAR en la tarjeta, cerrable en '
         'el detalle', (tester) async {
       final servida = tab(ff: GroupFulfillmentStatus.delivered);
 
@@ -160,7 +158,8 @@ void main() {
           reason: 'Ya está todo entregado: no queda nada que tildar.');
     });
 
-    testWidgets('4· cuenta pedida mientras la cocina trabaja: sin acciones de '
+    testWidgets(
+        '4· cuenta pedida mientras la cocina trabaja: sin acciones de '
         'cocina, pero cerrable y SIN afirmar que está entregada', (tester) async {
       // `locked` + cuenta pedida es el único estado no-confirmado que el panel
       // lista, justo para que el mesero pueda cobrarla en efectivo. El BE
@@ -184,12 +183,10 @@ void main() {
           reason: 'Sin esto, la mesa que paga en efectivo no tiene dónde cerrarse.');
     });
 
-    testWidgets('4b· la mesa avisó que paga en caja: el panel lo destaca',
-        (tester) async {
+    testWidgets('4b· la mesa avisó que paga en caja: el panel lo destaca', (tester) async {
       // Mientras hay alguien parado en la caja, eso es lo único que el mesero
       // necesita saber de esta orden. Un "POR PAGAR" genérico no se lo dice.
-      final enCaja = tab(ff: GroupFulfillmentStatus.delivered)
-          .copyWith(cashRequestedAt: DateTime(2026, 8, 9, 22));
+      final enCaja = tab(ff: GroupFulfillmentStatus.delivered).copyWith(cashRequestedAt: DateTime(2026, 8, 9, 22));
 
       await pumpCard(tester, enCaja);
       expect(find.text(S.current.managerAwaitingCashBadge), findsOneWidget);
@@ -201,8 +198,7 @@ void main() {
           reason: 'El mesero cobra y confirma en el mismo lugar donde lee el aviso.');
     });
 
-    testWidgets('5· cobrada EN CAJA: la tarjeta lo dice y deja de pedir plata',
-        (tester) async {
+    testWidgets('5· cobrada EN CAJA: la tarjeta lo dice y deja de pedir plata', (tester) async {
       final enCaja = tab(ff: GroupFulfillmentStatus.delivered).copyWith(
         status: GroupOrderStatus.completed,
         closedReason: 'paid_offline',
@@ -216,7 +212,8 @@ void main() {
           reason: 'Decía POR PAGAR para siempre sobre mesas ya cobradas.');
     });
 
-    testWidgets('6· se fueron sin pagar con el checklist a medias: se dice CÓMO '
+    testWidgets(
+        '6· se fueron sin pagar con el checklist a medias: se dice CÓMO '
         'terminó y no se ofrece nada', (tester) async {
       final impaga = tab(ff: GroupFulfillmentStatus.preparing).copyWith(
         status: GroupOrderStatus.completed,
@@ -235,7 +232,8 @@ void main() {
           reason: 'Ya está cerrada: cerrarla de nuevo daría 409.');
     });
 
-    testWidgets('7· pagada POR LA APP con la última tanda en el horno: se dice '
+    testWidgets(
+        '7· pagada POR LA APP con la última tanda en el horno: se dice '
         'que la cuenta cerró, no que está entregada', (tester) async {
       // Sin `closed_reason` porque el cobro fue por Foodly: el ciclo normal.
       // Es el mismo cartel del caso 4, y la razón por la que no puede afirmar
@@ -264,8 +262,7 @@ void main() {
           fulfillment: ff,
         ));
 
-    testWidgets('1· la comanda es la orden ENTERA: acá no hay tandas',
-        (tester) async {
+    testWidgets('1· la comanda es la orden ENTERA: acá no hay tandas', (tester) async {
       await pumpDetail(tester, round(ff: GroupFulfillmentStatus.preparing));
 
       // `sent_at` es SIEMPRE null en prepago. Filtrar la comanda por él dejó
@@ -342,7 +339,8 @@ void main() {
 
     GroupOrderDM conHost(GroupOrderDM o) => o.copyWith(participants: const [host]);
 
-    testWidgets('A1 · con platos en el carrito: "Enviar orden", sin salida a '
+    testWidgets(
+        'A1 · con platos en el carrito: "Enviar orden", sin salida a '
         'pedir más', (tester) async {
       final carrito = conHost(GroupOrders.openTab(
         fulfillment: GroupFulfillmentStatus.delivered,
@@ -361,7 +359,8 @@ void main() {
           reason: 'Ya está pidiendo más: el atajo sería ruido.');
     });
 
-    testWidgets('A2 · comida en la cocina: el pago está BLOQUEADO y se dice '
+    testWidgets(
+        'A2 · comida en la cocina: el pago está BLOQUEADO y se dice '
         'por qué', (tester) async {
       final esperando = conHost(GroupOrders.openTab(
         fulfillment: GroupFulfillmentStatus.preparing,
@@ -372,8 +371,7 @@ void main() {
 
       final label = S.current.groupOrderPayBillCta('€12.00');
       expect(find.text(label), findsOneWidget);
-      expect(ctaEnabled(tester, label), isFalse,
-          reason: 'Pagar antes de que sirvan deja al comensal sin recurso.');
+      expect(ctaEnabled(tester, label), isFalse, reason: 'Pagar antes de que sirvan deja al comensal sin recurso.');
       expect(find.text(S.current.groupOrderPayBlockedHint), findsOneWidget);
       expect(find.text(S.current.groupOrderOrderMore), findsOneWidget,
           reason: 'Mientras espera es justo cuando quiere sumar otra cosa.');
@@ -386,8 +384,7 @@ void main() {
         items: [GroupOrders.sentItem(uuid: 'i1', price: 12, participantUuid: 'p1')],
       ));
 
-      await pumpFooter(tester, servida,
-          onRequestBill: () => pidioLaCuenta = true, onOrderMore: () {});
+      await pumpFooter(tester, servida, onRequestBill: () => pidioLaCuenta = true, onOrderMore: () {});
 
       final label = S.current.groupOrderPayBillCta('€12.00');
       expect(find.text(S.current.groupOrderPayBillHint), findsOneWidget);
@@ -398,8 +395,7 @@ void main() {
       expect(pidioLaCuenta, isTrue);
     });
 
-    testWidgets('A4 · cuenta pedida: cae al bloque de pago de siempre',
-        (tester) async {
+    testWidgets('A4 · cuenta pedida: cae al bloque de pago de siempre', (tester) async {
       final pedida = conHost(GroupOrders.openTab(
         fulfillment: GroupFulfillmentStatus.delivered,
         items: [GroupOrders.sentItem(uuid: 'i1', price: 12, participantUuid: 'p1')],
@@ -415,24 +411,21 @@ void main() {
       expect(find.text(S.current.groupOrderPayBlockedHint), findsNothing);
     });
 
-    testWidgets('A3b · todo servido: además de pagar, se puede pagar en caja',
-        (tester) async {
+    testWidgets('A3b · todo servido: además de pagar, se puede pagar en caja', (tester) async {
       var aviso = false;
       final servida = conHost(GroupOrders.openTab(
         fulfillment: GroupFulfillmentStatus.delivered,
         items: [GroupOrders.sentItem(uuid: 'i1', price: 12, participantUuid: 'p1')],
       ));
 
-      await pumpFooter(tester, servida,
-          onRequestBill: () {}, onPayAtRegister: () => aviso = true);
+      await pumpFooter(tester, servida, onRequestBill: () {}, onPayAtRegister: () => aviso = true);
 
       await tester.tap(find.text(S.current.groupOrderPayAtRegister));
       await tester.pumpAndSettle();
       expect(aviso, isTrue);
     });
 
-    testWidgets('CAJA · avisado el negocio, el pie deja de ofrecer pagar',
-        (tester) async {
+    testWidgets('CAJA · avisado el negocio, el pie deja de ofrecer pagar', (tester) async {
       // El bug que esto previene: si el estado cayera en `billed`, el pie
       // pintaría "Pagar la orden" sobre una mesa que ya se comprometió a
       // pagar en el mostrador.
@@ -452,8 +445,7 @@ void main() {
       expect(find.text(S.current.groupOrderPayAtRegister), findsNothing);
     });
 
-    testWidgets('PREPAGO · el pie NUNCA ofrece el CTA de cuenta abierta',
-        (tester) async {
+    testWidgets('PREPAGO · el pie NUNCA ofrece el CTA de cuenta abierta', (tester) async {
       // Con prepago la orden se cierra y se paga: no hay tandas ni cuenta que
       // pedir. Que asomara cualquiera de esos textos sería ceguera de modo.
       final enCarrito = conHost(GroupOrders.openCart(mode: GroupPaymentMode.perRound));

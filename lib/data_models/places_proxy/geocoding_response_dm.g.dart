@@ -6,20 +6,15 @@ part of 'geocoding_response_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_GeocodingResponseDM _$GeocodingResponseDMFromJson(Map<String, dynamic> json) =>
-    _GeocodingResponseDM(
-      status: $enumDecode(_$ProxyStatusEnumEnumMap, json['status'],
-          unknownValue: ProxyStatusEnum.unknown),
+_GeocodingResponseDM _$GeocodingResponseDMFromJson(Map<String, dynamic> json) => _GeocodingResponseDM(
+      status: $enumDecode(_$ProxyStatusEnumEnumMap, json['status'], unknownValue: ProxyStatusEnum.unknown),
       results: (json['results'] as List<dynamic>?)
-              ?.map(
-                  (e) => GeocodingResultDM.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => GeocodingResultDM.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <GeocodingResultDM>[],
     );
 
-Map<String, dynamic> _$GeocodingResponseDMToJson(
-        _GeocodingResponseDM instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$GeocodingResponseDMToJson(_GeocodingResponseDM instance) => <String, dynamic>{
       'status': _$ProxyStatusEnumEnumMap[instance.status]!,
       'results': instance.results.map((e) => e.toJson()).toList(),
     };

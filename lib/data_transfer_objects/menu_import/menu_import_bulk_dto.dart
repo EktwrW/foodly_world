@@ -65,7 +65,8 @@ class MenuImportBulkSubcategoryDTO {
     required this.items,
   });
 
-  factory MenuImportBulkSubcategoryDTO.fromJson(Map<String, dynamic> json) => _$MenuImportBulkSubcategoryDTOFromJson(json);
+  factory MenuImportBulkSubcategoryDTO.fromJson(Map<String, dynamic> json) =>
+      _$MenuImportBulkSubcategoryDTOFromJson(json);
   Map<String, dynamic> toJson() => _$MenuImportBulkSubcategoryDTOToJson(this);
 }
 

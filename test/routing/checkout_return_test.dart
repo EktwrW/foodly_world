@@ -251,8 +251,7 @@ void main() {
       expect(find.text('ORDER:$uuid'), findsOneWidget);
     });
 
-    testWidgets('y NO deja la vuelta del pago guardada para el próximo arranque',
-        (tester) async {
+    testWidgets('y NO deja la vuelta del pago guardada para el próximo arranque', (tester) async {
       final router = await pump(tester);
 
       router.go('/checkout/return/success?order=$uuid');
@@ -265,8 +264,7 @@ void main() {
       );
     });
 
-    testWidgets('sin ?order= aterriza en start, no en NotFound ni en bucle',
-        (tester) async {
+    testWidgets('sin ?order= aterriza en start, no en NotFound ni en bucle', (tester) async {
       // La forma que produce el bucle: Stripe o el navegador pierden la query,
       // o llega un link viejo de antes del cambio.
       final router = await pump(tester);
@@ -278,8 +276,7 @@ void main() {
       expect(find.text('NOT_FOUND'), findsNothing);
     });
 
-    testWidgets('arrancar en frío sobre la vuelta del pago sin orden no se pega',
-        (tester) async {
+    testWidgets('arrancar en frío sobre la vuelta del pago sin orden no se pega', (tester) async {
       // Cold start directo sobre el deep link: es la forma en que el LAST_PATH
       // envenenado reaparecía en cada booteo.
       final router = await pump(tester, initialLocation: '/checkout/return/success');
@@ -320,6 +317,5 @@ class _Probe extends StatelessWidget {
   final String label;
 
   @override
-  Widget build(BuildContext context) =>
-      Scaffold(body: Text(label, textDirection: TextDirection.ltr));
+  Widget build(BuildContext context) => Scaffold(body: Text(label, textDirection: TextDirection.ltr));
 }

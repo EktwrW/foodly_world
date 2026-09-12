@@ -156,7 +156,8 @@ class PushNotificationService with WidgetsBindingObserver {
       // NO penalizar al usuario por leer despacio. Se cancela en cuanto
       // [_completePermissionFlow] dispare por el camino normal.
       _permissionFlowSafetyTimer = Timer(const Duration(seconds: 120), () {
-        _logger.w('PushNotificationService permission flow safety timer fired — releasing completer (possible plugin hang)');
+        _logger.w(
+            'PushNotificationService permission flow safety timer fired — releasing completer (possible plugin hang)');
         _completePermissionFlow();
       });
 

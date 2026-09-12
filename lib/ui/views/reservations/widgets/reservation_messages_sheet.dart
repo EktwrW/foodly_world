@@ -477,9 +477,7 @@ class _ReservationMessagesSheetState extends State<_ReservationMessagesSheet> wi
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  _unseenBelow == 1
-                      ? S.current.oneNewMessage
-                      : S.current.nNewMessages(_unseenBelow),
+                  _unseenBelow == 1 ? S.current.oneNewMessage : S.current.nNewMessages(_unseenBelow),
                   style: FoodlyTextStyles.caption.copyWith(
                     color: Colors.white,
                     fontSize: 11,

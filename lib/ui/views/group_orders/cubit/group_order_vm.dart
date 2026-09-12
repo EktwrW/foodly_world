@@ -41,6 +41,5 @@ abstract class GroupOrderVM with _$GroupOrderVM {
     return o.participants.any((p) => p.uuid == me && p.isProcessing);
   }
 
-  bool get canPay =>
-      (order?.isPayable ?? false) && myShare > 0 && !isPaying && !iHavePaid && !iAmProcessing;
+  bool get canPay => (order?.isPayable ?? false) && myShare > 0 && !isPaying && !iHavePaid && !iAmProcessing;
 }

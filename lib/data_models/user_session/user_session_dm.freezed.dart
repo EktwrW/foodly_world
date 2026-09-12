@@ -34,8 +34,7 @@ mixin _$UserSessionDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $UserSessionDMCopyWith<UserSessionDM> get copyWith =>
-      _$UserSessionDMCopyWithImpl<UserSessionDM>(
-          this as UserSessionDM, _$identity);
+      _$UserSessionDMCopyWithImpl<UserSessionDM>(this as UserSessionDM, _$identity);
 
   /// Serializes this UserSessionDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -46,23 +45,18 @@ mixin _$UserSessionDM {
         (other.runtimeType == runtimeType &&
             other is UserSessionDM &&
             (identical(other.user, user) || other.user == user) &&
-            (identical(other.welcomeMessage, welcomeMessage) ||
-                other.welcomeMessage == welcomeMessage) &&
-            (identical(other.tokedCreatedAt, tokedCreatedAt) ||
-                other.tokedCreatedAt == tokedCreatedAt) &&
+            (identical(other.welcomeMessage, welcomeMessage) || other.welcomeMessage == welcomeMessage) &&
+            (identical(other.tokedCreatedAt, tokedCreatedAt) || other.tokedCreatedAt == tokedCreatedAt) &&
             (identical(other.token, token) || other.token == token) &&
-            (identical(other.tokenType, tokenType) ||
-                other.tokenType == tokenType) &&
-            (identical(other.refreshToken, refreshToken) ||
-                other.refreshToken == refreshToken) &&
-            (identical(other.accessToken, accessToken) ||
-                other.accessToken == accessToken));
+            (identical(other.tokenType, tokenType) || other.tokenType == tokenType) &&
+            (identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken) &&
+            (identical(other.accessToken, accessToken) || other.accessToken == accessToken));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, user, welcomeMessage,
-      tokedCreatedAt, token, tokenType, refreshToken, accessToken);
+  int get hashCode =>
+      Object.hash(runtimeType, user, welcomeMessage, tokedCreatedAt, token, tokenType, refreshToken, accessToken);
 
   @override
   String toString() {
@@ -72,9 +66,7 @@ mixin _$UserSessionDM {
 
 /// @nodoc
 abstract mixin class $UserSessionDMCopyWith<$Res> {
-  factory $UserSessionDMCopyWith(
-          UserSessionDM value, $Res Function(UserSessionDM) _then) =
-      _$UserSessionDMCopyWithImpl;
+  factory $UserSessionDMCopyWith(UserSessionDM value, $Res Function(UserSessionDM) _then) = _$UserSessionDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'user') UserDM user,
@@ -89,8 +81,7 @@ abstract mixin class $UserSessionDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserSessionDMCopyWithImpl<$Res>
-    implements $UserSessionDMCopyWith<$Res> {
+class _$UserSessionDMCopyWithImpl<$Res> implements $UserSessionDMCopyWith<$Res> {
   _$UserSessionDMCopyWithImpl(this._self, this._then);
 
   final UserSessionDM _self;
@@ -259,14 +250,8 @@ extension UserSessionDMPatterns on UserSessionDM {
     final _that = this;
     switch (_that) {
       case _UserSessionDM() when $default != null:
-        return $default(
-            _that.user,
-            _that.welcomeMessage,
-            _that.tokedCreatedAt,
-            _that.token,
-            _that.tokenType,
-            _that.refreshToken,
-            _that.accessToken);
+        return $default(_that.user, _that.welcomeMessage, _that.tokedCreatedAt, _that.token, _that.tokenType,
+            _that.refreshToken, _that.accessToken);
       case _:
         return orElse();
     }
@@ -300,14 +285,8 @@ extension UserSessionDMPatterns on UserSessionDM {
     final _that = this;
     switch (_that) {
       case _UserSessionDM():
-        return $default(
-            _that.user,
-            _that.welcomeMessage,
-            _that.tokedCreatedAt,
-            _that.token,
-            _that.tokenType,
-            _that.refreshToken,
-            _that.accessToken);
+        return $default(_that.user, _that.welcomeMessage, _that.tokedCreatedAt, _that.token, _that.tokenType,
+            _that.refreshToken, _that.accessToken);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -340,14 +319,8 @@ extension UserSessionDMPatterns on UserSessionDM {
     final _that = this;
     switch (_that) {
       case _UserSessionDM() when $default != null:
-        return $default(
-            _that.user,
-            _that.welcomeMessage,
-            _that.tokedCreatedAt,
-            _that.token,
-            _that.tokenType,
-            _that.refreshToken,
-            _that.accessToken);
+        return $default(_that.user, _that.welcomeMessage, _that.tokedCreatedAt, _that.token, _that.tokenType,
+            _that.refreshToken, _that.accessToken);
       case _:
         return null;
     }
@@ -366,8 +339,7 @@ class _UserSessionDM extends UserSessionDM {
       @JsonKey(name: 'refresh_token') this.refreshToken,
       @JsonKey(name: 'access_token') this.accessToken})
       : super._();
-  factory _UserSessionDM.fromJson(Map<String, dynamic> json) =>
-      _$UserSessionDMFromJson(json);
+  factory _UserSessionDM.fromJson(Map<String, dynamic> json) => _$UserSessionDMFromJson(json);
 
   @override
   @JsonKey(name: 'user')
@@ -412,23 +384,18 @@ class _UserSessionDM extends UserSessionDM {
         (other.runtimeType == runtimeType &&
             other is _UserSessionDM &&
             (identical(other.user, user) || other.user == user) &&
-            (identical(other.welcomeMessage, welcomeMessage) ||
-                other.welcomeMessage == welcomeMessage) &&
-            (identical(other.tokedCreatedAt, tokedCreatedAt) ||
-                other.tokedCreatedAt == tokedCreatedAt) &&
+            (identical(other.welcomeMessage, welcomeMessage) || other.welcomeMessage == welcomeMessage) &&
+            (identical(other.tokedCreatedAt, tokedCreatedAt) || other.tokedCreatedAt == tokedCreatedAt) &&
             (identical(other.token, token) || other.token == token) &&
-            (identical(other.tokenType, tokenType) ||
-                other.tokenType == tokenType) &&
-            (identical(other.refreshToken, refreshToken) ||
-                other.refreshToken == refreshToken) &&
-            (identical(other.accessToken, accessToken) ||
-                other.accessToken == accessToken));
+            (identical(other.tokenType, tokenType) || other.tokenType == tokenType) &&
+            (identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken) &&
+            (identical(other.accessToken, accessToken) || other.accessToken == accessToken));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, user, welcomeMessage,
-      tokedCreatedAt, token, tokenType, refreshToken, accessToken);
+  int get hashCode =>
+      Object.hash(runtimeType, user, welcomeMessage, tokedCreatedAt, token, tokenType, refreshToken, accessToken);
 
   @override
   String toString() {
@@ -437,10 +404,8 @@ class _UserSessionDM extends UserSessionDM {
 }
 
 /// @nodoc
-abstract mixin class _$UserSessionDMCopyWith<$Res>
-    implements $UserSessionDMCopyWith<$Res> {
-  factory _$UserSessionDMCopyWith(
-          _UserSessionDM value, $Res Function(_UserSessionDM) _then) =
+abstract mixin class _$UserSessionDMCopyWith<$Res> implements $UserSessionDMCopyWith<$Res> {
+  factory _$UserSessionDMCopyWith(_UserSessionDM value, $Res Function(_UserSessionDM) _then) =
       __$UserSessionDMCopyWithImpl;
   @override
   @useResult
@@ -458,8 +423,7 @@ abstract mixin class _$UserSessionDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$UserSessionDMCopyWithImpl<$Res>
-    implements _$UserSessionDMCopyWith<$Res> {
+class __$UserSessionDMCopyWithImpl<$Res> implements _$UserSessionDMCopyWith<$Res> {
   __$UserSessionDMCopyWithImpl(this._self, this._then);
 
   final _UserSessionDM _self;

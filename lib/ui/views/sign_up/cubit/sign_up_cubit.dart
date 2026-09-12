@@ -337,8 +337,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     // 1) Country: solo sobrescribe si aún no hay country seteado y el DM
     // trae un code reconocido. No forzamos USA si el code es de un mercado
     // fuera de Foodly — respetamos la selección default del constructor.
-    final resolvedCountry =
-        FoodlyCountries.values.firstWhereOrNull((c) => c.countryCode == dm.countryCode);
+    final resolvedCountry = FoodlyCountries.values.firstWhereOrNull((c) => c.countryCode == dm.countryCode);
     if (_vm.country == null && resolvedCountry != null) {
       _vm = _vm.copyWith(country: resolvedCountry);
       changed = true;
@@ -348,10 +347,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     // curso e inputs ya pre-llenos (social sign-up).
     final addressCtrl = _vm.addressController?.controller;
     final addressText = dm.address;
-    if (addressCtrl != null &&
-        addressCtrl.text.isEmpty &&
-        addressText != null &&
-        addressText.isNotEmpty) {
+    if (addressCtrl != null && addressCtrl.text.isEmpty && addressText != null && addressText.isNotEmpty) {
       addressCtrl.text = addressText;
       changed = true;
     }

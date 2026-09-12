@@ -17,30 +17,27 @@ void main() {
   group('accessRedirectPath (decisión pura del guard)', () {
     test('sin acceso → /no-access', () {
       expect(
-        GoRouterRedirector.accessRedirectPath(
-            guestBrowsable: false, pendingRestore: false, hasAccess: false),
+        GoRouterRedirector.accessRedirectPath(guestBrowsable: false, pendingRestore: false, hasAccess: false),
         AppRoutes.noAccess.path,
       );
     });
 
     test('con acceso → pasa (null)', () {
       expect(
-        GoRouterRedirector.accessRedirectPath(
-            guestBrowsable: false, pendingRestore: false, hasAccess: true),
+        GoRouterRedirector.accessRedirectPath(guestBrowsable: false, pendingRestore: false, hasAccess: true),
         isNull,
       );
     });
 
-    test('bypass invitado browsable y restauración de sesión en curso → pasan '
+    test(
+        'bypass invitado browsable y restauración de sesión en curso → pasan '
         'aunque hasAccess sea false', () {
       expect(
-        GoRouterRedirector.accessRedirectPath(
-            guestBrowsable: true, pendingRestore: false, hasAccess: false),
+        GoRouterRedirector.accessRedirectPath(guestBrowsable: true, pendingRestore: false, hasAccess: false),
         isNull,
       );
       expect(
-        GoRouterRedirector.accessRedirectPath(
-            guestBrowsable: false, pendingRestore: true, hasAccess: false),
+        GoRouterRedirector.accessRedirectPath(guestBrowsable: false, pendingRestore: true, hasAccess: false),
         isNull,
       );
     });

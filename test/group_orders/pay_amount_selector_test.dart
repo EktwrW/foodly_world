@@ -87,8 +87,7 @@ void main() {
       expect(todaLaCuenta(), findsOneWidget);
     });
 
-    testWidgets('sin saldo ajeno no hay selector: sería un control de un botón',
-        (tester) async {
+    testWidgets('sin saldo ajeno no hay selector: sería un control de un botón', (tester) async {
       await pintar(tester, order: orden(), canCoverAll: false);
       expect(miParte(), findsNothing);
       expect(todaLaCuenta(), findsNothing);
@@ -96,8 +95,7 @@ void main() {
       expect(find.textContaining('Pagar mi parte'), findsOneWidget);
     });
 
-    testWidgets('ya pagué lo mío: sin selector, pero puedo cubrir al resto',
-        (tester) async {
+    testWidgets('ya pagué lo mío: sin selector, pero puedo cubrir al resto', (tester) async {
       await pintar(tester, order: orden(miParte: 0), myShare: 0);
 
       expect(miParte(), findsNothing);
@@ -133,8 +131,7 @@ void main() {
       expect(cubrioTodo, isTrue);
     });
 
-    testWidgets('el monto elegido viaja TAMBIÉN por MB WAY — el bug de origen',
-        (tester) async {
+    testWidgets('el monto elegido viaja TAMBIÉN por MB WAY — el bug de origen', (tester) async {
       bool? cubrioTodo;
       await pintar(tester, order: orden(), onPayHosted: (v) => cubrioTodo = v);
 

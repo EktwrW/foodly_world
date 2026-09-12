@@ -27,6 +27,5 @@ abstract class PlaceDetailsResponseDM with _$PlaceDetailsResponseDM {
     PlaceDM? result,
   }) = _PlaceDetailsResponseDM;
 
-  factory PlaceDetailsResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$PlaceDetailsResponseDMFromJson(json);
+  factory PlaceDetailsResponseDM.fromJson(Map<String, dynamic> json) => _$PlaceDetailsResponseDMFromJson(json);
 }

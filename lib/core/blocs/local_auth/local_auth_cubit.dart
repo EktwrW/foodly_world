@@ -128,8 +128,7 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
           // lado seguro (rutear a login).
           bool sessionValid;
           try {
-            sessionValid = await _authSessionService.sessionRestoreVerdict
-                .timeout(const Duration(seconds: 12));
+            sessionValid = await _authSessionService.sessionRestoreVerdict.timeout(const Duration(seconds: 12));
           } catch (_) {
             sessionValid = false;
           }

@@ -28,8 +28,7 @@ mixin _$GeocodingResultDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $GeocodingResultDMCopyWith<GeocodingResultDM> get copyWith =>
-      _$GeocodingResultDMCopyWithImpl<GeocodingResultDM>(
-          this as GeocodingResultDM, _$identity);
+      _$GeocodingResultDMCopyWithImpl<GeocodingResultDM>(this as GeocodingResultDM, _$identity);
 
   /// Serializes this GeocodingResultDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -40,24 +39,16 @@ mixin _$GeocodingResultDM {
         (other.runtimeType == runtimeType &&
             other is GeocodingResultDM &&
             (identical(other.placeId, placeId) || other.placeId == placeId) &&
-            (identical(other.formattedAddress, formattedAddress) ||
-                other.formattedAddress == formattedAddress) &&
-            const DeepCollectionEquality()
-                .equals(other.addressComponents, addressComponents) &&
-            (identical(other.geometry, geometry) ||
-                other.geometry == geometry) &&
+            (identical(other.formattedAddress, formattedAddress) || other.formattedAddress == formattedAddress) &&
+            const DeepCollectionEquality().equals(other.addressComponents, addressComponents) &&
+            (identical(other.geometry, geometry) || other.geometry == geometry) &&
             const DeepCollectionEquality().equals(other.types, types));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      placeId,
-      formattedAddress,
-      const DeepCollectionEquality().hash(addressComponents),
-      geometry,
-      const DeepCollectionEquality().hash(types));
+  int get hashCode => Object.hash(runtimeType, placeId, formattedAddress,
+      const DeepCollectionEquality().hash(addressComponents), geometry, const DeepCollectionEquality().hash(types));
 
   @override
   String toString() {
@@ -67,15 +58,13 @@ mixin _$GeocodingResultDM {
 
 /// @nodoc
 abstract mixin class $GeocodingResultDMCopyWith<$Res> {
-  factory $GeocodingResultDMCopyWith(
-          GeocodingResultDM value, $Res Function(GeocodingResultDM) _then) =
+  factory $GeocodingResultDMCopyWith(GeocodingResultDM value, $Res Function(GeocodingResultDM) _then) =
       _$GeocodingResultDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'place_id') String? placeId,
       @JsonKey(name: 'formatted_address') String? formattedAddress,
-      @JsonKey(name: 'address_components')
-      List<PlaceAddressComponentDM> addressComponents,
+      @JsonKey(name: 'address_components') List<PlaceAddressComponentDM> addressComponents,
       PlaceGeometryDM? geometry,
       List<String> types});
 
@@ -83,8 +72,7 @@ abstract mixin class $GeocodingResultDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$GeocodingResultDMCopyWithImpl<$Res>
-    implements $GeocodingResultDMCopyWith<$Res> {
+class _$GeocodingResultDMCopyWithImpl<$Res> implements $GeocodingResultDMCopyWith<$Res> {
   _$GeocodingResultDMCopyWithImpl(this._self, this._then);
 
   final GeocodingResultDM _self;
@@ -236,8 +224,7 @@ extension GeocodingResultDMPatterns on GeocodingResultDM {
     TResult Function(
             @JsonKey(name: 'place_id') String? placeId,
             @JsonKey(name: 'formatted_address') String? formattedAddress,
-            @JsonKey(name: 'address_components')
-            List<PlaceAddressComponentDM> addressComponents,
+            @JsonKey(name: 'address_components') List<PlaceAddressComponentDM> addressComponents,
             PlaceGeometryDM? geometry,
             List<String> types)?
         $default, {
@@ -246,8 +233,7 @@ extension GeocodingResultDMPatterns on GeocodingResultDM {
     final _that = this;
     switch (_that) {
       case _GeocodingResultDM() when $default != null:
-        return $default(_that.placeId, _that.formattedAddress,
-            _that.addressComponents, _that.geometry, _that.types);
+        return $default(_that.placeId, _that.formattedAddress, _that.addressComponents, _that.geometry, _that.types);
       case _:
         return orElse();
     }
@@ -271,8 +257,7 @@ extension GeocodingResultDMPatterns on GeocodingResultDM {
     TResult Function(
             @JsonKey(name: 'place_id') String? placeId,
             @JsonKey(name: 'formatted_address') String? formattedAddress,
-            @JsonKey(name: 'address_components')
-            List<PlaceAddressComponentDM> addressComponents,
+            @JsonKey(name: 'address_components') List<PlaceAddressComponentDM> addressComponents,
             PlaceGeometryDM? geometry,
             List<String> types)
         $default,
@@ -280,8 +265,7 @@ extension GeocodingResultDMPatterns on GeocodingResultDM {
     final _that = this;
     switch (_that) {
       case _GeocodingResultDM():
-        return $default(_that.placeId, _that.formattedAddress,
-            _that.addressComponents, _that.geometry, _that.types);
+        return $default(_that.placeId, _that.formattedAddress, _that.addressComponents, _that.geometry, _that.types);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -304,8 +288,7 @@ extension GeocodingResultDMPatterns on GeocodingResultDM {
     TResult? Function(
             @JsonKey(name: 'place_id') String? placeId,
             @JsonKey(name: 'formatted_address') String? formattedAddress,
-            @JsonKey(name: 'address_components')
-            List<PlaceAddressComponentDM> addressComponents,
+            @JsonKey(name: 'address_components') List<PlaceAddressComponentDM> addressComponents,
             PlaceGeometryDM? geometry,
             List<String> types)?
         $default,
@@ -313,8 +296,7 @@ extension GeocodingResultDMPatterns on GeocodingResultDM {
     final _that = this;
     switch (_that) {
       case _GeocodingResultDM() when $default != null:
-        return $default(_that.placeId, _that.formattedAddress,
-            _that.addressComponents, _that.geometry, _that.types);
+        return $default(_that.placeId, _that.formattedAddress, _that.addressComponents, _that.geometry, _that.types);
       case _:
         return null;
     }
@@ -328,14 +310,12 @@ class _GeocodingResultDM implements GeocodingResultDM {
       {@JsonKey(name: 'place_id') this.placeId,
       @JsonKey(name: 'formatted_address') this.formattedAddress,
       @JsonKey(name: 'address_components')
-      final List<PlaceAddressComponentDM> addressComponents =
-          const <PlaceAddressComponentDM>[],
+      final List<PlaceAddressComponentDM> addressComponents = const <PlaceAddressComponentDM>[],
       this.geometry,
       final List<String> types = const <String>[]})
       : _addressComponents = addressComponents,
         _types = types;
-  factory _GeocodingResultDM.fromJson(Map<String, dynamic> json) =>
-      _$GeocodingResultDMFromJson(json);
+  factory _GeocodingResultDM.fromJson(Map<String, dynamic> json) => _$GeocodingResultDMFromJson(json);
 
   @override
   @JsonKey(name: 'place_id')
@@ -347,8 +327,7 @@ class _GeocodingResultDM implements GeocodingResultDM {
   @override
   @JsonKey(name: 'address_components')
   List<PlaceAddressComponentDM> get addressComponents {
-    if (_addressComponents is EqualUnmodifiableListView)
-      return _addressComponents;
+    if (_addressComponents is EqualUnmodifiableListView) return _addressComponents;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_addressComponents);
   }
@@ -385,24 +364,16 @@ class _GeocodingResultDM implements GeocodingResultDM {
         (other.runtimeType == runtimeType &&
             other is _GeocodingResultDM &&
             (identical(other.placeId, placeId) || other.placeId == placeId) &&
-            (identical(other.formattedAddress, formattedAddress) ||
-                other.formattedAddress == formattedAddress) &&
-            const DeepCollectionEquality()
-                .equals(other._addressComponents, _addressComponents) &&
-            (identical(other.geometry, geometry) ||
-                other.geometry == geometry) &&
+            (identical(other.formattedAddress, formattedAddress) || other.formattedAddress == formattedAddress) &&
+            const DeepCollectionEquality().equals(other._addressComponents, _addressComponents) &&
+            (identical(other.geometry, geometry) || other.geometry == geometry) &&
             const DeepCollectionEquality().equals(other._types, _types));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      placeId,
-      formattedAddress,
-      const DeepCollectionEquality().hash(_addressComponents),
-      geometry,
-      const DeepCollectionEquality().hash(_types));
+  int get hashCode => Object.hash(runtimeType, placeId, formattedAddress,
+      const DeepCollectionEquality().hash(_addressComponents), geometry, const DeepCollectionEquality().hash(_types));
 
   @override
   String toString() {
@@ -411,18 +382,15 @@ class _GeocodingResultDM implements GeocodingResultDM {
 }
 
 /// @nodoc
-abstract mixin class _$GeocodingResultDMCopyWith<$Res>
-    implements $GeocodingResultDMCopyWith<$Res> {
-  factory _$GeocodingResultDMCopyWith(
-          _GeocodingResultDM value, $Res Function(_GeocodingResultDM) _then) =
+abstract mixin class _$GeocodingResultDMCopyWith<$Res> implements $GeocodingResultDMCopyWith<$Res> {
+  factory _$GeocodingResultDMCopyWith(_GeocodingResultDM value, $Res Function(_GeocodingResultDM) _then) =
       __$GeocodingResultDMCopyWithImpl;
   @override
   @useResult
   $Res call(
       {@JsonKey(name: 'place_id') String? placeId,
       @JsonKey(name: 'formatted_address') String? formattedAddress,
-      @JsonKey(name: 'address_components')
-      List<PlaceAddressComponentDM> addressComponents,
+      @JsonKey(name: 'address_components') List<PlaceAddressComponentDM> addressComponents,
       PlaceGeometryDM? geometry,
       List<String> types});
 
@@ -431,8 +399,7 @@ abstract mixin class _$GeocodingResultDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$GeocodingResultDMCopyWithImpl<$Res>
-    implements _$GeocodingResultDMCopyWith<$Res> {
+class __$GeocodingResultDMCopyWithImpl<$Res> implements _$GeocodingResultDMCopyWith<$Res> {
   __$GeocodingResultDMCopyWithImpl(this._self, this._then);
 
   final _GeocodingResultDM _self;

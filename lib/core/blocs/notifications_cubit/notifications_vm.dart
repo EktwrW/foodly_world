@@ -20,9 +20,7 @@ abstract class NotificationsVM with _$NotificationsVM {
 
   bool get hasUnread => unreadCount > 0;
 
-  List<NotificationDM> get unreadNotifications =>
-      notifications.where((n) => !n.isRead).toList();
+  List<NotificationDM> get unreadNotifications => notifications.where((n) => !n.isRead).toList();
 
-  List<NotificationDM> get readNotifications =>
-      notifications.where((n) => n.isRead).toList();
+  List<NotificationDM> get readNotifications => notifications.where((n) => n.isRead).toList();
 }

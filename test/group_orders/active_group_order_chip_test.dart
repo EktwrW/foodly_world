@@ -49,35 +49,39 @@ void main() {
         ),
       );
 
-  testWidgets('carrito abierto: "Ver pedido · €X" (comportamiento previo)',
-      (tester) async {
+  testWidgets('carrito abierto: "Ver pedido · €X" (comportamiento previo)', (tester) async {
     await pump(tester, order());
     expect(find.textContaining(S.current.groupOrderViewOrder), findsOneWidget);
     expect(find.textContaining('€26.00'), findsOneWidget);
   });
 
   testWidgets('preparando: el chip lo dice', (tester) async {
-    await pump(tester, order(
-      status: GroupOrderStatus.confirmed,
-      fulfillment: GroupFulfillmentStatus.preparing,
-    ));
+    await pump(
+        tester,
+        order(
+          status: GroupOrderStatus.confirmed,
+          fulfillment: GroupFulfillmentStatus.preparing,
+        ));
     expect(find.text(S.current.groupOrderChipPreparing), findsOneWidget);
   });
 
-  testWidgets('LISTA: el chip grita el estado (señal de mostrador)',
-      (tester) async {
-    await pump(tester, order(
-      status: GroupOrderStatus.confirmed,
-      fulfillment: GroupFulfillmentStatus.ready,
-    ));
+  testWidgets('LISTA: el chip grita el estado (señal de mostrador)', (tester) async {
+    await pump(
+        tester,
+        order(
+          status: GroupOrderStatus.confirmed,
+          fulfillment: GroupFulfillmentStatus.ready,
+        ));
     expect(find.text(S.current.groupOrderChipReady), findsOneWidget);
   });
 
   testWidgets('cuenta abierta entregada: el chip invita a pagar', (tester) async {
-    await pump(tester, order(
-      status: GroupOrderStatus.confirmed,
-      fulfillment: GroupFulfillmentStatus.delivered,
-    ));
+    await pump(
+        tester,
+        order(
+          status: GroupOrderStatus.confirmed,
+          fulfillment: GroupFulfillmentStatus.delivered,
+        ));
     expect(find.textContaining('€26.00'), findsOneWidget);
   });
 
@@ -115,8 +119,7 @@ void main() {
         ],
       );
 
-  testWidgets('con ítems sin enviar el chip dice "Enviar orden", no "Pagar"',
-      (tester) async {
+  testWidgets('con ítems sin enviar el chip dice "Enviar orden", no "Pagar"', (tester) async {
     final o = withPendingItem();
     expect(o.openTabCtaState, OpenTabCtaState.send, reason: 'Precondición de la máquina pura.');
 
@@ -131,10 +134,12 @@ void main() {
   });
 
   testWidgets('sin ítems pendientes vuelve a invitar a pagar', (tester) async {
-    await pump(tester, order(
-      status: GroupOrderStatus.confirmed,
-      fulfillment: GroupFulfillmentStatus.delivered,
-    ));
+    await pump(
+        tester,
+        order(
+          status: GroupOrderStatus.confirmed,
+          fulfillment: GroupFulfillmentStatus.delivered,
+        ));
     expect(find.text(S.current.groupOrderSendCta), findsNothing);
   });
 
@@ -157,8 +162,7 @@ void main() {
         items: items,
       );
 
-  GroupOrderItemDM sent(String uuid, {DateTime? delivered, DateTime? voided, int batch = 1}) =>
-      GroupOrderItemDM(
+  GroupOrderItemDM sent(String uuid, {DateTime? delivered, DateTime? voided, int batch = 1}) => GroupOrderItemDM(
         uuid: uuid,
         name: 'Plato',
         unitPricePreview: 26,
@@ -168,8 +172,7 @@ void main() {
         voidedAt: voided,
       );
 
-  testWidgets('entregada y luego el negocio ANULA un plato: no dice "preparando"',
-      (tester) async {
+  testWidgets('entregada y luego el negocio ANULA un plato: no dice "preparando"', (tester) async {
     // El BE revierte el agregado a preparing, pero lo único que quedaba vivo
     // ya estaba entregado: no hay nada en cocina.
     final o = openTab(
@@ -187,8 +190,7 @@ void main() {
     expect(find.textContaining('€26.00'), findsOneWidget);
   });
 
-  testWidgets('tanda 2 enviada Y entregada: no se queda en "preparando"',
-      (tester) async {
+  testWidgets('tanda 2 enviada Y entregada: no se queda en "preparando"', (tester) async {
     final o = openTab(
       fulfillment: GroupFulfillmentStatus.preparing, // agregado obsoleto
       items: [

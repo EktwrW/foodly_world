@@ -35,8 +35,7 @@ mixin _$UserPrefsDM {
         (other.runtimeType == runtimeType &&
             other is UserPrefsDM &&
             (identical(other.locale, locale) || other.locale == locale) &&
-            (identical(other.userTheme, userTheme) ||
-                other.userTheme == userTheme));
+            (identical(other.userTheme, userTheme) || other.userTheme == userTheme));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -51,13 +50,9 @@ mixin _$UserPrefsDM {
 
 /// @nodoc
 abstract mixin class $UserPrefsDMCopyWith<$Res> {
-  factory $UserPrefsDMCopyWith(
-          UserPrefsDM value, $Res Function(UserPrefsDM) _then) =
-      _$UserPrefsDMCopyWithImpl;
+  factory $UserPrefsDMCopyWith(UserPrefsDM value, $Res Function(UserPrefsDM) _then) = _$UserPrefsDMCopyWithImpl;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'user_locale') String? locale,
-      @JsonKey(name: 'user_theme') UserTheme? userTheme});
+  $Res call({@JsonKey(name: 'user_locale') String? locale, @JsonKey(name: 'user_theme') UserTheme? userTheme});
 }
 
 /// @nodoc
@@ -181,8 +176,7 @@ extension UserPrefsDMPatterns on UserPrefsDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'user_locale') String? locale,
-            @JsonKey(name: 'user_theme') UserTheme? userTheme)?
+    TResult Function(@JsonKey(name: 'user_locale') String? locale, @JsonKey(name: 'user_theme') UserTheme? userTheme)?
         $default, {
     required TResult orElse(),
   }) {
@@ -210,8 +204,7 @@ extension UserPrefsDMPatterns on UserPrefsDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'user_locale') String? locale,
-            @JsonKey(name: 'user_theme') UserTheme? userTheme)
+    TResult Function(@JsonKey(name: 'user_locale') String? locale, @JsonKey(name: 'user_theme') UserTheme? userTheme)
         $default,
   ) {
     final _that = this;
@@ -237,8 +230,7 @@ extension UserPrefsDMPatterns on UserPrefsDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(@JsonKey(name: 'user_locale') String? locale,
-            @JsonKey(name: 'user_theme') UserTheme? userTheme)?
+    TResult? Function(@JsonKey(name: 'user_locale') String? locale, @JsonKey(name: 'user_theme') UserTheme? userTheme)?
         $default,
   ) {
     final _that = this;
@@ -254,11 +246,8 @@ extension UserPrefsDMPatterns on UserPrefsDM {
 /// @nodoc
 @JsonSerializable()
 class _UserPrefsDM implements UserPrefsDM {
-  const _UserPrefsDM(
-      {@JsonKey(name: 'user_locale') this.locale,
-      @JsonKey(name: 'user_theme') this.userTheme});
-  factory _UserPrefsDM.fromJson(Map<String, dynamic> json) =>
-      _$UserPrefsDMFromJson(json);
+  const _UserPrefsDM({@JsonKey(name: 'user_locale') this.locale, @JsonKey(name: 'user_theme') this.userTheme});
+  factory _UserPrefsDM.fromJson(Map<String, dynamic> json) => _$UserPrefsDMFromJson(json);
 
   @override
   @JsonKey(name: 'user_locale')
@@ -272,8 +261,7 @@ class _UserPrefsDM implements UserPrefsDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$UserPrefsDMCopyWith<_UserPrefsDM> get copyWith =>
-      __$UserPrefsDMCopyWithImpl<_UserPrefsDM>(this, _$identity);
+  _$UserPrefsDMCopyWith<_UserPrefsDM> get copyWith => __$UserPrefsDMCopyWithImpl<_UserPrefsDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -288,8 +276,7 @@ class _UserPrefsDM implements UserPrefsDM {
         (other.runtimeType == runtimeType &&
             other is _UserPrefsDM &&
             (identical(other.locale, locale) || other.locale == locale) &&
-            (identical(other.userTheme, userTheme) ||
-                other.userTheme == userTheme));
+            (identical(other.userTheme, userTheme) || other.userTheme == userTheme));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -303,16 +290,11 @@ class _UserPrefsDM implements UserPrefsDM {
 }
 
 /// @nodoc
-abstract mixin class _$UserPrefsDMCopyWith<$Res>
-    implements $UserPrefsDMCopyWith<$Res> {
-  factory _$UserPrefsDMCopyWith(
-          _UserPrefsDM value, $Res Function(_UserPrefsDM) _then) =
-      __$UserPrefsDMCopyWithImpl;
+abstract mixin class _$UserPrefsDMCopyWith<$Res> implements $UserPrefsDMCopyWith<$Res> {
+  factory _$UserPrefsDMCopyWith(_UserPrefsDM value, $Res Function(_UserPrefsDM) _then) = __$UserPrefsDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: 'user_locale') String? locale,
-      @JsonKey(name: 'user_theme') UserTheme? userTheme});
+  $Res call({@JsonKey(name: 'user_locale') String? locale, @JsonKey(name: 'user_theme') UserTheme? userTheme});
 }
 
 /// @nodoc

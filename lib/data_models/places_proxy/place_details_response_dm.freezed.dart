@@ -23,8 +23,7 @@ mixin _$PlaceDetailsResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PlaceDetailsResponseDMCopyWith<PlaceDetailsResponseDM> get copyWith =>
-      _$PlaceDetailsResponseDMCopyWithImpl<PlaceDetailsResponseDM>(
-          this as PlaceDetailsResponseDM, _$identity);
+      _$PlaceDetailsResponseDMCopyWithImpl<PlaceDetailsResponseDM>(this as PlaceDetailsResponseDM, _$identity);
 
   /// Serializes this PlaceDetailsResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -50,21 +49,16 @@ mixin _$PlaceDetailsResponseDM {
 
 /// @nodoc
 abstract mixin class $PlaceDetailsResponseDMCopyWith<$Res> {
-  factory $PlaceDetailsResponseDMCopyWith(PlaceDetailsResponseDM value,
-          $Res Function(PlaceDetailsResponseDM) _then) =
+  factory $PlaceDetailsResponseDMCopyWith(PlaceDetailsResponseDM value, $Res Function(PlaceDetailsResponseDM) _then) =
       _$PlaceDetailsResponseDMCopyWithImpl;
   @useResult
-  $Res call(
-      {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-      ProxyStatusEnum status,
-      PlaceDM? result});
+  $Res call({@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) ProxyStatusEnum status, PlaceDM? result});
 
   $PlaceDMCopyWith<$Res>? get result;
 }
 
 /// @nodoc
-class _$PlaceDetailsResponseDMCopyWithImpl<$Res>
-    implements $PlaceDetailsResponseDMCopyWith<$Res> {
+class _$PlaceDetailsResponseDMCopyWithImpl<$Res> implements $PlaceDetailsResponseDMCopyWith<$Res> {
   _$PlaceDetailsResponseDMCopyWithImpl(this._self, this._then);
 
   final PlaceDetailsResponseDM _self;
@@ -198,10 +192,7 @@ extension PlaceDetailsResponseDMPatterns on PlaceDetailsResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-            ProxyStatusEnum status,
-            PlaceDM? result)?
+    TResult Function(@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) ProxyStatusEnum status, PlaceDM? result)?
         $default, {
     required TResult orElse(),
   }) {
@@ -229,10 +220,7 @@ extension PlaceDetailsResponseDMPatterns on PlaceDetailsResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-            ProxyStatusEnum status,
-            PlaceDM? result)
+    TResult Function(@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) ProxyStatusEnum status, PlaceDM? result)
         $default,
   ) {
     final _that = this;
@@ -258,10 +246,7 @@ extension PlaceDetailsResponseDMPatterns on PlaceDetailsResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-            ProxyStatusEnum status,
-            PlaceDM? result)?
+    TResult? Function(@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) ProxyStatusEnum status, PlaceDM? result)?
         $default,
   ) {
     final _that = this;
@@ -278,10 +263,8 @@ extension PlaceDetailsResponseDMPatterns on PlaceDetailsResponseDM {
 @JsonSerializable()
 class _PlaceDetailsResponseDM implements PlaceDetailsResponseDM {
   const _PlaceDetailsResponseDM(
-      {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) required this.status,
-      this.result});
-  factory _PlaceDetailsResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$PlaceDetailsResponseDMFromJson(json);
+      {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) required this.status, this.result});
+  factory _PlaceDetailsResponseDM.fromJson(Map<String, dynamic> json) => _$PlaceDetailsResponseDMFromJson(json);
 
   @override
   @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
@@ -295,8 +278,7 @@ class _PlaceDetailsResponseDM implements PlaceDetailsResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$PlaceDetailsResponseDMCopyWith<_PlaceDetailsResponseDM> get copyWith =>
-      __$PlaceDetailsResponseDMCopyWithImpl<_PlaceDetailsResponseDM>(
-          this, _$identity);
+      __$PlaceDetailsResponseDMCopyWithImpl<_PlaceDetailsResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -325,25 +307,20 @@ class _PlaceDetailsResponseDM implements PlaceDetailsResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$PlaceDetailsResponseDMCopyWith<$Res>
-    implements $PlaceDetailsResponseDMCopyWith<$Res> {
-  factory _$PlaceDetailsResponseDMCopyWith(_PlaceDetailsResponseDM value,
-          $Res Function(_PlaceDetailsResponseDM) _then) =
+abstract mixin class _$PlaceDetailsResponseDMCopyWith<$Res> implements $PlaceDetailsResponseDMCopyWith<$Res> {
+  factory _$PlaceDetailsResponseDMCopyWith(
+          _PlaceDetailsResponseDM value, $Res Function(_PlaceDetailsResponseDM) _then) =
       __$PlaceDetailsResponseDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-      ProxyStatusEnum status,
-      PlaceDM? result});
+  $Res call({@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) ProxyStatusEnum status, PlaceDM? result});
 
   @override
   $PlaceDMCopyWith<$Res>? get result;
 }
 
 /// @nodoc
-class __$PlaceDetailsResponseDMCopyWithImpl<$Res>
-    implements _$PlaceDetailsResponseDMCopyWith<$Res> {
+class __$PlaceDetailsResponseDMCopyWithImpl<$Res> implements _$PlaceDetailsResponseDMCopyWith<$Res> {
   __$PlaceDetailsResponseDMCopyWithImpl(this._self, this._then);
 
   final _PlaceDetailsResponseDM _self;

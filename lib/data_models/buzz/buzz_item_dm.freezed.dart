@@ -22,8 +22,7 @@ mixin _$BuzzResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $BuzzResponseDMCopyWith<BuzzResponseDM> get copyWith =>
-      _$BuzzResponseDMCopyWithImpl<BuzzResponseDM>(
-          this as BuzzResponseDM, _$identity);
+      _$BuzzResponseDMCopyWithImpl<BuzzResponseDM>(this as BuzzResponseDM, _$identity);
 
   /// Serializes this BuzzResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -39,8 +38,7 @@ mixin _$BuzzResponseDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(data), meta);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(data), meta);
 
   @override
   String toString() {
@@ -50,8 +48,7 @@ mixin _$BuzzResponseDM {
 
 /// @nodoc
 abstract mixin class $BuzzResponseDMCopyWith<$Res> {
-  factory $BuzzResponseDMCopyWith(
-          BuzzResponseDM value, $Res Function(BuzzResponseDM) _then) =
+  factory $BuzzResponseDMCopyWith(BuzzResponseDM value, $Res Function(BuzzResponseDM) _then) =
       _$BuzzResponseDMCopyWithImpl;
   @useResult
   $Res call({List<BuzzItemDM> data, BuzzMetaDM? meta});
@@ -60,8 +57,7 @@ abstract mixin class $BuzzResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BuzzResponseDMCopyWithImpl<$Res>
-    implements $BuzzResponseDMCopyWith<$Res> {
+class _$BuzzResponseDMCopyWithImpl<$Res> implements $BuzzResponseDMCopyWith<$Res> {
   _$BuzzResponseDMCopyWithImpl(this._self, this._then);
 
   final BuzzResponseDM _self;
@@ -262,10 +258,8 @@ extension BuzzResponseDMPatterns on BuzzResponseDM {
 /// @nodoc
 @JsonSerializable()
 class _BuzzResponseDM implements BuzzResponseDM {
-  const _BuzzResponseDM({final List<BuzzItemDM> data = const [], this.meta})
-      : _data = data;
-  factory _BuzzResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$BuzzResponseDMFromJson(json);
+  const _BuzzResponseDM({final List<BuzzItemDM> data = const [], this.meta}) : _data = data;
+  factory _BuzzResponseDM.fromJson(Map<String, dynamic> json) => _$BuzzResponseDMFromJson(json);
 
   final List<BuzzItemDM> _data;
   @override
@@ -305,8 +299,7 @@ class _BuzzResponseDM implements BuzzResponseDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_data), meta);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_data), meta);
 
   @override
   String toString() {
@@ -315,10 +308,8 @@ class _BuzzResponseDM implements BuzzResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$BuzzResponseDMCopyWith<$Res>
-    implements $BuzzResponseDMCopyWith<$Res> {
-  factory _$BuzzResponseDMCopyWith(
-          _BuzzResponseDM value, $Res Function(_BuzzResponseDM) _then) =
+abstract mixin class _$BuzzResponseDMCopyWith<$Res> implements $BuzzResponseDMCopyWith<$Res> {
+  factory _$BuzzResponseDMCopyWith(_BuzzResponseDM value, $Res Function(_BuzzResponseDM) _then) =
       __$BuzzResponseDMCopyWithImpl;
   @override
   @useResult
@@ -329,8 +320,7 @@ abstract mixin class _$BuzzResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$BuzzResponseDMCopyWithImpl<$Res>
-    implements _$BuzzResponseDMCopyWith<$Res> {
+class __$BuzzResponseDMCopyWithImpl<$Res> implements _$BuzzResponseDMCopyWith<$Res> {
   __$BuzzResponseDMCopyWithImpl(this._self, this._then);
 
   final _BuzzResponseDM _self;
@@ -385,8 +375,7 @@ mixin _$BuzzMetaDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $BuzzMetaDMCopyWith<BuzzMetaDM> get copyWith =>
-      _$BuzzMetaDMCopyWithImpl<BuzzMetaDM>(this as BuzzMetaDM, _$identity);
+  $BuzzMetaDMCopyWith<BuzzMetaDM> get copyWith => _$BuzzMetaDMCopyWithImpl<BuzzMetaDM>(this as BuzzMetaDM, _$identity);
 
   /// Serializes this BuzzMetaDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -396,18 +385,15 @@ mixin _$BuzzMetaDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is BuzzMetaDM &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.lastPage, lastPage) ||
-                other.lastPage == lastPage) &&
+            (identical(other.currentPage, currentPage) || other.currentPage == currentPage) &&
+            (identical(other.lastPage, lastPage) || other.lastPage == lastPage) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
             (identical(other.total, total) || other.total == total));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, currentPage, lastPage, perPage, total);
+  int get hashCode => Object.hash(runtimeType, currentPage, lastPage, perPage, total);
 
   @override
   String toString() {
@@ -417,9 +403,7 @@ mixin _$BuzzMetaDM {
 
 /// @nodoc
 abstract mixin class $BuzzMetaDMCopyWith<$Res> {
-  factory $BuzzMetaDMCopyWith(
-          BuzzMetaDM value, $Res Function(BuzzMetaDM) _then) =
-      _$BuzzMetaDMCopyWithImpl;
+  factory $BuzzMetaDMCopyWith(BuzzMetaDM value, $Res Function(BuzzMetaDM) _then) = _$BuzzMetaDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'current_page') int currentPage,
@@ -559,19 +543,15 @@ extension BuzzMetaDMPatterns on BuzzMetaDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(name: 'current_page') int currentPage,
-            @JsonKey(name: 'last_page') int lastPage,
-            @JsonKey(name: 'per_page') int perPage,
-            int total)?
+    TResult Function(@JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage,
+            @JsonKey(name: 'per_page') int perPage, int total)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _BuzzMetaDM() when $default != null:
-        return $default(
-            _that.currentPage, _that.lastPage, _that.perPage, _that.total);
+        return $default(_that.currentPage, _that.lastPage, _that.perPage, _that.total);
       case _:
         return orElse();
     }
@@ -592,18 +572,14 @@ extension BuzzMetaDMPatterns on BuzzMetaDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(name: 'current_page') int currentPage,
-            @JsonKey(name: 'last_page') int lastPage,
-            @JsonKey(name: 'per_page') int perPage,
-            int total)
+    TResult Function(@JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage,
+            @JsonKey(name: 'per_page') int perPage, int total)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _BuzzMetaDM():
-        return $default(
-            _that.currentPage, _that.lastPage, _that.perPage, _that.total);
+        return $default(_that.currentPage, _that.lastPage, _that.perPage, _that.total);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -623,18 +599,14 @@ extension BuzzMetaDMPatterns on BuzzMetaDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            @JsonKey(name: 'current_page') int currentPage,
-            @JsonKey(name: 'last_page') int lastPage,
-            @JsonKey(name: 'per_page') int perPage,
-            int total)?
+    TResult? Function(@JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage,
+            @JsonKey(name: 'per_page') int perPage, int total)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _BuzzMetaDM() when $default != null:
-        return $default(
-            _that.currentPage, _that.lastPage, _that.perPage, _that.total);
+        return $default(_that.currentPage, _that.lastPage, _that.perPage, _that.total);
       case _:
         return null;
     }
@@ -649,8 +621,7 @@ class _BuzzMetaDM implements BuzzMetaDM {
       @JsonKey(name: 'last_page') this.lastPage = 1,
       @JsonKey(name: 'per_page') this.perPage = 20,
       this.total = 0});
-  factory _BuzzMetaDM.fromJson(Map<String, dynamic> json) =>
-      _$BuzzMetaDMFromJson(json);
+  factory _BuzzMetaDM.fromJson(Map<String, dynamic> json) => _$BuzzMetaDMFromJson(json);
 
   @override
   @JsonKey(name: 'current_page')
@@ -670,8 +641,7 @@ class _BuzzMetaDM implements BuzzMetaDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$BuzzMetaDMCopyWith<_BuzzMetaDM> get copyWith =>
-      __$BuzzMetaDMCopyWithImpl<_BuzzMetaDM>(this, _$identity);
+  _$BuzzMetaDMCopyWith<_BuzzMetaDM> get copyWith => __$BuzzMetaDMCopyWithImpl<_BuzzMetaDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -685,18 +655,15 @@ class _BuzzMetaDM implements BuzzMetaDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _BuzzMetaDM &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.lastPage, lastPage) ||
-                other.lastPage == lastPage) &&
+            (identical(other.currentPage, currentPage) || other.currentPage == currentPage) &&
+            (identical(other.lastPage, lastPage) || other.lastPage == lastPage) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
             (identical(other.total, total) || other.total == total));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, currentPage, lastPage, perPage, total);
+  int get hashCode => Object.hash(runtimeType, currentPage, lastPage, perPage, total);
 
   @override
   String toString() {
@@ -705,11 +672,8 @@ class _BuzzMetaDM implements BuzzMetaDM {
 }
 
 /// @nodoc
-abstract mixin class _$BuzzMetaDMCopyWith<$Res>
-    implements $BuzzMetaDMCopyWith<$Res> {
-  factory _$BuzzMetaDMCopyWith(
-          _BuzzMetaDM value, $Res Function(_BuzzMetaDM) _then) =
-      __$BuzzMetaDMCopyWithImpl;
+abstract mixin class _$BuzzMetaDMCopyWith<$Res> implements $BuzzMetaDMCopyWith<$Res> {
+  factory _$BuzzMetaDMCopyWith(_BuzzMetaDM value, $Res Function(_BuzzMetaDM) _then) = __$BuzzMetaDMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -774,8 +738,7 @@ mixin _$BuzzItemDM {
   @JsonKey(name: 'entity_name')
   String? get entityName;
   @JsonKey(name: 'created_at')
-  DateTime?
-      get createdAt; // Follow Loop (mayo 2026): social attribution. Cuando el actor de
+  DateTime? get createdAt; // Follow Loop (mayo 2026): social attribution. Cuando el actor de
 // la notif está en la red del usuario actual, el BE popula estos
 // campos y `from_following=true`; el FE renderiza al actor en el
 // copy y un avatar pequeño. Si false, mostramos la copy genérica.
@@ -792,8 +755,7 @@ mixin _$BuzzItemDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $BuzzItemDMCopyWith<BuzzItemDM> get copyWith =>
-      _$BuzzItemDMCopyWithImpl<BuzzItemDM>(this as BuzzItemDM, _$identity);
+  $BuzzItemDMCopyWith<BuzzItemDM> get copyWith => _$BuzzItemDMCopyWithImpl<BuzzItemDM>(this as BuzzItemDM, _$identity);
 
   /// Serializes this BuzzItemDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -806,45 +768,22 @@ mixin _$BuzzItemDM {
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.subType, subType) || other.subType == subType) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            (identical(other.businessName, businessName) ||
-                other.businessName == businessName) &&
-            (identical(other.businessPhoto, businessPhoto) ||
-                other.businessPhoto == businessPhoto) &&
-            (identical(other.menuUuid, menuUuid) ||
-                other.menuUuid == menuUuid) &&
-            (identical(other.entityName, entityName) ||
-                other.entityName == entityName) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.fromFollowing, fromFollowing) ||
-                other.fromFollowing == fromFollowing) &&
-            (identical(other.actorUuid, actorUuid) ||
-                other.actorUuid == actorUuid) &&
-            (identical(other.actorName, actorName) ||
-                other.actorName == actorName) &&
-            (identical(other.actorPhotoUrl, actorPhotoUrl) ||
-                other.actorPhotoUrl == actorPhotoUrl));
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            (identical(other.businessName, businessName) || other.businessName == businessName) &&
+            (identical(other.businessPhoto, businessPhoto) || other.businessPhoto == businessPhoto) &&
+            (identical(other.menuUuid, menuUuid) || other.menuUuid == menuUuid) &&
+            (identical(other.entityName, entityName) || other.entityName == entityName) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.fromFollowing, fromFollowing) || other.fromFollowing == fromFollowing) &&
+            (identical(other.actorUuid, actorUuid) || other.actorUuid == actorUuid) &&
+            (identical(other.actorName, actorName) || other.actorName == actorName) &&
+            (identical(other.actorPhotoUrl, actorPhotoUrl) || other.actorPhotoUrl == actorPhotoUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      uuid,
-      message,
-      subType,
-      businessUuid,
-      businessName,
-      businessPhoto,
-      menuUuid,
-      entityName,
-      createdAt,
-      fromFollowing,
-      actorUuid,
-      actorName,
-      actorPhotoUrl);
+  int get hashCode => Object.hash(runtimeType, uuid, message, subType, businessUuid, businessName, businessPhoto,
+      menuUuid, entityName, createdAt, fromFollowing, actorUuid, actorName, actorPhotoUrl);
 
   @override
   String toString() {
@@ -854,9 +793,7 @@ mixin _$BuzzItemDM {
 
 /// @nodoc
 abstract mixin class $BuzzItemDMCopyWith<$Res> {
-  factory $BuzzItemDMCopyWith(
-          BuzzItemDM value, $Res Function(BuzzItemDM) _then) =
-      _$BuzzItemDMCopyWithImpl;
+  factory $BuzzItemDMCopyWith(BuzzItemDM value, $Res Function(BuzzItemDM) _then) = _$BuzzItemDMCopyWithImpl;
   @useResult
   $Res call(
       {String uuid,
@@ -1213,8 +1150,7 @@ class _BuzzItemDM extends BuzzItemDM {
       @JsonKey(name: 'actor_name') this.actorName,
       @JsonKey(name: 'actor_photo_url') this.actorPhotoUrl})
       : super._();
-  factory _BuzzItemDM.fromJson(Map<String, dynamic> json) =>
-      _$BuzzItemDMFromJson(json);
+  factory _BuzzItemDM.fromJson(Map<String, dynamic> json) => _$BuzzItemDMFromJson(json);
 
   @override
   final String uuid;
@@ -1264,8 +1200,7 @@ class _BuzzItemDM extends BuzzItemDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$BuzzItemDMCopyWith<_BuzzItemDM> get copyWith =>
-      __$BuzzItemDMCopyWithImpl<_BuzzItemDM>(this, _$identity);
+  _$BuzzItemDMCopyWith<_BuzzItemDM> get copyWith => __$BuzzItemDMCopyWithImpl<_BuzzItemDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1282,45 +1217,22 @@ class _BuzzItemDM extends BuzzItemDM {
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.subType, subType) || other.subType == subType) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            (identical(other.businessName, businessName) ||
-                other.businessName == businessName) &&
-            (identical(other.businessPhoto, businessPhoto) ||
-                other.businessPhoto == businessPhoto) &&
-            (identical(other.menuUuid, menuUuid) ||
-                other.menuUuid == menuUuid) &&
-            (identical(other.entityName, entityName) ||
-                other.entityName == entityName) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.fromFollowing, fromFollowing) ||
-                other.fromFollowing == fromFollowing) &&
-            (identical(other.actorUuid, actorUuid) ||
-                other.actorUuid == actorUuid) &&
-            (identical(other.actorName, actorName) ||
-                other.actorName == actorName) &&
-            (identical(other.actorPhotoUrl, actorPhotoUrl) ||
-                other.actorPhotoUrl == actorPhotoUrl));
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            (identical(other.businessName, businessName) || other.businessName == businessName) &&
+            (identical(other.businessPhoto, businessPhoto) || other.businessPhoto == businessPhoto) &&
+            (identical(other.menuUuid, menuUuid) || other.menuUuid == menuUuid) &&
+            (identical(other.entityName, entityName) || other.entityName == entityName) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.fromFollowing, fromFollowing) || other.fromFollowing == fromFollowing) &&
+            (identical(other.actorUuid, actorUuid) || other.actorUuid == actorUuid) &&
+            (identical(other.actorName, actorName) || other.actorName == actorName) &&
+            (identical(other.actorPhotoUrl, actorPhotoUrl) || other.actorPhotoUrl == actorPhotoUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      uuid,
-      message,
-      subType,
-      businessUuid,
-      businessName,
-      businessPhoto,
-      menuUuid,
-      entityName,
-      createdAt,
-      fromFollowing,
-      actorUuid,
-      actorName,
-      actorPhotoUrl);
+  int get hashCode => Object.hash(runtimeType, uuid, message, subType, businessUuid, businessName, businessPhoto,
+      menuUuid, entityName, createdAt, fromFollowing, actorUuid, actorName, actorPhotoUrl);
 
   @override
   String toString() {
@@ -1329,11 +1241,8 @@ class _BuzzItemDM extends BuzzItemDM {
 }
 
 /// @nodoc
-abstract mixin class _$BuzzItemDMCopyWith<$Res>
-    implements $BuzzItemDMCopyWith<$Res> {
-  factory _$BuzzItemDMCopyWith(
-          _BuzzItemDM value, $Res Function(_BuzzItemDM) _then) =
-      __$BuzzItemDMCopyWithImpl;
+abstract mixin class _$BuzzItemDMCopyWith<$Res> implements $BuzzItemDMCopyWith<$Res> {
+  factory _$BuzzItemDMCopyWith(_BuzzItemDM value, $Res Function(_BuzzItemDM) _then) = __$BuzzItemDMCopyWithImpl;
   @override
   @useResult
   $Res call(

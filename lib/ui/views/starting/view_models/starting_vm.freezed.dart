@@ -20,16 +20,14 @@ mixin _$StartingVM {
   UserSessionDM get userSessionDM;
   AutovalidateMode get autovalidateMode;
   RecoverPasswordView get recoverPasswordView;
-  GoogleSignInAccount?
-      get googleSignInAccount; // Apple solo entrega nombre/email en la PRIMERA autorización y nunca
+  GoogleSignInAccount? get googleSignInAccount; // Apple solo entrega nombre/email en la PRIMERA autorización y nunca
 // dentro del identityToken (el JWT solo trae `sub` + email). Por eso los
 // capturamos del lado cliente —igual que el displayName/email de Google—
 // y los arrastramos al sign-up cuando el usuario es nuevo.
   String? get appleGivenName;
   String? get appleFamilyName;
   String? get appleEmail;
-  String?
-      get importedAvatar; // True solo cuando el usuario acaba de crearse vía alta social directa
+  String? get importedAvatar; // True solo cuando el usuario acaba de crearse vía alta social directa
 // (Apple/Google). Lo usa StartingPage para mostrar el WelcomeDialog (con la
 // guía de "migrar a cuenta empresarial") en ese primer ingreso al home, y
 // NO en logins normales posteriores.
@@ -39,36 +37,27 @@ mixin _$StartingVM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $StartingVMCopyWith<StartingVM> get copyWith =>
-      _$StartingVMCopyWithImpl<StartingVM>(this as StartingVM, _$identity);
+  $StartingVMCopyWith<StartingVM> get copyWith => _$StartingVMCopyWithImpl<StartingVM>(this as StartingVM, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is StartingVM &&
-            (identical(other.currentView, currentView) ||
-                other.currentView == currentView) &&
-            (identical(other.emailController, emailController) ||
-                other.emailController == emailController) &&
+            (identical(other.currentView, currentView) || other.currentView == currentView) &&
+            (identical(other.emailController, emailController) || other.emailController == emailController) &&
             (identical(other.passwordController, passwordController) ||
                 other.passwordController == passwordController) &&
-            (identical(other.userSessionDM, userSessionDM) ||
-                other.userSessionDM == userSessionDM) &&
-            (identical(other.autovalidateMode, autovalidateMode) ||
-                other.autovalidateMode == autovalidateMode) &&
+            (identical(other.userSessionDM, userSessionDM) || other.userSessionDM == userSessionDM) &&
+            (identical(other.autovalidateMode, autovalidateMode) || other.autovalidateMode == autovalidateMode) &&
             (identical(other.recoverPasswordView, recoverPasswordView) ||
                 other.recoverPasswordView == recoverPasswordView) &&
             (identical(other.googleSignInAccount, googleSignInAccount) ||
                 other.googleSignInAccount == googleSignInAccount) &&
-            (identical(other.appleGivenName, appleGivenName) ||
-                other.appleGivenName == appleGivenName) &&
-            (identical(other.appleFamilyName, appleFamilyName) ||
-                other.appleFamilyName == appleFamilyName) &&
-            (identical(other.appleEmail, appleEmail) ||
-                other.appleEmail == appleEmail) &&
-            (identical(other.importedAvatar, importedAvatar) ||
-                other.importedAvatar == importedAvatar) &&
+            (identical(other.appleGivenName, appleGivenName) || other.appleGivenName == appleGivenName) &&
+            (identical(other.appleFamilyName, appleFamilyName) || other.appleFamilyName == appleFamilyName) &&
+            (identical(other.appleEmail, appleEmail) || other.appleEmail == appleEmail) &&
+            (identical(other.importedAvatar, importedAvatar) || other.importedAvatar == importedAvatar) &&
             (identical(other.justSocialRegistered, justSocialRegistered) ||
                 other.justSocialRegistered == justSocialRegistered));
   }
@@ -97,9 +86,7 @@ mixin _$StartingVM {
 
 /// @nodoc
 abstract mixin class $StartingVMCopyWith<$Res> {
-  factory $StartingVMCopyWith(
-          StartingVM value, $Res Function(StartingVM) _then) =
-      _$StartingVMCopyWithImpl;
+  factory $StartingVMCopyWith(StartingVM value, $Res Function(StartingVM) _then) = _$StartingVMCopyWithImpl;
   @useResult
   $Res call(
       {StartingPageView currentView,
@@ -499,36 +486,27 @@ class _StartingVM extends StartingVM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$StartingVMCopyWith<_StartingVM> get copyWith =>
-      __$StartingVMCopyWithImpl<_StartingVM>(this, _$identity);
+  _$StartingVMCopyWith<_StartingVM> get copyWith => __$StartingVMCopyWithImpl<_StartingVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _StartingVM &&
-            (identical(other.currentView, currentView) ||
-                other.currentView == currentView) &&
-            (identical(other.emailController, emailController) ||
-                other.emailController == emailController) &&
+            (identical(other.currentView, currentView) || other.currentView == currentView) &&
+            (identical(other.emailController, emailController) || other.emailController == emailController) &&
             (identical(other.passwordController, passwordController) ||
                 other.passwordController == passwordController) &&
-            (identical(other.userSessionDM, userSessionDM) ||
-                other.userSessionDM == userSessionDM) &&
-            (identical(other.autovalidateMode, autovalidateMode) ||
-                other.autovalidateMode == autovalidateMode) &&
+            (identical(other.userSessionDM, userSessionDM) || other.userSessionDM == userSessionDM) &&
+            (identical(other.autovalidateMode, autovalidateMode) || other.autovalidateMode == autovalidateMode) &&
             (identical(other.recoverPasswordView, recoverPasswordView) ||
                 other.recoverPasswordView == recoverPasswordView) &&
             (identical(other.googleSignInAccount, googleSignInAccount) ||
                 other.googleSignInAccount == googleSignInAccount) &&
-            (identical(other.appleGivenName, appleGivenName) ||
-                other.appleGivenName == appleGivenName) &&
-            (identical(other.appleFamilyName, appleFamilyName) ||
-                other.appleFamilyName == appleFamilyName) &&
-            (identical(other.appleEmail, appleEmail) ||
-                other.appleEmail == appleEmail) &&
-            (identical(other.importedAvatar, importedAvatar) ||
-                other.importedAvatar == importedAvatar) &&
+            (identical(other.appleGivenName, appleGivenName) || other.appleGivenName == appleGivenName) &&
+            (identical(other.appleFamilyName, appleFamilyName) || other.appleFamilyName == appleFamilyName) &&
+            (identical(other.appleEmail, appleEmail) || other.appleEmail == appleEmail) &&
+            (identical(other.importedAvatar, importedAvatar) || other.importedAvatar == importedAvatar) &&
             (identical(other.justSocialRegistered, justSocialRegistered) ||
                 other.justSocialRegistered == justSocialRegistered));
   }
@@ -556,11 +534,8 @@ class _StartingVM extends StartingVM {
 }
 
 /// @nodoc
-abstract mixin class _$StartingVMCopyWith<$Res>
-    implements $StartingVMCopyWith<$Res> {
-  factory _$StartingVMCopyWith(
-          _StartingVM value, $Res Function(_StartingVM) _then) =
-      __$StartingVMCopyWithImpl;
+abstract mixin class _$StartingVMCopyWith<$Res> implements $StartingVMCopyWith<$Res> {
+  factory _$StartingVMCopyWith(_StartingVM value, $Res Function(_StartingVM) _then) = __$StartingVMCopyWithImpl;
   @override
   @useResult
   $Res call(

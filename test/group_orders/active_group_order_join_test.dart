@@ -99,34 +99,32 @@ void main() {
     tearDown(() => cubit.close());
 
     test('prioriza el carrito vivo sobre la orden en tracking', () async {
-      repo.mineOutcome =
-          ApiResult.success(GroupOrdersListResponseDM(groupOrders: [tracking, open]));
+      repo.mineOutcome = ApiResult.success(GroupOrdersListResponseDM(groupOrders: [tracking, open]));
 
       await cubit.syncAnyActive();
 
       expect(cubit.state?.uuid, 'cart');
     });
 
-    test('sin carrito, adopta la orden pagada SIN entregar (tracking) — el '
+    test(
+        'sin carrito, adopta la orden pagada SIN entregar (tracking) — el '
         'cliente que cerró la app recupera su pedido', () async {
-      repo.mineOutcome =
-          ApiResult.success(GroupOrdersListResponseDM(groupOrders: [tracking]));
+      repo.mineOutcome = ApiResult.success(GroupOrdersListResponseDM(groupOrders: [tracking]));
 
       await cubit.syncAnyActive();
 
       expect(cubit.state?.uuid, 'track');
     });
 
-    test('las entregadas y las confirmadas VIEJAS (TTL 12h) no cuentan; '
+    test(
+        'las entregadas y las confirmadas VIEJAS (TTL 12h) no cuentan; '
         'con estado ya presente es no-op', () async {
-      repo.mineOutcome =
-          ApiResult.success(GroupOrdersListResponseDM(groupOrders: [delivered, stale]));
+      repo.mineOutcome = ApiResult.success(GroupOrdersListResponseDM(groupOrders: [delivered, stale]));
       await cubit.syncAnyActive();
       expect(cubit.state, isNull);
 
       // Con estado presente no vuelve a pegarle a /mine.
-      repo.mineOutcome = const ApiResult.success(
-          GroupOrdersListResponseDM(groupOrders: [open]));
+      repo.mineOutcome = const ApiResult.success(GroupOrdersListResponseDM(groupOrders: [open]));
       await cubit.syncAnyActive(); // state sigue null → consulta
       expect(cubit.state?.uuid, 'cart');
       final calls = repo.mineCalls;

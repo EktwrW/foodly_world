@@ -124,7 +124,9 @@ class _PublicMenuViewState extends State<_PublicMenuView> with AutomaticKeepAliv
     final menuScreens = <MenuCategory, List<CategoryDM>?>{
       MenuCategory.food: menu.foodCategories,
       MenuCategory.drinks: menu.drinkCategories,
-      MenuCategory.combos: [CategoryDM(items: menu.combos, name: MenuCategory.combos.textWith(combosLabel: business.combosLabel), uuid: '')],
+      MenuCategory.combos: [
+        CategoryDM(items: menu.combos, name: MenuCategory.combos.textWith(combosLabel: business.combosLabel), uuid: '')
+      ],
     };
 
     return Scaffold(

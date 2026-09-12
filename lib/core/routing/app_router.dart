@@ -60,7 +60,6 @@ import 'package:foodly_world/ui/views/visited_business/service_packages/visit_se
 import 'package:foodly_world/ui/views/visited_business/visit_business_page.dart';
 import 'package:go_router/go_router.dart';
 
-
 /// True when the app is running on the menu.foodly.solutions subdomain.
 /// Production: Uri.base.host starts with 'menu.'
 /// CI build: --dart-define=IS_MENU_SUBDOMAIN=true
@@ -109,6 +108,7 @@ class AppRouter {
 
     return config.isEmpty ? _currentRoute.uri.toString() : config.uri.toString();
   }
+
   GoRouterState get currentRoute => _currentRoute;
   UnmodifiableListView<String> get routeHistory => UnmodifiableListView(_routeHistory);
 
@@ -675,8 +675,7 @@ class AppRouter {
           _goRouteWithTransition(AppRoutes.termsConditions, const TermsConditionsPage(), []),
           _goRouteWithTransition(AppRoutes.myReservations, const MyReservationsPage(), [RedirectRoute.requiresLogin]),
           _goRouteWithTransition(AppRoutes.blockedUsers, const BlockedUsersPage(), [RedirectRoute.requiresLogin]),
-          _goRouteWithTransition(
-              AppRoutes.activeSessions, const ActiveSessionsPage(), [RedirectRoute.requiresLogin]),
+          _goRouteWithTransition(AppRoutes.activeSessions, const ActiveSessionsPage(), [RedirectRoute.requiresLogin]),
           _goRouteWithTransition(AppRoutes.about, const AboutPage(), [RedirectRoute.requiresLogin]),
           GoRoute(
             path: AppRoutes.managePromotions.path,

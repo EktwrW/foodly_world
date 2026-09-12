@@ -15,7 +15,9 @@ class PostImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(cacheManager: FoodlyImageCache.manager, imageUrl: src,
+    return CachedNetworkImage(
+      cacheManager: FoodlyImageCache.manager,
+      imageUrl: src,
       fit: fit,
       progressIndicatorBuilder: (context, url, progress) {
         return const Column(

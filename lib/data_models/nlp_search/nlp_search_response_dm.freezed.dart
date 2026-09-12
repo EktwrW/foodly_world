@@ -24,8 +24,7 @@ mixin _$NlpSearchResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $NlpSearchResponseDMCopyWith<NlpSearchResponseDM> get copyWith =>
-      _$NlpSearchResponseDMCopyWithImpl<NlpSearchResponseDM>(
-          this as NlpSearchResponseDM, _$identity);
+      _$NlpSearchResponseDMCopyWithImpl<NlpSearchResponseDM>(this as NlpSearchResponseDM, _$identity);
 
   /// Serializes this NlpSearchResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -41,8 +40,7 @@ mixin _$NlpSearchResponseDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(business), nlpInfo);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(business), nlpInfo);
 
   @override
   String toString() {
@@ -52,20 +50,16 @@ mixin _$NlpSearchResponseDM {
 
 /// @nodoc
 abstract mixin class $NlpSearchResponseDMCopyWith<$Res> {
-  factory $NlpSearchResponseDMCopyWith(
-          NlpSearchResponseDM value, $Res Function(NlpSearchResponseDM) _then) =
+  factory $NlpSearchResponseDMCopyWith(NlpSearchResponseDM value, $Res Function(NlpSearchResponseDM) _then) =
       _$NlpSearchResponseDMCopyWithImpl;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'business') List<BusinessDM> business,
-      @JsonKey(name: 'nlp_info') NlpInfoDM? nlpInfo});
+  $Res call({@JsonKey(name: 'business') List<BusinessDM> business, @JsonKey(name: 'nlp_info') NlpInfoDM? nlpInfo});
 
   $NlpInfoDMCopyWith<$Res>? get nlpInfo;
 }
 
 /// @nodoc
-class _$NlpSearchResponseDMCopyWithImpl<$Res>
-    implements $NlpSearchResponseDMCopyWith<$Res> {
+class _$NlpSearchResponseDMCopyWithImpl<$Res> implements $NlpSearchResponseDMCopyWith<$Res> {
   _$NlpSearchResponseDMCopyWithImpl(this._self, this._then);
 
   final NlpSearchResponseDM _self;
@@ -199,8 +193,8 @@ extension NlpSearchResponseDMPatterns on NlpSearchResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'business') List<BusinessDM> business,
-            @JsonKey(name: 'nlp_info') NlpInfoDM? nlpInfo)?
+    TResult Function(
+            @JsonKey(name: 'business') List<BusinessDM> business, @JsonKey(name: 'nlp_info') NlpInfoDM? nlpInfo)?
         $default, {
     required TResult orElse(),
   }) {
@@ -228,8 +222,8 @@ extension NlpSearchResponseDMPatterns on NlpSearchResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'business') List<BusinessDM> business,
-            @JsonKey(name: 'nlp_info') NlpInfoDM? nlpInfo)
+    TResult Function(
+            @JsonKey(name: 'business') List<BusinessDM> business, @JsonKey(name: 'nlp_info') NlpInfoDM? nlpInfo)
         $default,
   ) {
     final _that = this;
@@ -255,8 +249,8 @@ extension NlpSearchResponseDMPatterns on NlpSearchResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(@JsonKey(name: 'business') List<BusinessDM> business,
-            @JsonKey(name: 'nlp_info') NlpInfoDM? nlpInfo)?
+    TResult? Function(
+            @JsonKey(name: 'business') List<BusinessDM> business, @JsonKey(name: 'nlp_info') NlpInfoDM? nlpInfo)?
         $default,
   ) {
     final _that = this;
@@ -273,11 +267,9 @@ extension NlpSearchResponseDMPatterns on NlpSearchResponseDM {
 @JsonSerializable()
 class _NlpSearchResponseDM implements NlpSearchResponseDM {
   const _NlpSearchResponseDM(
-      {@JsonKey(name: 'business') final List<BusinessDM> business = const [],
-      @JsonKey(name: 'nlp_info') this.nlpInfo})
+      {@JsonKey(name: 'business') final List<BusinessDM> business = const [], @JsonKey(name: 'nlp_info') this.nlpInfo})
       : _business = business;
-  factory _NlpSearchResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$NlpSearchResponseDMFromJson(json);
+  factory _NlpSearchResponseDM.fromJson(Map<String, dynamic> json) => _$NlpSearchResponseDMFromJson(json);
 
   final List<BusinessDM> _business;
   @override
@@ -298,8 +290,7 @@ class _NlpSearchResponseDM implements NlpSearchResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$NlpSearchResponseDMCopyWith<_NlpSearchResponseDM> get copyWith =>
-      __$NlpSearchResponseDMCopyWithImpl<_NlpSearchResponseDM>(
-          this, _$identity);
+      __$NlpSearchResponseDMCopyWithImpl<_NlpSearchResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -319,8 +310,7 @@ class _NlpSearchResponseDM implements NlpSearchResponseDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_business), nlpInfo);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_business), nlpInfo);
 
   @override
   String toString() {
@@ -329,24 +319,19 @@ class _NlpSearchResponseDM implements NlpSearchResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$NlpSearchResponseDMCopyWith<$Res>
-    implements $NlpSearchResponseDMCopyWith<$Res> {
-  factory _$NlpSearchResponseDMCopyWith(_NlpSearchResponseDM value,
-          $Res Function(_NlpSearchResponseDM) _then) =
+abstract mixin class _$NlpSearchResponseDMCopyWith<$Res> implements $NlpSearchResponseDMCopyWith<$Res> {
+  factory _$NlpSearchResponseDMCopyWith(_NlpSearchResponseDM value, $Res Function(_NlpSearchResponseDM) _then) =
       __$NlpSearchResponseDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: 'business') List<BusinessDM> business,
-      @JsonKey(name: 'nlp_info') NlpInfoDM? nlpInfo});
+  $Res call({@JsonKey(name: 'business') List<BusinessDM> business, @JsonKey(name: 'nlp_info') NlpInfoDM? nlpInfo});
 
   @override
   $NlpInfoDMCopyWith<$Res>? get nlpInfo;
 }
 
 /// @nodoc
-class __$NlpSearchResponseDMCopyWithImpl<$Res>
-    implements _$NlpSearchResponseDMCopyWith<$Res> {
+class __$NlpSearchResponseDMCopyWithImpl<$Res> implements _$NlpSearchResponseDMCopyWith<$Res> {
   __$NlpSearchResponseDMCopyWithImpl(this._self, this._then);
 
   final _NlpSearchResponseDM _self;
@@ -401,8 +386,7 @@ mixin _$NlpInfoDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $NlpInfoDMCopyWith<NlpInfoDM> get copyWith =>
-      _$NlpInfoDMCopyWithImpl<NlpInfoDM>(this as NlpInfoDM, _$identity);
+  $NlpInfoDMCopyWith<NlpInfoDM> get copyWith => _$NlpInfoDMCopyWithImpl<NlpInfoDM>(this as NlpInfoDM, _$identity);
 
   /// Serializes this NlpInfoDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -412,24 +396,16 @@ mixin _$NlpInfoDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is NlpInfoDM &&
-            const DeepCollectionEquality()
-                .equals(other.detectedCategories, detectedCategories) &&
-            const DeepCollectionEquality()
-                .equals(other.extractedKeywords, extractedKeywords) &&
-            (identical(other.confidence, confidence) ||
-                other.confidence == confidence) &&
-            (identical(other.timeFilter, timeFilter) ||
-                other.timeFilter == timeFilter));
+            const DeepCollectionEquality().equals(other.detectedCategories, detectedCategories) &&
+            const DeepCollectionEquality().equals(other.extractedKeywords, extractedKeywords) &&
+            (identical(other.confidence, confidence) || other.confidence == confidence) &&
+            (identical(other.timeFilter, timeFilter) || other.timeFilter == timeFilter));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(detectedCategories),
-      const DeepCollectionEquality().hash(extractedKeywords),
-      confidence,
-      timeFilter);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(detectedCategories),
+      const DeepCollectionEquality().hash(extractedKeywords), confidence, timeFilter);
 
   @override
   String toString() {
@@ -439,8 +415,7 @@ mixin _$NlpInfoDM {
 
 /// @nodoc
 abstract mixin class $NlpInfoDMCopyWith<$Res> {
-  factory $NlpInfoDMCopyWith(NlpInfoDM value, $Res Function(NlpInfoDM) _then) =
-      _$NlpInfoDMCopyWithImpl;
+  factory $NlpInfoDMCopyWith(NlpInfoDM value, $Res Function(NlpInfoDM) _then) = _$NlpInfoDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'detected_categories') List<int> detectedCategories,
@@ -607,8 +582,7 @@ extension NlpInfoDMPatterns on NlpInfoDM {
     final _that = this;
     switch (_that) {
       case _NlpInfoDM() when $default != null:
-        return $default(_that.detectedCategories, _that.extractedKeywords,
-            _that.confidence, _that.timeFilter);
+        return $default(_that.detectedCategories, _that.extractedKeywords, _that.confidence, _that.timeFilter);
       case _:
         return orElse();
     }
@@ -639,8 +613,7 @@ extension NlpInfoDMPatterns on NlpInfoDM {
     final _that = this;
     switch (_that) {
       case _NlpInfoDM():
-        return $default(_that.detectedCategories, _that.extractedKeywords,
-            _that.confidence, _that.timeFilter);
+        return $default(_that.detectedCategories, _that.extractedKeywords, _that.confidence, _that.timeFilter);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -670,8 +643,7 @@ extension NlpInfoDMPatterns on NlpInfoDM {
     final _that = this;
     switch (_that) {
       case _NlpInfoDM() when $default != null:
-        return $default(_that.detectedCategories, _that.extractedKeywords,
-            _that.confidence, _that.timeFilter);
+        return $default(_that.detectedCategories, _that.extractedKeywords, _that.confidence, _that.timeFilter);
       case _:
         return null;
     }
@@ -682,23 +654,19 @@ extension NlpInfoDMPatterns on NlpInfoDM {
 @JsonSerializable()
 class _NlpInfoDM implements NlpInfoDM {
   const _NlpInfoDM(
-      {@JsonKey(name: 'detected_categories')
-      final List<int> detectedCategories = const [],
-      @JsonKey(name: 'extracted_keywords')
-      final List<String> extractedKeywords = const [],
+      {@JsonKey(name: 'detected_categories') final List<int> detectedCategories = const [],
+      @JsonKey(name: 'extracted_keywords') final List<String> extractedKeywords = const [],
       this.confidence = 0.0,
       @JsonKey(name: 'time_filter') this.timeFilter})
       : _detectedCategories = detectedCategories,
         _extractedKeywords = extractedKeywords;
-  factory _NlpInfoDM.fromJson(Map<String, dynamic> json) =>
-      _$NlpInfoDMFromJson(json);
+  factory _NlpInfoDM.fromJson(Map<String, dynamic> json) => _$NlpInfoDMFromJson(json);
 
   final List<int> _detectedCategories;
   @override
   @JsonKey(name: 'detected_categories')
   List<int> get detectedCategories {
-    if (_detectedCategories is EqualUnmodifiableListView)
-      return _detectedCategories;
+    if (_detectedCategories is EqualUnmodifiableListView) return _detectedCategories;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_detectedCategories);
   }
@@ -707,8 +675,7 @@ class _NlpInfoDM implements NlpInfoDM {
   @override
   @JsonKey(name: 'extracted_keywords')
   List<String> get extractedKeywords {
-    if (_extractedKeywords is EqualUnmodifiableListView)
-      return _extractedKeywords;
+    if (_extractedKeywords is EqualUnmodifiableListView) return _extractedKeywords;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_extractedKeywords);
   }
@@ -725,8 +692,7 @@ class _NlpInfoDM implements NlpInfoDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$NlpInfoDMCopyWith<_NlpInfoDM> get copyWith =>
-      __$NlpInfoDMCopyWithImpl<_NlpInfoDM>(this, _$identity);
+  _$NlpInfoDMCopyWith<_NlpInfoDM> get copyWith => __$NlpInfoDMCopyWithImpl<_NlpInfoDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -740,24 +706,16 @@ class _NlpInfoDM implements NlpInfoDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _NlpInfoDM &&
-            const DeepCollectionEquality()
-                .equals(other._detectedCategories, _detectedCategories) &&
-            const DeepCollectionEquality()
-                .equals(other._extractedKeywords, _extractedKeywords) &&
-            (identical(other.confidence, confidence) ||
-                other.confidence == confidence) &&
-            (identical(other.timeFilter, timeFilter) ||
-                other.timeFilter == timeFilter));
+            const DeepCollectionEquality().equals(other._detectedCategories, _detectedCategories) &&
+            const DeepCollectionEquality().equals(other._extractedKeywords, _extractedKeywords) &&
+            (identical(other.confidence, confidence) || other.confidence == confidence) &&
+            (identical(other.timeFilter, timeFilter) || other.timeFilter == timeFilter));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_detectedCategories),
-      const DeepCollectionEquality().hash(_extractedKeywords),
-      confidence,
-      timeFilter);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_detectedCategories),
+      const DeepCollectionEquality().hash(_extractedKeywords), confidence, timeFilter);
 
   @override
   String toString() {
@@ -766,11 +724,8 @@ class _NlpInfoDM implements NlpInfoDM {
 }
 
 /// @nodoc
-abstract mixin class _$NlpInfoDMCopyWith<$Res>
-    implements $NlpInfoDMCopyWith<$Res> {
-  factory _$NlpInfoDMCopyWith(
-          _NlpInfoDM value, $Res Function(_NlpInfoDM) _then) =
-      __$NlpInfoDMCopyWithImpl;
+abstract mixin class _$NlpInfoDMCopyWith<$Res> implements $NlpInfoDMCopyWith<$Res> {
+  factory _$NlpInfoDMCopyWith(_NlpInfoDM value, $Res Function(_NlpInfoDM) _then) = __$NlpInfoDMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -849,8 +804,7 @@ mixin _$TimeFilterDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $TimeFilterDMCopyWith<TimeFilterDM> get copyWith =>
-      _$TimeFilterDMCopyWithImpl<TimeFilterDM>(
-          this as TimeFilterDM, _$identity);
+      _$TimeFilterDMCopyWithImpl<TimeFilterDM>(this as TimeFilterDM, _$identity);
 
   /// Serializes this TimeFilterDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -862,10 +816,8 @@ mixin _$TimeFilterDM {
             other is TimeFilterDM &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.to, to) || other.to == to) &&
-            (identical(other.dayOfWeek, dayOfWeek) ||
-                other.dayOfWeek == dayOfWeek) &&
-            (identical(other.mealTime, mealTime) ||
-                other.mealTime == mealTime));
+            (identical(other.dayOfWeek, dayOfWeek) || other.dayOfWeek == dayOfWeek) &&
+            (identical(other.mealTime, mealTime) || other.mealTime == mealTime));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -880,9 +832,7 @@ mixin _$TimeFilterDM {
 
 /// @nodoc
 abstract mixin class $TimeFilterDMCopyWith<$Res> {
-  factory $TimeFilterDMCopyWith(
-          TimeFilterDM value, $Res Function(TimeFilterDM) _then) =
-      _$TimeFilterDMCopyWithImpl;
+  factory $TimeFilterDMCopyWith(TimeFilterDM value, $Res Function(TimeFilterDM) _then) = _$TimeFilterDMCopyWithImpl;
   @useResult
   $Res call(
       {String? from,
@@ -1022,10 +972,7 @@ extension TimeFilterDMPatterns on TimeFilterDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            String? from,
-            String? to,
-            @JsonKey(name: 'day_of_week') int? dayOfWeek,
+    TResult Function(String? from, String? to, @JsonKey(name: 'day_of_week') int? dayOfWeek,
             @JsonKey(name: 'meal_time') String? mealTime)?
         $default, {
     required TResult orElse(),
@@ -1054,10 +1001,7 @@ extension TimeFilterDMPatterns on TimeFilterDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            String? from,
-            String? to,
-            @JsonKey(name: 'day_of_week') int? dayOfWeek,
+    TResult Function(String? from, String? to, @JsonKey(name: 'day_of_week') int? dayOfWeek,
             @JsonKey(name: 'meal_time') String? mealTime)
         $default,
   ) {
@@ -1084,10 +1028,7 @@ extension TimeFilterDMPatterns on TimeFilterDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            String? from,
-            String? to,
-            @JsonKey(name: 'day_of_week') int? dayOfWeek,
+    TResult? Function(String? from, String? to, @JsonKey(name: 'day_of_week') int? dayOfWeek,
             @JsonKey(name: 'meal_time') String? mealTime)?
         $default,
   ) {
@@ -1105,12 +1046,8 @@ extension TimeFilterDMPatterns on TimeFilterDM {
 @JsonSerializable()
 class _TimeFilterDM implements TimeFilterDM {
   const _TimeFilterDM(
-      {this.from,
-      this.to,
-      @JsonKey(name: 'day_of_week') this.dayOfWeek,
-      @JsonKey(name: 'meal_time') this.mealTime});
-  factory _TimeFilterDM.fromJson(Map<String, dynamic> json) =>
-      _$TimeFilterDMFromJson(json);
+      {this.from, this.to, @JsonKey(name: 'day_of_week') this.dayOfWeek, @JsonKey(name: 'meal_time') this.mealTime});
+  factory _TimeFilterDM.fromJson(Map<String, dynamic> json) => _$TimeFilterDMFromJson(json);
 
   @override
   final String? from;
@@ -1128,8 +1065,7 @@ class _TimeFilterDM implements TimeFilterDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$TimeFilterDMCopyWith<_TimeFilterDM> get copyWith =>
-      __$TimeFilterDMCopyWithImpl<_TimeFilterDM>(this, _$identity);
+  _$TimeFilterDMCopyWith<_TimeFilterDM> get copyWith => __$TimeFilterDMCopyWithImpl<_TimeFilterDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1145,10 +1081,8 @@ class _TimeFilterDM implements TimeFilterDM {
             other is _TimeFilterDM &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.to, to) || other.to == to) &&
-            (identical(other.dayOfWeek, dayOfWeek) ||
-                other.dayOfWeek == dayOfWeek) &&
-            (identical(other.mealTime, mealTime) ||
-                other.mealTime == mealTime));
+            (identical(other.dayOfWeek, dayOfWeek) || other.dayOfWeek == dayOfWeek) &&
+            (identical(other.mealTime, mealTime) || other.mealTime == mealTime));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1162,11 +1096,8 @@ class _TimeFilterDM implements TimeFilterDM {
 }
 
 /// @nodoc
-abstract mixin class _$TimeFilterDMCopyWith<$Res>
-    implements $TimeFilterDMCopyWith<$Res> {
-  factory _$TimeFilterDMCopyWith(
-          _TimeFilterDM value, $Res Function(_TimeFilterDM) _then) =
-      __$TimeFilterDMCopyWithImpl;
+abstract mixin class _$TimeFilterDMCopyWith<$Res> implements $TimeFilterDMCopyWith<$Res> {
+  factory _$TimeFilterDMCopyWith(_TimeFilterDM value, $Res Function(_TimeFilterDM) _then) = __$TimeFilterDMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -1177,8 +1108,7 @@ abstract mixin class _$TimeFilterDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$TimeFilterDMCopyWithImpl<$Res>
-    implements _$TimeFilterDMCopyWith<$Res> {
+class __$TimeFilterDMCopyWithImpl<$Res> implements _$TimeFilterDMCopyWith<$Res> {
   __$TimeFilterDMCopyWithImpl(this._self, this._then);
 
   final _TimeFilterDM _self;

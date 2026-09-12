@@ -6,33 +6,17 @@ part of 'opening_hours_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_BusinessDays _$BusinessDaysFromJson(Map<String, dynamic> json) =>
-    _BusinessDays(
-      day0: json['day_0'] == null
-          ? const Day()
-          : Day.fromJson(json['day_0'] as Map<String, dynamic>),
-      day1: json['day_1'] == null
-          ? const Day()
-          : Day.fromJson(json['day_1'] as Map<String, dynamic>),
-      day2: json['day_2'] == null
-          ? const Day()
-          : Day.fromJson(json['day_2'] as Map<String, dynamic>),
-      day3: json['day_3'] == null
-          ? const Day()
-          : Day.fromJson(json['day_3'] as Map<String, dynamic>),
-      day4: json['day_4'] == null
-          ? const Day()
-          : Day.fromJson(json['day_4'] as Map<String, dynamic>),
-      day5: json['day_5'] == null
-          ? const Day()
-          : Day.fromJson(json['day_5'] as Map<String, dynamic>),
-      day6: json['day_6'] == null
-          ? const Day()
-          : Day.fromJson(json['day_6'] as Map<String, dynamic>),
+_BusinessDays _$BusinessDaysFromJson(Map<String, dynamic> json) => _BusinessDays(
+      day0: json['day_0'] == null ? const Day() : Day.fromJson(json['day_0'] as Map<String, dynamic>),
+      day1: json['day_1'] == null ? const Day() : Day.fromJson(json['day_1'] as Map<String, dynamic>),
+      day2: json['day_2'] == null ? const Day() : Day.fromJson(json['day_2'] as Map<String, dynamic>),
+      day3: json['day_3'] == null ? const Day() : Day.fromJson(json['day_3'] as Map<String, dynamic>),
+      day4: json['day_4'] == null ? const Day() : Day.fromJson(json['day_4'] as Map<String, dynamic>),
+      day5: json['day_5'] == null ? const Day() : Day.fromJson(json['day_5'] as Map<String, dynamic>),
+      day6: json['day_6'] == null ? const Day() : Day.fromJson(json['day_6'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$BusinessDaysToJson(_BusinessDays instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BusinessDaysToJson(_BusinessDays instance) => <String, dynamic>{
       'day_0': instance.day0.toJson(),
       'day_1': instance.day1.toJson(),
       'day_2': instance.day2.toJson(),

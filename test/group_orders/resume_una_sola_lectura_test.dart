@@ -1,6 +1,5 @@
 import 'dart:async';
 
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
@@ -96,8 +95,7 @@ void main() {
     tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
     await tester.pump();
 
-    expect(repo.coalescePorLlamada, [true],
-        reason: 'el refresh del resume tiene que poder colapsar con el del evento');
+    expect(repo.coalescePorLlamada, [true], reason: 'el refresh del resume tiene que poder colapsar con el del evento');
   });
 }
 
@@ -114,8 +112,7 @@ class _RepoEspia implements GroupOrderRepo {
   }
 
   @override
-  Future<ApiResult<GroupOrderResponseDM>> joinByCode(String code) async =>
-      ApiResult.success(_respuesta('o1'));
+  Future<ApiResult<GroupOrderResponseDM>> joinByCode(String code) async => ApiResult.success(_respuesta('o1'));
 
   /// El `initState` del host llama a `syncAnyActive()`, que pasa por aquí.
   /// Sin orden activa, para que el estado lo ponga el `joinByCode` del test.

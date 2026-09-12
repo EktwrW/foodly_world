@@ -22,8 +22,7 @@ mixin _$UserBodySetPasswordDTO {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $UserBodySetPasswordDTOCopyWith<UserBodySetPasswordDTO> get copyWith =>
-      _$UserBodySetPasswordDTOCopyWithImpl<UserBodySetPasswordDTO>(
-          this as UserBodySetPasswordDTO, _$identity);
+      _$UserBodySetPasswordDTOCopyWithImpl<UserBodySetPasswordDTO>(this as UserBodySetPasswordDTO, _$identity);
 
   /// Serializes this UserBodySetPasswordDTO to a JSON map.
   Map<String, dynamic> toJson();
@@ -33,8 +32,7 @@ mixin _$UserBodySetPasswordDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is UserBodySetPasswordDTO &&
-            (identical(other.newPassword, newPassword) ||
-                other.newPassword == newPassword));
+            (identical(other.newPassword, newPassword) || other.newPassword == newPassword));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,16 +47,14 @@ mixin _$UserBodySetPasswordDTO {
 
 /// @nodoc
 abstract mixin class $UserBodySetPasswordDTOCopyWith<$Res> {
-  factory $UserBodySetPasswordDTOCopyWith(UserBodySetPasswordDTO value,
-          $Res Function(UserBodySetPasswordDTO) _then) =
+  factory $UserBodySetPasswordDTOCopyWith(UserBodySetPasswordDTO value, $Res Function(UserBodySetPasswordDTO) _then) =
       _$UserBodySetPasswordDTOCopyWithImpl;
   @useResult
   $Res call({@JsonKey(name: 'new_password') String newPassword});
 }
 
 /// @nodoc
-class _$UserBodySetPasswordDTOCopyWithImpl<$Res>
-    implements $UserBodySetPasswordDTOCopyWith<$Res> {
+class _$UserBodySetPasswordDTOCopyWithImpl<$Res> implements $UserBodySetPasswordDTOCopyWith<$Res> {
   _$UserBodySetPasswordDTOCopyWithImpl(this._self, this._then);
 
   final UserBodySetPasswordDTO _self;
@@ -173,8 +169,7 @@ extension UserBodySetPasswordDTOPatterns on UserBodySetPasswordDTO {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'new_password') String newPassword)?
-        $default, {
+    TResult Function(@JsonKey(name: 'new_password') String newPassword)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -201,8 +196,7 @@ extension UserBodySetPasswordDTOPatterns on UserBodySetPasswordDTO {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'new_password') String newPassword)
-        $default,
+    TResult Function(@JsonKey(name: 'new_password') String newPassword) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -227,8 +221,7 @@ extension UserBodySetPasswordDTOPatterns on UserBodySetPasswordDTO {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(@JsonKey(name: 'new_password') String newPassword)?
-        $default,
+    TResult? Function(@JsonKey(name: 'new_password') String newPassword)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -243,10 +236,8 @@ extension UserBodySetPasswordDTOPatterns on UserBodySetPasswordDTO {
 /// @nodoc
 @JsonSerializable()
 class _UserBodySetPasswordDTO implements UserBodySetPasswordDTO {
-  const _UserBodySetPasswordDTO(
-      {@JsonKey(name: 'new_password') required this.newPassword});
-  factory _UserBodySetPasswordDTO.fromJson(Map<String, dynamic> json) =>
-      _$UserBodySetPasswordDTOFromJson(json);
+  const _UserBodySetPasswordDTO({@JsonKey(name: 'new_password') required this.newPassword});
+  factory _UserBodySetPasswordDTO.fromJson(Map<String, dynamic> json) => _$UserBodySetPasswordDTOFromJson(json);
 
   @override
   @JsonKey(name: 'new_password')
@@ -258,8 +249,7 @@ class _UserBodySetPasswordDTO implements UserBodySetPasswordDTO {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$UserBodySetPasswordDTOCopyWith<_UserBodySetPasswordDTO> get copyWith =>
-      __$UserBodySetPasswordDTOCopyWithImpl<_UserBodySetPasswordDTO>(
-          this, _$identity);
+      __$UserBodySetPasswordDTOCopyWithImpl<_UserBodySetPasswordDTO>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -273,8 +263,7 @@ class _UserBodySetPasswordDTO implements UserBodySetPasswordDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _UserBodySetPasswordDTO &&
-            (identical(other.newPassword, newPassword) ||
-                other.newPassword == newPassword));
+            (identical(other.newPassword, newPassword) || other.newPassword == newPassword));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -288,10 +277,9 @@ class _UserBodySetPasswordDTO implements UserBodySetPasswordDTO {
 }
 
 /// @nodoc
-abstract mixin class _$UserBodySetPasswordDTOCopyWith<$Res>
-    implements $UserBodySetPasswordDTOCopyWith<$Res> {
-  factory _$UserBodySetPasswordDTOCopyWith(_UserBodySetPasswordDTO value,
-          $Res Function(_UserBodySetPasswordDTO) _then) =
+abstract mixin class _$UserBodySetPasswordDTOCopyWith<$Res> implements $UserBodySetPasswordDTOCopyWith<$Res> {
+  factory _$UserBodySetPasswordDTOCopyWith(
+          _UserBodySetPasswordDTO value, $Res Function(_UserBodySetPasswordDTO) _then) =
       __$UserBodySetPasswordDTOCopyWithImpl;
   @override
   @useResult
@@ -299,8 +287,7 @@ abstract mixin class _$UserBodySetPasswordDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$UserBodySetPasswordDTOCopyWithImpl<$Res>
-    implements _$UserBodySetPasswordDTOCopyWith<$Res> {
+class __$UserBodySetPasswordDTOCopyWithImpl<$Res> implements _$UserBodySetPasswordDTOCopyWith<$Res> {
   __$UserBodySetPasswordDTOCopyWithImpl(this._self, this._then);
 
   final _UserBodySetPasswordDTO _self;

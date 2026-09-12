@@ -145,8 +145,7 @@ void main() {
         final created = DateTime.now().subtract(const Duration(hours: 23, seconds: 1));
         service.setSession(_sessionWithCreatedAt(created.toIso8601String()));
 
-        expect(service.isAccessTokenExpired, true,
-            reason: 'A 23h o más, el cliente debe refrescar proactivamente');
+        expect(service.isAccessTokenExpired, true, reason: 'A 23h o más, el cliente debe refrescar proactivamente');
       },
     );
 
@@ -168,8 +167,7 @@ void main() {
         // server-side decida via 401).
         service.setSession(_sessionWithCreatedAt('not-a-date'));
 
-        expect(service.isAccessTokenExpired, false,
-            reason: 'Parsing failure no debe escalar a logout silencioso');
+        expect(service.isAccessTokenExpired, false, reason: 'Parsing failure no debe escalar a logout silencioso');
       },
     );
   });

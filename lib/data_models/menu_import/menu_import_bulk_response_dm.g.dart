@@ -6,24 +6,17 @@ part of 'menu_import_bulk_response_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-MenuImportBulkResponseDM _$MenuImportBulkResponseDMFromJson(
-        Map<String, dynamic> json) =>
-    MenuImportBulkResponseDM(
+MenuImportBulkResponseDM _$MenuImportBulkResponseDMFromJson(Map<String, dynamic> json) => MenuImportBulkResponseDM(
       success: json['success'] as bool,
-      stats:
-          MenuImportBulkStatsDM.fromJson(json['stats'] as Map<String, dynamic>),
+      stats: MenuImportBulkStatsDM.fromJson(json['stats'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$MenuImportBulkResponseDMToJson(
-        MenuImportBulkResponseDM instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$MenuImportBulkResponseDMToJson(MenuImportBulkResponseDM instance) => <String, dynamic>{
       'success': instance.success,
       'stats': instance.stats.toJson(),
     };
 
-MenuImportBulkStatsDM _$MenuImportBulkStatsDMFromJson(
-        Map<String, dynamic> json) =>
-    MenuImportBulkStatsDM(
+MenuImportBulkStatsDM _$MenuImportBulkStatsDMFromJson(Map<String, dynamic> json) => MenuImportBulkStatsDM(
       foodCategoriesCreated: (json['food_categories_created'] as num).toInt(),
       foodItemsCreated: (json['food_items_created'] as num).toInt(),
       drinkCategoriesCreated: (json['drink_categories_created'] as num).toInt(),
@@ -31,9 +24,7 @@ MenuImportBulkStatsDM _$MenuImportBulkStatsDMFromJson(
       combosCreated: (json['combos_created'] as num).toInt(),
     );
 
-Map<String, dynamic> _$MenuImportBulkStatsDMToJson(
-        MenuImportBulkStatsDM instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$MenuImportBulkStatsDMToJson(MenuImportBulkStatsDM instance) => <String, dynamic>{
       'food_categories_created': instance.foodCategoriesCreated,
       'food_items_created': instance.foodItemsCreated,
       'drink_categories_created': instance.drinkCategoriesCreated,

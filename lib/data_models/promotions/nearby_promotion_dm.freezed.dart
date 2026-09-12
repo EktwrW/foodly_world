@@ -44,8 +44,7 @@ mixin _$NearbyPromotionDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $NearbyPromotionDMCopyWith<NearbyPromotionDM> get copyWith =>
-      _$NearbyPromotionDMCopyWithImpl<NearbyPromotionDM>(
-          this as NearbyPromotionDM, _$identity);
+      _$NearbyPromotionDMCopyWithImpl<NearbyPromotionDM>(this as NearbyPromotionDM, _$identity);
 
   /// Serializes this NearbyPromotionDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -57,47 +56,23 @@ mixin _$NearbyPromotionDM {
             other is NearbyPromotionDM &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.subTitle, subTitle) ||
-                other.subTitle == subTitle) &&
-            (identical(other.mediaLink, mediaLink) ||
-                other.mediaLink == mediaLink) &&
-            (identical(other.promoMedia, promoMedia) ||
-                other.promoMedia == promoMedia) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            (identical(other.businessName, businessName) ||
-                other.businessName == businessName) &&
-            (identical(other.businessLogo, businessLogo) ||
-                other.businessLogo == businessLogo) &&
-            (identical(other.ratingAvg, ratingAvg) ||
-                other.ratingAvg == ratingAvg) &&
-            (identical(other.isFavorited, isFavorited) ||
-                other.isFavorited == isFavorited) &&
-            (identical(other.distanceKm, distanceKm) ||
-                other.distanceKm == distanceKm) &&
-            (identical(other.startDate, startDate) ||
-                other.startDate == startDate) &&
-            (identical(other.expireDate, expireDate) ||
-                other.expireDate == expireDate));
+            (identical(other.subTitle, subTitle) || other.subTitle == subTitle) &&
+            (identical(other.mediaLink, mediaLink) || other.mediaLink == mediaLink) &&
+            (identical(other.promoMedia, promoMedia) || other.promoMedia == promoMedia) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            (identical(other.businessName, businessName) || other.businessName == businessName) &&
+            (identical(other.businessLogo, businessLogo) || other.businessLogo == businessLogo) &&
+            (identical(other.ratingAvg, ratingAvg) || other.ratingAvg == ratingAvg) &&
+            (identical(other.isFavorited, isFavorited) || other.isFavorited == isFavorited) &&
+            (identical(other.distanceKm, distanceKm) || other.distanceKm == distanceKm) &&
+            (identical(other.startDate, startDate) || other.startDate == startDate) &&
+            (identical(other.expireDate, expireDate) || other.expireDate == expireDate));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      uuid,
-      title,
-      subTitle,
-      mediaLink,
-      promoMedia,
-      businessUuid,
-      businessName,
-      businessLogo,
-      ratingAvg,
-      isFavorited,
-      distanceKm,
-      startDate,
-      expireDate);
+  int get hashCode => Object.hash(runtimeType, uuid, title, subTitle, mediaLink, promoMedia, businessUuid, businessName,
+      businessLogo, ratingAvg, isFavorited, distanceKm, startDate, expireDate);
 
   @override
   String toString() {
@@ -107,8 +82,7 @@ mixin _$NearbyPromotionDM {
 
 /// @nodoc
 abstract mixin class $NearbyPromotionDMCopyWith<$Res> {
-  factory $NearbyPromotionDMCopyWith(
-          NearbyPromotionDM value, $Res Function(NearbyPromotionDM) _then) =
+  factory $NearbyPromotionDMCopyWith(NearbyPromotionDM value, $Res Function(NearbyPromotionDM) _then) =
       _$NearbyPromotionDMCopyWithImpl;
   @useResult
   $Res call(
@@ -130,8 +104,7 @@ abstract mixin class $NearbyPromotionDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NearbyPromotionDMCopyWithImpl<$Res>
-    implements $NearbyPromotionDMCopyWith<$Res> {
+class _$NearbyPromotionDMCopyWithImpl<$Res> implements $NearbyPromotionDMCopyWith<$Res> {
   _$NearbyPromotionDMCopyWithImpl(this._self, this._then);
 
   final NearbyPromotionDM _self;
@@ -483,8 +456,7 @@ class _NearbyPromotionDM extends NearbyPromotionDM {
       @JsonKey(name: 'start_date') this.startDate,
       @JsonKey(name: 'expire_date') this.expireDate})
       : super._();
-  factory _NearbyPromotionDM.fromJson(Map<String, dynamic> json) =>
-      _$NearbyPromotionDMFromJson(json);
+  factory _NearbyPromotionDM.fromJson(Map<String, dynamic> json) => _$NearbyPromotionDMFromJson(json);
 
   @override
   final String uuid;
@@ -546,47 +518,23 @@ class _NearbyPromotionDM extends NearbyPromotionDM {
             other is _NearbyPromotionDM &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.subTitle, subTitle) ||
-                other.subTitle == subTitle) &&
-            (identical(other.mediaLink, mediaLink) ||
-                other.mediaLink == mediaLink) &&
-            (identical(other.promoMedia, promoMedia) ||
-                other.promoMedia == promoMedia) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            (identical(other.businessName, businessName) ||
-                other.businessName == businessName) &&
-            (identical(other.businessLogo, businessLogo) ||
-                other.businessLogo == businessLogo) &&
-            (identical(other.ratingAvg, ratingAvg) ||
-                other.ratingAvg == ratingAvg) &&
-            (identical(other.isFavorited, isFavorited) ||
-                other.isFavorited == isFavorited) &&
-            (identical(other.distanceKm, distanceKm) ||
-                other.distanceKm == distanceKm) &&
-            (identical(other.startDate, startDate) ||
-                other.startDate == startDate) &&
-            (identical(other.expireDate, expireDate) ||
-                other.expireDate == expireDate));
+            (identical(other.subTitle, subTitle) || other.subTitle == subTitle) &&
+            (identical(other.mediaLink, mediaLink) || other.mediaLink == mediaLink) &&
+            (identical(other.promoMedia, promoMedia) || other.promoMedia == promoMedia) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            (identical(other.businessName, businessName) || other.businessName == businessName) &&
+            (identical(other.businessLogo, businessLogo) || other.businessLogo == businessLogo) &&
+            (identical(other.ratingAvg, ratingAvg) || other.ratingAvg == ratingAvg) &&
+            (identical(other.isFavorited, isFavorited) || other.isFavorited == isFavorited) &&
+            (identical(other.distanceKm, distanceKm) || other.distanceKm == distanceKm) &&
+            (identical(other.startDate, startDate) || other.startDate == startDate) &&
+            (identical(other.expireDate, expireDate) || other.expireDate == expireDate));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      uuid,
-      title,
-      subTitle,
-      mediaLink,
-      promoMedia,
-      businessUuid,
-      businessName,
-      businessLogo,
-      ratingAvg,
-      isFavorited,
-      distanceKm,
-      startDate,
-      expireDate);
+  int get hashCode => Object.hash(runtimeType, uuid, title, subTitle, mediaLink, promoMedia, businessUuid, businessName,
+      businessLogo, ratingAvg, isFavorited, distanceKm, startDate, expireDate);
 
   @override
   String toString() {
@@ -595,10 +543,8 @@ class _NearbyPromotionDM extends NearbyPromotionDM {
 }
 
 /// @nodoc
-abstract mixin class _$NearbyPromotionDMCopyWith<$Res>
-    implements $NearbyPromotionDMCopyWith<$Res> {
-  factory _$NearbyPromotionDMCopyWith(
-          _NearbyPromotionDM value, $Res Function(_NearbyPromotionDM) _then) =
+abstract mixin class _$NearbyPromotionDMCopyWith<$Res> implements $NearbyPromotionDMCopyWith<$Res> {
+  factory _$NearbyPromotionDMCopyWith(_NearbyPromotionDM value, $Res Function(_NearbyPromotionDM) _then) =
       __$NearbyPromotionDMCopyWithImpl;
   @override
   @useResult
@@ -622,8 +568,7 @@ abstract mixin class _$NearbyPromotionDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$NearbyPromotionDMCopyWithImpl<$Res>
-    implements _$NearbyPromotionDMCopyWith<$Res> {
+class __$NearbyPromotionDMCopyWithImpl<$Res> implements _$NearbyPromotionDMCopyWith<$Res> {
   __$NearbyPromotionDMCopyWithImpl(this._self, this._then);
 
   final _NearbyPromotionDM _self;
@@ -732,8 +677,7 @@ mixin _$PromoMediaLiteDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PromoMediaLiteDMCopyWith<PromoMediaLiteDM> get copyWith =>
-      _$PromoMediaLiteDMCopyWithImpl<PromoMediaLiteDM>(
-          this as PromoMediaLiteDM, _$identity);
+      _$PromoMediaLiteDMCopyWithImpl<PromoMediaLiteDM>(this as PromoMediaLiteDM, _$identity);
 
   /// Serializes this PromoMediaLiteDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -744,10 +688,8 @@ mixin _$PromoMediaLiteDM {
         (other.runtimeType == runtimeType &&
             other is PromoMediaLiteDM &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.mediaUrl, mediaUrl) ||
-                other.mediaUrl == mediaUrl) &&
-            (identical(other.mediaType, mediaType) ||
-                other.mediaType == mediaType));
+            (identical(other.mediaUrl, mediaUrl) || other.mediaUrl == mediaUrl) &&
+            (identical(other.mediaType, mediaType) || other.mediaType == mediaType));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -762,8 +704,7 @@ mixin _$PromoMediaLiteDM {
 
 /// @nodoc
 abstract mixin class $PromoMediaLiteDMCopyWith<$Res> {
-  factory $PromoMediaLiteDMCopyWith(
-          PromoMediaLiteDM value, $Res Function(PromoMediaLiteDM) _then) =
+  factory $PromoMediaLiteDMCopyWith(PromoMediaLiteDM value, $Res Function(PromoMediaLiteDM) _then) =
       _$PromoMediaLiteDMCopyWithImpl;
   @useResult
   $Res call(
@@ -773,8 +714,7 @@ abstract mixin class $PromoMediaLiteDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PromoMediaLiteDMCopyWithImpl<$Res>
-    implements $PromoMediaLiteDMCopyWith<$Res> {
+class _$PromoMediaLiteDMCopyWithImpl<$Res> implements $PromoMediaLiteDMCopyWith<$Res> {
   _$PromoMediaLiteDMCopyWithImpl(this._self, this._then);
 
   final PromoMediaLiteDM _self;
@@ -899,9 +839,7 @@ extension PromoMediaLiteDMPatterns on PromoMediaLiteDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            String uuid,
-            @JsonKey(name: 'business_promo_media_url') String mediaUrl,
+    TResult Function(String uuid, @JsonKey(name: 'business_promo_media_url') String mediaUrl,
             @JsonKey(name: 'media_type') String mediaType)?
         $default, {
     required TResult orElse(),
@@ -930,9 +868,7 @@ extension PromoMediaLiteDMPatterns on PromoMediaLiteDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            String uuid,
-            @JsonKey(name: 'business_promo_media_url') String mediaUrl,
+    TResult Function(String uuid, @JsonKey(name: 'business_promo_media_url') String mediaUrl,
             @JsonKey(name: 'media_type') String mediaType)
         $default,
   ) {
@@ -959,9 +895,7 @@ extension PromoMediaLiteDMPatterns on PromoMediaLiteDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            String uuid,
-            @JsonKey(name: 'business_promo_media_url') String mediaUrl,
+    TResult? Function(String uuid, @JsonKey(name: 'business_promo_media_url') String mediaUrl,
             @JsonKey(name: 'media_type') String mediaType)?
         $default,
   ) {
@@ -983,8 +917,7 @@ class _PromoMediaLiteDM extends PromoMediaLiteDM {
       @JsonKey(name: 'business_promo_media_url') required this.mediaUrl,
       @JsonKey(name: 'media_type') this.mediaType = 'Image'})
       : super._();
-  factory _PromoMediaLiteDM.fromJson(Map<String, dynamic> json) =>
-      _$PromoMediaLiteDMFromJson(json);
+  factory _PromoMediaLiteDM.fromJson(Map<String, dynamic> json) => _$PromoMediaLiteDMFromJson(json);
 
   @override
   final String uuid;
@@ -1016,10 +949,8 @@ class _PromoMediaLiteDM extends PromoMediaLiteDM {
         (other.runtimeType == runtimeType &&
             other is _PromoMediaLiteDM &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.mediaUrl, mediaUrl) ||
-                other.mediaUrl == mediaUrl) &&
-            (identical(other.mediaType, mediaType) ||
-                other.mediaType == mediaType));
+            (identical(other.mediaUrl, mediaUrl) || other.mediaUrl == mediaUrl) &&
+            (identical(other.mediaType, mediaType) || other.mediaType == mediaType));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1033,10 +964,8 @@ class _PromoMediaLiteDM extends PromoMediaLiteDM {
 }
 
 /// @nodoc
-abstract mixin class _$PromoMediaLiteDMCopyWith<$Res>
-    implements $PromoMediaLiteDMCopyWith<$Res> {
-  factory _$PromoMediaLiteDMCopyWith(
-          _PromoMediaLiteDM value, $Res Function(_PromoMediaLiteDM) _then) =
+abstract mixin class _$PromoMediaLiteDMCopyWith<$Res> implements $PromoMediaLiteDMCopyWith<$Res> {
+  factory _$PromoMediaLiteDMCopyWith(_PromoMediaLiteDM value, $Res Function(_PromoMediaLiteDM) _then) =
       __$PromoMediaLiteDMCopyWithImpl;
   @override
   @useResult
@@ -1047,8 +976,7 @@ abstract mixin class _$PromoMediaLiteDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PromoMediaLiteDMCopyWithImpl<$Res>
-    implements _$PromoMediaLiteDMCopyWith<$Res> {
+class __$PromoMediaLiteDMCopyWithImpl<$Res> implements _$PromoMediaLiteDMCopyWith<$Res> {
   __$PromoMediaLiteDMCopyWithImpl(this._self, this._then);
 
   final _PromoMediaLiteDM _self;
@@ -1089,10 +1017,9 @@ mixin _$NearbyPromotionsResponseDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $NearbyPromotionsResponseDMCopyWith<NearbyPromotionsResponseDM>
-      get copyWith =>
-          _$NearbyPromotionsResponseDMCopyWithImpl<NearbyPromotionsResponseDM>(
-              this as NearbyPromotionsResponseDM, _$identity);
+  $NearbyPromotionsResponseDMCopyWith<NearbyPromotionsResponseDM> get copyWith =>
+      _$NearbyPromotionsResponseDMCopyWithImpl<NearbyPromotionsResponseDM>(
+          this as NearbyPromotionsResponseDM, _$identity);
 
   /// Serializes this NearbyPromotionsResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1108,8 +1035,7 @@ mixin _$NearbyPromotionsResponseDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(data), meta);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(data), meta);
 
   @override
   String toString() {
@@ -1119,8 +1045,8 @@ mixin _$NearbyPromotionsResponseDM {
 
 /// @nodoc
 abstract mixin class $NearbyPromotionsResponseDMCopyWith<$Res> {
-  factory $NearbyPromotionsResponseDMCopyWith(NearbyPromotionsResponseDM value,
-          $Res Function(NearbyPromotionsResponseDM) _then) =
+  factory $NearbyPromotionsResponseDMCopyWith(
+          NearbyPromotionsResponseDM value, $Res Function(NearbyPromotionsResponseDM) _then) =
       _$NearbyPromotionsResponseDMCopyWithImpl;
   @useResult
   $Res call({List<NearbyPromotionDM> data, NearbyPromotionsMeta meta});
@@ -1129,8 +1055,7 @@ abstract mixin class $NearbyPromotionsResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NearbyPromotionsResponseDMCopyWithImpl<$Res>
-    implements $NearbyPromotionsResponseDMCopyWith<$Res> {
+class _$NearbyPromotionsResponseDMCopyWithImpl<$Res> implements $NearbyPromotionsResponseDMCopyWith<$Res> {
   _$NearbyPromotionsResponseDMCopyWithImpl(this._self, this._then);
 
   final NearbyPromotionsResponseDM _self;
@@ -1260,8 +1185,7 @@ extension NearbyPromotionsResponseDMPatterns on NearbyPromotionsResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(List<NearbyPromotionDM> data, NearbyPromotionsMeta meta)?
-        $default, {
+    TResult Function(List<NearbyPromotionDM> data, NearbyPromotionsMeta meta)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -1288,8 +1212,7 @@ extension NearbyPromotionsResponseDMPatterns on NearbyPromotionsResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(List<NearbyPromotionDM> data, NearbyPromotionsMeta meta)
-        $default,
+    TResult Function(List<NearbyPromotionDM> data, NearbyPromotionsMeta meta) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -1314,8 +1237,7 @@ extension NearbyPromotionsResponseDMPatterns on NearbyPromotionsResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(List<NearbyPromotionDM> data, NearbyPromotionsMeta meta)?
-        $default,
+    TResult? Function(List<NearbyPromotionDM> data, NearbyPromotionsMeta meta)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -1330,11 +1252,8 @@ extension NearbyPromotionsResponseDMPatterns on NearbyPromotionsResponseDM {
 /// @nodoc
 @JsonSerializable()
 class _NearbyPromotionsResponseDM implements NearbyPromotionsResponseDM {
-  const _NearbyPromotionsResponseDM(
-      {required final List<NearbyPromotionDM> data, required this.meta})
-      : _data = data;
-  factory _NearbyPromotionsResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$NearbyPromotionsResponseDMFromJson(json);
+  const _NearbyPromotionsResponseDM({required final List<NearbyPromotionDM> data, required this.meta}) : _data = data;
+  factory _NearbyPromotionsResponseDM.fromJson(Map<String, dynamic> json) => _$NearbyPromotionsResponseDMFromJson(json);
 
   final List<NearbyPromotionDM> _data;
   @override
@@ -1352,9 +1271,8 @@ class _NearbyPromotionsResponseDM implements NearbyPromotionsResponseDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$NearbyPromotionsResponseDMCopyWith<_NearbyPromotionsResponseDM>
-      get copyWith => __$NearbyPromotionsResponseDMCopyWithImpl<
-          _NearbyPromotionsResponseDM>(this, _$identity);
+  _$NearbyPromotionsResponseDMCopyWith<_NearbyPromotionsResponseDM> get copyWith =>
+      __$NearbyPromotionsResponseDMCopyWithImpl<_NearbyPromotionsResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1374,8 +1292,7 @@ class _NearbyPromotionsResponseDM implements NearbyPromotionsResponseDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_data), meta);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_data), meta);
 
   @override
   String toString() {
@@ -1384,11 +1301,9 @@ class _NearbyPromotionsResponseDM implements NearbyPromotionsResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$NearbyPromotionsResponseDMCopyWith<$Res>
-    implements $NearbyPromotionsResponseDMCopyWith<$Res> {
+abstract mixin class _$NearbyPromotionsResponseDMCopyWith<$Res> implements $NearbyPromotionsResponseDMCopyWith<$Res> {
   factory _$NearbyPromotionsResponseDMCopyWith(
-          _NearbyPromotionsResponseDM value,
-          $Res Function(_NearbyPromotionsResponseDM) _then) =
+          _NearbyPromotionsResponseDM value, $Res Function(_NearbyPromotionsResponseDM) _then) =
       __$NearbyPromotionsResponseDMCopyWithImpl;
   @override
   @useResult
@@ -1399,8 +1314,7 @@ abstract mixin class _$NearbyPromotionsResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$NearbyPromotionsResponseDMCopyWithImpl<$Res>
-    implements _$NearbyPromotionsResponseDMCopyWith<$Res> {
+class __$NearbyPromotionsResponseDMCopyWithImpl<$Res> implements _$NearbyPromotionsResponseDMCopyWith<$Res> {
   __$NearbyPromotionsResponseDMCopyWithImpl(this._self, this._then);
 
   final _NearbyPromotionsResponseDM _self;
@@ -1455,8 +1369,7 @@ mixin _$NearbyPromotionsMeta {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $NearbyPromotionsMetaCopyWith<NearbyPromotionsMeta> get copyWith =>
-      _$NearbyPromotionsMetaCopyWithImpl<NearbyPromotionsMeta>(
-          this as NearbyPromotionsMeta, _$identity);
+      _$NearbyPromotionsMetaCopyWithImpl<NearbyPromotionsMeta>(this as NearbyPromotionsMeta, _$identity);
 
   /// Serializes this NearbyPromotionsMeta to a JSON map.
   Map<String, dynamic> toJson();
@@ -1470,16 +1383,13 @@ mixin _$NearbyPromotionsMeta {
             (identical(other.page, page) || other.page == page) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
             (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
-            (identical(other.maxTotal, maxTotal) ||
-                other.maxTotal == maxTotal) &&
-            (identical(other.radiusKm, radiusKm) ||
-                other.radiusKm == radiusKm));
+            (identical(other.maxTotal, maxTotal) || other.maxTotal == maxTotal) &&
+            (identical(other.radiusKm, radiusKm) || other.radiusKm == radiusKm));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, total, page, perPage, hasMore, maxTotal, radiusKm);
+  int get hashCode => Object.hash(runtimeType, total, page, perPage, hasMore, maxTotal, radiusKm);
 
   @override
   String toString() {
@@ -1489,8 +1399,7 @@ mixin _$NearbyPromotionsMeta {
 
 /// @nodoc
 abstract mixin class $NearbyPromotionsMetaCopyWith<$Res> {
-  factory $NearbyPromotionsMetaCopyWith(NearbyPromotionsMeta value,
-          $Res Function(NearbyPromotionsMeta) _then) =
+  factory $NearbyPromotionsMetaCopyWith(NearbyPromotionsMeta value, $Res Function(NearbyPromotionsMeta) _then) =
       _$NearbyPromotionsMetaCopyWithImpl;
   @useResult
   $Res call(
@@ -1503,8 +1412,7 @@ abstract mixin class $NearbyPromotionsMetaCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NearbyPromotionsMetaCopyWithImpl<$Res>
-    implements $NearbyPromotionsMetaCopyWith<$Res> {
+class _$NearbyPromotionsMetaCopyWithImpl<$Res> implements $NearbyPromotionsMetaCopyWith<$Res> {
   _$NearbyPromotionsMetaCopyWithImpl(this._self, this._then);
 
   final NearbyPromotionsMeta _self;
@@ -1657,8 +1565,7 @@ extension NearbyPromotionsMetaPatterns on NearbyPromotionsMeta {
     final _that = this;
     switch (_that) {
       case _NearbyPromotionsMeta() when $default != null:
-        return $default(_that.total, _that.page, _that.perPage, _that.hasMore,
-            _that.maxTotal, _that.radiusKm);
+        return $default(_that.total, _that.page, _that.perPage, _that.hasMore, _that.maxTotal, _that.radiusKm);
       case _:
         return orElse();
     }
@@ -1691,8 +1598,7 @@ extension NearbyPromotionsMetaPatterns on NearbyPromotionsMeta {
     final _that = this;
     switch (_that) {
       case _NearbyPromotionsMeta():
-        return $default(_that.total, _that.page, _that.perPage, _that.hasMore,
-            _that.maxTotal, _that.radiusKm);
+        return $default(_that.total, _that.page, _that.perPage, _that.hasMore, _that.maxTotal, _that.radiusKm);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -1724,8 +1630,7 @@ extension NearbyPromotionsMetaPatterns on NearbyPromotionsMeta {
     final _that = this;
     switch (_that) {
       case _NearbyPromotionsMeta() when $default != null:
-        return $default(_that.total, _that.page, _that.perPage, _that.hasMore,
-            _that.maxTotal, _that.radiusKm);
+        return $default(_that.total, _that.page, _that.perPage, _that.hasMore, _that.maxTotal, _that.radiusKm);
       case _:
         return null;
     }
@@ -1742,8 +1647,7 @@ class _NearbyPromotionsMeta implements NearbyPromotionsMeta {
       @JsonKey(name: 'has_more') required this.hasMore,
       @JsonKey(name: 'max_total') this.maxTotal = 50,
       @JsonKey(name: 'radius_km') this.radiusKm = 10.0});
-  factory _NearbyPromotionsMeta.fromJson(Map<String, dynamic> json) =>
-      _$NearbyPromotionsMetaFromJson(json);
+  factory _NearbyPromotionsMeta.fromJson(Map<String, dynamic> json) => _$NearbyPromotionsMetaFromJson(json);
 
   @override
   final int total;
@@ -1768,8 +1672,7 @@ class _NearbyPromotionsMeta implements NearbyPromotionsMeta {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$NearbyPromotionsMetaCopyWith<_NearbyPromotionsMeta> get copyWith =>
-      __$NearbyPromotionsMetaCopyWithImpl<_NearbyPromotionsMeta>(
-          this, _$identity);
+      __$NearbyPromotionsMetaCopyWithImpl<_NearbyPromotionsMeta>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1787,16 +1690,13 @@ class _NearbyPromotionsMeta implements NearbyPromotionsMeta {
             (identical(other.page, page) || other.page == page) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
             (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
-            (identical(other.maxTotal, maxTotal) ||
-                other.maxTotal == maxTotal) &&
-            (identical(other.radiusKm, radiusKm) ||
-                other.radiusKm == radiusKm));
+            (identical(other.maxTotal, maxTotal) || other.maxTotal == maxTotal) &&
+            (identical(other.radiusKm, radiusKm) || other.radiusKm == radiusKm));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, total, page, perPage, hasMore, maxTotal, radiusKm);
+  int get hashCode => Object.hash(runtimeType, total, page, perPage, hasMore, maxTotal, radiusKm);
 
   @override
   String toString() {
@@ -1805,10 +1705,8 @@ class _NearbyPromotionsMeta implements NearbyPromotionsMeta {
 }
 
 /// @nodoc
-abstract mixin class _$NearbyPromotionsMetaCopyWith<$Res>
-    implements $NearbyPromotionsMetaCopyWith<$Res> {
-  factory _$NearbyPromotionsMetaCopyWith(_NearbyPromotionsMeta value,
-          $Res Function(_NearbyPromotionsMeta) _then) =
+abstract mixin class _$NearbyPromotionsMetaCopyWith<$Res> implements $NearbyPromotionsMetaCopyWith<$Res> {
+  factory _$NearbyPromotionsMetaCopyWith(_NearbyPromotionsMeta value, $Res Function(_NearbyPromotionsMeta) _then) =
       __$NearbyPromotionsMetaCopyWithImpl;
   @override
   @useResult
@@ -1822,8 +1720,7 @@ abstract mixin class _$NearbyPromotionsMetaCopyWith<$Res>
 }
 
 /// @nodoc
-class __$NearbyPromotionsMetaCopyWithImpl<$Res>
-    implements _$NearbyPromotionsMetaCopyWith<$Res> {
+class __$NearbyPromotionsMetaCopyWithImpl<$Res> implements _$NearbyPromotionsMetaCopyWith<$Res> {
   __$NearbyPromotionsMetaCopyWithImpl(this._self, this._then);
 
   final _NearbyPromotionsMeta _self;

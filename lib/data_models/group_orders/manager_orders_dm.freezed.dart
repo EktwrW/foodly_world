@@ -24,8 +24,7 @@ mixin _$ManagerOrderCountsDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ManagerOrderCountsDMCopyWith<ManagerOrderCountsDM> get copyWith =>
-      _$ManagerOrderCountsDMCopyWithImpl<ManagerOrderCountsDM>(
-          this as ManagerOrderCountsDM, _$identity);
+      _$ManagerOrderCountsDMCopyWithImpl<ManagerOrderCountsDM>(this as ManagerOrderCountsDM, _$identity);
 
   /// Serializes this ManagerOrderCountsDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -36,17 +35,14 @@ mixin _$ManagerOrderCountsDM {
         (other.runtimeType == runtimeType &&
             other is ManagerOrderCountsDM &&
             (identical(other.pending, pending) || other.pending == pending) &&
-            (identical(other.preparing, preparing) ||
-                other.preparing == preparing) &&
+            (identical(other.preparing, preparing) || other.preparing == preparing) &&
             (identical(other.ready, ready) || other.ready == ready) &&
-            (identical(other.delivered, delivered) ||
-                other.delivered == delivered));
+            (identical(other.delivered, delivered) || other.delivered == delivered));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, pending, preparing, ready, delivered);
+  int get hashCode => Object.hash(runtimeType, pending, preparing, ready, delivered);
 
   @override
   String toString() {
@@ -56,16 +52,14 @@ mixin _$ManagerOrderCountsDM {
 
 /// @nodoc
 abstract mixin class $ManagerOrderCountsDMCopyWith<$Res> {
-  factory $ManagerOrderCountsDMCopyWith(ManagerOrderCountsDM value,
-          $Res Function(ManagerOrderCountsDM) _then) =
+  factory $ManagerOrderCountsDMCopyWith(ManagerOrderCountsDM value, $Res Function(ManagerOrderCountsDM) _then) =
       _$ManagerOrderCountsDMCopyWithImpl;
   @useResult
   $Res call({int pending, int preparing, int ready, int delivered});
 }
 
 /// @nodoc
-class _$ManagerOrderCountsDMCopyWithImpl<$Res>
-    implements $ManagerOrderCountsDMCopyWith<$Res> {
+class _$ManagerOrderCountsDMCopyWithImpl<$Res> implements $ManagerOrderCountsDMCopyWith<$Res> {
   _$ManagerOrderCountsDMCopyWithImpl(this._self, this._then);
 
   final ManagerOrderCountsDM _self;
@@ -195,15 +189,13 @@ extension ManagerOrderCountsDMPatterns on ManagerOrderCountsDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(int pending, int preparing, int ready, int delivered)?
-        $default, {
+    TResult Function(int pending, int preparing, int ready, int delivered)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _ManagerOrderCountsDM() when $default != null:
-        return $default(
-            _that.pending, _that.preparing, _that.ready, _that.delivered);
+        return $default(_that.pending, _that.preparing, _that.ready, _that.delivered);
       case _:
         return orElse();
     }
@@ -224,14 +216,12 @@ extension ManagerOrderCountsDMPatterns on ManagerOrderCountsDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(int pending, int preparing, int ready, int delivered)
-        $default,
+    TResult Function(int pending, int preparing, int ready, int delivered) $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ManagerOrderCountsDM():
-        return $default(
-            _that.pending, _that.preparing, _that.ready, _that.delivered);
+        return $default(_that.pending, _that.preparing, _that.ready, _that.delivered);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -251,14 +241,12 @@ extension ManagerOrderCountsDMPatterns on ManagerOrderCountsDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(int pending, int preparing, int ready, int delivered)?
-        $default,
+    TResult? Function(int pending, int preparing, int ready, int delivered)? $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ManagerOrderCountsDM() when $default != null:
-        return $default(
-            _that.pending, _that.preparing, _that.ready, _that.delivered);
+        return $default(_that.pending, _that.preparing, _that.ready, _that.delivered);
       case _:
         return null;
     }
@@ -268,13 +256,8 @@ extension ManagerOrderCountsDMPatterns on ManagerOrderCountsDM {
 /// @nodoc
 @JsonSerializable()
 class _ManagerOrderCountsDM implements ManagerOrderCountsDM {
-  const _ManagerOrderCountsDM(
-      {this.pending = 0,
-      this.preparing = 0,
-      this.ready = 0,
-      this.delivered = 0});
-  factory _ManagerOrderCountsDM.fromJson(Map<String, dynamic> json) =>
-      _$ManagerOrderCountsDMFromJson(json);
+  const _ManagerOrderCountsDM({this.pending = 0, this.preparing = 0, this.ready = 0, this.delivered = 0});
+  factory _ManagerOrderCountsDM.fromJson(Map<String, dynamic> json) => _$ManagerOrderCountsDMFromJson(json);
 
   @override
   @JsonKey()
@@ -295,8 +278,7 @@ class _ManagerOrderCountsDM implements ManagerOrderCountsDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$ManagerOrderCountsDMCopyWith<_ManagerOrderCountsDM> get copyWith =>
-      __$ManagerOrderCountsDMCopyWithImpl<_ManagerOrderCountsDM>(
-          this, _$identity);
+      __$ManagerOrderCountsDMCopyWithImpl<_ManagerOrderCountsDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -311,17 +293,14 @@ class _ManagerOrderCountsDM implements ManagerOrderCountsDM {
         (other.runtimeType == runtimeType &&
             other is _ManagerOrderCountsDM &&
             (identical(other.pending, pending) || other.pending == pending) &&
-            (identical(other.preparing, preparing) ||
-                other.preparing == preparing) &&
+            (identical(other.preparing, preparing) || other.preparing == preparing) &&
             (identical(other.ready, ready) || other.ready == ready) &&
-            (identical(other.delivered, delivered) ||
-                other.delivered == delivered));
+            (identical(other.delivered, delivered) || other.delivered == delivered));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, pending, preparing, ready, delivered);
+  int get hashCode => Object.hash(runtimeType, pending, preparing, ready, delivered);
 
   @override
   String toString() {
@@ -330,10 +309,8 @@ class _ManagerOrderCountsDM implements ManagerOrderCountsDM {
 }
 
 /// @nodoc
-abstract mixin class _$ManagerOrderCountsDMCopyWith<$Res>
-    implements $ManagerOrderCountsDMCopyWith<$Res> {
-  factory _$ManagerOrderCountsDMCopyWith(_ManagerOrderCountsDM value,
-          $Res Function(_ManagerOrderCountsDM) _then) =
+abstract mixin class _$ManagerOrderCountsDMCopyWith<$Res> implements $ManagerOrderCountsDMCopyWith<$Res> {
+  factory _$ManagerOrderCountsDMCopyWith(_ManagerOrderCountsDM value, $Res Function(_ManagerOrderCountsDM) _then) =
       __$ManagerOrderCountsDMCopyWithImpl;
   @override
   @useResult
@@ -341,8 +318,7 @@ abstract mixin class _$ManagerOrderCountsDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ManagerOrderCountsDMCopyWithImpl<$Res>
-    implements _$ManagerOrderCountsDMCopyWith<$Res> {
+class __$ManagerOrderCountsDMCopyWithImpl<$Res> implements _$ManagerOrderCountsDMCopyWith<$Res> {
   __$ManagerOrderCountsDMCopyWithImpl(this._self, this._then);
 
   final _ManagerOrderCountsDM _self;
@@ -391,8 +367,7 @@ mixin _$ManagerOrdersResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ManagerOrdersResponseDMCopyWith<ManagerOrdersResponseDM> get copyWith =>
-      _$ManagerOrdersResponseDMCopyWithImpl<ManagerOrdersResponseDM>(
-          this as ManagerOrdersResponseDM, _$identity);
+      _$ManagerOrdersResponseDMCopyWithImpl<ManagerOrdersResponseDM>(this as ManagerOrdersResponseDM, _$identity);
 
   /// Serializes this ManagerOrdersResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -410,8 +385,7 @@ mixin _$ManagerOrdersResponseDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, success,
-      const DeepCollectionEquality().hash(orders), counts, meta);
+  int get hashCode => Object.hash(runtimeType, success, const DeepCollectionEquality().hash(orders), counts, meta);
 
   @override
   String toString() {
@@ -421,23 +395,18 @@ mixin _$ManagerOrdersResponseDM {
 
 /// @nodoc
 abstract mixin class $ManagerOrdersResponseDMCopyWith<$Res> {
-  factory $ManagerOrdersResponseDMCopyWith(ManagerOrdersResponseDM value,
-          $Res Function(ManagerOrdersResponseDM) _then) =
+  factory $ManagerOrdersResponseDMCopyWith(
+          ManagerOrdersResponseDM value, $Res Function(ManagerOrdersResponseDM) _then) =
       _$ManagerOrdersResponseDMCopyWithImpl;
   @useResult
-  $Res call(
-      {bool success,
-      List<GroupOrderDM> orders,
-      ManagerOrderCountsDM counts,
-      ManagerOrdersMetaDM? meta});
+  $Res call({bool success, List<GroupOrderDM> orders, ManagerOrderCountsDM counts, ManagerOrdersMetaDM? meta});
 
   $ManagerOrderCountsDMCopyWith<$Res> get counts;
   $ManagerOrdersMetaDMCopyWith<$Res>? get meta;
 }
 
 /// @nodoc
-class _$ManagerOrdersResponseDMCopyWithImpl<$Res>
-    implements $ManagerOrdersResponseDMCopyWith<$Res> {
+class _$ManagerOrdersResponseDMCopyWithImpl<$Res> implements $ManagerOrdersResponseDMCopyWith<$Res> {
   _$ManagerOrdersResponseDMCopyWithImpl(this._self, this._then);
 
   final ManagerOrdersResponseDM _self;
@@ -591,8 +560,7 @@ extension ManagerOrdersResponseDMPatterns on ManagerOrdersResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(bool success, List<GroupOrderDM> orders,
-            ManagerOrderCountsDM counts, ManagerOrdersMetaDM? meta)?
+    TResult Function(bool success, List<GroupOrderDM> orders, ManagerOrderCountsDM counts, ManagerOrdersMetaDM? meta)?
         $default, {
     required TResult orElse(),
   }) {
@@ -620,8 +588,7 @@ extension ManagerOrdersResponseDMPatterns on ManagerOrdersResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(bool success, List<GroupOrderDM> orders,
-            ManagerOrderCountsDM counts, ManagerOrdersMetaDM? meta)
+    TResult Function(bool success, List<GroupOrderDM> orders, ManagerOrderCountsDM counts, ManagerOrdersMetaDM? meta)
         $default,
   ) {
     final _that = this;
@@ -647,8 +614,7 @@ extension ManagerOrdersResponseDMPatterns on ManagerOrdersResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(bool success, List<GroupOrderDM> orders,
-            ManagerOrderCountsDM counts, ManagerOrdersMetaDM? meta)?
+    TResult? Function(bool success, List<GroupOrderDM> orders, ManagerOrderCountsDM counts, ManagerOrdersMetaDM? meta)?
         $default,
   ) {
     final _that = this;
@@ -670,8 +636,7 @@ class _ManagerOrdersResponseDM implements ManagerOrdersResponseDM {
       this.counts = const ManagerOrderCountsDM(),
       this.meta})
       : _orders = orders;
-  factory _ManagerOrdersResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$ManagerOrdersResponseDMFromJson(json);
+  factory _ManagerOrdersResponseDM.fromJson(Map<String, dynamic> json) => _$ManagerOrdersResponseDMFromJson(json);
 
   @override
   @JsonKey()
@@ -697,8 +662,7 @@ class _ManagerOrdersResponseDM implements ManagerOrdersResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$ManagerOrdersResponseDMCopyWith<_ManagerOrdersResponseDM> get copyWith =>
-      __$ManagerOrdersResponseDMCopyWithImpl<_ManagerOrdersResponseDM>(
-          this, _$identity);
+      __$ManagerOrdersResponseDMCopyWithImpl<_ManagerOrdersResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -720,8 +684,7 @@ class _ManagerOrdersResponseDM implements ManagerOrdersResponseDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, success,
-      const DeepCollectionEquality().hash(_orders), counts, meta);
+  int get hashCode => Object.hash(runtimeType, success, const DeepCollectionEquality().hash(_orders), counts, meta);
 
   @override
   String toString() {
@@ -730,18 +693,13 @@ class _ManagerOrdersResponseDM implements ManagerOrdersResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$ManagerOrdersResponseDMCopyWith<$Res>
-    implements $ManagerOrdersResponseDMCopyWith<$Res> {
-  factory _$ManagerOrdersResponseDMCopyWith(_ManagerOrdersResponseDM value,
-          $Res Function(_ManagerOrdersResponseDM) _then) =
+abstract mixin class _$ManagerOrdersResponseDMCopyWith<$Res> implements $ManagerOrdersResponseDMCopyWith<$Res> {
+  factory _$ManagerOrdersResponseDMCopyWith(
+          _ManagerOrdersResponseDM value, $Res Function(_ManagerOrdersResponseDM) _then) =
       __$ManagerOrdersResponseDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {bool success,
-      List<GroupOrderDM> orders,
-      ManagerOrderCountsDM counts,
-      ManagerOrdersMetaDM? meta});
+  $Res call({bool success, List<GroupOrderDM> orders, ManagerOrderCountsDM counts, ManagerOrdersMetaDM? meta});
 
   @override
   $ManagerOrderCountsDMCopyWith<$Res> get counts;
@@ -750,8 +708,7 @@ abstract mixin class _$ManagerOrdersResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ManagerOrdersResponseDMCopyWithImpl<$Res>
-    implements _$ManagerOrdersResponseDMCopyWith<$Res> {
+class __$ManagerOrdersResponseDMCopyWithImpl<$Res> implements _$ManagerOrdersResponseDMCopyWith<$Res> {
   __$ManagerOrdersResponseDMCopyWithImpl(this._self, this._then);
 
   final _ManagerOrdersResponseDM _self;
@@ -826,8 +783,7 @@ mixin _$ManagerHistoryResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ManagerHistoryResponseDMCopyWith<ManagerHistoryResponseDM> get copyWith =>
-      _$ManagerHistoryResponseDMCopyWithImpl<ManagerHistoryResponseDM>(
-          this as ManagerHistoryResponseDM, _$identity);
+      _$ManagerHistoryResponseDMCopyWithImpl<ManagerHistoryResponseDM>(this as ManagerHistoryResponseDM, _$identity);
 
   /// Serializes this ManagerHistoryResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -840,14 +796,13 @@ mixin _$ManagerHistoryResponseDM {
             (identical(other.success, success) || other.success == success) &&
             const DeepCollectionEquality().equals(other.orders, orders) &&
             (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
-            (identical(other.nextBefore, nextBefore) ||
-                other.nextBefore == nextBefore));
+            (identical(other.nextBefore, nextBefore) || other.nextBefore == nextBefore));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, success,
-      const DeepCollectionEquality().hash(orders), hasMore, nextBefore);
+  int get hashCode =>
+      Object.hash(runtimeType, success, const DeepCollectionEquality().hash(orders), hasMore, nextBefore);
 
   @override
   String toString() {
@@ -857,8 +812,8 @@ mixin _$ManagerHistoryResponseDM {
 
 /// @nodoc
 abstract mixin class $ManagerHistoryResponseDMCopyWith<$Res> {
-  factory $ManagerHistoryResponseDMCopyWith(ManagerHistoryResponseDM value,
-          $Res Function(ManagerHistoryResponseDM) _then) =
+  factory $ManagerHistoryResponseDMCopyWith(
+          ManagerHistoryResponseDM value, $Res Function(ManagerHistoryResponseDM) _then) =
       _$ManagerHistoryResponseDMCopyWithImpl;
   @useResult
   $Res call(
@@ -869,8 +824,7 @@ abstract mixin class $ManagerHistoryResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ManagerHistoryResponseDMCopyWithImpl<$Res>
-    implements $ManagerHistoryResponseDMCopyWith<$Res> {
+class _$ManagerHistoryResponseDMCopyWithImpl<$Res> implements $ManagerHistoryResponseDMCopyWith<$Res> {
   _$ManagerHistoryResponseDMCopyWithImpl(this._self, this._then);
 
   final ManagerHistoryResponseDM _self;
@@ -1000,10 +954,7 @@ extension ManagerHistoryResponseDMPatterns on ManagerHistoryResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            bool success,
-            List<GroupOrderDM> orders,
-            @JsonKey(name: 'has_more') bool hasMore,
+    TResult Function(bool success, List<GroupOrderDM> orders, @JsonKey(name: 'has_more') bool hasMore,
             @JsonKey(name: 'next_before') String? nextBefore)?
         $default, {
     required TResult orElse(),
@@ -1011,8 +962,7 @@ extension ManagerHistoryResponseDMPatterns on ManagerHistoryResponseDM {
     final _that = this;
     switch (_that) {
       case _ManagerHistoryResponseDM() when $default != null:
-        return $default(
-            _that.success, _that.orders, _that.hasMore, _that.nextBefore);
+        return $default(_that.success, _that.orders, _that.hasMore, _that.nextBefore);
       case _:
         return orElse();
     }
@@ -1033,18 +983,14 @@ extension ManagerHistoryResponseDMPatterns on ManagerHistoryResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            bool success,
-            List<GroupOrderDM> orders,
-            @JsonKey(name: 'has_more') bool hasMore,
+    TResult Function(bool success, List<GroupOrderDM> orders, @JsonKey(name: 'has_more') bool hasMore,
             @JsonKey(name: 'next_before') String? nextBefore)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ManagerHistoryResponseDM():
-        return $default(
-            _that.success, _that.orders, _that.hasMore, _that.nextBefore);
+        return $default(_that.success, _that.orders, _that.hasMore, _that.nextBefore);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -1064,18 +1010,14 @@ extension ManagerHistoryResponseDMPatterns on ManagerHistoryResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            bool success,
-            List<GroupOrderDM> orders,
-            @JsonKey(name: 'has_more') bool hasMore,
+    TResult? Function(bool success, List<GroupOrderDM> orders, @JsonKey(name: 'has_more') bool hasMore,
             @JsonKey(name: 'next_before') String? nextBefore)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ManagerHistoryResponseDM() when $default != null:
-        return $default(
-            _that.success, _that.orders, _that.hasMore, _that.nextBefore);
+        return $default(_that.success, _that.orders, _that.hasMore, _that.nextBefore);
       case _:
         return null;
     }
@@ -1091,8 +1033,7 @@ class _ManagerHistoryResponseDM implements ManagerHistoryResponseDM {
       @JsonKey(name: 'has_more') this.hasMore = false,
       @JsonKey(name: 'next_before') this.nextBefore})
       : _orders = orders;
-  factory _ManagerHistoryResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$ManagerHistoryResponseDMFromJson(json);
+  factory _ManagerHistoryResponseDM.fromJson(Map<String, dynamic> json) => _$ManagerHistoryResponseDMFromJson(json);
 
   @override
   @JsonKey()
@@ -1119,8 +1060,7 @@ class _ManagerHistoryResponseDM implements ManagerHistoryResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$ManagerHistoryResponseDMCopyWith<_ManagerHistoryResponseDM> get copyWith =>
-      __$ManagerHistoryResponseDMCopyWithImpl<_ManagerHistoryResponseDM>(
-          this, _$identity);
+      __$ManagerHistoryResponseDMCopyWithImpl<_ManagerHistoryResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1137,14 +1077,13 @@ class _ManagerHistoryResponseDM implements ManagerHistoryResponseDM {
             (identical(other.success, success) || other.success == success) &&
             const DeepCollectionEquality().equals(other._orders, _orders) &&
             (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
-            (identical(other.nextBefore, nextBefore) ||
-                other.nextBefore == nextBefore));
+            (identical(other.nextBefore, nextBefore) || other.nextBefore == nextBefore));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, success,
-      const DeepCollectionEquality().hash(_orders), hasMore, nextBefore);
+  int get hashCode =>
+      Object.hash(runtimeType, success, const DeepCollectionEquality().hash(_orders), hasMore, nextBefore);
 
   @override
   String toString() {
@@ -1153,10 +1092,9 @@ class _ManagerHistoryResponseDM implements ManagerHistoryResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$ManagerHistoryResponseDMCopyWith<$Res>
-    implements $ManagerHistoryResponseDMCopyWith<$Res> {
-  factory _$ManagerHistoryResponseDMCopyWith(_ManagerHistoryResponseDM value,
-          $Res Function(_ManagerHistoryResponseDM) _then) =
+abstract mixin class _$ManagerHistoryResponseDMCopyWith<$Res> implements $ManagerHistoryResponseDMCopyWith<$Res> {
+  factory _$ManagerHistoryResponseDMCopyWith(
+          _ManagerHistoryResponseDM value, $Res Function(_ManagerHistoryResponseDM) _then) =
       __$ManagerHistoryResponseDMCopyWithImpl;
   @override
   @useResult
@@ -1168,8 +1106,7 @@ abstract mixin class _$ManagerHistoryResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ManagerHistoryResponseDMCopyWithImpl<$Res>
-    implements _$ManagerHistoryResponseDMCopyWith<$Res> {
+class __$ManagerHistoryResponseDMCopyWithImpl<$Res> implements _$ManagerHistoryResponseDMCopyWith<$Res> {
   __$ManagerHistoryResponseDMCopyWithImpl(this._self, this._then);
 
   final _ManagerHistoryResponseDM _self;
@@ -1217,8 +1154,7 @@ mixin _$PaymentModeResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PaymentModeResponseDMCopyWith<PaymentModeResponseDM> get copyWith =>
-      _$PaymentModeResponseDMCopyWithImpl<PaymentModeResponseDM>(
-          this as PaymentModeResponseDM, _$identity);
+      _$PaymentModeResponseDMCopyWithImpl<PaymentModeResponseDM>(this as PaymentModeResponseDM, _$identity);
 
   /// Serializes this PaymentModeResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1229,8 +1165,7 @@ mixin _$PaymentModeResponseDM {
         (other.runtimeType == runtimeType &&
             other is PaymentModeResponseDM &&
             (identical(other.success, success) || other.success == success) &&
-            (identical(other.groupPaymentMode, groupPaymentMode) ||
-                other.groupPaymentMode == groupPaymentMode));
+            (identical(other.groupPaymentMode, groupPaymentMode) || other.groupPaymentMode == groupPaymentMode));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1245,18 +1180,14 @@ mixin _$PaymentModeResponseDM {
 
 /// @nodoc
 abstract mixin class $PaymentModeResponseDMCopyWith<$Res> {
-  factory $PaymentModeResponseDMCopyWith(PaymentModeResponseDM value,
-          $Res Function(PaymentModeResponseDM) _then) =
+  factory $PaymentModeResponseDMCopyWith(PaymentModeResponseDM value, $Res Function(PaymentModeResponseDM) _then) =
       _$PaymentModeResponseDMCopyWithImpl;
   @useResult
-  $Res call(
-      {bool success,
-      @JsonKey(name: 'group_payment_mode') String groupPaymentMode});
+  $Res call({bool success, @JsonKey(name: 'group_payment_mode') String groupPaymentMode});
 }
 
 /// @nodoc
-class _$PaymentModeResponseDMCopyWithImpl<$Res>
-    implements $PaymentModeResponseDMCopyWith<$Res> {
+class _$PaymentModeResponseDMCopyWithImpl<$Res> implements $PaymentModeResponseDMCopyWith<$Res> {
   _$PaymentModeResponseDMCopyWithImpl(this._self, this._then);
 
   final PaymentModeResponseDM _self;
@@ -1376,9 +1307,7 @@ extension PaymentModeResponseDMPatterns on PaymentModeResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(bool success,
-            @JsonKey(name: 'group_payment_mode') String groupPaymentMode)?
-        $default, {
+    TResult Function(bool success, @JsonKey(name: 'group_payment_mode') String groupPaymentMode)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -1405,9 +1334,7 @@ extension PaymentModeResponseDMPatterns on PaymentModeResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(bool success,
-            @JsonKey(name: 'group_payment_mode') String groupPaymentMode)
-        $default,
+    TResult Function(bool success, @JsonKey(name: 'group_payment_mode') String groupPaymentMode) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -1432,9 +1359,7 @@ extension PaymentModeResponseDMPatterns on PaymentModeResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(bool success,
-            @JsonKey(name: 'group_payment_mode') String groupPaymentMode)?
-        $default,
+    TResult? Function(bool success, @JsonKey(name: 'group_payment_mode') String groupPaymentMode)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -1450,11 +1375,8 @@ extension PaymentModeResponseDMPatterns on PaymentModeResponseDM {
 @JsonSerializable()
 class _PaymentModeResponseDM implements PaymentModeResponseDM {
   const _PaymentModeResponseDM(
-      {this.success = true,
-      @JsonKey(name: 'group_payment_mode')
-      this.groupPaymentMode = 'per_round'});
-  factory _PaymentModeResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$PaymentModeResponseDMFromJson(json);
+      {this.success = true, @JsonKey(name: 'group_payment_mode') this.groupPaymentMode = 'per_round'});
+  factory _PaymentModeResponseDM.fromJson(Map<String, dynamic> json) => _$PaymentModeResponseDMFromJson(json);
 
   @override
   @JsonKey()
@@ -1469,8 +1391,7 @@ class _PaymentModeResponseDM implements PaymentModeResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$PaymentModeResponseDMCopyWith<_PaymentModeResponseDM> get copyWith =>
-      __$PaymentModeResponseDMCopyWithImpl<_PaymentModeResponseDM>(
-          this, _$identity);
+      __$PaymentModeResponseDMCopyWithImpl<_PaymentModeResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1485,8 +1406,7 @@ class _PaymentModeResponseDM implements PaymentModeResponseDM {
         (other.runtimeType == runtimeType &&
             other is _PaymentModeResponseDM &&
             (identical(other.success, success) || other.success == success) &&
-            (identical(other.groupPaymentMode, groupPaymentMode) ||
-                other.groupPaymentMode == groupPaymentMode));
+            (identical(other.groupPaymentMode, groupPaymentMode) || other.groupPaymentMode == groupPaymentMode));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1500,21 +1420,16 @@ class _PaymentModeResponseDM implements PaymentModeResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$PaymentModeResponseDMCopyWith<$Res>
-    implements $PaymentModeResponseDMCopyWith<$Res> {
-  factory _$PaymentModeResponseDMCopyWith(_PaymentModeResponseDM value,
-          $Res Function(_PaymentModeResponseDM) _then) =
+abstract mixin class _$PaymentModeResponseDMCopyWith<$Res> implements $PaymentModeResponseDMCopyWith<$Res> {
+  factory _$PaymentModeResponseDMCopyWith(_PaymentModeResponseDM value, $Res Function(_PaymentModeResponseDM) _then) =
       __$PaymentModeResponseDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {bool success,
-      @JsonKey(name: 'group_payment_mode') String groupPaymentMode});
+  $Res call({bool success, @JsonKey(name: 'group_payment_mode') String groupPaymentMode});
 }
 
 /// @nodoc
-class __$PaymentModeResponseDMCopyWithImpl<$Res>
-    implements _$PaymentModeResponseDMCopyWith<$Res> {
+class __$PaymentModeResponseDMCopyWithImpl<$Res> implements _$PaymentModeResponseDMCopyWith<$Res> {
   __$PaymentModeResponseDMCopyWithImpl(this._self, this._then);
 
   final _PaymentModeResponseDM _self;
@@ -1554,8 +1469,7 @@ mixin _$ManagerOrdersMetaDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ManagerOrdersMetaDMCopyWith<ManagerOrdersMetaDM> get copyWith =>
-      _$ManagerOrdersMetaDMCopyWithImpl<ManagerOrdersMetaDM>(
-          this as ManagerOrdersMetaDM, _$identity);
+      _$ManagerOrdersMetaDMCopyWithImpl<ManagerOrdersMetaDM>(this as ManagerOrdersMetaDM, _$identity);
 
   /// Serializes this ManagerOrdersMetaDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1565,10 +1479,8 @@ mixin _$ManagerOrdersMetaDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ManagerOrdersMetaDM &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.lastPage, lastPage) ||
-                other.lastPage == lastPage) &&
+            (identical(other.currentPage, currentPage) || other.currentPage == currentPage) &&
+            (identical(other.lastPage, lastPage) || other.lastPage == lastPage) &&
             (identical(other.total, total) || other.total == total));
   }
 
@@ -1584,19 +1496,14 @@ mixin _$ManagerOrdersMetaDM {
 
 /// @nodoc
 abstract mixin class $ManagerOrdersMetaDMCopyWith<$Res> {
-  factory $ManagerOrdersMetaDMCopyWith(
-          ManagerOrdersMetaDM value, $Res Function(ManagerOrdersMetaDM) _then) =
+  factory $ManagerOrdersMetaDMCopyWith(ManagerOrdersMetaDM value, $Res Function(ManagerOrdersMetaDM) _then) =
       _$ManagerOrdersMetaDMCopyWithImpl;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'current_page') int currentPage,
-      @JsonKey(name: 'last_page') int lastPage,
-      int total});
+  $Res call({@JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage, int total});
 }
 
 /// @nodoc
-class _$ManagerOrdersMetaDMCopyWithImpl<$Res>
-    implements $ManagerOrdersMetaDMCopyWith<$Res> {
+class _$ManagerOrdersMetaDMCopyWithImpl<$Res> implements $ManagerOrdersMetaDMCopyWith<$Res> {
   _$ManagerOrdersMetaDMCopyWithImpl(this._self, this._then);
 
   final ManagerOrdersMetaDM _self;
@@ -1721,8 +1628,8 @@ extension ManagerOrdersMetaDMPatterns on ManagerOrdersMetaDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'current_page') int currentPage,
-            @JsonKey(name: 'last_page') int lastPage, int total)?
+    TResult Function(
+            @JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage, int total)?
         $default, {
     required TResult orElse(),
   }) {
@@ -1750,8 +1657,8 @@ extension ManagerOrdersMetaDMPatterns on ManagerOrdersMetaDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'current_page') int currentPage,
-            @JsonKey(name: 'last_page') int lastPage, int total)
+    TResult Function(
+            @JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage, int total)
         $default,
   ) {
     final _that = this;
@@ -1777,8 +1684,8 @@ extension ManagerOrdersMetaDMPatterns on ManagerOrdersMetaDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(@JsonKey(name: 'current_page') int currentPage,
-            @JsonKey(name: 'last_page') int lastPage, int total)?
+    TResult? Function(
+            @JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage, int total)?
         $default,
   ) {
     final _that = this;
@@ -1798,8 +1705,7 @@ class _ManagerOrdersMetaDM implements ManagerOrdersMetaDM {
       {@JsonKey(name: 'current_page') this.currentPage = 1,
       @JsonKey(name: 'last_page') this.lastPage = 1,
       this.total = 0});
-  factory _ManagerOrdersMetaDM.fromJson(Map<String, dynamic> json) =>
-      _$ManagerOrdersMetaDMFromJson(json);
+  factory _ManagerOrdersMetaDM.fromJson(Map<String, dynamic> json) => _$ManagerOrdersMetaDMFromJson(json);
 
   @override
   @JsonKey(name: 'current_page')
@@ -1817,8 +1723,7 @@ class _ManagerOrdersMetaDM implements ManagerOrdersMetaDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$ManagerOrdersMetaDMCopyWith<_ManagerOrdersMetaDM> get copyWith =>
-      __$ManagerOrdersMetaDMCopyWithImpl<_ManagerOrdersMetaDM>(
-          this, _$identity);
+      __$ManagerOrdersMetaDMCopyWithImpl<_ManagerOrdersMetaDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1832,10 +1737,8 @@ class _ManagerOrdersMetaDM implements ManagerOrdersMetaDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ManagerOrdersMetaDM &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.lastPage, lastPage) ||
-                other.lastPage == lastPage) &&
+            (identical(other.currentPage, currentPage) || other.currentPage == currentPage) &&
+            (identical(other.lastPage, lastPage) || other.lastPage == lastPage) &&
             (identical(other.total, total) || other.total == total));
   }
 
@@ -1850,22 +1753,16 @@ class _ManagerOrdersMetaDM implements ManagerOrdersMetaDM {
 }
 
 /// @nodoc
-abstract mixin class _$ManagerOrdersMetaDMCopyWith<$Res>
-    implements $ManagerOrdersMetaDMCopyWith<$Res> {
-  factory _$ManagerOrdersMetaDMCopyWith(_ManagerOrdersMetaDM value,
-          $Res Function(_ManagerOrdersMetaDM) _then) =
+abstract mixin class _$ManagerOrdersMetaDMCopyWith<$Res> implements $ManagerOrdersMetaDMCopyWith<$Res> {
+  factory _$ManagerOrdersMetaDMCopyWith(_ManagerOrdersMetaDM value, $Res Function(_ManagerOrdersMetaDM) _then) =
       __$ManagerOrdersMetaDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: 'current_page') int currentPage,
-      @JsonKey(name: 'last_page') int lastPage,
-      int total});
+  $Res call({@JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage, int total});
 }
 
 /// @nodoc
-class __$ManagerOrdersMetaDMCopyWithImpl<$Res>
-    implements _$ManagerOrdersMetaDMCopyWith<$Res> {
+class __$ManagerOrdersMetaDMCopyWithImpl<$Res> implements _$ManagerOrdersMetaDMCopyWith<$Res> {
   __$ManagerOrdersMetaDMCopyWithImpl(this._self, this._then);
 
   final _ManagerOrdersMetaDM _self;

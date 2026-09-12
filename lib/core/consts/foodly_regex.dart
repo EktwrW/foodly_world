@@ -41,11 +41,11 @@ class FoodlyRegex {
   /// to ISO codes (used as keys in phoneNumberRegex / postalCodeRegex).
   /// Must be kept in sync with phoneNumberRegex.
   static const Map<String, String> dialCodeToIso = {
-    '1': 'US',    // United States
-    '34': 'ES',   // Spain
-    '54': 'AR',   // Argentina
-    '58': 'VE',   // Venezuela
-    '351': 'PT',  // Portugal
+    '1': 'US', // United States
+    '34': 'ES', // Spain
+    '54': 'AR', // Argentina
+    '58': 'VE', // Venezuela
+    '351': 'PT', // Portugal
   };
 
   /// ISO → prefijo de marcado. Inverso de [dialCodeToIso]; se usa para componer

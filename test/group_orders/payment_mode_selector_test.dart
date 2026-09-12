@@ -12,7 +12,8 @@ void main() {
   setUpAll(() async => S.load(const Locale('es')));
 
   group('PaymentModeSelector', () {
-    testWidgets('sin selección previa el CTA arranca deshabilitado y no '
+    testWidgets(
+        'sin selección previa el CTA arranca deshabilitado y no '
         'confirma nada (decisión: elección explícita)', (tester) async {
       GroupPaymentMode? confirmed;
       await tester.pumpWidget(MaterialApp(
@@ -46,7 +47,8 @@ void main() {
       expect(confirmed, GroupPaymentMode.openTab);
     });
 
-    testWidgets('elegir prepago devuelve perRound; el flujo se explica en '
+    testWidgets(
+        'elegir prepago devuelve perRound; el flujo se explica en '
         'lenguaje de negocio', (tester) async {
       GroupPaymentMode? confirmed;
       await tester.pumpWidget(MaterialApp(
@@ -70,8 +72,7 @@ void main() {
   });
 
   group('ManagerPaymentBadge', () {
-    Widget host(GroupOrderDM order) =>
-        MaterialApp(home: Scaffold(body: ManagerPaymentBadge(order: order)));
+    Widget host(GroupOrderDM order) => MaterialApp(home: Scaffold(body: ManagerPaymentBadge(order: order)));
 
     testWidgets('cuenta abierta sin cobrar → POR PAGAR', (tester) async {
       await tester.pumpWidget(host(const GroupOrderDM(

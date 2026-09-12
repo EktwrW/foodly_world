@@ -38,9 +38,7 @@ void main() {
         await pintar(tester, FoodlyEmptyView(intent: intent, title: 'Vacío'));
 
         final medallon = tester.widget<Container>(
-          find
-              .descendant(of: find.byType(FoodlyEmptyView), matching: find.byType(Container))
-              .first,
+          find.descendant(of: find.byType(FoodlyEmptyView), matching: find.byType(Container)).first,
         );
         colores[intent] = (medallon.decoration! as BoxDecoration).color;
       }

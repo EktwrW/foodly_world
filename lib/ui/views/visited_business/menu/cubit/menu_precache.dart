@@ -30,11 +30,5 @@ List<String> menuPhotosToPrecache(
   final drinks = menu.drinkCategories.expand((c) => c.items);
   final pages = drinksFirst ? [drinks, food, menu.combos] : [food, drinks, menu.combos];
 
-  return pages
-      .expand((items) => items)
-      .map(url)
-      .whereType<String>()
-      .where((u) => u.isNotEmpty)
-      .take(n)
-      .toList();
+  return pages.expand((items) => items).map(url).whereType<String>().where((u) => u.isNotEmpty).take(n).toList();
 }

@@ -100,7 +100,8 @@ void main() {
           ),
         );
 
-    testWidgets('sin datos: invisible; sin activar: banner con CTA que abre '
+    testWidgets(
+        'sin datos: invisible; sin activar: banner con CTA que abre '
         'el AccountLink; refresco re-consulta', (tester) async {
       // Sin consulta aún → nada.
       await tester.pumpWidget(app(null));
@@ -129,7 +130,8 @@ void main() {
       expect(repo.statusCalls, callsBefore + 1);
     });
 
-    testWidgets('guard anti doble-tap: machacar el CTA con el onboard en '
+    testWidgets(
+        'guard anti doble-tap: machacar el CTA con el onboard en '
         'vuelo dispara UN solo POST (e2e: 36 cuentas huérfanas)', (tester) async {
       repo.statusOutcome = const ApiResult.success(StripeConnectStatusDM());
       await cubit.load();
@@ -155,7 +157,8 @@ void main() {
       expect(repo.onboardCalls, 1);
     });
 
-    testWidgets('si el onboard FALLA, el tap no es mudo: snackbar de error '
+    testWidgets(
+        'si el onboard FALLA, el tap no es mudo: snackbar de error '
         'visible', (tester) async {
       repo.statusOutcome = const ApiResult.success(StripeConnectStatusDM());
       await cubit.load();
@@ -176,7 +179,8 @@ void main() {
       await tester.pumpAndSettle();
     });
 
-    testWidgets('al volver a la app (resumed, p. ej. cerraste el navegador '
+    testWidgets(
+        'al volver a la app (resumed, p. ej. cerraste el navegador '
         'del onboarding) re-consulta solo y el banner pasa a activo', (tester) async {
       // Estado inicial: sin activar → banner CTA.
       repo.statusOutcome = const ApiResult.success(StripeConnectStatusDM());
@@ -200,7 +204,8 @@ void main() {
       expect(find.text(S.current.managerActivateWithStripe), findsNothing);
     });
 
-    testWidgets('con pagos YA activos, resumed no re-consulta (cero llamadas '
+    testWidgets(
+        'con pagos YA activos, resumed no re-consulta (cero llamadas '
         'de más)', (tester) async {
       repo.statusOutcome = const ApiResult.success(
         StripeConnectStatusDM(connected: true, chargesEnabled: true, payoutsEnabled: true),

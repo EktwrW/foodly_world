@@ -22,8 +22,7 @@ mixin _$MenuResponse {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $MenuResponseCopyWith<MenuResponse> get copyWith =>
-      _$MenuResponseCopyWithImpl<MenuResponse>(
-          this as MenuResponse, _$identity);
+      _$MenuResponseCopyWithImpl<MenuResponse>(this as MenuResponse, _$identity);
 
   /// Serializes this MenuResponse to a JSON map.
   Map<String, dynamic> toJson();
@@ -48,9 +47,7 @@ mixin _$MenuResponse {
 
 /// @nodoc
 abstract mixin class $MenuResponseCopyWith<$Res> {
-  factory $MenuResponseCopyWith(
-          MenuResponse value, $Res Function(MenuResponse) _then) =
-      _$MenuResponseCopyWithImpl;
+  factory $MenuResponseCopyWith(MenuResponse value, $Res Function(MenuResponse) _then) = _$MenuResponseCopyWithImpl;
   @useResult
   $Res call({@JsonKey(name: 'menu') MenuDM menuDM});
 
@@ -251,8 +248,7 @@ extension MenuResponsePatterns on MenuResponse {
 @JsonSerializable()
 class _MenuResponse implements MenuResponse {
   _MenuResponse({@JsonKey(name: 'menu') required this.menuDM});
-  factory _MenuResponse.fromJson(Map<String, dynamic> json) =>
-      _$MenuResponseFromJson(json);
+  factory _MenuResponse.fromJson(Map<String, dynamic> json) => _$MenuResponseFromJson(json);
 
   @override
   @JsonKey(name: 'menu')
@@ -263,8 +259,7 @@ class _MenuResponse implements MenuResponse {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$MenuResponseCopyWith<_MenuResponse> get copyWith =>
-      __$MenuResponseCopyWithImpl<_MenuResponse>(this, _$identity);
+  _$MenuResponseCopyWith<_MenuResponse> get copyWith => __$MenuResponseCopyWithImpl<_MenuResponse>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -292,11 +287,8 @@ class _MenuResponse implements MenuResponse {
 }
 
 /// @nodoc
-abstract mixin class _$MenuResponseCopyWith<$Res>
-    implements $MenuResponseCopyWith<$Res> {
-  factory _$MenuResponseCopyWith(
-          _MenuResponse value, $Res Function(_MenuResponse) _then) =
-      __$MenuResponseCopyWithImpl;
+abstract mixin class _$MenuResponseCopyWith<$Res> implements $MenuResponseCopyWith<$Res> {
+  factory _$MenuResponseCopyWith(_MenuResponse value, $Res Function(_MenuResponse) _then) = __$MenuResponseCopyWithImpl;
   @override
   @useResult
   $Res call({@JsonKey(name: 'menu') MenuDM menuDM});
@@ -306,8 +298,7 @@ abstract mixin class _$MenuResponseCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MenuResponseCopyWithImpl<$Res>
-    implements _$MenuResponseCopyWith<$Res> {
+class __$MenuResponseCopyWithImpl<$Res> implements _$MenuResponseCopyWith<$Res> {
   __$MenuResponseCopyWithImpl(this._self, this._then);
 
   final _MenuResponse _self;
@@ -342,16 +333,14 @@ class __$MenuResponseCopyWithImpl<$Res>
 /// @nodoc
 mixin _$MenuDM {
   String get uuid;
-  int?
-      get id; // Hydrated client-side in some flows (e.g. favorites_vm wires the parent
+  int? get id; // Hydrated client-side in some flows (e.g. favorites_vm wires the parent
 // BusinessDM in after fetching). [BusinessMenuResource] does NOT include
 // it — see [businessName] for the flat name that always comes from the BE.
   BusinessDM? get business;
   @JsonKey(name: 'business_uuid')
   String get businessUuid;
   @JsonKey(name: 'business_id')
-  int?
-      get businessId; // Flat business name shipped by [BusinessMenuResource] — added so share
+  int? get businessId; // Flat business name shipped by [BusinessMenuResource] — added so share
 // sheets / breadcrumbs can render the parent business without pulling the
 // full BusinessDM (~15 KB lite payload, recursion risk). Mirrors the
 // existing flat businessUuid / businessId pattern. Nullable for
@@ -373,8 +362,7 @@ mixin _$MenuDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $MenuDMCopyWith<MenuDM> get copyWith =>
-      _$MenuDMCopyWithImpl<MenuDM>(this as MenuDM, _$identity);
+  $MenuDMCopyWith<MenuDM> get copyWith => _$MenuDMCopyWithImpl<MenuDM>(this as MenuDM, _$identity);
 
   /// Serializes this MenuDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -386,23 +374,15 @@ mixin _$MenuDM {
             other is MenuDM &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.business, business) ||
-                other.business == business) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            (identical(other.businessId, businessId) ||
-                other.businessId == businessId) &&
-            (identical(other.businessName, businessName) ||
-                other.businessName == businessName) &&
-            (identical(other.lastUpdate, lastUpdate) ||
-                other.lastUpdate == lastUpdate) &&
-            const DeepCollectionEquality()
-                .equals(other.foodCategories, foodCategories) &&
-            const DeepCollectionEquality()
-                .equals(other.drinkCategories, drinkCategories) &&
+            (identical(other.business, business) || other.business == business) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            (identical(other.businessId, businessId) || other.businessId == businessId) &&
+            (identical(other.businessName, businessName) || other.businessName == businessName) &&
+            (identical(other.lastUpdate, lastUpdate) || other.lastUpdate == lastUpdate) &&
+            const DeepCollectionEquality().equals(other.foodCategories, foodCategories) &&
+            const DeepCollectionEquality().equals(other.drinkCategories, drinkCategories) &&
             const DeepCollectionEquality().equals(other.combos, combos) &&
-            (identical(other.followersLength, followersLength) ||
-                other.followersLength == followersLength));
+            (identical(other.followersLength, followersLength) || other.followersLength == followersLength));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -429,8 +409,7 @@ mixin _$MenuDM {
 
 /// @nodoc
 abstract mixin class $MenuDMCopyWith<$Res> {
-  factory $MenuDMCopyWith(MenuDM value, $Res Function(MenuDM) _then) =
-      _$MenuDMCopyWithImpl;
+  factory $MenuDMCopyWith(MenuDM value, $Res Function(MenuDM) _then) = _$MenuDMCopyWithImpl;
   @useResult
   $Res call(
       {String uuid,
@@ -440,10 +419,8 @@ abstract mixin class $MenuDMCopyWith<$Res> {
       @JsonKey(name: 'business_id') int? businessId,
       @JsonKey(name: 'business_name') String? businessName,
       @JsonKey(name: 'updated_at') DateTime? lastUpdate,
-      @JsonKey(name: 'business_food_categories')
-      List<CategoryDM> foodCategories,
-      @JsonKey(name: 'business_drink_categories')
-      List<CategoryDM> drinkCategories,
+      @JsonKey(name: 'business_food_categories') List<CategoryDM> foodCategories,
+      @JsonKey(name: 'business_drink_categories') List<CategoryDM> drinkCategories,
       @JsonKey(name: 'business_combos') List<ItemDM> combos,
       @JsonKey(name: 'followers_length') int followersLength});
 
@@ -638,10 +615,8 @@ extension MenuDMPatterns on MenuDM {
             @JsonKey(name: 'business_id') int? businessId,
             @JsonKey(name: 'business_name') String? businessName,
             @JsonKey(name: 'updated_at') DateTime? lastUpdate,
-            @JsonKey(name: 'business_food_categories')
-            List<CategoryDM> foodCategories,
-            @JsonKey(name: 'business_drink_categories')
-            List<CategoryDM> drinkCategories,
+            @JsonKey(name: 'business_food_categories') List<CategoryDM> foodCategories,
+            @JsonKey(name: 'business_drink_categories') List<CategoryDM> drinkCategories,
             @JsonKey(name: 'business_combos') List<ItemDM> combos,
             @JsonKey(name: 'followers_length') int followersLength)?
         $default, {
@@ -650,18 +625,8 @@ extension MenuDMPatterns on MenuDM {
     final _that = this;
     switch (_that) {
       case _MenuDM() when $default != null:
-        return $default(
-            _that.uuid,
-            _that.id,
-            _that.business,
-            _that.businessUuid,
-            _that.businessId,
-            _that.businessName,
-            _that.lastUpdate,
-            _that.foodCategories,
-            _that.drinkCategories,
-            _that.combos,
-            _that.followersLength);
+        return $default(_that.uuid, _that.id, _that.business, _that.businessUuid, _that.businessId, _that.businessName,
+            _that.lastUpdate, _that.foodCategories, _that.drinkCategories, _that.combos, _that.followersLength);
       case _:
         return orElse();
     }
@@ -690,10 +655,8 @@ extension MenuDMPatterns on MenuDM {
             @JsonKey(name: 'business_id') int? businessId,
             @JsonKey(name: 'business_name') String? businessName,
             @JsonKey(name: 'updated_at') DateTime? lastUpdate,
-            @JsonKey(name: 'business_food_categories')
-            List<CategoryDM> foodCategories,
-            @JsonKey(name: 'business_drink_categories')
-            List<CategoryDM> drinkCategories,
+            @JsonKey(name: 'business_food_categories') List<CategoryDM> foodCategories,
+            @JsonKey(name: 'business_drink_categories') List<CategoryDM> drinkCategories,
             @JsonKey(name: 'business_combos') List<ItemDM> combos,
             @JsonKey(name: 'followers_length') int followersLength)
         $default,
@@ -701,18 +664,8 @@ extension MenuDMPatterns on MenuDM {
     final _that = this;
     switch (_that) {
       case _MenuDM():
-        return $default(
-            _that.uuid,
-            _that.id,
-            _that.business,
-            _that.businessUuid,
-            _that.businessId,
-            _that.businessName,
-            _that.lastUpdate,
-            _that.foodCategories,
-            _that.drinkCategories,
-            _that.combos,
-            _that.followersLength);
+        return $default(_that.uuid, _that.id, _that.business, _that.businessUuid, _that.businessId, _that.businessName,
+            _that.lastUpdate, _that.foodCategories, _that.drinkCategories, _that.combos, _that.followersLength);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -740,10 +693,8 @@ extension MenuDMPatterns on MenuDM {
             @JsonKey(name: 'business_id') int? businessId,
             @JsonKey(name: 'business_name') String? businessName,
             @JsonKey(name: 'updated_at') DateTime? lastUpdate,
-            @JsonKey(name: 'business_food_categories')
-            List<CategoryDM> foodCategories,
-            @JsonKey(name: 'business_drink_categories')
-            List<CategoryDM> drinkCategories,
+            @JsonKey(name: 'business_food_categories') List<CategoryDM> foodCategories,
+            @JsonKey(name: 'business_drink_categories') List<CategoryDM> drinkCategories,
             @JsonKey(name: 'business_combos') List<ItemDM> combos,
             @JsonKey(name: 'followers_length') int followersLength)?
         $default,
@@ -751,18 +702,8 @@ extension MenuDMPatterns on MenuDM {
     final _that = this;
     switch (_that) {
       case _MenuDM() when $default != null:
-        return $default(
-            _that.uuid,
-            _that.id,
-            _that.business,
-            _that.businessUuid,
-            _that.businessId,
-            _that.businessName,
-            _that.lastUpdate,
-            _that.foodCategories,
-            _that.drinkCategories,
-            _that.combos,
-            _that.followersLength);
+        return $default(_that.uuid, _that.id, _that.business, _that.businessUuid, _that.businessId, _that.businessName,
+            _that.lastUpdate, _that.foodCategories, _that.drinkCategories, _that.combos, _that.followersLength);
       case _:
         return null;
     }
@@ -780,10 +721,8 @@ class _MenuDM extends MenuDM {
       @JsonKey(name: 'business_id') this.businessId,
       @JsonKey(name: 'business_name') this.businessName,
       @JsonKey(name: 'updated_at') this.lastUpdate,
-      @JsonKey(name: 'business_food_categories')
-      final List<CategoryDM> foodCategories = const [],
-      @JsonKey(name: 'business_drink_categories')
-      final List<CategoryDM> drinkCategories = const [],
+      @JsonKey(name: 'business_food_categories') final List<CategoryDM> foodCategories = const [],
+      @JsonKey(name: 'business_drink_categories') final List<CategoryDM> drinkCategories = const [],
       @JsonKey(name: 'business_combos') final List<ItemDM> combos = const [],
       @JsonKey(name: 'followers_length') this.followersLength = 0})
       : _foodCategories = foodCategories,
@@ -854,8 +793,7 @@ class _MenuDM extends MenuDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$MenuDMCopyWith<_MenuDM> get copyWith =>
-      __$MenuDMCopyWithImpl<_MenuDM>(this, _$identity);
+  _$MenuDMCopyWith<_MenuDM> get copyWith => __$MenuDMCopyWithImpl<_MenuDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -871,23 +809,15 @@ class _MenuDM extends MenuDM {
             other is _MenuDM &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.business, business) ||
-                other.business == business) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            (identical(other.businessId, businessId) ||
-                other.businessId == businessId) &&
-            (identical(other.businessName, businessName) ||
-                other.businessName == businessName) &&
-            (identical(other.lastUpdate, lastUpdate) ||
-                other.lastUpdate == lastUpdate) &&
-            const DeepCollectionEquality()
-                .equals(other._foodCategories, _foodCategories) &&
-            const DeepCollectionEquality()
-                .equals(other._drinkCategories, _drinkCategories) &&
+            (identical(other.business, business) || other.business == business) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            (identical(other.businessId, businessId) || other.businessId == businessId) &&
+            (identical(other.businessName, businessName) || other.businessName == businessName) &&
+            (identical(other.lastUpdate, lastUpdate) || other.lastUpdate == lastUpdate) &&
+            const DeepCollectionEquality().equals(other._foodCategories, _foodCategories) &&
+            const DeepCollectionEquality().equals(other._drinkCategories, _drinkCategories) &&
             const DeepCollectionEquality().equals(other._combos, _combos) &&
-            (identical(other.followersLength, followersLength) ||
-                other.followersLength == followersLength));
+            (identical(other.followersLength, followersLength) || other.followersLength == followersLength));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -914,8 +844,7 @@ class _MenuDM extends MenuDM {
 
 /// @nodoc
 abstract mixin class _$MenuDMCopyWith<$Res> implements $MenuDMCopyWith<$Res> {
-  factory _$MenuDMCopyWith(_MenuDM value, $Res Function(_MenuDM) _then) =
-      __$MenuDMCopyWithImpl;
+  factory _$MenuDMCopyWith(_MenuDM value, $Res Function(_MenuDM) _then) = __$MenuDMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -926,10 +855,8 @@ abstract mixin class _$MenuDMCopyWith<$Res> implements $MenuDMCopyWith<$Res> {
       @JsonKey(name: 'business_id') int? businessId,
       @JsonKey(name: 'business_name') String? businessName,
       @JsonKey(name: 'updated_at') DateTime? lastUpdate,
-      @JsonKey(name: 'business_food_categories')
-      List<CategoryDM> foodCategories,
-      @JsonKey(name: 'business_drink_categories')
-      List<CategoryDM> drinkCategories,
+      @JsonKey(name: 'business_food_categories') List<CategoryDM> foodCategories,
+      @JsonKey(name: 'business_drink_categories') List<CategoryDM> drinkCategories,
       @JsonKey(name: 'business_combos') List<ItemDM> combos,
       @JsonKey(name: 'followers_length') int followersLength});
 
@@ -1039,8 +966,7 @@ mixin _$CategoryDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $CategoryDMCopyWith<CategoryDM> get copyWith =>
-      _$CategoryDMCopyWithImpl<CategoryDM>(this as CategoryDM, _$identity);
+  $CategoryDMCopyWith<CategoryDM> get copyWith => _$CategoryDMCopyWithImpl<CategoryDM>(this as CategoryDM, _$identity);
 
   /// Serializes this CategoryDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1053,17 +979,15 @@ mixin _$CategoryDM {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.sortOrder, sortOrder) ||
-                other.sortOrder == sortOrder) &&
+            (identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder) &&
             const DeepCollectionEquality().equals(other.items, items) &&
-            (identical(other.editingName, editingName) ||
-                other.editingName == editingName));
+            (identical(other.editingName, editingName) || other.editingName == editingName));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, uuid, id, sortOrder,
-      const DeepCollectionEquality().hash(items), editingName);
+  int get hashCode =>
+      Object.hash(runtimeType, name, uuid, id, sortOrder, const DeepCollectionEquality().hash(items), editingName);
 
   @override
   String toString() {
@@ -1073,9 +997,7 @@ mixin _$CategoryDM {
 
 /// @nodoc
 abstract mixin class $CategoryDMCopyWith<$Res> {
-  factory $CategoryDMCopyWith(
-          CategoryDM value, $Res Function(CategoryDM) _then) =
-      _$CategoryDMCopyWithImpl;
+  factory $CategoryDMCopyWith(CategoryDM value, $Res Function(CategoryDM) _then) = _$CategoryDMCopyWithImpl;
   @useResult
   $Res call(
       {String name,
@@ -1227,22 +1149,15 @@ extension CategoryDMPatterns on CategoryDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            String name,
-            String uuid,
-            int? id,
-            @JsonKey(name: 'sort_order') int sortOrder,
-            List<ItemDM> items,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            bool editingName)?
+    TResult Function(String name, String uuid, int? id, @JsonKey(name: 'sort_order') int sortOrder, List<ItemDM> items,
+            @JsonKey(includeFromJson: false, includeToJson: false) bool editingName)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _CategoryDM() when $default != null:
-        return $default(_that.name, _that.uuid, _that.id, _that.sortOrder,
-            _that.items, _that.editingName);
+        return $default(_that.name, _that.uuid, _that.id, _that.sortOrder, _that.items, _that.editingName);
       case _:
         return orElse();
     }
@@ -1263,21 +1178,14 @@ extension CategoryDMPatterns on CategoryDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            String name,
-            String uuid,
-            int? id,
-            @JsonKey(name: 'sort_order') int sortOrder,
-            List<ItemDM> items,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            bool editingName)
+    TResult Function(String name, String uuid, int? id, @JsonKey(name: 'sort_order') int sortOrder, List<ItemDM> items,
+            @JsonKey(includeFromJson: false, includeToJson: false) bool editingName)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _CategoryDM():
-        return $default(_that.name, _that.uuid, _that.id, _that.sortOrder,
-            _that.items, _that.editingName);
+        return $default(_that.name, _that.uuid, _that.id, _that.sortOrder, _that.items, _that.editingName);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -1297,21 +1205,14 @@ extension CategoryDMPatterns on CategoryDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            String name,
-            String uuid,
-            int? id,
-            @JsonKey(name: 'sort_order') int sortOrder,
-            List<ItemDM> items,
-            @JsonKey(includeFromJson: false, includeToJson: false)
-            bool editingName)?
+    TResult? Function(String name, String uuid, int? id, @JsonKey(name: 'sort_order') int sortOrder, List<ItemDM> items,
+            @JsonKey(includeFromJson: false, includeToJson: false) bool editingName)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _CategoryDM() when $default != null:
-        return $default(_that.name, _that.uuid, _that.id, _that.sortOrder,
-            _that.items, _that.editingName);
+        return $default(_that.name, _that.uuid, _that.id, _that.sortOrder, _that.items, _that.editingName);
       case _:
         return null;
     }
@@ -1327,12 +1228,10 @@ class _CategoryDM extends CategoryDM {
       this.id,
       @JsonKey(name: 'sort_order') this.sortOrder = 0,
       required final List<ItemDM> items,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      this.editingName = false})
+      @JsonKey(includeFromJson: false, includeToJson: false) this.editingName = false})
       : _items = items,
         super._();
-  factory _CategoryDM.fromJson(Map<String, dynamic> json) =>
-      _$CategoryDMFromJson(json);
+  factory _CategoryDM.fromJson(Map<String, dynamic> json) => _$CategoryDMFromJson(json);
 
   @override
   final String name;
@@ -1360,8 +1259,7 @@ class _CategoryDM extends CategoryDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$CategoryDMCopyWith<_CategoryDM> get copyWith =>
-      __$CategoryDMCopyWithImpl<_CategoryDM>(this, _$identity);
+  _$CategoryDMCopyWith<_CategoryDM> get copyWith => __$CategoryDMCopyWithImpl<_CategoryDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1378,17 +1276,15 @@ class _CategoryDM extends CategoryDM {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.sortOrder, sortOrder) ||
-                other.sortOrder == sortOrder) &&
+            (identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder) &&
             const DeepCollectionEquality().equals(other._items, _items) &&
-            (identical(other.editingName, editingName) ||
-                other.editingName == editingName));
+            (identical(other.editingName, editingName) || other.editingName == editingName));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, uuid, id, sortOrder,
-      const DeepCollectionEquality().hash(_items), editingName);
+  int get hashCode =>
+      Object.hash(runtimeType, name, uuid, id, sortOrder, const DeepCollectionEquality().hash(_items), editingName);
 
   @override
   String toString() {
@@ -1397,11 +1293,8 @@ class _CategoryDM extends CategoryDM {
 }
 
 /// @nodoc
-abstract mixin class _$CategoryDMCopyWith<$Res>
-    implements $CategoryDMCopyWith<$Res> {
-  factory _$CategoryDMCopyWith(
-          _CategoryDM value, $Res Function(_CategoryDM) _then) =
-      __$CategoryDMCopyWithImpl;
+abstract mixin class _$CategoryDMCopyWith<$Res> implements $CategoryDMCopyWith<$Res> {
+  factory _$CategoryDMCopyWith(_CategoryDM value, $Res Function(_CategoryDM) _then) = __$CategoryDMCopyWithImpl;
   @override
   @useResult
   $Res call(

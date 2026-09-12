@@ -48,8 +48,7 @@ mixin _$ManagePromotionsVM implements DiagnosticableTreeMixin {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ManagePromotionsVMCopyWith<ManagePromotionsVM> get copyWith =>
-      _$ManagePromotionsVMCopyWithImpl<ManagePromotionsVM>(
-          this as ManagePromotionsVM, _$identity);
+      _$ManagePromotionsVMCopyWithImpl<ManagePromotionsVM>(this as ManagePromotionsVM, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -74,10 +73,8 @@ mixin _$ManagePromotionsVM implements DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('aiImageOptions', aiImageOptions))
       ..add(DiagnosticsProperty('selectedAiImageIndex', selectedAiImageIndex))
       ..add(DiagnosticsProperty('videoController', videoController))
-      ..add(DiagnosticsProperty(
-          'activePromosScrollController', activePromosScrollController))
-      ..add(DiagnosticsProperty(
-          'upcomingPromosScrollController', upcomingPromosScrollController));
+      ..add(DiagnosticsProperty('activePromosScrollController', activePromosScrollController))
+      ..add(DiagnosticsProperty('upcomingPromosScrollController', upcomingPromosScrollController));
   }
 
   @override
@@ -86,50 +83,29 @@ mixin _$ManagePromotionsVM implements DiagnosticableTreeMixin {
         (other.runtimeType == runtimeType &&
             other is ManagePromotionsVM &&
             (identical(other.editing, editing) || other.editing == editing) &&
-            const DeepCollectionEquality()
-                .equals(other.promotions, promotions) &&
-            (identical(other.titleCtrl, titleCtrl) ||
-                other.titleCtrl == titleCtrl) &&
-            (identical(other.subtitleCtrl, subtitleCtrl) ||
-                other.subtitleCtrl == subtitleCtrl) &&
-            (identical(other.descriptionCtrl, descriptionCtrl) ||
-                other.descriptionCtrl == descriptionCtrl) &&
-            (identical(other.promptCtrl, promptCtrl) ||
-                other.promptCtrl == promptCtrl) &&
-            (identical(other.youtubeUrlCtrl, youtubeUrlCtrl) ||
-                other.youtubeUrlCtrl == youtubeUrlCtrl) &&
-            (identical(other.youtubeUrlFormKey, youtubeUrlFormKey) ||
-                other.youtubeUrlFormKey == youtubeUrlFormKey) &&
-            const DeepCollectionEquality()
-                .equals(other.activeDays, activeDays) &&
-            (identical(other.autovalidateMode, autovalidateMode) ||
-                other.autovalidateMode == autovalidateMode) &&
-            (identical(other.newPromo, newPromo) ||
-                other.newPromo == newPromo) &&
-            (identical(other.businessDM, businessDM) ||
-                other.businessDM == businessDM) &&
-            (identical(other.indexView, indexView) ||
-                other.indexView == indexView) &&
-            (identical(other.controller, controller) ||
-                other.controller == controller) &&
-            (identical(other.newPromoMediaPath, newPromoMediaPath) ||
-                other.newPromoMediaPath == newPromoMediaPath) &&
-            const DeepCollectionEquality()
-                .equals(other.imageBytes, imageBytes) &&
-            const DeepCollectionEquality()
-                .equals(other.aiImageOptions, aiImageOptions) &&
+            const DeepCollectionEquality().equals(other.promotions, promotions) &&
+            (identical(other.titleCtrl, titleCtrl) || other.titleCtrl == titleCtrl) &&
+            (identical(other.subtitleCtrl, subtitleCtrl) || other.subtitleCtrl == subtitleCtrl) &&
+            (identical(other.descriptionCtrl, descriptionCtrl) || other.descriptionCtrl == descriptionCtrl) &&
+            (identical(other.promptCtrl, promptCtrl) || other.promptCtrl == promptCtrl) &&
+            (identical(other.youtubeUrlCtrl, youtubeUrlCtrl) || other.youtubeUrlCtrl == youtubeUrlCtrl) &&
+            (identical(other.youtubeUrlFormKey, youtubeUrlFormKey) || other.youtubeUrlFormKey == youtubeUrlFormKey) &&
+            const DeepCollectionEquality().equals(other.activeDays, activeDays) &&
+            (identical(other.autovalidateMode, autovalidateMode) || other.autovalidateMode == autovalidateMode) &&
+            (identical(other.newPromo, newPromo) || other.newPromo == newPromo) &&
+            (identical(other.businessDM, businessDM) || other.businessDM == businessDM) &&
+            (identical(other.indexView, indexView) || other.indexView == indexView) &&
+            (identical(other.controller, controller) || other.controller == controller) &&
+            (identical(other.newPromoMediaPath, newPromoMediaPath) || other.newPromoMediaPath == newPromoMediaPath) &&
+            const DeepCollectionEquality().equals(other.imageBytes, imageBytes) &&
+            const DeepCollectionEquality().equals(other.aiImageOptions, aiImageOptions) &&
             (identical(other.selectedAiImageIndex, selectedAiImageIndex) ||
                 other.selectedAiImageIndex == selectedAiImageIndex) &&
-            (identical(other.videoController, videoController) ||
-                other.videoController == videoController) &&
-            (identical(other.activePromosScrollController,
-                    activePromosScrollController) ||
-                other.activePromosScrollController ==
-                    activePromosScrollController) &&
-            (identical(other.upcomingPromosScrollController,
-                    upcomingPromosScrollController) ||
-                other.upcomingPromosScrollController ==
-                    upcomingPromosScrollController));
+            (identical(other.videoController, videoController) || other.videoController == videoController) &&
+            (identical(other.activePromosScrollController, activePromosScrollController) ||
+                other.activePromosScrollController == activePromosScrollController) &&
+            (identical(other.upcomingPromosScrollController, upcomingPromosScrollController) ||
+                other.upcomingPromosScrollController == upcomingPromosScrollController));
   }
 
   @override
@@ -166,8 +142,7 @@ mixin _$ManagePromotionsVM implements DiagnosticableTreeMixin {
 
 /// @nodoc
 abstract mixin class $ManagePromotionsVMCopyWith<$Res> {
-  factory $ManagePromotionsVMCopyWith(
-          ManagePromotionsVM value, $Res Function(ManagePromotionsVM) _then) =
+  factory $ManagePromotionsVMCopyWith(ManagePromotionsVM value, $Res Function(ManagePromotionsVM) _then) =
       _$ManagePromotionsVMCopyWithImpl;
   @useResult
   $Res call(
@@ -202,8 +177,7 @@ abstract mixin class $ManagePromotionsVMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ManagePromotionsVMCopyWithImpl<$Res>
-    implements $ManagePromotionsVMCopyWith<$Res> {
+class _$ManagePromotionsVMCopyWithImpl<$Res> implements $ManagePromotionsVMCopyWith<$Res> {
   _$ManagePromotionsVMCopyWithImpl(this._self, this._then);
 
   final ManagePromotionsVM _self;
@@ -809,8 +783,7 @@ class _PromotionsVM extends ManagePromotionsVM with DiagnosticableTreeMixin {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PromotionsVMCopyWith<_PromotionsVM> get copyWith =>
-      __$PromotionsVMCopyWithImpl<_PromotionsVM>(this, _$identity);
+  _$PromotionsVMCopyWith<_PromotionsVM> get copyWith => __$PromotionsVMCopyWithImpl<_PromotionsVM>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -835,10 +808,8 @@ class _PromotionsVM extends ManagePromotionsVM with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('aiImageOptions', aiImageOptions))
       ..add(DiagnosticsProperty('selectedAiImageIndex', selectedAiImageIndex))
       ..add(DiagnosticsProperty('videoController', videoController))
-      ..add(DiagnosticsProperty(
-          'activePromosScrollController', activePromosScrollController))
-      ..add(DiagnosticsProperty(
-          'upcomingPromosScrollController', upcomingPromosScrollController));
+      ..add(DiagnosticsProperty('activePromosScrollController', activePromosScrollController))
+      ..add(DiagnosticsProperty('upcomingPromosScrollController', upcomingPromosScrollController));
   }
 
   @override
@@ -847,50 +818,29 @@ class _PromotionsVM extends ManagePromotionsVM with DiagnosticableTreeMixin {
         (other.runtimeType == runtimeType &&
             other is _PromotionsVM &&
             (identical(other.editing, editing) || other.editing == editing) &&
-            const DeepCollectionEquality()
-                .equals(other._promotions, _promotions) &&
-            (identical(other.titleCtrl, titleCtrl) ||
-                other.titleCtrl == titleCtrl) &&
-            (identical(other.subtitleCtrl, subtitleCtrl) ||
-                other.subtitleCtrl == subtitleCtrl) &&
-            (identical(other.descriptionCtrl, descriptionCtrl) ||
-                other.descriptionCtrl == descriptionCtrl) &&
-            (identical(other.promptCtrl, promptCtrl) ||
-                other.promptCtrl == promptCtrl) &&
-            (identical(other.youtubeUrlCtrl, youtubeUrlCtrl) ||
-                other.youtubeUrlCtrl == youtubeUrlCtrl) &&
-            (identical(other.youtubeUrlFormKey, youtubeUrlFormKey) ||
-                other.youtubeUrlFormKey == youtubeUrlFormKey) &&
-            const DeepCollectionEquality()
-                .equals(other._activeDays, _activeDays) &&
-            (identical(other.autovalidateMode, autovalidateMode) ||
-                other.autovalidateMode == autovalidateMode) &&
-            (identical(other.newPromo, newPromo) ||
-                other.newPromo == newPromo) &&
-            (identical(other.businessDM, businessDM) ||
-                other.businessDM == businessDM) &&
-            (identical(other.indexView, indexView) ||
-                other.indexView == indexView) &&
-            (identical(other.controller, controller) ||
-                other.controller == controller) &&
-            (identical(other.newPromoMediaPath, newPromoMediaPath) ||
-                other.newPromoMediaPath == newPromoMediaPath) &&
-            const DeepCollectionEquality()
-                .equals(other.imageBytes, imageBytes) &&
-            const DeepCollectionEquality()
-                .equals(other._aiImageOptions, _aiImageOptions) &&
+            const DeepCollectionEquality().equals(other._promotions, _promotions) &&
+            (identical(other.titleCtrl, titleCtrl) || other.titleCtrl == titleCtrl) &&
+            (identical(other.subtitleCtrl, subtitleCtrl) || other.subtitleCtrl == subtitleCtrl) &&
+            (identical(other.descriptionCtrl, descriptionCtrl) || other.descriptionCtrl == descriptionCtrl) &&
+            (identical(other.promptCtrl, promptCtrl) || other.promptCtrl == promptCtrl) &&
+            (identical(other.youtubeUrlCtrl, youtubeUrlCtrl) || other.youtubeUrlCtrl == youtubeUrlCtrl) &&
+            (identical(other.youtubeUrlFormKey, youtubeUrlFormKey) || other.youtubeUrlFormKey == youtubeUrlFormKey) &&
+            const DeepCollectionEquality().equals(other._activeDays, _activeDays) &&
+            (identical(other.autovalidateMode, autovalidateMode) || other.autovalidateMode == autovalidateMode) &&
+            (identical(other.newPromo, newPromo) || other.newPromo == newPromo) &&
+            (identical(other.businessDM, businessDM) || other.businessDM == businessDM) &&
+            (identical(other.indexView, indexView) || other.indexView == indexView) &&
+            (identical(other.controller, controller) || other.controller == controller) &&
+            (identical(other.newPromoMediaPath, newPromoMediaPath) || other.newPromoMediaPath == newPromoMediaPath) &&
+            const DeepCollectionEquality().equals(other.imageBytes, imageBytes) &&
+            const DeepCollectionEquality().equals(other._aiImageOptions, _aiImageOptions) &&
             (identical(other.selectedAiImageIndex, selectedAiImageIndex) ||
                 other.selectedAiImageIndex == selectedAiImageIndex) &&
-            (identical(other.videoController, videoController) ||
-                other.videoController == videoController) &&
-            (identical(other.activePromosScrollController,
-                    activePromosScrollController) ||
-                other.activePromosScrollController ==
-                    activePromosScrollController) &&
-            (identical(other.upcomingPromosScrollController,
-                    upcomingPromosScrollController) ||
-                other.upcomingPromosScrollController ==
-                    upcomingPromosScrollController));
+            (identical(other.videoController, videoController) || other.videoController == videoController) &&
+            (identical(other.activePromosScrollController, activePromosScrollController) ||
+                other.activePromosScrollController == activePromosScrollController) &&
+            (identical(other.upcomingPromosScrollController, upcomingPromosScrollController) ||
+                other.upcomingPromosScrollController == upcomingPromosScrollController));
   }
 
   @override
@@ -926,11 +876,8 @@ class _PromotionsVM extends ManagePromotionsVM with DiagnosticableTreeMixin {
 }
 
 /// @nodoc
-abstract mixin class _$PromotionsVMCopyWith<$Res>
-    implements $ManagePromotionsVMCopyWith<$Res> {
-  factory _$PromotionsVMCopyWith(
-          _PromotionsVM value, $Res Function(_PromotionsVM) _then) =
-      __$PromotionsVMCopyWithImpl;
+abstract mixin class _$PromotionsVMCopyWith<$Res> implements $ManagePromotionsVMCopyWith<$Res> {
+  factory _$PromotionsVMCopyWith(_PromotionsVM value, $Res Function(_PromotionsVM) _then) = __$PromotionsVMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -971,8 +918,7 @@ abstract mixin class _$PromotionsVMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PromotionsVMCopyWithImpl<$Res>
-    implements _$PromotionsVMCopyWith<$Res> {
+class __$PromotionsVMCopyWithImpl<$Res> implements _$PromotionsVMCopyWith<$Res> {
   __$PromotionsVMCopyWithImpl(this._self, this._then);
 
   final _PromotionsVM _self;

@@ -29,8 +29,7 @@ mixin _$UserDM {
   @JsonKey(name: 'photo')
   String? get avatar;
   @JsonKey(name: 'phone')
-  String?
-      get phone; // ISO del país del teléfono (ej. 'AR'). Separado del número nacional en
+  String? get phone; // ISO del país del teléfono (ej. 'AR'). Separado del número nacional en
 // `phone` para poder reconstruir el internacional y re-renderar la bandera.
   @JsonKey(name: 'phone_country_code')
   String? get phoneCountryCode;
@@ -64,8 +63,7 @@ mixin _$UserDM {
   @JsonKey(name: 'provider_id')
   String? get providerId;
   @JsonKey(name: 'provider_avatar')
-  String?
-      get providerAvatar; // True when the user has an email/password credential set. False for
+  String? get providerAvatar; // True when the user has an email/password credential set. False for
 // social-only users (Google/FB). Drives the profile UI between "Set
 // password" and "Change password". Nullable for backward-compat with
 // older payloads that don't include the field.
@@ -96,8 +94,7 @@ mixin _$UserDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $UserDMCopyWith<UserDM> get copyWith =>
-      _$UserDMCopyWithImpl<UserDM>(this as UserDM, _$identity);
+  $UserDMCopyWith<UserDM> get copyWith => _$UserDMCopyWithImpl<UserDM>(this as UserDM, _$identity);
 
   /// Serializes this UserDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -110,62 +107,39 @@ mixin _$UserDM {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.username, username) ||
-                other.username == username) &&
-            (identical(other.firstName, firstName) ||
-                other.firstName == firstName) &&
-            (identical(other.lastName, lastName) ||
-                other.lastName == lastName) &&
+            (identical(other.username, username) || other.username == username) &&
+            (identical(other.firstName, firstName) || other.firstName == firstName) &&
+            (identical(other.lastName, lastName) || other.lastName == lastName) &&
             (identical(other.avatar, avatar) || other.avatar == avatar) &&
             (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.phoneCountryCode, phoneCountryCode) ||
-                other.phoneCountryCode == phoneCountryCode) &&
-            (identical(other.signUpDate, signUpDate) ||
-                other.signUpDate == signUpDate) &&
-            (identical(other.lastUpdated, lastUpdated) ||
-                other.lastUpdated == lastUpdated) &&
-            (identical(other.deletedAt, deletedAt) ||
-                other.deletedAt == deletedAt) &&
-            (identical(other.dateOfBirth, dateOfBirth) ||
-                other.dateOfBirth == dateOfBirth) &&
+            (identical(other.phoneCountryCode, phoneCountryCode) || other.phoneCountryCode == phoneCountryCode) &&
+            (identical(other.signUpDate, signUpDate) || other.signUpDate == signUpDate) &&
+            (identical(other.lastUpdated, lastUpdated) || other.lastUpdated == lastUpdated) &&
+            (identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt) &&
+            (identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.roleId, roleId) || other.roleId == roleId) &&
-            (identical(other.userRole, userRole) ||
-                other.userRole == userRole) &&
+            (identical(other.userRole, userRole) || other.userRole == userRole) &&
             (identical(other.termsAndConditions, termsAndConditions) ||
                 other.termsAndConditions == termsAndConditions) &&
             const DeepCollectionEquality().equals(other.business, business) &&
-            (identical(other.userPrefs, userPrefs) ||
-                other.userPrefs == userPrefs) &&
-            const DeepCollectionEquality()
-                .equals(other.socialProvider, socialProvider) &&
-            (identical(other.emailVerifiedAt, emailVerifiedAt) ||
-                other.emailVerifiedAt == emailVerifiedAt) &&
-            (identical(other.provider, provider) ||
-                other.provider == provider) &&
-            (identical(other.providerId, providerId) ||
-                other.providerId == providerId) &&
-            (identical(other.providerAvatar, providerAvatar) ||
-                other.providerAvatar == providerAvatar) &&
-            (identical(other.hasPassword, hasPassword) ||
-                other.hasPassword == hasPassword) &&
+            (identical(other.userPrefs, userPrefs) || other.userPrefs == userPrefs) &&
+            const DeepCollectionEquality().equals(other.socialProvider, socialProvider) &&
+            (identical(other.emailVerifiedAt, emailVerifiedAt) || other.emailVerifiedAt == emailVerifiedAt) &&
+            (identical(other.provider, provider) || other.provider == provider) &&
+            (identical(other.providerId, providerId) || other.providerId == providerId) &&
+            (identical(other.providerAvatar, providerAvatar) || other.providerAvatar == providerAvatar) &&
+            (identical(other.hasPassword, hasPassword) || other.hasPassword == hasPassword) &&
             const DeepCollectionEquality().equals(other.addresses, addresses) &&
-            const DeepCollectionEquality()
-                .equals(other.favoriteBusiness, favoriteBusiness) &&
-            const DeepCollectionEquality()
-                .equals(other.favoriteMenus, favoriteMenus) &&
-            const DeepCollectionEquality()
-                .equals(other.favoriteItems, favoriteItems) &&
-            const DeepCollectionEquality()
-                .equals(other.favoriteCombos, favoriteCombos) &&
-            const DeepCollectionEquality()
-                .equals(other.savedPromotions, savedPromotions) &&
+            const DeepCollectionEquality().equals(other.favoriteBusiness, favoriteBusiness) &&
+            const DeepCollectionEquality().equals(other.favoriteMenus, favoriteMenus) &&
+            const DeepCollectionEquality().equals(other.favoriteItems, favoriteItems) &&
+            const DeepCollectionEquality().equals(other.favoriteCombos, favoriteCombos) &&
+            const DeepCollectionEquality().equals(other.savedPromotions, savedPromotions) &&
             const DeepCollectionEquality().equals(other.followers, followers) &&
-            (identical(other.followersLength, followersLength) ||
-                other.followersLength == followersLength) &&
+            (identical(other.followersLength, followersLength) || other.followersLength == followersLength) &&
             const DeepCollectionEquality().equals(other.following, following) &&
-            (identical(other.followingLength, followingLength) ||
-                other.followingLength == followingLength));
+            (identical(other.followingLength, followingLength) || other.followingLength == followingLength));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -217,8 +191,7 @@ mixin _$UserDM {
 
 /// @nodoc
 abstract mixin class $UserDMCopyWith<$Res> {
-  factory $UserDMCopyWith(UserDM value, $Res Function(UserDM) _then) =
-      _$UserDMCopyWithImpl;
+  factory $UserDMCopyWith(UserDM value, $Res Function(UserDM) _then) = _$UserDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'id') int? id,
@@ -580,8 +553,7 @@ extension UserDMPatterns on UserDM {
             @JsonKey(name: 'terms_and_conditions') bool termsAndConditions,
             @JsonKey(name: 'business') List<BusinessDM> business,
             @JsonKey(name: 'user-prefs') UserPrefsDM? userPrefs,
-            @JsonKey(name: 'social_provider')
-            List<LoginProviderDM>? socialProvider,
+            @JsonKey(name: 'social_provider') List<LoginProviderDM>? socialProvider,
             @JsonKey(name: 'email_verified_at') DateTime? emailVerifiedAt,
             @JsonKey(name: 'provider') String? provider,
             @JsonKey(name: 'provider_id') String? providerId,
@@ -679,8 +651,7 @@ extension UserDMPatterns on UserDM {
             @JsonKey(name: 'terms_and_conditions') bool termsAndConditions,
             @JsonKey(name: 'business') List<BusinessDM> business,
             @JsonKey(name: 'user-prefs') UserPrefsDM? userPrefs,
-            @JsonKey(name: 'social_provider')
-            List<LoginProviderDM>? socialProvider,
+            @JsonKey(name: 'social_provider') List<LoginProviderDM>? socialProvider,
             @JsonKey(name: 'email_verified_at') DateTime? emailVerifiedAt,
             @JsonKey(name: 'provider') String? provider,
             @JsonKey(name: 'provider_id') String? providerId,
@@ -776,8 +747,7 @@ extension UserDMPatterns on UserDM {
             @JsonKey(name: 'terms_and_conditions') bool termsAndConditions,
             @JsonKey(name: 'business') List<BusinessDM> business,
             @JsonKey(name: 'user-prefs') UserPrefsDM? userPrefs,
-            @JsonKey(name: 'social_provider')
-            List<LoginProviderDM>? socialProvider,
+            @JsonKey(name: 'social_provider') List<LoginProviderDM>? socialProvider,
             @JsonKey(name: 'email_verified_at') DateTime? emailVerifiedAt,
             @JsonKey(name: 'provider') String? provider,
             @JsonKey(name: 'provider_id') String? providerId,
@@ -850,8 +820,7 @@ class _UserDM extends UserDM {
       @JsonKey(name: 'username') this.username,
       @JsonKey(name: 'name') this.firstName,
       @JsonKey(name: 'last_name') this.lastName,
-      @JsonKey(name: 'photo')
-      this.avatar = FoodlyStrings.USER_AVATAR_PLACEHOLDER,
+      @JsonKey(name: 'photo') this.avatar = FoodlyStrings.USER_AVATAR_PLACEHOLDER,
       @JsonKey(name: 'phone') this.phone,
       @JsonKey(name: 'phone_country_code') this.phoneCountryCode,
       @JsonKey(name: 'created_at') this.signUpDate,
@@ -864,24 +833,18 @@ class _UserDM extends UserDM {
       @JsonKey(name: 'terms_and_conditions') this.termsAndConditions = false,
       @JsonKey(name: 'business') final List<BusinessDM> business = const [],
       @JsonKey(name: 'user-prefs') this.userPrefs,
-      @JsonKey(name: 'social_provider')
-      final List<LoginProviderDM>? socialProvider,
+      @JsonKey(name: 'social_provider') final List<LoginProviderDM>? socialProvider,
       @JsonKey(name: 'email_verified_at') this.emailVerifiedAt,
       @JsonKey(name: 'provider') this.provider,
       @JsonKey(name: 'provider_id') this.providerId,
       @JsonKey(name: 'provider_avatar') this.providerAvatar,
       @JsonKey(name: 'has_password') this.hasPassword,
       @JsonKey(name: 'addresses') final List<AddressDM> addresses = const [],
-      @JsonKey(name: 'favorite_businesses')
-      final List<String> favoriteBusiness = const [],
-      @JsonKey(name: 'favorite_menus')
-      final List<String> favoriteMenus = const [],
-      @JsonKey(name: 'favorite_items')
-      final List<String> favoriteItems = const [],
-      @JsonKey(name: 'favorite_combos')
-      final List<String> favoriteCombos = const [],
-      @JsonKey(name: 'saved_promotions')
-      final List<String> savedPromotions = const [],
+      @JsonKey(name: 'favorite_businesses') final List<String> favoriteBusiness = const [],
+      @JsonKey(name: 'favorite_menus') final List<String> favoriteMenus = const [],
+      @JsonKey(name: 'favorite_items') final List<String> favoriteItems = const [],
+      @JsonKey(name: 'favorite_combos') final List<String> favoriteCombos = const [],
+      @JsonKey(name: 'saved_promotions') final List<String> savedPromotions = const [],
       @JsonKey(name: 'followers') final List<String> followers = const [],
       @JsonKey(name: 'followers_length') this.followersLength = 0,
       @JsonKey(name: 'following') final List<String> following = const [],
@@ -1009,8 +972,7 @@ class _UserDM extends UserDM {
   @override
   @JsonKey(name: 'favorite_businesses')
   List<String> get favoriteBusiness {
-    if (_favoriteBusiness is EqualUnmodifiableListView)
-      return _favoriteBusiness;
+    if (_favoriteBusiness is EqualUnmodifiableListView) return _favoriteBusiness;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_favoriteBusiness);
   }
@@ -1081,8 +1043,7 @@ class _UserDM extends UserDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$UserDMCopyWith<_UserDM> get copyWith =>
-      __$UserDMCopyWithImpl<_UserDM>(this, _$identity);
+  _$UserDMCopyWith<_UserDM> get copyWith => __$UserDMCopyWithImpl<_UserDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1099,65 +1060,39 @@ class _UserDM extends UserDM {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.username, username) ||
-                other.username == username) &&
-            (identical(other.firstName, firstName) ||
-                other.firstName == firstName) &&
-            (identical(other.lastName, lastName) ||
-                other.lastName == lastName) &&
+            (identical(other.username, username) || other.username == username) &&
+            (identical(other.firstName, firstName) || other.firstName == firstName) &&
+            (identical(other.lastName, lastName) || other.lastName == lastName) &&
             (identical(other.avatar, avatar) || other.avatar == avatar) &&
             (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.phoneCountryCode, phoneCountryCode) ||
-                other.phoneCountryCode == phoneCountryCode) &&
-            (identical(other.signUpDate, signUpDate) ||
-                other.signUpDate == signUpDate) &&
-            (identical(other.lastUpdated, lastUpdated) ||
-                other.lastUpdated == lastUpdated) &&
-            (identical(other.deletedAt, deletedAt) ||
-                other.deletedAt == deletedAt) &&
-            (identical(other.dateOfBirth, dateOfBirth) ||
-                other.dateOfBirth == dateOfBirth) &&
+            (identical(other.phoneCountryCode, phoneCountryCode) || other.phoneCountryCode == phoneCountryCode) &&
+            (identical(other.signUpDate, signUpDate) || other.signUpDate == signUpDate) &&
+            (identical(other.lastUpdated, lastUpdated) || other.lastUpdated == lastUpdated) &&
+            (identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt) &&
+            (identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.roleId, roleId) || other.roleId == roleId) &&
-            (identical(other.userRole, userRole) ||
-                other.userRole == userRole) &&
+            (identical(other.userRole, userRole) || other.userRole == userRole) &&
             (identical(other.termsAndConditions, termsAndConditions) ||
                 other.termsAndConditions == termsAndConditions) &&
             const DeepCollectionEquality().equals(other._business, _business) &&
-            (identical(other.userPrefs, userPrefs) ||
-                other.userPrefs == userPrefs) &&
-            const DeepCollectionEquality()
-                .equals(other._socialProvider, _socialProvider) &&
-            (identical(other.emailVerifiedAt, emailVerifiedAt) ||
-                other.emailVerifiedAt == emailVerifiedAt) &&
-            (identical(other.provider, provider) ||
-                other.provider == provider) &&
-            (identical(other.providerId, providerId) ||
-                other.providerId == providerId) &&
-            (identical(other.providerAvatar, providerAvatar) ||
-                other.providerAvatar == providerAvatar) &&
-            (identical(other.hasPassword, hasPassword) ||
-                other.hasPassword == hasPassword) &&
-            const DeepCollectionEquality()
-                .equals(other._addresses, _addresses) &&
-            const DeepCollectionEquality()
-                .equals(other._favoriteBusiness, _favoriteBusiness) &&
-            const DeepCollectionEquality()
-                .equals(other._favoriteMenus, _favoriteMenus) &&
-            const DeepCollectionEquality()
-                .equals(other._favoriteItems, _favoriteItems) &&
-            const DeepCollectionEquality()
-                .equals(other._favoriteCombos, _favoriteCombos) &&
-            const DeepCollectionEquality()
-                .equals(other._savedPromotions, _savedPromotions) &&
-            const DeepCollectionEquality()
-                .equals(other._followers, _followers) &&
-            (identical(other.followersLength, followersLength) ||
-                other.followersLength == followersLength) &&
-            const DeepCollectionEquality()
-                .equals(other._following, _following) &&
-            (identical(other.followingLength, followingLength) ||
-                other.followingLength == followingLength));
+            (identical(other.userPrefs, userPrefs) || other.userPrefs == userPrefs) &&
+            const DeepCollectionEquality().equals(other._socialProvider, _socialProvider) &&
+            (identical(other.emailVerifiedAt, emailVerifiedAt) || other.emailVerifiedAt == emailVerifiedAt) &&
+            (identical(other.provider, provider) || other.provider == provider) &&
+            (identical(other.providerId, providerId) || other.providerId == providerId) &&
+            (identical(other.providerAvatar, providerAvatar) || other.providerAvatar == providerAvatar) &&
+            (identical(other.hasPassword, hasPassword) || other.hasPassword == hasPassword) &&
+            const DeepCollectionEquality().equals(other._addresses, _addresses) &&
+            const DeepCollectionEquality().equals(other._favoriteBusiness, _favoriteBusiness) &&
+            const DeepCollectionEquality().equals(other._favoriteMenus, _favoriteMenus) &&
+            const DeepCollectionEquality().equals(other._favoriteItems, _favoriteItems) &&
+            const DeepCollectionEquality().equals(other._favoriteCombos, _favoriteCombos) &&
+            const DeepCollectionEquality().equals(other._savedPromotions, _savedPromotions) &&
+            const DeepCollectionEquality().equals(other._followers, _followers) &&
+            (identical(other.followersLength, followersLength) || other.followersLength == followersLength) &&
+            const DeepCollectionEquality().equals(other._following, _following) &&
+            (identical(other.followingLength, followingLength) || other.followingLength == followingLength));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1209,8 +1144,7 @@ class _UserDM extends UserDM {
 
 /// @nodoc
 abstract mixin class _$UserDMCopyWith<$Res> implements $UserDMCopyWith<$Res> {
-  factory _$UserDMCopyWith(_UserDM value, $Res Function(_UserDM) _then) =
-      __$UserDMCopyWithImpl;
+  factory _$UserDMCopyWith(_UserDM value, $Res Function(_UserDM) _then) = __$UserDMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -1476,8 +1410,7 @@ mixin _$AddressLabelDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $AddressLabelDMCopyWith<AddressLabelDM> get copyWith =>
-      _$AddressLabelDMCopyWithImpl<AddressLabelDM>(
-          this as AddressLabelDM, _$identity);
+      _$AddressLabelDMCopyWithImpl<AddressLabelDM>(this as AddressLabelDM, _$identity);
 
   /// Serializes this AddressLabelDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1490,17 +1423,14 @@ mixin _$AddressLabelDM {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.description, description) || other.description == description) &&
             (identical(other.icon, icon) || other.icon == icon) &&
-            (identical(other.isActive, isActive) ||
-                other.isActive == isActive));
+            (identical(other.isActive, isActive) || other.isActive == isActive));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, uuid, name, description, icon, isActive);
+  int get hashCode => Object.hash(runtimeType, id, uuid, name, description, icon, isActive);
 
   @override
   String toString() {
@@ -1510,8 +1440,7 @@ mixin _$AddressLabelDM {
 
 /// @nodoc
 abstract mixin class $AddressLabelDMCopyWith<$Res> {
-  factory $AddressLabelDMCopyWith(
-          AddressLabelDM value, $Res Function(AddressLabelDM) _then) =
+  factory $AddressLabelDMCopyWith(AddressLabelDM value, $Res Function(AddressLabelDM) _then) =
       _$AddressLabelDMCopyWithImpl;
   @useResult
   $Res call(
@@ -1524,8 +1453,7 @@ abstract mixin class $AddressLabelDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AddressLabelDMCopyWithImpl<$Res>
-    implements $AddressLabelDMCopyWith<$Res> {
+class _$AddressLabelDMCopyWithImpl<$Res> implements $AddressLabelDMCopyWith<$Res> {
   _$AddressLabelDMCopyWithImpl(this._self, this._then);
 
   final AddressLabelDM _self;
@@ -1665,16 +1593,15 @@ extension AddressLabelDMPatterns on AddressLabelDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(int? id, String? uuid, String name, String? description,
-            String? icon, @JsonKey(name: 'is_active') bool isActive)?
+    TResult Function(int? id, String? uuid, String name, String? description, String? icon,
+            @JsonKey(name: 'is_active') bool isActive)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _AddressLabelDM() when $default != null:
-        return $default(_that.id, _that.uuid, _that.name, _that.description,
-            _that.icon, _that.isActive);
+        return $default(_that.id, _that.uuid, _that.name, _that.description, _that.icon, _that.isActive);
       case _:
         return orElse();
     }
@@ -1695,15 +1622,14 @@ extension AddressLabelDMPatterns on AddressLabelDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(int? id, String? uuid, String name, String? description,
-            String? icon, @JsonKey(name: 'is_active') bool isActive)
+    TResult Function(int? id, String? uuid, String name, String? description, String? icon,
+            @JsonKey(name: 'is_active') bool isActive)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _AddressLabelDM():
-        return $default(_that.id, _that.uuid, _that.name, _that.description,
-            _that.icon, _that.isActive);
+        return $default(_that.id, _that.uuid, _that.name, _that.description, _that.icon, _that.isActive);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -1723,15 +1649,14 @@ extension AddressLabelDMPatterns on AddressLabelDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(int? id, String? uuid, String name, String? description,
-            String? icon, @JsonKey(name: 'is_active') bool isActive)?
+    TResult? Function(int? id, String? uuid, String name, String? description, String? icon,
+            @JsonKey(name: 'is_active') bool isActive)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _AddressLabelDM() when $default != null:
-        return $default(_that.id, _that.uuid, _that.name, _that.description,
-            _that.icon, _that.isActive);
+        return $default(_that.id, _that.uuid, _that.name, _that.description, _that.icon, _that.isActive);
       case _:
         return null;
     }
@@ -1748,8 +1673,7 @@ class _AddressLabelDM implements AddressLabelDM {
       this.description,
       this.icon,
       @JsonKey(name: 'is_active') this.isActive = true});
-  factory _AddressLabelDM.fromJson(Map<String, dynamic> json) =>
-      _$AddressLabelDMFromJson(json);
+  factory _AddressLabelDM.fromJson(Map<String, dynamic> json) => _$AddressLabelDMFromJson(json);
 
   @override
   final int? id;
@@ -1788,17 +1712,14 @@ class _AddressLabelDM implements AddressLabelDM {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.description, description) || other.description == description) &&
             (identical(other.icon, icon) || other.icon == icon) &&
-            (identical(other.isActive, isActive) ||
-                other.isActive == isActive));
+            (identical(other.isActive, isActive) || other.isActive == isActive));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, uuid, name, description, icon, isActive);
+  int get hashCode => Object.hash(runtimeType, id, uuid, name, description, icon, isActive);
 
   @override
   String toString() {
@@ -1807,10 +1728,8 @@ class _AddressLabelDM implements AddressLabelDM {
 }
 
 /// @nodoc
-abstract mixin class _$AddressLabelDMCopyWith<$Res>
-    implements $AddressLabelDMCopyWith<$Res> {
-  factory _$AddressLabelDMCopyWith(
-          _AddressLabelDM value, $Res Function(_AddressLabelDM) _then) =
+abstract mixin class _$AddressLabelDMCopyWith<$Res> implements $AddressLabelDMCopyWith<$Res> {
+  factory _$AddressLabelDMCopyWith(_AddressLabelDM value, $Res Function(_AddressLabelDM) _then) =
       __$AddressLabelDMCopyWithImpl;
   @override
   @useResult
@@ -1824,8 +1743,7 @@ abstract mixin class _$AddressLabelDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$AddressLabelDMCopyWithImpl<$Res>
-    implements _$AddressLabelDMCopyWith<$Res> {
+class __$AddressLabelDMCopyWithImpl<$Res> implements _$AddressLabelDMCopyWith<$Res> {
   __$AddressLabelDMCopyWithImpl(this._self, this._then);
 
   final _AddressLabelDM _self;
@@ -1883,8 +1801,7 @@ mixin _$AddressDM {
   @JsonKey(name: 'zip_code')
   String get zipCode;
   double get latitude;
-  double
-      get longitude; // CORREGIDO: Cambiar el mapeo para que coincida con el JSON response
+  double get longitude; // CORREGIDO: Cambiar el mapeo para que coincida con el JSON response
   @JsonKey(name: 'label')
   AddressLabelDM get addressLabel;
   bool get principal;
@@ -1897,8 +1814,7 @@ mixin _$AddressDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $AddressDMCopyWith<AddressDM> get copyWith =>
-      _$AddressDMCopyWithImpl<AddressDM>(this as AddressDM, _$identity);
+  $AddressDMCopyWith<AddressDM> get copyWith => _$AddressDMCopyWithImpl<AddressDM>(this as AddressDM, _$identity);
 
   /// Serializes this AddressDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1914,36 +1830,18 @@ mixin _$AddressDM {
             (identical(other.city, city) || other.city == city) &&
             (identical(other.country, country) || other.country == country) &&
             (identical(other.zipCode, zipCode) || other.zipCode == zipCode) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude) &&
-            (identical(other.addressLabel, addressLabel) ||
-                other.addressLabel == addressLabel) &&
-            (identical(other.principal, principal) ||
-                other.principal == principal) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.latitude, latitude) || other.latitude == latitude) &&
+            (identical(other.longitude, longitude) || other.longitude == longitude) &&
+            (identical(other.addressLabel, addressLabel) || other.addressLabel == addressLabel) &&
+            (identical(other.principal, principal) || other.principal == principal) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      uuid,
-      address,
-      city,
-      country,
-      zipCode,
-      latitude,
-      longitude,
-      addressLabel,
-      principal,
-      createdAt,
-      updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, uuid, address, city, country, zipCode, latitude, longitude,
+      addressLabel, principal, createdAt, updatedAt);
 
   @override
   String toString() {
@@ -1953,8 +1851,7 @@ mixin _$AddressDM {
 
 /// @nodoc
 abstract mixin class $AddressDMCopyWith<$Res> {
-  factory $AddressDMCopyWith(AddressDM value, $Res Function(AddressDM) _then) =
-      _$AddressDMCopyWithImpl;
+  factory $AddressDMCopyWith(AddressDM value, $Res Function(AddressDM) _then) = _$AddressDMCopyWithImpl;
   @useResult
   $Res call(
       {int id,
@@ -2173,19 +2070,8 @@ extension AddressDMPatterns on AddressDM {
     final _that = this;
     switch (_that) {
       case _AddressDM() when $default != null:
-        return $default(
-            _that.id,
-            _that.uuid,
-            _that.address,
-            _that.city,
-            _that.country,
-            _that.zipCode,
-            _that.latitude,
-            _that.longitude,
-            _that.addressLabel,
-            _that.principal,
-            _that.createdAt,
-            _that.updatedAt);
+        return $default(_that.id, _that.uuid, _that.address, _that.city, _that.country, _that.zipCode, _that.latitude,
+            _that.longitude, _that.addressLabel, _that.principal, _that.createdAt, _that.updatedAt);
       case _:
         return orElse();
     }
@@ -2224,19 +2110,8 @@ extension AddressDMPatterns on AddressDM {
     final _that = this;
     switch (_that) {
       case _AddressDM():
-        return $default(
-            _that.id,
-            _that.uuid,
-            _that.address,
-            _that.city,
-            _that.country,
-            _that.zipCode,
-            _that.latitude,
-            _that.longitude,
-            _that.addressLabel,
-            _that.principal,
-            _that.createdAt,
-            _that.updatedAt);
+        return $default(_that.id, _that.uuid, _that.address, _that.city, _that.country, _that.zipCode, _that.latitude,
+            _that.longitude, _that.addressLabel, _that.principal, _that.createdAt, _that.updatedAt);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -2274,19 +2149,8 @@ extension AddressDMPatterns on AddressDM {
     final _that = this;
     switch (_that) {
       case _AddressDM() when $default != null:
-        return $default(
-            _that.id,
-            _that.uuid,
-            _that.address,
-            _that.city,
-            _that.country,
-            _that.zipCode,
-            _that.latitude,
-            _that.longitude,
-            _that.addressLabel,
-            _that.principal,
-            _that.createdAt,
-            _that.updatedAt);
+        return $default(_that.id, _that.uuid, _that.address, _that.city, _that.country, _that.zipCode, _that.latitude,
+            _that.longitude, _that.addressLabel, _that.principal, _that.createdAt, _that.updatedAt);
       case _:
         return null;
     }
@@ -2310,8 +2174,7 @@ class _AddressDM extends AddressDM {
       @JsonKey(name: 'created_at') required this.createdAt,
       @JsonKey(name: 'updated_at') required this.updatedAt})
       : super._();
-  factory _AddressDM.fromJson(Map<String, dynamic> json) =>
-      _$AddressDMFromJson(json);
+  factory _AddressDM.fromJson(Map<String, dynamic> json) => _$AddressDMFromJson(json);
 
   @override
   final int id;
@@ -2351,8 +2214,7 @@ class _AddressDM extends AddressDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$AddressDMCopyWith<_AddressDM> get copyWith =>
-      __$AddressDMCopyWithImpl<_AddressDM>(this, _$identity);
+  _$AddressDMCopyWith<_AddressDM> get copyWith => __$AddressDMCopyWithImpl<_AddressDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -2372,36 +2234,18 @@ class _AddressDM extends AddressDM {
             (identical(other.city, city) || other.city == city) &&
             (identical(other.country, country) || other.country == country) &&
             (identical(other.zipCode, zipCode) || other.zipCode == zipCode) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude) &&
-            (identical(other.addressLabel, addressLabel) ||
-                other.addressLabel == addressLabel) &&
-            (identical(other.principal, principal) ||
-                other.principal == principal) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.latitude, latitude) || other.latitude == latitude) &&
+            (identical(other.longitude, longitude) || other.longitude == longitude) &&
+            (identical(other.addressLabel, addressLabel) || other.addressLabel == addressLabel) &&
+            (identical(other.principal, principal) || other.principal == principal) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      uuid,
-      address,
-      city,
-      country,
-      zipCode,
-      latitude,
-      longitude,
-      addressLabel,
-      principal,
-      createdAt,
-      updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, uuid, address, city, country, zipCode, latitude, longitude,
+      addressLabel, principal, createdAt, updatedAt);
 
   @override
   String toString() {
@@ -2410,11 +2254,8 @@ class _AddressDM extends AddressDM {
 }
 
 /// @nodoc
-abstract mixin class _$AddressDMCopyWith<$Res>
-    implements $AddressDMCopyWith<$Res> {
-  factory _$AddressDMCopyWith(
-          _AddressDM value, $Res Function(_AddressDM) _then) =
-      __$AddressDMCopyWithImpl;
+abstract mixin class _$AddressDMCopyWith<$Res> implements $AddressDMCopyWith<$Res> {
+  factory _$AddressDMCopyWith(_AddressDM value, $Res Function(_AddressDM) _then) = __$AddressDMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -2544,8 +2385,7 @@ mixin _$LoginProviderDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $LoginProviderDMCopyWith<LoginProviderDM> get copyWith =>
-      _$LoginProviderDMCopyWithImpl<LoginProviderDM>(
-          this as LoginProviderDM, _$identity);
+      _$LoginProviderDMCopyWithImpl<LoginProviderDM>(this as LoginProviderDM, _$identity);
 
   /// Serializes this LoginProviderDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -2557,23 +2397,18 @@ mixin _$LoginProviderDM {
             other is LoginProviderDM &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.provider, provider) ||
-                other.provider == provider) &&
-            (identical(other.providerId, providerId) ||
-                other.providerId == providerId) &&
-            (identical(other.providerAvatar, providerAvatar) ||
-                other.providerAvatar == providerAvatar) &&
+            (identical(other.provider, provider) || other.provider == provider) &&
+            (identical(other.providerId, providerId) || other.providerId == providerId) &&
+            (identical(other.providerAvatar, providerAvatar) || other.providerAvatar == providerAvatar) &&
             (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, uuid, provider, providerId,
-      providerAvatar, userId, createdAt, updatedAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, uuid, provider, providerId, providerAvatar, userId, createdAt, updatedAt);
 
   @override
   String toString() {
@@ -2583,8 +2418,7 @@ mixin _$LoginProviderDM {
 
 /// @nodoc
 abstract mixin class $LoginProviderDMCopyWith<$Res> {
-  factory $LoginProviderDMCopyWith(
-          LoginProviderDM value, $Res Function(LoginProviderDM) _then) =
+  factory $LoginProviderDMCopyWith(LoginProviderDM value, $Res Function(LoginProviderDM) _then) =
       _$LoginProviderDMCopyWithImpl;
   @useResult
   $Res call(
@@ -2599,8 +2433,7 @@ abstract mixin class $LoginProviderDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LoginProviderDMCopyWithImpl<$Res>
-    implements $LoginProviderDMCopyWith<$Res> {
+class _$LoginProviderDMCopyWithImpl<$Res> implements $LoginProviderDMCopyWith<$Res> {
   _$LoginProviderDMCopyWithImpl(this._self, this._then);
 
   final LoginProviderDM _self;
@@ -2765,15 +2598,8 @@ extension LoginProviderDMPatterns on LoginProviderDM {
     final _that = this;
     switch (_that) {
       case _LoginProviderDM() when $default != null:
-        return $default(
-            _that.id,
-            _that.uuid,
-            _that.provider,
-            _that.providerId,
-            _that.providerAvatar,
-            _that.userId,
-            _that.createdAt,
-            _that.updatedAt);
+        return $default(_that.id, _that.uuid, _that.provider, _that.providerId, _that.providerAvatar, _that.userId,
+            _that.createdAt, _that.updatedAt);
       case _:
         return orElse();
     }
@@ -2808,15 +2634,8 @@ extension LoginProviderDMPatterns on LoginProviderDM {
     final _that = this;
     switch (_that) {
       case _LoginProviderDM():
-        return $default(
-            _that.id,
-            _that.uuid,
-            _that.provider,
-            _that.providerId,
-            _that.providerAvatar,
-            _that.userId,
-            _that.createdAt,
-            _that.updatedAt);
+        return $default(_that.id, _that.uuid, _that.provider, _that.providerId, _that.providerAvatar, _that.userId,
+            _that.createdAt, _that.updatedAt);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -2850,15 +2669,8 @@ extension LoginProviderDMPatterns on LoginProviderDM {
     final _that = this;
     switch (_that) {
       case _LoginProviderDM() when $default != null:
-        return $default(
-            _that.id,
-            _that.uuid,
-            _that.provider,
-            _that.providerId,
-            _that.providerAvatar,
-            _that.userId,
-            _that.createdAt,
-            _that.updatedAt);
+        return $default(_that.id, _that.uuid, _that.provider, _that.providerId, _that.providerAvatar, _that.userId,
+            _that.createdAt, _that.updatedAt);
       case _:
         return null;
     }
@@ -2877,8 +2689,7 @@ class _LoginProviderDM implements LoginProviderDM {
       @JsonKey(name: 'user_id') required this.userId,
       @JsonKey(name: 'created_at') required this.createdAt,
       @JsonKey(name: 'updated_at') required this.updatedAt});
-  factory _LoginProviderDM.fromJson(Map<String, dynamic> json) =>
-      _$LoginProviderDMFromJson(json);
+  factory _LoginProviderDM.fromJson(Map<String, dynamic> json) => _$LoginProviderDMFromJson(json);
 
   @override
   final int id;
@@ -2924,23 +2735,18 @@ class _LoginProviderDM implements LoginProviderDM {
             other is _LoginProviderDM &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.provider, provider) ||
-                other.provider == provider) &&
-            (identical(other.providerId, providerId) ||
-                other.providerId == providerId) &&
-            (identical(other.providerAvatar, providerAvatar) ||
-                other.providerAvatar == providerAvatar) &&
+            (identical(other.provider, provider) || other.provider == provider) &&
+            (identical(other.providerId, providerId) || other.providerId == providerId) &&
+            (identical(other.providerAvatar, providerAvatar) || other.providerAvatar == providerAvatar) &&
             (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, uuid, provider, providerId,
-      providerAvatar, userId, createdAt, updatedAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, uuid, provider, providerId, providerAvatar, userId, createdAt, updatedAt);
 
   @override
   String toString() {
@@ -2949,10 +2755,8 @@ class _LoginProviderDM implements LoginProviderDM {
 }
 
 /// @nodoc
-abstract mixin class _$LoginProviderDMCopyWith<$Res>
-    implements $LoginProviderDMCopyWith<$Res> {
-  factory _$LoginProviderDMCopyWith(
-          _LoginProviderDM value, $Res Function(_LoginProviderDM) _then) =
+abstract mixin class _$LoginProviderDMCopyWith<$Res> implements $LoginProviderDMCopyWith<$Res> {
+  factory _$LoginProviderDMCopyWith(_LoginProviderDM value, $Res Function(_LoginProviderDM) _then) =
       __$LoginProviderDMCopyWithImpl;
   @override
   @useResult
@@ -2968,8 +2772,7 @@ abstract mixin class _$LoginProviderDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$LoginProviderDMCopyWithImpl<$Res>
-    implements _$LoginProviderDMCopyWith<$Res> {
+class __$LoginProviderDMCopyWithImpl<$Res> implements _$LoginProviderDMCopyWith<$Res> {
   __$LoginProviderDMCopyWithImpl(this._self, this._then);
 
   final _LoginProviderDM _self;

@@ -56,7 +56,10 @@ class AvatarWidget extends StatelessWidget {
       );
 
   // Placeholders optimizados
-  Widget get userAvatarPlaceholder => CachedNetworkImage(cacheManager: FoodlyImageCache.manager, memCacheWidth: _memCacheWidth, imageUrl: FoodlyStrings.USER_AVATAR_PLACEHOLDER,
+  Widget get userAvatarPlaceholder => CachedNetworkImage(
+        cacheManager: FoodlyImageCache.manager,
+        memCacheWidth: _memCacheWidth,
+        imageUrl: FoodlyStrings.USER_AVATAR_PLACEHOLDER,
         fit: boxFit,
         imageBuilder: (context, imageProvider) => Container(
           constraints: BoxConstraints.tight(Size(width, height)),
@@ -68,7 +71,10 @@ class AvatarWidget extends StatelessWidget {
         fadeOutDuration: Durations.medium3,
       );
 
-  Widget get businessPlaceholder => CachedNetworkImage(cacheManager: FoodlyImageCache.manager, memCacheWidth: _memCacheWidth, imageUrl: FoodlyStrings.LOGO_PLACEHOLDER,
+  Widget get businessPlaceholder => CachedNetworkImage(
+        cacheManager: FoodlyImageCache.manager,
+        memCacheWidth: _memCacheWidth,
+        imageUrl: FoodlyStrings.LOGO_PLACEHOLDER,
         fit: boxFit,
         imageBuilder: (context, imageProvider) => Container(
           constraints: BoxConstraints.tight(Size(width, height)),
@@ -112,7 +118,10 @@ class AvatarWidget extends StatelessWidget {
     return SizedBox(
       width: width,
       height: height,
-      child: CachedNetworkImage(cacheManager: FoodlyImageCache.manager, memCacheWidth: _memCacheWidth, imageUrl: avatarUrl!,
+      child: CachedNetworkImage(
+        cacheManager: FoodlyImageCache.manager,
+        memCacheWidth: _memCacheWidth,
+        imageUrl: avatarUrl!,
         fit: boxFit,
         imageBuilder: (context, imageProvider) => Container(
           constraints: BoxConstraints.tight(Size(width, height)),

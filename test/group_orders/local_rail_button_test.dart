@@ -45,17 +45,18 @@ void main() {
     GroupPaymentMode modo = GroupPaymentMode.perRound,
     List<GroupOrderItemDM> items = const [],
     DateTime? cuentaPedidaEn,
-  }) => GroupOrderDM(
-    uuid: 'o1',
-    status: estado,
-    paymentMode: modo,
-    items: items,
-    billRequestedAt: cuentaPedidaEn,
-    totalAmount: 20,
-    participants: const [
-      GroupOrderParticipantDM(uuid: 'p1', displayName: 'Yo', amountDue: 20),
-    ],
-  );
+  }) =>
+      GroupOrderDM(
+        uuid: 'o1',
+        status: estado,
+        paymentMode: modo,
+        items: items,
+        billRequestedAt: cuentaPedidaEn,
+        totalAmount: 20,
+        participants: const [
+          GroupOrderParticipantDM(uuid: 'p1', displayName: 'Yo', amountDue: 20),
+        ],
+      );
 
   final elBotonMbWay = find.text('Pagar con MB WAY');
   final elBotonBizum = find.text('Pagar con Bizum');
@@ -68,18 +69,19 @@ void main() {
     double myShare = 20,
     void Function(bool)? onPayHosted,
     bool isBusy = false,
-  }) => tester.pumpWidget(
-    host(
-      GroupOrderTotalsFooter(
-        order: order,
-        myShare: myShare,
-        onPay: (_) {},
-        onPayHosted: onPayHosted ?? (_) {},
-        hostedRail: rail,
-        isBusy: isBusy,
-      ),
-    ),
-  );
+  }) =>
+      tester.pumpWidget(
+        host(
+          GroupOrderTotalsFooter(
+            order: order,
+            myShare: myShare,
+            onPay: (_) {},
+            onPayHosted: onPayHosted ?? (_) {},
+            hostedRail: rail,
+            isBusy: isBusy,
+          ),
+        ),
+      );
 
   group('cada comensal ve SU método', () {
     testWidgets('portugués → MB WAY, y no Bizum', (tester) async {
@@ -196,13 +198,13 @@ void main() {
     final entregado = DateTime(2026, 8, 14, 20, 30);
 
     GroupOrderItemDM plato({DateTime? sentAt, DateTime? deliveredAt}) => GroupOrderItemDM(
-      uuid: 'i1',
-      name: 'Bacalhau',
-      unitPricePreview: 20,
-      sentAt: sentAt,
-      batchNo: sentAt == null ? null : 1,
-      deliveredAt: deliveredAt,
-    );
+          uuid: 'i1',
+          name: 'Bacalhau',
+          unitPricePreview: 20,
+          sentAt: sentAt,
+          batchNo: sentAt == null ? null : 1,
+          deliveredAt: deliveredAt,
+        );
 
     testWidgets('con la cuenta PEDIDA y todo servido → aparece', (tester) async {
       // Es el momento de pagar de una mesa: el mismo bloque de cobro que el
@@ -326,9 +328,7 @@ void main() {
       );
 
       final contenedor = tester.widget<Container>(
-        find
-            .descendant(of: find.byType(GroupOrderTotalsFooter), matching: find.byType(Container))
-            .first,
+        find.descendant(of: find.byType(GroupOrderTotalsFooter), matching: find.byType(Container)).first,
       );
       final padding = contenedor.padding as EdgeInsets;
 
@@ -344,9 +344,7 @@ void main() {
       await pintar(tester, order: orden());
 
       final contenedor = tester.widget<Container>(
-        find
-            .descendant(of: find.byType(GroupOrderTotalsFooter), matching: find.byType(Container))
-            .first,
+        find.descendant(of: find.byType(GroupOrderTotalsFooter), matching: find.byType(Container)).first,
       );
 
       expect((contenedor.padding as EdgeInsets).bottom, 18);

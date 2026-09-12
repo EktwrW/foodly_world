@@ -14,15 +14,42 @@ void main() {
   /// Copy real, en los tres idiomas, para que lo que se mida sea lo que se ve.
   /// El portugues es el mas largo de los tres y es el que manda.
   const copys = <String, (String, String)>{
-    'negocios es': ('Aún no tienes negocios favoritos', 'Toca el corazón en cualquier negocio y lo tendrás siempre a mano.'),
-    'negocios en': ("You haven't saved any places yet", 'Tap the heart on any place and it will always be within reach.'),
-    'negocios pt': ('Ainda não tens negócios favoritos', 'Toca no coração de qualquer negócio e tê-lo-ás sempre à mão.'),
-    'cartas es': ('Aún no tienes cartas guardadas', 'Guarda la carta de un negocio y la abrirás desde aquí sin buscarla.'),
-    'cartas en': ("You haven't saved any menus yet", "Save a place's menu and you'll open it from here without searching."),
-    'cartas pt': ('Ainda não tens cartas guardadas', 'Guarda a carta de um negócio e abri-la-ás daqui sem a procurares.'),
-    'platos es': ('Aún no tienes platos favoritos', 'Toca el corazón en un plato y lo encontrarás aquí cuando vuelvas.'),
-    'platos en': ("You haven't saved any dishes yet", "Tap the heart on a dish and you'll find it here when you come back."),
-    'platos pt': ('Ainda não tens pratos favoritos', 'Toca no coração de um prato e encontrá-lo-ás aqui quando voltares.'),
+    'negocios es': (
+      'Aún no tienes negocios favoritos',
+      'Toca el corazón en cualquier negocio y lo tendrás siempre a mano.'
+    ),
+    'negocios en': (
+      "You haven't saved any places yet",
+      'Tap the heart on any place and it will always be within reach.'
+    ),
+    'negocios pt': (
+      'Ainda não tens negócios favoritos',
+      'Toca no coração de qualquer negócio e tê-lo-ás sempre à mão.'
+    ),
+    'cartas es': (
+      'Aún no tienes cartas guardadas',
+      'Guarda la carta de un negocio y la abrirás desde aquí sin buscarla.'
+    ),
+    'cartas en': (
+      "You haven't saved any menus yet",
+      "Save a place's menu and you'll open it from here without searching."
+    ),
+    'cartas pt': (
+      'Ainda não tens cartas guardadas',
+      'Guarda a carta de um negócio e abri-la-ás daqui sem a procurares.'
+    ),
+    'platos es': (
+      'Aún no tienes platos favoritos',
+      'Toca el corazón en un plato y lo encontrarás aquí cuando vuelvas.'
+    ),
+    'platos en': (
+      "You haven't saved any dishes yet",
+      "Tap the heart on a dish and you'll find it here when you come back."
+    ),
+    'platos pt': (
+      'Ainda não tens pratos favoritos',
+      'Toca no coração de um prato e encontrá-lo-ás aqui quando voltares.'
+    ),
   };
 
   /// Los 120 px que la pagina le pone debajo para levantarlo del borde.

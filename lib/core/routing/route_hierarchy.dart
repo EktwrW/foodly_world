@@ -86,8 +86,6 @@ class RouteHierarchy {
     return false;
   }
 
-
-
   /// Índice del historial al que lleva el "atrás", o null si no hay destino
   /// válido y hay que derivar el padre. El caller trunca desde ese índice.
   ///

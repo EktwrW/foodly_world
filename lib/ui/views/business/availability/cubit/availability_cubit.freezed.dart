@@ -21,15 +21,12 @@ mixin _$AvailabilityState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $AvailabilityStateCopyWith<AvailabilityState> get copyWith =>
-      _$AvailabilityStateCopyWithImpl<AvailabilityState>(
-          this as AvailabilityState, _$identity);
+      _$AvailabilityStateCopyWithImpl<AvailabilityState>(this as AvailabilityState, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is AvailabilityState &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is AvailabilityState && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -43,8 +40,7 @@ mixin _$AvailabilityState {
 
 /// @nodoc
 abstract mixin class $AvailabilityStateCopyWith<$Res> {
-  factory $AvailabilityStateCopyWith(
-          AvailabilityState value, $Res Function(AvailabilityState) _then) =
+  factory $AvailabilityStateCopyWith(AvailabilityState value, $Res Function(AvailabilityState) _then) =
       _$AvailabilityStateCopyWithImpl;
   @useResult
   $Res call({AvailabilityVM vm});
@@ -53,8 +49,7 @@ abstract mixin class $AvailabilityStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AvailabilityStateCopyWithImpl<$Res>
-    implements $AvailabilityStateCopyWith<$Res> {
+class _$AvailabilityStateCopyWithImpl<$Res> implements $AvailabilityStateCopyWith<$Res> {
   _$AvailabilityStateCopyWithImpl(this._self, this._then);
 
   final AvailabilityState _self;
@@ -360,15 +355,12 @@ class _Initial implements AvailabilityState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Initial &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Initial && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -381,10 +373,8 @@ class _Initial implements AvailabilityState {
 }
 
 /// @nodoc
-abstract mixin class _$InitialCopyWith<$Res>
-    implements $AvailabilityStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
-      __$InitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $AvailabilityStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({AvailabilityVM vm});
@@ -439,15 +429,12 @@ class _Loading implements AvailabilityState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadingCopyWith<_Loading> get copyWith =>
-      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+  _$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loading &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loading && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -460,10 +447,8 @@ class _Loading implements AvailabilityState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadingCopyWith<$Res>
-    implements $AvailabilityStateCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
-      __$LoadingCopyWithImpl;
+abstract mixin class _$LoadingCopyWith<$Res> implements $AvailabilityStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
   @override
   @useResult
   $Res call({AvailabilityVM vm});
@@ -518,15 +503,12 @@ class _Loaded implements AvailabilityState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loaded &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loaded && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -539,10 +521,8 @@ class _Loaded implements AvailabilityState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res>
-    implements $AvailabilityStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
-      __$LoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $AvailabilityStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
   @override
   @useResult
   $Res call({AvailabilityVM vm});
@@ -597,15 +577,12 @@ class _Saving implements AvailabilityState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$SavingCopyWith<_Saving> get copyWith =>
-      __$SavingCopyWithImpl<_Saving>(this, _$identity);
+  _$SavingCopyWith<_Saving> get copyWith => __$SavingCopyWithImpl<_Saving>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Saving &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Saving && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -618,10 +595,8 @@ class _Saving implements AvailabilityState {
 }
 
 /// @nodoc
-abstract mixin class _$SavingCopyWith<$Res>
-    implements $AvailabilityStateCopyWith<$Res> {
-  factory _$SavingCopyWith(_Saving value, $Res Function(_Saving) _then) =
-      __$SavingCopyWithImpl;
+abstract mixin class _$SavingCopyWith<$Res> implements $AvailabilityStateCopyWith<$Res> {
+  factory _$SavingCopyWith(_Saving value, $Res Function(_Saving) _then) = __$SavingCopyWithImpl;
   @override
   @useResult
   $Res call({AvailabilityVM vm});
@@ -677,8 +652,7 @@ class _Saved implements AvailabilityState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$SavedCopyWith<_Saved> get copyWith =>
-      __$SavedCopyWithImpl<_Saved>(this, _$identity);
+  _$SavedCopyWith<_Saved> get copyWith => __$SavedCopyWithImpl<_Saved>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -699,10 +673,8 @@ class _Saved implements AvailabilityState {
 }
 
 /// @nodoc
-abstract mixin class _$SavedCopyWith<$Res>
-    implements $AvailabilityStateCopyWith<$Res> {
-  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) _then) =
-      __$SavedCopyWithImpl;
+abstract mixin class _$SavedCopyWith<$Res> implements $AvailabilityStateCopyWith<$Res> {
+  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) _then) = __$SavedCopyWithImpl;
   @override
   @useResult
   $Res call({AvailabilityVM vm, String message});
@@ -763,8 +735,7 @@ class _Deleted implements AvailabilityState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$DeletedCopyWith<_Deleted> get copyWith =>
-      __$DeletedCopyWithImpl<_Deleted>(this, _$identity);
+  _$DeletedCopyWith<_Deleted> get copyWith => __$DeletedCopyWithImpl<_Deleted>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -785,10 +756,8 @@ class _Deleted implements AvailabilityState {
 }
 
 /// @nodoc
-abstract mixin class _$DeletedCopyWith<$Res>
-    implements $AvailabilityStateCopyWith<$Res> {
-  factory _$DeletedCopyWith(_Deleted value, $Res Function(_Deleted) _then) =
-      __$DeletedCopyWithImpl;
+abstract mixin class _$DeletedCopyWith<$Res> implements $AvailabilityStateCopyWith<$Res> {
+  factory _$DeletedCopyWith(_Deleted value, $Res Function(_Deleted) _then) = __$DeletedCopyWithImpl;
   @override
   @useResult
   $Res call({AvailabilityVM vm, String message});
@@ -849,8 +818,7 @@ class _Error implements AvailabilityState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -871,10 +839,8 @@ class _Error implements AvailabilityState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $AvailabilityStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $AvailabilityStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({AvailabilityVM vm, String message});

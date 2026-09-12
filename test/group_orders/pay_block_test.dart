@@ -46,16 +46,14 @@ void main() {
 
     test('cancelada lo dice', () {
       expect(
-        orden(estado: GroupOrderStatus.cancelled)
-            .payBlockFor(myParticipantUuid: 'p-1', myShare: 68.50),
+        orden(estado: GroupOrderStatus.cancelled).payBlockFor(myParticipantUuid: 'p-1', myShare: 68.50),
         GroupOrderPayBlock.cancelled,
       );
     });
 
     test('cerrada lo dice', () {
       expect(
-        orden(estado: GroupOrderStatus.completed)
-            .payBlockFor(myParticipantUuid: 'p-1', myShare: 0),
+        orden(estado: GroupOrderStatus.completed).payBlockFor(myParticipantUuid: 'p-1', myShare: 0),
         GroupOrderPayBlock.completed,
       );
     });

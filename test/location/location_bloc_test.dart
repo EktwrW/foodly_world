@@ -122,16 +122,12 @@ void main() {
   }
 
   /// Predicados para discriminar variantes sin acceso a tipos privados.
-  bool isServiceDisabled(LocationState s) =>
-      s.maybeWhen(serviceDisabled: (_) => true, orElse: () => false);
-  bool isPermissionDenied(LocationState s) =>
-      s.maybeWhen(permissionDenied: (_) => true, orElse: () => false);
+  bool isServiceDisabled(LocationState s) => s.maybeWhen(serviceDisabled: (_) => true, orElse: () => false);
+  bool isPermissionDenied(LocationState s) => s.maybeWhen(permissionDenied: (_) => true, orElse: () => false);
   bool isPermissionPermanentlyDenied(LocationState s) =>
       s.maybeWhen(permissionPermanentlyDenied: (_) => true, orElse: () => false);
-  bool isLocationChecked(LocationState s) =>
-      s.maybeWhen(locationChecked: (_) => true, orElse: () => false);
-  bool isCheckingLocation(LocationState s) =>
-      s.maybeWhen(checkingLocation: () => true, orElse: () => false);
+  bool isLocationChecked(LocationState s) => s.maybeWhen(locationChecked: (_) => true, orElse: () => false);
+  bool isCheckingLocation(LocationState s) => s.maybeWhen(checkingLocation: () => true, orElse: () => false);
 
   LocationDetailsDM extractCheckedDM(LocationState s) =>
       s.maybeWhen(locationChecked: (dm) => dm, orElse: () => const LocationDetailsDM());
@@ -147,10 +143,8 @@ void main() {
       final bloc = buildBloc();
       final emitted = await runCheckLocationFlow(bloc);
 
-      expect(emitted.any(isCheckingLocation), true,
-          reason: 'Debe emitir checkingLocation primero');
-      expect(emitted.any(isServiceDisabled), true,
-          reason: 'Sin GPS, debe emitir ServiceDisabled — no LocationChecked');
+      expect(emitted.any(isCheckingLocation), true, reason: 'Debe emitir checkingLocation primero');
+      expect(emitted.any(isServiceDisabled), true, reason: 'Sin GPS, debe emitir ServiceDisabled — no LocationChecked');
       expect(emitted.any(isLocationChecked), false,
           reason: 'No debe avanzar al flow normal si el service está disabled');
 
@@ -273,7 +267,9 @@ void main() {
       await bloc.close();
     });
 
-    test('8. getCurrentPosition timeout + getLastKnownPosition null → emite LocationChecked con position null (no se cuelga)', () async {
+    test(
+        '8. getCurrentPosition timeout + getLastKnownPosition null → emite LocationChecked con position null (no se cuelga)',
+        () async {
       fakeGeolocator
         ..serviceEnabled = true
         ..permission = LocationPermission.whileInUse
@@ -386,7 +382,8 @@ void main() {
       fakeGeolocator
         ..serviceEnabled = true
         ..permission = LocationPermission.whileInUse
-        ..nextLastKnownPosition = _samplePosition(latitude: 38.7169, timestamp: DateTime.now().subtract(const Duration(hours: 3)))
+        ..nextLastKnownPosition =
+            _samplePosition(latitude: 38.7169, timestamp: DateTime.now().subtract(const Duration(hours: 3)))
         ..nextPosition = _samplePosition();
       final bloc = buildBloc();
       final emitted = await runCheckLocationFlow(bloc);

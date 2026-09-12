@@ -259,7 +259,8 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
               key: vm.formKey,
               autovalidateMode: vm.autovalidateMode,
               child: SingleChildScrollView(
-                physics: vm.tooltipActive ? const NeverScrollableScrollPhysics() : const AlwaysScrollableScrollPhysics(),
+                physics:
+                    vm.tooltipActive ? const NeverScrollableScrollPhysics() : const AlwaysScrollableScrollPhysics(),
                 padding: const EdgeInsets.only(
                     right: UIDimens.SCREEN_PADDING_MOB, left: UIDimens.SCREEN_PADDING_MOB, top: 12, bottom: 36),
                 child: Column(

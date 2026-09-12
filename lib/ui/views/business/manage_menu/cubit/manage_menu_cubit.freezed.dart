@@ -21,15 +21,12 @@ mixin _$ManageMenuState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ManageMenuStateCopyWith<ManageMenuState> get copyWith =>
-      _$ManageMenuStateCopyWithImpl<ManageMenuState>(
-          this as ManageMenuState, _$identity);
+      _$ManageMenuStateCopyWithImpl<ManageMenuState>(this as ManageMenuState, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is ManageMenuState &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is ManageMenuState && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -43,8 +40,7 @@ mixin _$ManageMenuState {
 
 /// @nodoc
 abstract mixin class $ManageMenuStateCopyWith<$Res> {
-  factory $ManageMenuStateCopyWith(
-          ManageMenuState value, $Res Function(ManageMenuState) _then) =
+  factory $ManageMenuStateCopyWith(ManageMenuState value, $Res Function(ManageMenuState) _then) =
       _$ManageMenuStateCopyWithImpl;
   @useResult
   $Res call({ManageMenuVM vm});
@@ -53,8 +49,7 @@ abstract mixin class $ManageMenuStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ManageMenuStateCopyWithImpl<$Res>
-    implements $ManageMenuStateCopyWith<$Res> {
+class _$ManageMenuStateCopyWithImpl<$Res> implements $ManageMenuStateCopyWith<$Res> {
   _$ManageMenuStateCopyWithImpl(this._self, this._then);
 
   final ManageMenuState _self;
@@ -324,15 +319,12 @@ class _Initial extends ManageMenuState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Initial &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Initial && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -345,10 +337,8 @@ class _Initial extends ManageMenuState {
 }
 
 /// @nodoc
-abstract mixin class _$InitialCopyWith<$Res>
-    implements $ManageMenuStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
-      __$InitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $ManageMenuStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({ManageMenuVM vm});
@@ -403,15 +393,12 @@ class _Loading extends ManageMenuState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadingCopyWith<_Loading> get copyWith =>
-      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+  _$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loading &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loading && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -424,10 +411,8 @@ class _Loading extends ManageMenuState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadingCopyWith<$Res>
-    implements $ManageMenuStateCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
-      __$LoadingCopyWithImpl;
+abstract mixin class _$LoadingCopyWith<$Res> implements $ManageMenuStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
   @override
   @useResult
   $Res call({ManageMenuVM vm});
@@ -482,15 +467,12 @@ class _Loaded extends ManageMenuState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loaded &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loaded && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -503,10 +485,8 @@ class _Loaded extends ManageMenuState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res>
-    implements $ManageMenuStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
-      __$LoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $ManageMenuStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
   @override
   @useResult
   $Res call({ManageMenuVM vm});
@@ -562,8 +542,7 @@ class _ShowSnackbar extends ManageMenuState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ShowSnackbarCopyWith<_ShowSnackbar> get copyWith =>
-      __$ShowSnackbarCopyWithImpl<_ShowSnackbar>(this, _$identity);
+  _$ShowSnackbarCopyWith<_ShowSnackbar> get copyWith => __$ShowSnackbarCopyWithImpl<_ShowSnackbar>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -584,11 +563,8 @@ class _ShowSnackbar extends ManageMenuState {
 }
 
 /// @nodoc
-abstract mixin class _$ShowSnackbarCopyWith<$Res>
-    implements $ManageMenuStateCopyWith<$Res> {
-  factory _$ShowSnackbarCopyWith(
-          _ShowSnackbar value, $Res Function(_ShowSnackbar) _then) =
-      __$ShowSnackbarCopyWithImpl;
+abstract mixin class _$ShowSnackbarCopyWith<$Res> implements $ManageMenuStateCopyWith<$Res> {
+  factory _$ShowSnackbarCopyWith(_ShowSnackbar value, $Res Function(_ShowSnackbar) _then) = __$ShowSnackbarCopyWithImpl;
   @override
   @useResult
   $Res call({ManageMenuVM vm, String msg});
@@ -598,8 +574,7 @@ abstract mixin class _$ShowSnackbarCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ShowSnackbarCopyWithImpl<$Res>
-    implements _$ShowSnackbarCopyWith<$Res> {
+class __$ShowSnackbarCopyWithImpl<$Res> implements _$ShowSnackbarCopyWith<$Res> {
   __$ShowSnackbarCopyWithImpl(this._self, this._then);
 
   final _ShowSnackbar _self;
@@ -650,8 +625,7 @@ class _Error extends ManageMenuState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -672,10 +646,8 @@ class _Error extends ManageMenuState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $ManageMenuStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $ManageMenuStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({String msg, ManageMenuVM vm});

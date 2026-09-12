@@ -162,8 +162,7 @@ void main() {
     });
 
     test('en prepago, confirmada YA no se edita (el cobro fue antes)', () {
-      final o = GroupOrders.openCart(mode: GroupPaymentMode.perRound)
-          .copyWith(status: GroupOrderStatus.confirmed);
+      final o = GroupOrders.openCart(mode: GroupPaymentMode.perRound).copyWith(status: GroupOrderStatus.confirmed);
 
       expect(o.isEditableCart, isFalse);
     });
@@ -208,8 +207,7 @@ void main() {
     });
 
     // 2026-08-08 — la UI no contradice al backend cuando no tiene qué objetar.
-    test('una comanda VACÍA no tiene nada pendiente (no degrada a preparando)',
-        () {
+    test('una comanda VACÍA no tiene nada pendiente (no degrada a preparando)', () {
       // Caso real: dos órdenes de prepago quedaron etiquetadas como cuenta
       // abierta por el backfill; sus ítems no tienen sent_at, así que el
       // checklist queda vacío. El panel las mostraba PREPARANDO estando

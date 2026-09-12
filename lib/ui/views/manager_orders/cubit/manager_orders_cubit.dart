@@ -133,17 +133,14 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
         () => _repo.managerSetFulfillment(orderUuid, status: status),
       );
 
-  Future<bool> setItemDelivered(String orderUuid, String itemUuid, bool delivered) =>
-      _applyAction(
+  Future<bool> setItemDelivered(String orderUuid, String itemUuid, bool delivered) => _applyAction(
         () => _repo.managerSetItemDelivered(orderUuid, itemUuid, delivered: delivered),
       );
 
-  Future<bool> deliverAll(String orderUuid) =>
-      _applyAction(() => _repo.managerDeliverAll(orderUuid));
+  Future<bool> deliverAll(String orderUuid) => _applyAction(() => _repo.managerDeliverAll(orderUuid));
 
   /// F4b.1: anula/restaura un ítem (plato devuelto) — deja de cobrarse.
-  Future<bool> setItemVoided(String orderUuid, String itemUuid, bool voided, {String? reason}) =>
-      _applyAction(
+  Future<bool> setItemVoided(String orderUuid, String itemUuid, bool voided, {String? reason}) => _applyAction(
         () => _repo.managerSetItemVoided(orderUuid, itemUuid, voided: voided, reason: reason),
       );
 

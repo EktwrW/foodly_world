@@ -16,8 +16,7 @@ T _$identity<T>(T value) => value;
 mixin _$LocationEvent {
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is LocationEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is LocationEvent);
   }
 
   @override
@@ -212,8 +211,7 @@ class _CheckLocation implements LocationEvent {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _CheckLocation);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _CheckLocation);
   }
 
   @override
@@ -244,8 +242,7 @@ class _SetManualLocation implements LocationEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _SetManualLocation &&
-            (identical(other.locationDM, locationDM) ||
-                other.locationDM == locationDM));
+            (identical(other.locationDM, locationDM) || other.locationDM == locationDM));
   }
 
   @override
@@ -258,10 +255,8 @@ class _SetManualLocation implements LocationEvent {
 }
 
 /// @nodoc
-abstract mixin class _$SetManualLocationCopyWith<$Res>
-    implements $LocationEventCopyWith<$Res> {
-  factory _$SetManualLocationCopyWith(
-          _SetManualLocation value, $Res Function(_SetManualLocation) _then) =
+abstract mixin class _$SetManualLocationCopyWith<$Res> implements $LocationEventCopyWith<$Res> {
+  factory _$SetManualLocationCopyWith(_SetManualLocation value, $Res Function(_SetManualLocation) _then) =
       __$SetManualLocationCopyWithImpl;
   @useResult
   $Res call({LocationDetailsDM locationDM});
@@ -270,8 +265,7 @@ abstract mixin class _$SetManualLocationCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SetManualLocationCopyWithImpl<$Res>
-    implements _$SetManualLocationCopyWith<$Res> {
+class __$SetManualLocationCopyWithImpl<$Res> implements _$SetManualLocationCopyWith<$Res> {
   __$SetManualLocationCopyWithImpl(this._self, this._then);
 
   final _SetManualLocation _self;
@@ -306,8 +300,7 @@ class __$SetManualLocationCopyWithImpl<$Res>
 mixin _$LocationState {
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is LocationState);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is LocationState);
   }
 
   @override
@@ -346,8 +339,7 @@ extension LocationStatePatterns on LocationState {
     TResult Function(_LocationError value)? locationError,
     TResult Function(_ServiceDisabled value)? serviceDisabled,
     TResult Function(_PermissionDenied value)? permissionDenied,
-    TResult Function(_PermissionPermanentlyDenied value)?
-        permissionPermanentlyDenied,
+    TResult Function(_PermissionPermanentlyDenied value)? permissionPermanentlyDenied,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -364,8 +356,7 @@ extension LocationStatePatterns on LocationState {
         return serviceDisabled(_that);
       case _PermissionDenied() when permissionDenied != null:
         return permissionDenied(_that);
-      case _PermissionPermanentlyDenied()
-          when permissionPermanentlyDenied != null:
+      case _PermissionPermanentlyDenied() when permissionPermanentlyDenied != null:
         return permissionPermanentlyDenied(_that);
       case _:
         return orElse();
@@ -393,8 +384,7 @@ extension LocationStatePatterns on LocationState {
     required TResult Function(_LocationError value) locationError,
     required TResult Function(_ServiceDisabled value) serviceDisabled,
     required TResult Function(_PermissionDenied value) permissionDenied,
-    required TResult Function(_PermissionPermanentlyDenied value)
-        permissionPermanentlyDenied,
+    required TResult Function(_PermissionPermanentlyDenied value) permissionPermanentlyDenied,
   }) {
     final _that = this;
     switch (_that) {
@@ -435,8 +425,7 @@ extension LocationStatePatterns on LocationState {
     TResult? Function(_LocationError value)? locationError,
     TResult? Function(_ServiceDisabled value)? serviceDisabled,
     TResult? Function(_PermissionDenied value)? permissionDenied,
-    TResult? Function(_PermissionPermanentlyDenied value)?
-        permissionPermanentlyDenied,
+    TResult? Function(_PermissionPermanentlyDenied value)? permissionPermanentlyDenied,
   }) {
     final _that = this;
     switch (_that) {
@@ -452,8 +441,7 @@ extension LocationStatePatterns on LocationState {
         return serviceDisabled(_that);
       case _PermissionDenied() when permissionDenied != null:
         return permissionDenied(_that);
-      case _PermissionPermanentlyDenied()
-          when permissionPermanentlyDenied != null:
+      case _PermissionPermanentlyDenied() when permissionPermanentlyDenied != null:
         return permissionPermanentlyDenied(_that);
       case _:
         return null;
@@ -497,8 +485,7 @@ extension LocationStatePatterns on LocationState {
         return serviceDisabled(_that.message);
       case _PermissionDenied() when permissionDenied != null:
         return permissionDenied(_that.message);
-      case _PermissionPermanentlyDenied()
-          when permissionPermanentlyDenied != null:
+      case _PermissionPermanentlyDenied() when permissionPermanentlyDenied != null:
         return permissionPermanentlyDenied(_that.message);
       case _:
         return orElse();
@@ -583,8 +570,7 @@ extension LocationStatePatterns on LocationState {
         return serviceDisabled(_that.message);
       case _PermissionDenied() when permissionDenied != null:
         return permissionDenied(_that.message);
-      case _PermissionPermanentlyDenied()
-          when permissionPermanentlyDenied != null:
+      case _PermissionPermanentlyDenied() when permissionPermanentlyDenied != null:
         return permissionPermanentlyDenied(_that.message);
       case _:
         return null;
@@ -599,8 +585,7 @@ class _Initial implements LocationState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _Initial);
   }
 
   @override
@@ -619,8 +604,7 @@ class _CheckingLocation implements LocationState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _CheckingLocation);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _CheckingLocation);
   }
 
   @override
@@ -651,8 +635,7 @@ class _LocationChecked implements LocationState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _LocationChecked &&
-            (identical(other.locationDM, locationDM) ||
-                other.locationDM == locationDM));
+            (identical(other.locationDM, locationDM) || other.locationDM == locationDM));
   }
 
   @override
@@ -665,10 +648,8 @@ class _LocationChecked implements LocationState {
 }
 
 /// @nodoc
-abstract mixin class _$LocationCheckedCopyWith<$Res>
-    implements $LocationStateCopyWith<$Res> {
-  factory _$LocationCheckedCopyWith(
-          _LocationChecked value, $Res Function(_LocationChecked) _then) =
+abstract mixin class _$LocationCheckedCopyWith<$Res> implements $LocationStateCopyWith<$Res> {
+  factory _$LocationCheckedCopyWith(_LocationChecked value, $Res Function(_LocationChecked) _then) =
       __$LocationCheckedCopyWithImpl;
   @useResult
   $Res call({LocationDetailsDM locationDM});
@@ -677,8 +658,7 @@ abstract mixin class _$LocationCheckedCopyWith<$Res>
 }
 
 /// @nodoc
-class __$LocationCheckedCopyWithImpl<$Res>
-    implements _$LocationCheckedCopyWith<$Res> {
+class __$LocationCheckedCopyWithImpl<$Res> implements _$LocationCheckedCopyWith<$Res> {
   __$LocationCheckedCopyWithImpl(this._self, this._then);
 
   final _LocationChecked _self;
@@ -741,18 +721,15 @@ class _LocationError implements LocationState {
 }
 
 /// @nodoc
-abstract mixin class _$LocationErrorCopyWith<$Res>
-    implements $LocationStateCopyWith<$Res> {
-  factory _$LocationErrorCopyWith(
-          _LocationError value, $Res Function(_LocationError) _then) =
+abstract mixin class _$LocationErrorCopyWith<$Res> implements $LocationStateCopyWith<$Res> {
+  factory _$LocationErrorCopyWith(_LocationError value, $Res Function(_LocationError) _then) =
       __$LocationErrorCopyWithImpl;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$LocationErrorCopyWithImpl<$Res>
-    implements _$LocationErrorCopyWith<$Res> {
+class __$LocationErrorCopyWithImpl<$Res> implements _$LocationErrorCopyWith<$Res> {
   __$LocationErrorCopyWithImpl(this._self, this._then);
 
   final _LocationError _self;
@@ -805,18 +782,15 @@ class _ServiceDisabled implements LocationState {
 }
 
 /// @nodoc
-abstract mixin class _$ServiceDisabledCopyWith<$Res>
-    implements $LocationStateCopyWith<$Res> {
-  factory _$ServiceDisabledCopyWith(
-          _ServiceDisabled value, $Res Function(_ServiceDisabled) _then) =
+abstract mixin class _$ServiceDisabledCopyWith<$Res> implements $LocationStateCopyWith<$Res> {
+  factory _$ServiceDisabledCopyWith(_ServiceDisabled value, $Res Function(_ServiceDisabled) _then) =
       __$ServiceDisabledCopyWithImpl;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$ServiceDisabledCopyWithImpl<$Res>
-    implements _$ServiceDisabledCopyWith<$Res> {
+class __$ServiceDisabledCopyWithImpl<$Res> implements _$ServiceDisabledCopyWith<$Res> {
   __$ServiceDisabledCopyWithImpl(this._self, this._then);
 
   final _ServiceDisabled _self;
@@ -869,18 +843,15 @@ class _PermissionDenied implements LocationState {
 }
 
 /// @nodoc
-abstract mixin class _$PermissionDeniedCopyWith<$Res>
-    implements $LocationStateCopyWith<$Res> {
-  factory _$PermissionDeniedCopyWith(
-          _PermissionDenied value, $Res Function(_PermissionDenied) _then) =
+abstract mixin class _$PermissionDeniedCopyWith<$Res> implements $LocationStateCopyWith<$Res> {
+  factory _$PermissionDeniedCopyWith(_PermissionDenied value, $Res Function(_PermissionDenied) _then) =
       __$PermissionDeniedCopyWithImpl;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$PermissionDeniedCopyWithImpl<$Res>
-    implements _$PermissionDeniedCopyWith<$Res> {
+class __$PermissionDeniedCopyWithImpl<$Res> implements _$PermissionDeniedCopyWith<$Res> {
   __$PermissionDeniedCopyWithImpl(this._self, this._then);
 
   final _PermissionDenied _self;
@@ -912,9 +883,8 @@ class _PermissionPermanentlyDenied implements LocationState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PermissionPermanentlyDeniedCopyWith<_PermissionPermanentlyDenied>
-      get copyWith => __$PermissionPermanentlyDeniedCopyWithImpl<
-          _PermissionPermanentlyDenied>(this, _$identity);
+  _$PermissionPermanentlyDeniedCopyWith<_PermissionPermanentlyDenied> get copyWith =>
+      __$PermissionPermanentlyDeniedCopyWithImpl<_PermissionPermanentlyDenied>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -934,19 +904,16 @@ class _PermissionPermanentlyDenied implements LocationState {
 }
 
 /// @nodoc
-abstract mixin class _$PermissionPermanentlyDeniedCopyWith<$Res>
-    implements $LocationStateCopyWith<$Res> {
+abstract mixin class _$PermissionPermanentlyDeniedCopyWith<$Res> implements $LocationStateCopyWith<$Res> {
   factory _$PermissionPermanentlyDeniedCopyWith(
-          _PermissionPermanentlyDenied value,
-          $Res Function(_PermissionPermanentlyDenied) _then) =
+          _PermissionPermanentlyDenied value, $Res Function(_PermissionPermanentlyDenied) _then) =
       __$PermissionPermanentlyDeniedCopyWithImpl;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$PermissionPermanentlyDeniedCopyWithImpl<$Res>
-    implements _$PermissionPermanentlyDeniedCopyWith<$Res> {
+class __$PermissionPermanentlyDeniedCopyWithImpl<$Res> implements _$PermissionPermanentlyDeniedCopyWith<$Res> {
   __$PermissionPermanentlyDeniedCopyWithImpl(this._self, this._then);
 
   final _PermissionPermanentlyDenied _self;

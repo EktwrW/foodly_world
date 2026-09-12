@@ -26,29 +26,24 @@ mixin _$AvailabilityVM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $AvailabilityVMCopyWith<AvailabilityVM> get copyWith =>
-      _$AvailabilityVMCopyWithImpl<AvailabilityVM>(
-          this as AvailabilityVM, _$identity);
+      _$AvailabilityVMCopyWithImpl<AvailabilityVM>(this as AvailabilityVM, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is AvailabilityVM &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            (identical(other.dateFrom, dateFrom) ||
-                other.dateFrom == dateFrom) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            (identical(other.dateFrom, dateFrom) || other.dateFrom == dateFrom) &&
             (identical(other.dateTo, dateTo) || other.dateTo == dateTo) &&
             const DeepCollectionEquality().equals(other.entries, entries) &&
-            (identical(other.isSaving, isSaving) ||
-                other.isSaving == isSaving) &&
-            (identical(other.isDeleting, isDeleting) ||
-                other.isDeleting == isDeleting));
+            (identical(other.isSaving, isSaving) || other.isSaving == isSaving) &&
+            (identical(other.isDeleting, isDeleting) || other.isDeleting == isDeleting));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, businessUuid, dateFrom, dateTo,
-      const DeepCollectionEquality().hash(entries), isSaving, isDeleting);
+  int get hashCode => Object.hash(
+      runtimeType, businessUuid, dateFrom, dateTo, const DeepCollectionEquality().hash(entries), isSaving, isDeleting);
 
   @override
   String toString() {
@@ -58,8 +53,7 @@ mixin _$AvailabilityVM {
 
 /// @nodoc
 abstract mixin class $AvailabilityVMCopyWith<$Res> {
-  factory $AvailabilityVMCopyWith(
-          AvailabilityVM value, $Res Function(AvailabilityVM) _then) =
+  factory $AvailabilityVMCopyWith(AvailabilityVM value, $Res Function(AvailabilityVM) _then) =
       _$AvailabilityVMCopyWithImpl;
   @useResult
   $Res call(
@@ -72,8 +66,7 @@ abstract mixin class $AvailabilityVMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AvailabilityVMCopyWithImpl<$Res>
-    implements $AvailabilityVMCopyWith<$Res> {
+class _$AvailabilityVMCopyWithImpl<$Res> implements $AvailabilityVMCopyWith<$Res> {
   _$AvailabilityVMCopyWithImpl(this._self, this._then);
 
   final AvailabilityVM _self;
@@ -213,21 +206,16 @@ extension AvailabilityVMPatterns on AvailabilityVM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            String? businessUuid,
-            DateTime? dateFrom,
-            DateTime? dateTo,
-            List<BusinessAvailabilityDM> entries,
-            bool isSaving,
-            bool isDeleting)?
+    TResult Function(String? businessUuid, DateTime? dateFrom, DateTime? dateTo, List<BusinessAvailabilityDM> entries,
+            bool isSaving, bool isDeleting)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _AvailabilityVM() when $default != null:
-        return $default(_that.businessUuid, _that.dateFrom, _that.dateTo,
-            _that.entries, _that.isSaving, _that.isDeleting);
+        return $default(
+            _that.businessUuid, _that.dateFrom, _that.dateTo, _that.entries, _that.isSaving, _that.isDeleting);
       case _:
         return orElse();
     }
@@ -248,20 +236,15 @@ extension AvailabilityVMPatterns on AvailabilityVM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            String? businessUuid,
-            DateTime? dateFrom,
-            DateTime? dateTo,
-            List<BusinessAvailabilityDM> entries,
-            bool isSaving,
-            bool isDeleting)
+    TResult Function(String? businessUuid, DateTime? dateFrom, DateTime? dateTo, List<BusinessAvailabilityDM> entries,
+            bool isSaving, bool isDeleting)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _AvailabilityVM():
-        return $default(_that.businessUuid, _that.dateFrom, _that.dateTo,
-            _that.entries, _that.isSaving, _that.isDeleting);
+        return $default(
+            _that.businessUuid, _that.dateFrom, _that.dateTo, _that.entries, _that.isSaving, _that.isDeleting);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -281,20 +264,15 @@ extension AvailabilityVMPatterns on AvailabilityVM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            String? businessUuid,
-            DateTime? dateFrom,
-            DateTime? dateTo,
-            List<BusinessAvailabilityDM> entries,
-            bool isSaving,
-            bool isDeleting)?
+    TResult? Function(String? businessUuid, DateTime? dateFrom, DateTime? dateTo, List<BusinessAvailabilityDM> entries,
+            bool isSaving, bool isDeleting)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _AvailabilityVM() when $default != null:
-        return $default(_that.businessUuid, _that.dateFrom, _that.dateTo,
-            _that.entries, _that.isSaving, _that.isDeleting);
+        return $default(
+            _that.businessUuid, _that.dateFrom, _that.dateTo, _that.entries, _that.isSaving, _that.isDeleting);
       case _:
         return null;
     }
@@ -349,21 +327,17 @@ class _AvailabilityVM extends AvailabilityVM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _AvailabilityVM &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
-            (identical(other.dateFrom, dateFrom) ||
-                other.dateFrom == dateFrom) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
+            (identical(other.dateFrom, dateFrom) || other.dateFrom == dateFrom) &&
             (identical(other.dateTo, dateTo) || other.dateTo == dateTo) &&
             const DeepCollectionEquality().equals(other._entries, _entries) &&
-            (identical(other.isSaving, isSaving) ||
-                other.isSaving == isSaving) &&
-            (identical(other.isDeleting, isDeleting) ||
-                other.isDeleting == isDeleting));
+            (identical(other.isSaving, isSaving) || other.isSaving == isSaving) &&
+            (identical(other.isDeleting, isDeleting) || other.isDeleting == isDeleting));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, businessUuid, dateFrom, dateTo,
-      const DeepCollectionEquality().hash(_entries), isSaving, isDeleting);
+  int get hashCode => Object.hash(
+      runtimeType, businessUuid, dateFrom, dateTo, const DeepCollectionEquality().hash(_entries), isSaving, isDeleting);
 
   @override
   String toString() {
@@ -372,10 +346,8 @@ class _AvailabilityVM extends AvailabilityVM {
 }
 
 /// @nodoc
-abstract mixin class _$AvailabilityVMCopyWith<$Res>
-    implements $AvailabilityVMCopyWith<$Res> {
-  factory _$AvailabilityVMCopyWith(
-          _AvailabilityVM value, $Res Function(_AvailabilityVM) _then) =
+abstract mixin class _$AvailabilityVMCopyWith<$Res> implements $AvailabilityVMCopyWith<$Res> {
+  factory _$AvailabilityVMCopyWith(_AvailabilityVM value, $Res Function(_AvailabilityVM) _then) =
       __$AvailabilityVMCopyWithImpl;
   @override
   @useResult
@@ -389,8 +361,7 @@ abstract mixin class _$AvailabilityVMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$AvailabilityVMCopyWithImpl<$Res>
-    implements _$AvailabilityVMCopyWith<$Res> {
+class __$AvailabilityVMCopyWithImpl<$Res> implements _$AvailabilityVMCopyWith<$Res> {
   __$AvailabilityVMCopyWithImpl(this._self, this._then);
 
   final _AvailabilityVM _self;

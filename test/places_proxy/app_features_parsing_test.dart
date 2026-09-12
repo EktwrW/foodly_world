@@ -14,15 +14,13 @@ void main() {
   group('AppFeaturesDM.fromJson', () {
     test('parsea el shape actual del backend', () {
       const jsonStr = '{"places_proxy_enabled": true}';
-      final parsed =
-          AppFeaturesDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      final parsed = AppFeaturesDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
       expect(parsed.placesProxyEnabled, isTrue);
     });
 
     test('flag en false funciona (kill-switch activado)', () {
       const jsonStr = '{"places_proxy_enabled": false}';
-      final parsed =
-          AppFeaturesDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      final parsed = AppFeaturesDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
       expect(parsed.placesProxyEnabled, isFalse);
     });
 
@@ -32,10 +30,8 @@ void main() {
       // del flag signifique "proxy activado" (default seguro: el proxy
       // existe, si falla hay fallback cliente-side).
       const jsonStr = '{}';
-      final parsed =
-          AppFeaturesDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
-      expect(parsed.placesProxyEnabled, isTrue,
-          reason: 'Ausencia del flag debe caer al @Default(true)');
+      final parsed = AppFeaturesDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      expect(parsed.placesProxyEnabled, isTrue, reason: 'Ausencia del flag debe caer al @Default(true)');
     });
 
     test('forward compat: flags futuros no rompen el parse', () {
@@ -56,8 +52,7 @@ void main() {
         () => AppFeaturesDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>),
         returnsNormally,
       );
-      final parsed =
-          AppFeaturesDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      final parsed = AppFeaturesDM.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
       expect(parsed.placesProxyEnabled, isFalse);
     });
 

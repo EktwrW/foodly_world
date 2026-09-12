@@ -21,15 +21,12 @@ mixin _$ContactState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ContactStateCopyWith<ContactState> get copyWith =>
-      _$ContactStateCopyWithImpl<ContactState>(
-          this as ContactState, _$identity);
+      _$ContactStateCopyWithImpl<ContactState>(this as ContactState, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is ContactState &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is ContactState && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -43,9 +40,7 @@ mixin _$ContactState {
 
 /// @nodoc
 abstract mixin class $ContactStateCopyWith<$Res> {
-  factory $ContactStateCopyWith(
-          ContactState value, $Res Function(ContactState) _then) =
-      _$ContactStateCopyWithImpl;
+  factory $ContactStateCopyWith(ContactState value, $Res Function(ContactState) _then) = _$ContactStateCopyWithImpl;
   @useResult
   $Res call({ContactVM vm});
 
@@ -305,15 +300,12 @@ class _Idle implements ContactState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$IdleCopyWith<_Idle> get copyWith =>
-      __$IdleCopyWithImpl<_Idle>(this, _$identity);
+  _$IdleCopyWith<_Idle> get copyWith => __$IdleCopyWithImpl<_Idle>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Idle &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Idle && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -326,10 +318,8 @@ class _Idle implements ContactState {
 }
 
 /// @nodoc
-abstract mixin class _$IdleCopyWith<$Res>
-    implements $ContactStateCopyWith<$Res> {
-  factory _$IdleCopyWith(_Idle value, $Res Function(_Idle) _then) =
-      __$IdleCopyWithImpl;
+abstract mixin class _$IdleCopyWith<$Res> implements $ContactStateCopyWith<$Res> {
+  factory _$IdleCopyWith(_Idle value, $Res Function(_Idle) _then) = __$IdleCopyWithImpl;
   @override
   @useResult
   $Res call({ContactVM vm});
@@ -384,15 +374,12 @@ class _Sending implements ContactState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$SendingCopyWith<_Sending> get copyWith =>
-      __$SendingCopyWithImpl<_Sending>(this, _$identity);
+  _$SendingCopyWith<_Sending> get copyWith => __$SendingCopyWithImpl<_Sending>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Sending &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Sending && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -405,10 +392,8 @@ class _Sending implements ContactState {
 }
 
 /// @nodoc
-abstract mixin class _$SendingCopyWith<$Res>
-    implements $ContactStateCopyWith<$Res> {
-  factory _$SendingCopyWith(_Sending value, $Res Function(_Sending) _then) =
-      __$SendingCopyWithImpl;
+abstract mixin class _$SendingCopyWith<$Res> implements $ContactStateCopyWith<$Res> {
+  factory _$SendingCopyWith(_Sending value, $Res Function(_Sending) _then) = __$SendingCopyWithImpl;
   @override
   @useResult
   $Res call({ContactVM vm});
@@ -463,15 +448,12 @@ class _Sent implements ContactState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$SentCopyWith<_Sent> get copyWith =>
-      __$SentCopyWithImpl<_Sent>(this, _$identity);
+  _$SentCopyWith<_Sent> get copyWith => __$SentCopyWithImpl<_Sent>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Sent &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Sent && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -484,10 +466,8 @@ class _Sent implements ContactState {
 }
 
 /// @nodoc
-abstract mixin class _$SentCopyWith<$Res>
-    implements $ContactStateCopyWith<$Res> {
-  factory _$SentCopyWith(_Sent value, $Res Function(_Sent) _then) =
-      __$SentCopyWithImpl;
+abstract mixin class _$SentCopyWith<$Res> implements $ContactStateCopyWith<$Res> {
+  factory _$SentCopyWith(_Sent value, $Res Function(_Sent) _then) = __$SentCopyWithImpl;
   @override
   @useResult
   $Res call({ContactVM vm});
@@ -543,8 +523,7 @@ class _Error implements ContactState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -565,10 +544,8 @@ class _Error implements ContactState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $ContactStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $ContactStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({String msg, ContactVM vm});

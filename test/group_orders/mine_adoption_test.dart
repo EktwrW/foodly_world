@@ -95,8 +95,7 @@ void main() {
   // ── Fantasmas: lo que NO se puede resucitar ──────────────────────────
 
   group('fantasmas — órdenes que /mine devuelve pero el chip no debe adoptar', () {
-    test('confirmada hace más de 12 h: el backend la sigue mandando, el chip no la toma',
-        () async {
+    test('confirmada hace más de 12 h: el backend la sigue mandando, el chip no la toma', () async {
       // El TTL vive SOLO en el cliente. `mine` no filtra por antigüedad: una
       // orden de un negocio que no opera el panel se queda en `confirmed`
       // indefinidamente y viaja en cada respuesta. Es el fantasma de €163.
@@ -239,8 +238,7 @@ void main() {
       await Future<void>.delayed(Duration.zero);
 
       // Los dos pasaron la guarda: `syncAnyActive` lee `_busy` pero no lo toma.
-      expect(repo.llamadasAMine, 2,
-          reason: 'comportamiento actual: nada serializa dos sync entre sí');
+      expect(repo.llamadasAMine, 2, reason: 'comportamiento actual: nada serializa dos sync entre sí');
 
       repo.liberar();
       await Future.wait([primero, segundo]);
@@ -248,8 +246,7 @@ void main() {
       await sub.cancel();
 
       expect(cubit.state?.uuid, 'la-unica');
-      expect(emisiones.length, 1,
-          reason: 'bloc deduplica estados iguales: el chip no puede parpadear');
+      expect(emisiones.length, 1, reason: 'bloc deduplica estados iguales: el chip no puede parpadear');
     });
 
     test('en secuencia, el segundo sync ni siquiera pregunta', () async {
@@ -258,8 +255,7 @@ void main() {
       await cubit.syncAnyActive();
       await cubit.syncAnyActive();
 
-      expect(repo.llamadasAMine, 1,
-          reason: 'con estado ya adoptado la guarda `state != null` corta el segundo');
+      expect(repo.llamadasAMine, 1, reason: 'con estado ya adoptado la guarda `state != null` corta el segundo');
       expect(cubit.state?.uuid, 'la-unica');
     });
 
@@ -307,8 +303,7 @@ void main() {
       await cubit.syncAnyActive();
 
       expect(cubit.state?.uuid, 'mi-carrito');
-      expect(repo.llamadasAMine, 0,
-          reason: 'con estado presente ni siquiera se pregunta');
+      expect(repo.llamadasAMine, 0, reason: 'con estado presente ni siquiera se pregunta');
     });
 
     test('503 (kill-switch del feature): también silencioso', () async {
@@ -347,8 +342,7 @@ void main() {
         // El cerrojo sigue tomado: la escritura de arriba no terminó.
         final unido = await cubit.joinWithCode('ABC123');
         expect(unido, isFalse);
-        expect(repo.llamadasAJoin, 0,
-            reason: 'end() no puede habilitar una petición concurrente');
+        expect(repo.llamadasAJoin, 0, reason: 'end() no puede habilitar una petición concurrente');
 
         repo.liberarCrear();
         await creando;
@@ -431,8 +425,7 @@ class _RepoDeMine implements GroupOrderRepo {
 
   @override
   Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid, {bool coalesce = false}) async =>
-      respuestaDeGet ??
-      ApiResult.success(GroupOrderResponseDM(groupOrder: GroupOrderDM(uuid: uuid)));
+      respuestaDeGet ?? ApiResult.success(GroupOrderResponseDM(groupOrder: GroupOrderDM(uuid: uuid)));
 
   @override
   Future<ApiResult<GroupOrderResponseDM>> createGroupOrder({

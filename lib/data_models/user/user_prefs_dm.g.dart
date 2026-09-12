@@ -11,11 +11,9 @@ _UserPrefsDM _$UserPrefsDMFromJson(Map<String, dynamic> json) => _UserPrefsDM(
       userTheme: $enumDecodeNullable(_$UserThemeEnumMap, json['user_theme']),
     );
 
-Map<String, dynamic> _$UserPrefsDMToJson(_UserPrefsDM instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$UserPrefsDMToJson(_UserPrefsDM instance) => <String, dynamic>{
       if (instance.locale case final value?) 'user_locale': value,
-      if (_$UserThemeEnumMap[instance.userTheme] case final value?)
-        'user_theme': value,
+      if (_$UserThemeEnumMap[instance.userTheme] case final value?) 'user_theme': value,
     };
 
 const _$UserThemeEnumMap = {

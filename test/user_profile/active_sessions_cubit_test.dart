@@ -97,9 +97,8 @@ class _FakeRepo implements MeRepo {
   final List<String> cerradas = [];
 
   @override
-  Future<ApiResult<ActiveSessionsDM>> getActiveSessions() async => fallaCarga
-      ? const ApiResult.failure(AppRequestException(error: 'sin red'))
-      : ApiResult.success(sesiones);
+  Future<ApiResult<ActiveSessionsDM>> getActiveSessions() async =>
+      fallaCarga ? const ApiResult.failure(AppRequestException(error: 'sin red')) : ApiResult.success(sesiones);
 
   @override
   Future<ApiResult<void>> closeSession(String sessionId) async {

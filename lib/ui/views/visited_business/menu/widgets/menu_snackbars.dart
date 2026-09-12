@@ -57,4 +57,3 @@ class MenuSnackbars {
 /// escaneable en un Z Fold cerrado sin comerse el texto de al lado.
 double _ladoDelQr(BuildContext context) =>
     (MediaQuery.sizeOf(context).width * .46 - FoodlyQrCard.chrome).clamp(120.0, 190.0);
-

@@ -47,20 +47,15 @@ mixin _$AnalyticsVM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is AnalyticsVM &&
-            (identical(other.business, business) ||
-                other.business == business) &&
+            (identical(other.business, business) || other.business == business) &&
             (identical(other.kind, kind) || other.kind == kind) &&
-            (identical(other.overview, overview) ||
-                other.overview == overview) &&
-            (identical(other.serviceOverview, serviceOverview) ||
-                other.serviceOverview == serviceOverview) &&
-            (identical(other.selectedDays, selectedDays) ||
-                other.selectedDays == selectedDays));
+            (identical(other.overview, overview) || other.overview == overview) &&
+            (identical(other.serviceOverview, serviceOverview) || other.serviceOverview == serviceOverview) &&
+            (identical(other.selectedDays, selectedDays) || other.selectedDays == selectedDays));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, business, kind, overview, serviceOverview, selectedDays);
+  int get hashCode => Object.hash(runtimeType, business, kind, overview, serviceOverview, selectedDays);
 
   @override
   String toString() {
@@ -70,9 +65,7 @@ mixin _$AnalyticsVM {
 
 /// @nodoc
 abstract mixin class $AnalyticsVMCopyWith<$Res> {
-  factory $AnalyticsVMCopyWith(
-          AnalyticsVM value, $Res Function(AnalyticsVM) _then) =
-      _$AnalyticsVMCopyWithImpl;
+  factory $AnalyticsVMCopyWith(AnalyticsVM value, $Res Function(AnalyticsVM) _then) = _$AnalyticsVMCopyWithImpl;
   @useResult
   $Res call(
       {BusinessDM? business,
@@ -165,8 +158,7 @@ class _$AnalyticsVMCopyWithImpl<$Res> implements $AnalyticsVMCopyWith<$Res> {
       return null;
     }
 
-    return $ServiceOverviewDataDMCopyWith<$Res>(_self.serviceOverview!,
-        (value) {
+    return $ServiceOverviewDataDMCopyWith<$Res>(_self.serviceOverview!, (value) {
       return _then(_self.copyWith(serviceOverview: value));
     });
   }
@@ -265,20 +257,15 @@ extension AnalyticsVMPatterns on AnalyticsVM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            BusinessDM? business,
-            AnalyticsKind kind,
-            BusinessOverviewDataDM? overview,
-            ServiceOverviewDataDM? serviceOverview,
-            int selectedDays)?
+    TResult Function(BusinessDM? business, AnalyticsKind kind, BusinessOverviewDataDM? overview,
+            ServiceOverviewDataDM? serviceOverview, int selectedDays)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _AnalyticsVM() when $default != null:
-        return $default(_that.business, _that.kind, _that.overview,
-            _that.serviceOverview, _that.selectedDays);
+        return $default(_that.business, _that.kind, _that.overview, _that.serviceOverview, _that.selectedDays);
       case _:
         return orElse();
     }
@@ -299,19 +286,14 @@ extension AnalyticsVMPatterns on AnalyticsVM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            BusinessDM? business,
-            AnalyticsKind kind,
-            BusinessOverviewDataDM? overview,
-            ServiceOverviewDataDM? serviceOverview,
-            int selectedDays)
+    TResult Function(BusinessDM? business, AnalyticsKind kind, BusinessOverviewDataDM? overview,
+            ServiceOverviewDataDM? serviceOverview, int selectedDays)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _AnalyticsVM():
-        return $default(_that.business, _that.kind, _that.overview,
-            _that.serviceOverview, _that.selectedDays);
+        return $default(_that.business, _that.kind, _that.overview, _that.serviceOverview, _that.selectedDays);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -331,19 +313,14 @@ extension AnalyticsVMPatterns on AnalyticsVM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            BusinessDM? business,
-            AnalyticsKind kind,
-            BusinessOverviewDataDM? overview,
-            ServiceOverviewDataDM? serviceOverview,
-            int selectedDays)?
+    TResult? Function(BusinessDM? business, AnalyticsKind kind, BusinessOverviewDataDM? overview,
+            ServiceOverviewDataDM? serviceOverview, int selectedDays)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _AnalyticsVM() when $default != null:
-        return $default(_that.business, _that.kind, _that.overview,
-            _that.serviceOverview, _that.selectedDays);
+        return $default(_that.business, _that.kind, _that.overview, _that.serviceOverview, _that.selectedDays);
       case _:
         return null;
     }
@@ -393,28 +370,22 @@ class _AnalyticsVM implements AnalyticsVM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$AnalyticsVMCopyWith<_AnalyticsVM> get copyWith =>
-      __$AnalyticsVMCopyWithImpl<_AnalyticsVM>(this, _$identity);
+  _$AnalyticsVMCopyWith<_AnalyticsVM> get copyWith => __$AnalyticsVMCopyWithImpl<_AnalyticsVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _AnalyticsVM &&
-            (identical(other.business, business) ||
-                other.business == business) &&
+            (identical(other.business, business) || other.business == business) &&
             (identical(other.kind, kind) || other.kind == kind) &&
-            (identical(other.overview, overview) ||
-                other.overview == overview) &&
-            (identical(other.serviceOverview, serviceOverview) ||
-                other.serviceOverview == serviceOverview) &&
-            (identical(other.selectedDays, selectedDays) ||
-                other.selectedDays == selectedDays));
+            (identical(other.overview, overview) || other.overview == overview) &&
+            (identical(other.serviceOverview, serviceOverview) || other.serviceOverview == serviceOverview) &&
+            (identical(other.selectedDays, selectedDays) || other.selectedDays == selectedDays));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, business, kind, overview, serviceOverview, selectedDays);
+  int get hashCode => Object.hash(runtimeType, business, kind, overview, serviceOverview, selectedDays);
 
   @override
   String toString() {
@@ -423,11 +394,8 @@ class _AnalyticsVM implements AnalyticsVM {
 }
 
 /// @nodoc
-abstract mixin class _$AnalyticsVMCopyWith<$Res>
-    implements $AnalyticsVMCopyWith<$Res> {
-  factory _$AnalyticsVMCopyWith(
-          _AnalyticsVM value, $Res Function(_AnalyticsVM) _then) =
-      __$AnalyticsVMCopyWithImpl;
+abstract mixin class _$AnalyticsVMCopyWith<$Res> implements $AnalyticsVMCopyWith<$Res> {
+  factory _$AnalyticsVMCopyWith(_AnalyticsVM value, $Res Function(_AnalyticsVM) _then) = __$AnalyticsVMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -524,8 +492,7 @@ class __$AnalyticsVMCopyWithImpl<$Res> implements _$AnalyticsVMCopyWith<$Res> {
       return null;
     }
 
-    return $ServiceOverviewDataDMCopyWith<$Res>(_self.serviceOverview!,
-        (value) {
+    return $ServiceOverviewDataDMCopyWith<$Res>(_self.serviceOverview!, (value) {
       return _then(_self.copyWith(serviceOverview: value));
     });
   }

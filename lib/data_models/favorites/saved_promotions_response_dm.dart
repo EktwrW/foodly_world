@@ -20,8 +20,7 @@ abstract class SavedPromoBusinessDM with _$SavedPromoBusinessDM {
     @JsonKey(name: 'hours_display') String? hoursDisplay,
   }) = _SavedPromoBusinessDM;
 
-  factory SavedPromoBusinessDM.fromJson(Map<String, dynamic> json) =>
-      _$SavedPromoBusinessDMFromJson(json);
+  factory SavedPromoBusinessDM.fromJson(Map<String, dynamic> json) => _$SavedPromoBusinessDMFromJson(json);
 
   /// Same parsing rules as [BusinessDM.currentStatus] — keeps the saved-
   /// promotions card and the regular business card on the same enum
@@ -42,8 +41,7 @@ abstract class SavedPromotionsResponseDM with _$SavedPromotionsResponseDM {
     SavedPromosMeta? meta,
   }) = _SavedPromotionsResponseDM;
 
-  factory SavedPromotionsResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$SavedPromotionsResponseDMFromJson(json);
+  factory SavedPromotionsResponseDM.fromJson(Map<String, dynamic> json) => _$SavedPromotionsResponseDMFromJson(json);
 }
 
 @freezed
@@ -52,6 +50,5 @@ abstract class SavedPromosMeta with _$SavedPromosMeta {
     @Default(0) int total,
   }) = _SavedPromosMeta;
 
-  factory SavedPromosMeta.fromJson(Map<String, dynamic> json) =>
-      _$SavedPromosMetaFromJson(json);
+  factory SavedPromosMeta.fromJson(Map<String, dynamic> json) => _$SavedPromosMetaFromJson(json);
 }

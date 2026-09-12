@@ -31,10 +31,17 @@ abstract final class MenuQrBatchPdf {
   /// Puntuación tipográfica → equivalente ASCII. Ver la nota de la clase: en
   /// pantalla un glifo faltante es un detalle; acá va impreso y pegado a la mesa.
   static const _asciiFallbacks = {
-    '—': '-', '–': '-', '‑': '-',
-    '“': '"', '”': '"', '„': '"',
-    '‘': "'", '’': "'",
-    '…': '...', '•': '-', '·': '-',
+    '—': '-',
+    '–': '-',
+    '‑': '-',
+    '“': '"',
+    '”': '"',
+    '„': '"',
+    '‘': "'",
+    '’': "'",
+    '…': '...',
+    '•': '-',
+    '·': '-',
     ' ': ' ',
   };
 

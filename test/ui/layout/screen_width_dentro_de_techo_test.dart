@@ -6,24 +6,9 @@ import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-/// `context.screenWidth` dentro de un techo de ancho.
-///
-/// LA TRAMPA (2026-09-12). `ContentColumn` acota a sus hijos, pero un hijo que
-/// se dimensiona con `context.screenWidth` NO se entera: sigue leyendo el ancho
-/// de la PANTALLA, no el de la caja en la que esta. En telefono da igual
-/// —pantalla y caja miden lo mismo— pero en tableta son 1032 contra 700.
-///
-/// MEDIDO, y sale mejor de lo que parecia: NO rompe nada. Tanto un `SizedBox`
-/// como el `ToggleSwitch` de las pestañas respetan las constraints que les
-/// bajan y se quedan en el techo. No hay overflow ni en tableta.
-///
-/// Lo que SI queda mal es la intencion: quien escribio `minWidth:
-/// context.screenWidth` queria «todo el ancho», y dentro de un techo eso pasa a
-/// significar «el ancho del techo». Sale bien por accidente, no por diseño.
-///
-/// Este test fija ese comportamiento para que un cambio de version de
-/// `toggle_switch` —o un techo aplicado a otra pantalla— no lo convierta en un
-/// overflow de verdad sin que nadie se entere.
+/// Un hijo que se dimensiona con `context.screenWidth` dentro de un techo lee
+/// la PANTALLA, no la caja. Medido: no desborda —tanto `SizedBox` como
+/// `ToggleSwitch` respetan las constraints—, pero sale bien por accidente.
 void main() {
   Future<void> pintar(WidgetTester tester, double ancho, Widget Function(BuildContext) hijo) async {
     tester.view.devicePixelRatio = 1;

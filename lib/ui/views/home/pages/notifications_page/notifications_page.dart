@@ -155,7 +155,8 @@ class NotificationsPage extends StatelessWidget {
                                   ),
                                 Flexible(
                                   child: InkWell(
-                                    onTap: () => context.read<NotificationsCubit>().deleteNotification(notification.uuid),
+                                    onTap: () =>
+                                        context.read<NotificationsCubit>().deleteNotification(notification.uuid),
                                     splashFactory: InkRipple.splashFactory,
                                     customBorder: const CircleBorder(),
                                     child: const Icon(Bootstrap.trash3, size: 20),

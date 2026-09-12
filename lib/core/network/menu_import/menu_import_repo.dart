@@ -72,9 +72,8 @@ class MenuImportRepo {
         );
       }));
 
-      final response = await _client
-          .uploadImages(businessMenuUuid, images: parts, sessionId: sessionId)
-          .timeout(_uploadTimeout);
+      final response =
+          await _client.uploadImages(businessMenuUuid, images: parts, sessionId: sessionId).timeout(_uploadTimeout);
 
       return ApiResult.success(response);
     } catch (e, st) {
@@ -112,9 +111,7 @@ class MenuImportRepo {
     required MenuImportBulkDTO body,
   }) async {
     try {
-      final response = await _client
-          .bulkImport(businessMenuUuid, body)
-          .timeout(_bulkTimeout);
+      final response = await _client.bulkImport(businessMenuUuid, body).timeout(_bulkTimeout);
       return ApiResult.success(response);
     } catch (e, st) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: st));

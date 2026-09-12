@@ -50,16 +50,14 @@ void main() {
   group('el aviso — se decide sin red', () {
     test('una petición nueva de reserva sí interrumpe', () {
       expect(
-        aviso(subType: FoodlyNotificationSubType.newReservationRequest)
-            .deservesProactiveDialog(now: ahora),
+        aviso(subType: FoodlyNotificationSubType.newReservationRequest).deservesProactiveDialog(now: ahora),
         isTrue,
       );
     });
 
     test('una confirmación sí interrumpe: es la buena noticia que se espera', () {
       expect(
-        aviso(subType: FoodlyNotificationSubType.reservationConfirmed)
-            .deservesProactiveDialog(now: ahora),
+        aviso(subType: FoodlyNotificationSubType.reservationConfirmed).deservesProactiveDialog(now: ahora),
         isTrue,
       );
     });
@@ -147,8 +145,7 @@ void main() {
         ReservationStatus.confirmed,
       ]) {
         expect(
-          reserva(fecha: ahora.add(const Duration(days: 3)), estado: estado)
-              .deservesProactiveDialog(now: ahora),
+          reserva(fecha: ahora.add(const Duration(days: 3)), estado: estado).deservesProactiveDialog(now: ahora),
           isTrue,
           reason: estado.toString(),
         );
@@ -163,8 +160,7 @@ void main() {
         ReservationStatus.noShow,
       ]) {
         expect(
-          reserva(fecha: ahora.add(const Duration(days: 3)), estado: estado)
-              .deservesProactiveDialog(now: ahora),
+          reserva(fecha: ahora.add(const Duration(days: 3)), estado: estado).deservesProactiveDialog(now: ahora),
           isFalse,
           reason: estado.toString(),
         );
@@ -195,8 +191,7 @@ void main() {
 
     test('sin fecha no se interrumpe', () {
       expect(
-        reserva(fecha: null, estado: ReservationStatus.pending)
-            .deservesProactiveDialog(now: ahora),
+        reserva(fecha: null, estado: ReservationStatus.pending).deservesProactiveDialog(now: ahora),
         isFalse,
       );
     });

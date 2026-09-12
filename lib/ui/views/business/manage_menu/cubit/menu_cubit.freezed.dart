@@ -77,14 +77,12 @@ mixin _$MenuState {
   /// Create a copy of MenuState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $MenuStateCopyWith<MenuState> get copyWith =>
-      throw _privateConstructorUsedError;
+  $MenuStateCopyWith<MenuState> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $MenuStateCopyWith<$Res> {
-  factory $MenuStateCopyWith(MenuState value, $Res Function(MenuState) then) =
-      _$MenuStateCopyWithImpl<$Res, MenuState>;
+  factory $MenuStateCopyWith(MenuState value, $Res Function(MenuState) then) = _$MenuStateCopyWithImpl<$Res, MenuState>;
   @useResult
   $Res call({MenuVM vm});
 
@@ -92,8 +90,7 @@ abstract class $MenuStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MenuStateCopyWithImpl<$Res, $Val extends MenuState>
-    implements $MenuStateCopyWith<$Res> {
+class _$MenuStateCopyWithImpl<$Res, $Val extends MenuState> implements $MenuStateCopyWith<$Res> {
   _$MenuStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -128,10 +125,8 @@ class _$MenuStateCopyWithImpl<$Res, $Val extends MenuState>
 }
 
 /// @nodoc
-abstract class _$$InitialImplCopyWith<$Res>
-    implements $MenuStateCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+abstract class _$$InitialImplCopyWith<$Res> implements $MenuStateCopyWith<$Res> {
+  factory _$$InitialImplCopyWith(_$InitialImpl value, $Res Function(_$InitialImpl) then) =
       __$$InitialImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -142,12 +137,9 @@ abstract class _$$InitialImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$MenuStateCopyWithImpl<$Res, _$InitialImpl>
+class __$$InitialImplCopyWithImpl<$Res> extends _$MenuStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
-      : super(_value, _then);
+  __$$InitialImplCopyWithImpl(_$InitialImpl _value, $Res Function(_$InitialImpl) _then) : super(_value, _then);
 
   /// Create a copy of MenuState
   /// with the given fields replaced by the non-null parameter values.
@@ -189,9 +181,7 @@ class _$InitialImpl extends _Initial with DiagnosticableTreeMixin {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$InitialImpl &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _$InitialImpl && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -202,8 +192,7 @@ class _$InitialImpl extends _Initial with DiagnosticableTreeMixin {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
+  _$$InitialImplCopyWith<_$InitialImpl> get copyWith => __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -297,15 +286,12 @@ abstract class _Initial extends MenuState {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$InitialImplCopyWith<_$InitialImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res>
-    implements $MenuStateCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+abstract class _$$LoadingImplCopyWith<$Res> implements $MenuStateCopyWith<$Res> {
+  factory _$$LoadingImplCopyWith(_$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
       __$$LoadingImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -316,12 +302,9 @@ abstract class _$$LoadingImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$MenuStateCopyWithImpl<$Res, _$LoadingImpl>
+class __$$LoadingImplCopyWithImpl<$Res> extends _$MenuStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
-      : super(_value, _then);
+  __$$LoadingImplCopyWithImpl(_$LoadingImpl _value, $Res Function(_$LoadingImpl) _then) : super(_value, _then);
 
   /// Create a copy of MenuState
   /// with the given fields replaced by the non-null parameter values.
@@ -363,9 +346,7 @@ class _$LoadingImpl extends _Loading with DiagnosticableTreeMixin {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LoadingImpl &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _$LoadingImpl && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -376,8 +357,7 @@ class _$LoadingImpl extends _Loading with DiagnosticableTreeMixin {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      __$$LoadingImplCopyWithImpl<_$LoadingImpl>(this, _$identity);
+  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith => __$$LoadingImplCopyWithImpl<_$LoadingImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -471,14 +451,12 @@ abstract class _Loading extends MenuState {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$LoadedImplCopyWith<$Res> implements $MenuStateCopyWith<$Res> {
-  factory _$$LoadedImplCopyWith(
-          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
+  factory _$$LoadedImplCopyWith(_$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -489,12 +467,9 @@ abstract class _$$LoadedImplCopyWith<$Res> implements $MenuStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$MenuStateCopyWithImpl<$Res, _$LoadedImpl>
+class __$$LoadedImplCopyWithImpl<$Res> extends _$MenuStateCopyWithImpl<$Res, _$LoadedImpl>
     implements _$$LoadedImplCopyWith<$Res> {
-  __$$LoadedImplCopyWithImpl(
-      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
-      : super(_value, _then);
+  __$$LoadedImplCopyWithImpl(_$LoadedImpl _value, $Res Function(_$LoadedImpl) _then) : super(_value, _then);
 
   /// Create a copy of MenuState
   /// with the given fields replaced by the non-null parameter values.
@@ -536,9 +511,7 @@ class _$LoadedImpl extends _Loaded with DiagnosticableTreeMixin {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LoadedImpl &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _$LoadedImpl && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -549,8 +522,7 @@ class _$LoadedImpl extends _Loaded with DiagnosticableTreeMixin {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith => __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -644,15 +616,12 @@ abstract class _Loaded extends MenuState {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ShowSnackbarImplCopyWith<$Res>
-    implements $MenuStateCopyWith<$Res> {
-  factory _$$ShowSnackbarImplCopyWith(
-          _$ShowSnackbarImpl value, $Res Function(_$ShowSnackbarImpl) then) =
+abstract class _$$ShowSnackbarImplCopyWith<$Res> implements $MenuStateCopyWith<$Res> {
+  factory _$$ShowSnackbarImplCopyWith(_$ShowSnackbarImpl value, $Res Function(_$ShowSnackbarImpl) then) =
       __$$ShowSnackbarImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -663,11 +632,9 @@ abstract class _$$ShowSnackbarImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ShowSnackbarImplCopyWithImpl<$Res>
-    extends _$MenuStateCopyWithImpl<$Res, _$ShowSnackbarImpl>
+class __$$ShowSnackbarImplCopyWithImpl<$Res> extends _$MenuStateCopyWithImpl<$Res, _$ShowSnackbarImpl>
     implements _$$ShowSnackbarImplCopyWith<$Res> {
-  __$$ShowSnackbarImplCopyWithImpl(
-      _$ShowSnackbarImpl _value, $Res Function(_$ShowSnackbarImpl) _then)
+  __$$ShowSnackbarImplCopyWithImpl(_$ShowSnackbarImpl _value, $Res Function(_$ShowSnackbarImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of MenuState
@@ -817,8 +784,7 @@ class _$ShowSnackbarImpl extends _ShowSnackbar with DiagnosticableTreeMixin {
 }
 
 abstract class _ShowSnackbar extends MenuState {
-  const factory _ShowSnackbar(final MenuVM vm, final String msg) =
-      _$ShowSnackbarImpl;
+  const factory _ShowSnackbar(final MenuVM vm, final String msg) = _$ShowSnackbarImpl;
   const _ShowSnackbar._() : super._();
 
   @override
@@ -829,15 +795,12 @@ abstract class _ShowSnackbar extends MenuState {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ShowSnackbarImplCopyWith<_$ShowSnackbarImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ShowSnackbarImplCopyWith<_$ShowSnackbarImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$ErrorImplCopyWith<$Res> implements $MenuStateCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
+  factory _$$ErrorImplCopyWith(_$ErrorImpl value, $Res Function(_$ErrorImpl) then) = __$$ErrorImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String msg, MenuVM vm});
@@ -847,12 +810,9 @@ abstract class _$$ErrorImplCopyWith<$Res> implements $MenuStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$MenuStateCopyWithImpl<$Res, _$ErrorImpl>
+class __$$ErrorImplCopyWithImpl<$Res> extends _$MenuStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
+  __$$ErrorImplCopyWithImpl(_$ErrorImpl _value, $Res Function(_$ErrorImpl) _then) : super(_value, _then);
 
   /// Create a copy of MenuState
   /// with the given fields replaced by the non-null parameter values.
@@ -916,8 +876,7 @@ class _$ErrorImpl extends _Error with DiagnosticableTreeMixin {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith => __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1012,6 +971,5 @@ abstract class _Error extends MenuState {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith => throw _privateConstructorUsedError;
 }

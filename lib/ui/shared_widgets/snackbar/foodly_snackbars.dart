@@ -8,8 +8,7 @@ class FoodlySnackbars {
 
   /// `duration` con el valor de siempre por defecto: los avisos que ya
   /// existían no cambian de comportamiento por pasar a ser configurable.
-  static void successGeneric(BuildContext context, String? message,
-      {Duration duration = const Duration(seconds: 4)}) {
+  static void successGeneric(BuildContext context, String? message, {Duration duration = const Duration(seconds: 4)}) {
     if (context.mounted) {
       final snackBar = SnackBarWdg(
         type: SnackBarType.success,

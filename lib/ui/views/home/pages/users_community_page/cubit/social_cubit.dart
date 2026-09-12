@@ -68,9 +68,7 @@ class SocialCubit extends Cubit<SocialState> {
     // Cuando el filtro es "following", el BE ignora lat/lng pero se las
     // pasamos igual (por consistencia con el getter del repo) — el
     // controller las descarta.
-    final filter = _vm.feedFilter == PostsFeedFilter.following
-        ? PostsFeedFilter.following.value
-        : null;
+    final filter = _vm.feedFilter == PostsFeedFilter.following ? PostsFeedFilter.following.value : null;
 
     try {
       final result = await _postRepo.getPosts(
@@ -110,9 +108,7 @@ class SocialCubit extends Cubit<SocialState> {
 
     final nextPage = _vm.currentPage + 1;
     final position = _locationService.currentLocation.position;
-    final filter = _vm.feedFilter == PostsFeedFilter.following
-        ? PostsFeedFilter.following.value
-        : null;
+    final filter = _vm.feedFilter == PostsFeedFilter.following ? PostsFeedFilter.following.value : null;
 
     try {
       final result = await _postRepo.getPosts(
@@ -589,10 +585,15 @@ class SocialCubit extends Cubit<SocialState> {
     final lp = uri.path.toLowerCase();
     if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
     final completer = Completer<void>();
-    final stream = CachedNetworkImageProvider(url, cacheManager: FoodlyImageCache.manager).resolve(const ImageConfiguration());
+    final stream =
+        CachedNetworkImageProvider(url, cacheManager: FoodlyImageCache.manager).resolve(const ImageConfiguration());
     stream.addListener(ImageStreamListener(
-      (_, __) { if (!completer.isCompleted) completer.complete(); },
-      onError: (_, __) { if (!completer.isCompleted) completer.complete(); },
+      (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
+      onError: (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
     ));
     return completer.future;
   }

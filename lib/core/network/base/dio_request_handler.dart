@@ -101,8 +101,7 @@ abstract class DioRequestHandler {
     // Si algún día alguien inventa `/public/places/details/admin/...`
     // authed, este chequeo lo dejaría pasar sin Bearer — pero el problema
     // sería estructural (contradicción en naming), no este whitelist.
-    final isAuthEndpoint = authEndpoints.contains(path) ||
-        path.startsWith('/public/places/details/');
+    final isAuthEndpoint = authEndpoints.contains(path) || path.startsWith('/public/places/details/');
 
     if (isAuthEndpoint) {
       options.headers.remove(FoodlyStrings.AUTHORIZATION);
@@ -157,8 +156,7 @@ abstract class DioRequestHandler {
     // Always inject the latest access token into the request header.
     // Mismo fix de case-sensitivity que arriba (Bug G).
     if (authHeader.isNotEmpty && isBearer) {
-      final activeToken = authSessionService.userSessionDM?.accessToken ??
-          authSessionService.userSessionDM?.token;
+      final activeToken = authSessionService.userSessionDM?.accessToken ?? authSessionService.userSessionDM?.token;
       // Modo invitado (5.1.1.v) / sin sesión: NO mandamos `Authorization:
       // Bearer null`. Los endpoints de descubrimiento (`/promotions/nearby`,
       // `/business/new-releases`, `/business/nearby|search`, `/public/menu/*`)
@@ -295,8 +293,7 @@ abstract class DioRequestHandler {
       bool looksLikeSudoModeFailure = false;
       if (body is Map) {
         final code = body['code'];
-        if (code is String &&
-            (code == 'current_password_mismatch' || code == 'current_password_required')) {
+        if (code is String && (code == 'current_password_mismatch' || code == 'current_password_required')) {
           looksLikeSudoModeFailure = true;
         } else {
           // Older BE responses include just `{error: "Current password ..."}`.
@@ -332,8 +329,8 @@ abstract class DioRequestHandler {
           if (refreshed) {
             // Retry the original request with the fresh access token.
             try {
-              final activeToken = authSessionService.userSessionDM?.accessToken ??
-                  authSessionService.userSessionDM?.token;
+              final activeToken =
+                  authSessionService.userSessionDM?.accessToken ?? authSessionService.userSessionDM?.token;
               e.requestOptions.headers[FoodlyStrings.AUTHORIZATION] =
                   '${authSessionService.userSessionDM?.tokenType ?? 'Bearer'} $activeToken';
               // Marcar el reintento para que su propio 401 no vuelva a entrar

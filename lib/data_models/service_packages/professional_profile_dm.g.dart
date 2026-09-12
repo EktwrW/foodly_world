@@ -6,49 +6,31 @@ part of 'professional_profile_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_ProfessionalProfileResponseDM _$ProfessionalProfileResponseDMFromJson(
-        Map<String, dynamic> json) =>
+_ProfessionalProfileResponseDM _$ProfessionalProfileResponseDMFromJson(Map<String, dynamic> json) =>
     _ProfessionalProfileResponseDM(
       success: json['success'] as bool? ?? false,
       message: json['message'] as String? ?? '',
       professionalProfile: json['professional_profile'] == null
           ? null
-          : ProfessionalProfileDM.fromJson(
-              json['professional_profile'] as Map<String, dynamic>),
+          : ProfessionalProfileDM.fromJson(json['professional_profile'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ProfessionalProfileResponseDMToJson(
-        _ProfessionalProfileResponseDM instance) =>
+Map<String, dynamic> _$ProfessionalProfileResponseDMToJson(_ProfessionalProfileResponseDM instance) =>
     <String, dynamic>{
       'success': instance.success,
       'message': instance.message,
-      if (instance.professionalProfile?.toJson() case final value?)
-        'professional_profile': value,
+      if (instance.professionalProfile?.toJson() case final value?) 'professional_profile': value,
     };
 
-_ProfessionalProfileDM _$ProfessionalProfileDMFromJson(
-        Map<String, dynamic> json) =>
-    _ProfessionalProfileDM(
+_ProfessionalProfileDM _$ProfessionalProfileDMFromJson(Map<String, dynamic> json) => _ProfessionalProfileDM(
       id: (json['id'] as num?)?.toInt(),
       uuid: json['uuid'] as String?,
       businessId: (json['business_id'] as num?)?.toInt(),
-      specialties: (json['specialties'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
-      cuisines: (json['cuisines'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
+      specialties: (json['specialties'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
+      cuisines: (json['cuisines'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
       yearsExperience: (json['years_experience'] as num?)?.toInt(),
-      certifications: (json['certifications'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
-      languagesSpoken: (json['languages_spoken'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
+      certifications: (json['certifications'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
+      languagesSpoken: (json['languages_spoken'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
       teamSize: $enumDecodeNullable(_$TeamSizeEnumMap, json['team_size']),
       serviceRadiusKm: _doubleFromJson(json['service_radius_km']),
       travelFeePerKm: _doubleFromJson(json['travel_fee_per_km']),
@@ -56,30 +38,18 @@ _ProfessionalProfileDM _$ProfessionalProfileDMFromJson(
       minBookingCurrency: json['min_booking_currency'] as String?,
       depositRequired: json['deposit_required'] as bool? ?? false,
       depositPercentage: _doubleFromJson(json['deposit_percentage']),
-      cancellationPolicy: $enumDecodeNullable(
-          _$CancellationPolicyEnumMap, json['cancellation_policy']),
+      cancellationPolicy: $enumDecodeNullable(_$CancellationPolicyEnumMap, json['cancellation_policy']),
       cancellationPolicyText: json['cancellation_policy_text'] as String?,
       hasInsurance: json['has_insurance'] as bool? ?? false,
       isVerified: json['is_verified'] as bool? ?? false,
-      verifiedAt: json['verified_at'] == null
-          ? null
-          : DateTime.parse(json['verified_at'] as String),
+      verifiedAt: json['verified_at'] == null ? null : DateTime.parse(json['verified_at'] as String),
       portfolioVideoUrl: json['portfolio_video_url'] as String?,
-      pressMentions: (json['press_mentions'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
-      createdAt: json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-      updatedAt: json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+      pressMentions: (json['press_mentions'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
+      createdAt: json['created_at'] == null ? null : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null ? null : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$ProfessionalProfileDMToJson(
-        _ProfessionalProfileDM instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ProfessionalProfileDMToJson(_ProfessionalProfileDM instance) => <String, dynamic>{
       if (instance.id case final value?) 'id': value,
       if (instance.uuid case final value?) 'uuid': value,
       if (instance.businessId case final value?) 'business_id': value,
@@ -88,34 +58,22 @@ Map<String, dynamic> _$ProfessionalProfileDMToJson(
       if (instance.yearsExperience case final value?) 'years_experience': value,
       'certifications': instance.certifications,
       'languages_spoken': instance.languagesSpoken,
-      if (_$TeamSizeEnumMap[instance.teamSize] case final value?)
-        'team_size': value,
-      if (instance.serviceRadiusKm case final value?)
-        'service_radius_km': value,
+      if (_$TeamSizeEnumMap[instance.teamSize] case final value?) 'team_size': value,
+      if (instance.serviceRadiusKm case final value?) 'service_radius_km': value,
       if (instance.travelFeePerKm case final value?) 'travel_fee_per_km': value,
-      if (instance.minBookingAmount case final value?)
-        'min_booking_amount': value,
-      if (instance.minBookingCurrency case final value?)
-        'min_booking_currency': value,
+      if (instance.minBookingAmount case final value?) 'min_booking_amount': value,
+      if (instance.minBookingCurrency case final value?) 'min_booking_currency': value,
       'deposit_required': instance.depositRequired,
-      if (instance.depositPercentage case final value?)
-        'deposit_percentage': value,
-      if (_$CancellationPolicyEnumMap[instance.cancellationPolicy]
-          case final value?)
-        'cancellation_policy': value,
-      if (instance.cancellationPolicyText case final value?)
-        'cancellation_policy_text': value,
+      if (instance.depositPercentage case final value?) 'deposit_percentage': value,
+      if (_$CancellationPolicyEnumMap[instance.cancellationPolicy] case final value?) 'cancellation_policy': value,
+      if (instance.cancellationPolicyText case final value?) 'cancellation_policy_text': value,
       'has_insurance': instance.hasInsurance,
       'is_verified': instance.isVerified,
-      if (instance.verifiedAt?.toIso8601String() case final value?)
-        'verified_at': value,
-      if (instance.portfolioVideoUrl case final value?)
-        'portfolio_video_url': value,
+      if (instance.verifiedAt?.toIso8601String() case final value?) 'verified_at': value,
+      if (instance.portfolioVideoUrl case final value?) 'portfolio_video_url': value,
       'press_mentions': instance.pressMentions,
-      if (instance.createdAt?.toIso8601String() case final value?)
-        'created_at': value,
-      if (instance.updatedAt?.toIso8601String() case final value?)
-        'updated_at': value,
+      if (instance.createdAt?.toIso8601String() case final value?) 'created_at': value,
+      if (instance.updatedAt?.toIso8601String() case final value?) 'updated_at': value,
     };
 
 const _$TeamSizeEnumMap = {

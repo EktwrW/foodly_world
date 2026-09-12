@@ -250,7 +250,9 @@ class _UserProfileBottomSheetState extends State<UserProfileBottomSheet> {
         if (post.photoUrl != null && post.photoUrl!.isNotEmpty) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: CachedNetworkImage(cacheManager: FoodlyImageCache.manager, imageUrl: post.photoUrl!,
+            child: CachedNetworkImage(
+              cacheManager: FoodlyImageCache.manager,
+              imageUrl: post.photoUrl!,
               fit: BoxFit.cover,
               placeholder: (_, __) => Container(color: Colors.grey[200]),
               errorWidget: (_, __, ___) => _buildTextPostTile(post),

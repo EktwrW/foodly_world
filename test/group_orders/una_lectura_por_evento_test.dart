@@ -107,8 +107,7 @@ void main() {
       cliente.responder('o1');
       await Future.wait([primerEvento, segundoEvento]);
 
-      expect(cliente.peticiones, 2,
-          reason: 'la respuesta en vuelo es anterior a la mutación del segundo evento');
+      expect(cliente.peticiones, 2, reason: 'la respuesta en vuelo es anterior a la mutación del segundo evento');
     });
 
     /// Y el corolario: una petición que NO TERMINA NUNCA —móvil que pasa de
@@ -160,8 +159,7 @@ void main() {
       cliente.responder('o1');
       cliente.responder('o2');
 
-      expect(peticionesEnLaSonda, 2,
-          reason: 'el borrado de `o2` se llevó por delante la entrada viva de `o1`');
+      expect(peticionesEnLaSonda, 2, reason: 'el borrado de `o2` se llevó por delante la entrada viva de `o1`');
     });
 
     /// El fallo silencioso que hace peligroso un coalescer mal hecho.
@@ -231,8 +229,7 @@ void main() {
       realtime.tocar(); // llega un `group-order.touched`
       await Future<void>.delayed(Duration.zero);
 
-      expect(repo.coalescePorLlamada, [false, true],
-          reason: 'la carga inicial no coalesce; el refetch del evento sí');
+      expect(repo.coalescePorLlamada, [false, true], reason: 'la carga inicial no coalesce; el refetch del evento sí');
       await cubit.close();
     });
 
@@ -370,7 +367,6 @@ class _ClienteFalso implements GroupOrderClient {
   dynamic noSuchMethod(Invocation i) => super.noSuchMethod(i);
 }
 
-
 final _mudo = Logger(level: Level.off);
 
 /// Repo que anota con qué valor de `coalesce` lo llamaron cada vez.
@@ -387,8 +383,7 @@ class _RepoEspia implements GroupOrderRepo {
   }
 
   @override
-  Future<ApiResult<GroupOrderResponseDM>> joinByCode(String code) async =>
-      ApiResult.success(_respuesta('o1'));
+  Future<ApiResult<GroupOrderResponseDM>> joinByCode(String code) async => ApiResult.success(_respuesta('o1'));
 
   /// Falla a propósito: el camino que re-lee es el del pago FALLIDO.
   @override

@@ -7,8 +7,7 @@ import 'package:foodly_world/data_models/reservations/reservation_message_dm.dar
 class ReservationRepo {
   final ReservationClient _reservationClient;
 
-  const ReservationRepo({required ReservationClient reservationClient})
-      : _reservationClient = reservationClient;
+  const ReservationRepo({required ReservationClient reservationClient}) : _reservationClient = reservationClient;
 
   Future<ApiResult<PendingReservationsCountDM>> getPendingCount() async {
     try {
@@ -120,11 +119,9 @@ class ReservationRepo {
     }
   }
 
-  Future<ApiResult<ReservationActionResponseDM>> managerCancelReservation(String uuid,
-      {String? managerNotes}) async {
+  Future<ApiResult<ReservationActionResponseDM>> managerCancelReservation(String uuid, {String? managerNotes}) async {
     try {
-      return ApiResult.success(
-          await _reservationClient.managerCancelReservation(uuid, managerNotes: managerNotes));
+      return ApiResult.success(await _reservationClient.managerCancelReservation(uuid, managerNotes: managerNotes));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

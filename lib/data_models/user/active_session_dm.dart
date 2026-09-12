@@ -29,7 +29,6 @@ abstract class ActiveSessionDM with _$ActiveSessionDM {
     /// No es un nombre comercial y no se traduce a uno — esa tabla envejece
     /// con cada dispositivo que sale. Va en la línea de detalle, no de título.
     String? model,
-
     @JsonKey(name: 'os_version') String? osVersion,
     @JsonKey(name: 'app_version') String? appVersion,
 

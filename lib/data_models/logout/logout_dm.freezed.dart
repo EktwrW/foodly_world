@@ -21,8 +21,7 @@ mixin _$LogoutDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $LogoutDMCopyWith<LogoutDM> get copyWith =>
-      _$LogoutDMCopyWithImpl<LogoutDM>(this as LogoutDM, _$identity);
+  $LogoutDMCopyWith<LogoutDM> get copyWith => _$LogoutDMCopyWithImpl<LogoutDM>(this as LogoutDM, _$identity);
 
   /// Serializes this LogoutDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -47,8 +46,7 @@ mixin _$LogoutDM {
 
 /// @nodoc
 abstract mixin class $LogoutDMCopyWith<$Res> {
-  factory $LogoutDMCopyWith(LogoutDM value, $Res Function(LogoutDM) _then) =
-      _$LogoutDMCopyWithImpl;
+  factory $LogoutDMCopyWith(LogoutDM value, $Res Function(LogoutDM) _then) = _$LogoutDMCopyWithImpl;
   @useResult
   $Res call({@JsonKey(name: 'message') String? message});
 }
@@ -237,8 +235,7 @@ extension LogoutDMPatterns on LogoutDM {
 @JsonSerializable()
 class _LogoutDM implements LogoutDM {
   const _LogoutDM({@JsonKey(name: 'message') this.message});
-  factory _LogoutDM.fromJson(Map<String, dynamic> json) =>
-      _$LogoutDMFromJson(json);
+  factory _LogoutDM.fromJson(Map<String, dynamic> json) => _$LogoutDMFromJson(json);
 
   @override
   @JsonKey(name: 'message')
@@ -249,8 +246,7 @@ class _LogoutDM implements LogoutDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LogoutDMCopyWith<_LogoutDM> get copyWith =>
-      __$LogoutDMCopyWithImpl<_LogoutDM>(this, _$identity);
+  _$LogoutDMCopyWith<_LogoutDM> get copyWith => __$LogoutDMCopyWithImpl<_LogoutDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -278,10 +274,8 @@ class _LogoutDM implements LogoutDM {
 }
 
 /// @nodoc
-abstract mixin class _$LogoutDMCopyWith<$Res>
-    implements $LogoutDMCopyWith<$Res> {
-  factory _$LogoutDMCopyWith(_LogoutDM value, $Res Function(_LogoutDM) _then) =
-      __$LogoutDMCopyWithImpl;
+abstract mixin class _$LogoutDMCopyWith<$Res> implements $LogoutDMCopyWith<$Res> {
+  factory _$LogoutDMCopyWith(_LogoutDM value, $Res Function(_LogoutDM) _then) = __$LogoutDMCopyWithImpl;
   @override
   @useResult
   $Res call({@JsonKey(name: 'message') String? message});

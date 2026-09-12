@@ -23,9 +23,8 @@ mixin _$ProfessionalProfileResponseDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $ProfessionalProfileResponseDMCopyWith<ProfessionalProfileResponseDM>
-      get copyWith => _$ProfessionalProfileResponseDMCopyWithImpl<
-              ProfessionalProfileResponseDM>(
+  $ProfessionalProfileResponseDMCopyWith<ProfessionalProfileResponseDM> get copyWith =>
+      _$ProfessionalProfileResponseDMCopyWithImpl<ProfessionalProfileResponseDM>(
           this as ProfessionalProfileResponseDM, _$identity);
 
   /// Serializes this ProfessionalProfileResponseDM to a JSON map.
@@ -44,8 +43,7 @@ mixin _$ProfessionalProfileResponseDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, success, message, professionalProfile);
+  int get hashCode => Object.hash(runtimeType, success, message, professionalProfile);
 
   @override
   String toString() {
@@ -56,22 +54,19 @@ mixin _$ProfessionalProfileResponseDM {
 /// @nodoc
 abstract mixin class $ProfessionalProfileResponseDMCopyWith<$Res> {
   factory $ProfessionalProfileResponseDMCopyWith(
-          ProfessionalProfileResponseDM value,
-          $Res Function(ProfessionalProfileResponseDM) _then) =
+          ProfessionalProfileResponseDM value, $Res Function(ProfessionalProfileResponseDM) _then) =
       _$ProfessionalProfileResponseDMCopyWithImpl;
   @useResult
   $Res call(
       {bool success,
       String message,
-      @JsonKey(name: 'professional_profile')
-      ProfessionalProfileDM? professionalProfile});
+      @JsonKey(name: 'professional_profile') ProfessionalProfileDM? professionalProfile});
 
   $ProfessionalProfileDMCopyWith<$Res>? get professionalProfile;
 }
 
 /// @nodoc
-class _$ProfessionalProfileResponseDMCopyWithImpl<$Res>
-    implements $ProfessionalProfileResponseDMCopyWith<$Res> {
+class _$ProfessionalProfileResponseDMCopyWithImpl<$Res> implements $ProfessionalProfileResponseDMCopyWith<$Res> {
   _$ProfessionalProfileResponseDMCopyWithImpl(this._self, this._then);
 
   final ProfessionalProfileResponseDM _self;
@@ -111,16 +106,14 @@ class _$ProfessionalProfileResponseDMCopyWithImpl<$Res>
       return null;
     }
 
-    return $ProfessionalProfileDMCopyWith<$Res>(_self.professionalProfile!,
-        (value) {
+    return $ProfessionalProfileDMCopyWith<$Res>(_self.professionalProfile!, (value) {
       return _then(_self.copyWith(professionalProfile: value));
     });
   }
 }
 
 /// Adds pattern-matching-related methods to [ProfessionalProfileResponseDM].
-extension ProfessionalProfileResponseDMPatterns
-    on ProfessionalProfileResponseDM {
+extension ProfessionalProfileResponseDMPatterns on ProfessionalProfileResponseDM {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -212,19 +205,15 @@ extension ProfessionalProfileResponseDMPatterns
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            bool success,
-            String message,
-            @JsonKey(name: 'professional_profile')
-            ProfessionalProfileDM? professionalProfile)?
+    TResult Function(bool success, String message,
+            @JsonKey(name: 'professional_profile') ProfessionalProfileDM? professionalProfile)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _ProfessionalProfileResponseDM() when $default != null:
-        return $default(
-            _that.success, _that.message, _that.professionalProfile);
+        return $default(_that.success, _that.message, _that.professionalProfile);
       case _:
         return orElse();
     }
@@ -245,18 +234,14 @@ extension ProfessionalProfileResponseDMPatterns
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            bool success,
-            String message,
-            @JsonKey(name: 'professional_profile')
-            ProfessionalProfileDM? professionalProfile)
+    TResult Function(bool success, String message,
+            @JsonKey(name: 'professional_profile') ProfessionalProfileDM? professionalProfile)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ProfessionalProfileResponseDM():
-        return $default(
-            _that.success, _that.message, _that.professionalProfile);
+        return $default(_that.success, _that.message, _that.professionalProfile);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -276,18 +261,14 @@ extension ProfessionalProfileResponseDMPatterns
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            bool success,
-            String message,
-            @JsonKey(name: 'professional_profile')
-            ProfessionalProfileDM? professionalProfile)?
+    TResult? Function(bool success, String message,
+            @JsonKey(name: 'professional_profile') ProfessionalProfileDM? professionalProfile)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ProfessionalProfileResponseDM() when $default != null:
-        return $default(
-            _that.success, _that.message, _that.professionalProfile);
+        return $default(_that.success, _that.message, _that.professionalProfile);
       case _:
         return null;
     }
@@ -298,9 +279,7 @@ extension ProfessionalProfileResponseDMPatterns
 @JsonSerializable()
 class _ProfessionalProfileResponseDM implements ProfessionalProfileResponseDM {
   const _ProfessionalProfileResponseDM(
-      {this.success = false,
-      this.message = '',
-      @JsonKey(name: 'professional_profile') this.professionalProfile});
+      {this.success = false, this.message = '', @JsonKey(name: 'professional_profile') this.professionalProfile});
   factory _ProfessionalProfileResponseDM.fromJson(Map<String, dynamic> json) =>
       _$ProfessionalProfileResponseDMFromJson(json);
 
@@ -319,9 +298,8 @@ class _ProfessionalProfileResponseDM implements ProfessionalProfileResponseDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ProfessionalProfileResponseDMCopyWith<_ProfessionalProfileResponseDM>
-      get copyWith => __$ProfessionalProfileResponseDMCopyWithImpl<
-          _ProfessionalProfileResponseDM>(this, _$identity);
+  _$ProfessionalProfileResponseDMCopyWith<_ProfessionalProfileResponseDM> get copyWith =>
+      __$ProfessionalProfileResponseDMCopyWithImpl<_ProfessionalProfileResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -343,8 +321,7 @@ class _ProfessionalProfileResponseDM implements ProfessionalProfileResponseDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, success, message, professionalProfile);
+  int get hashCode => Object.hash(runtimeType, success, message, professionalProfile);
 
   @override
   String toString() {
@@ -356,24 +333,21 @@ class _ProfessionalProfileResponseDM implements ProfessionalProfileResponseDM {
 abstract mixin class _$ProfessionalProfileResponseDMCopyWith<$Res>
     implements $ProfessionalProfileResponseDMCopyWith<$Res> {
   factory _$ProfessionalProfileResponseDMCopyWith(
-          _ProfessionalProfileResponseDM value,
-          $Res Function(_ProfessionalProfileResponseDM) _then) =
+          _ProfessionalProfileResponseDM value, $Res Function(_ProfessionalProfileResponseDM) _then) =
       __$ProfessionalProfileResponseDMCopyWithImpl;
   @override
   @useResult
   $Res call(
       {bool success,
       String message,
-      @JsonKey(name: 'professional_profile')
-      ProfessionalProfileDM? professionalProfile});
+      @JsonKey(name: 'professional_profile') ProfessionalProfileDM? professionalProfile});
 
   @override
   $ProfessionalProfileDMCopyWith<$Res>? get professionalProfile;
 }
 
 /// @nodoc
-class __$ProfessionalProfileResponseDMCopyWithImpl<$Res>
-    implements _$ProfessionalProfileResponseDMCopyWith<$Res> {
+class __$ProfessionalProfileResponseDMCopyWithImpl<$Res> implements _$ProfessionalProfileResponseDMCopyWith<$Res> {
   __$ProfessionalProfileResponseDMCopyWithImpl(this._self, this._then);
 
   final _ProfessionalProfileResponseDM _self;
@@ -413,8 +387,7 @@ class __$ProfessionalProfileResponseDMCopyWithImpl<$Res>
       return null;
     }
 
-    return $ProfessionalProfileDMCopyWith<$Res>(_self.professionalProfile!,
-        (value) {
+    return $ProfessionalProfileDMCopyWith<$Res>(_self.professionalProfile!, (value) {
       return _then(_self.copyWith(professionalProfile: value));
     });
   }
@@ -471,8 +444,7 @@ mixin _$ProfessionalProfileDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ProfessionalProfileDMCopyWith<ProfessionalProfileDM> get copyWith =>
-      _$ProfessionalProfileDMCopyWithImpl<ProfessionalProfileDM>(
-          this as ProfessionalProfileDM, _$identity);
+      _$ProfessionalProfileDMCopyWithImpl<ProfessionalProfileDM>(this as ProfessionalProfileDM, _$identity);
 
   /// Serializes this ProfessionalProfileDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -484,49 +456,31 @@ mixin _$ProfessionalProfileDM {
             other is ProfessionalProfileDM &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.businessId, businessId) ||
-                other.businessId == businessId) &&
-            const DeepCollectionEquality()
-                .equals(other.specialties, specialties) &&
+            (identical(other.businessId, businessId) || other.businessId == businessId) &&
+            const DeepCollectionEquality().equals(other.specialties, specialties) &&
             const DeepCollectionEquality().equals(other.cuisines, cuisines) &&
-            (identical(other.yearsExperience, yearsExperience) ||
-                other.yearsExperience == yearsExperience) &&
-            const DeepCollectionEquality()
-                .equals(other.certifications, certifications) &&
-            const DeepCollectionEquality()
-                .equals(other.languagesSpoken, languagesSpoken) &&
-            (identical(other.teamSize, teamSize) ||
-                other.teamSize == teamSize) &&
-            (identical(other.serviceRadiusKm, serviceRadiusKm) ||
-                other.serviceRadiusKm == serviceRadiusKm) &&
-            (identical(other.travelFeePerKm, travelFeePerKm) ||
-                other.travelFeePerKm == travelFeePerKm) &&
-            (identical(other.minBookingAmount, minBookingAmount) ||
-                other.minBookingAmount == minBookingAmount) &&
+            (identical(other.yearsExperience, yearsExperience) || other.yearsExperience == yearsExperience) &&
+            const DeepCollectionEquality().equals(other.certifications, certifications) &&
+            const DeepCollectionEquality().equals(other.languagesSpoken, languagesSpoken) &&
+            (identical(other.teamSize, teamSize) || other.teamSize == teamSize) &&
+            (identical(other.serviceRadiusKm, serviceRadiusKm) || other.serviceRadiusKm == serviceRadiusKm) &&
+            (identical(other.travelFeePerKm, travelFeePerKm) || other.travelFeePerKm == travelFeePerKm) &&
+            (identical(other.minBookingAmount, minBookingAmount) || other.minBookingAmount == minBookingAmount) &&
             (identical(other.minBookingCurrency, minBookingCurrency) ||
                 other.minBookingCurrency == minBookingCurrency) &&
-            (identical(other.depositRequired, depositRequired) ||
-                other.depositRequired == depositRequired) &&
-            (identical(other.depositPercentage, depositPercentage) ||
-                other.depositPercentage == depositPercentage) &&
+            (identical(other.depositRequired, depositRequired) || other.depositRequired == depositRequired) &&
+            (identical(other.depositPercentage, depositPercentage) || other.depositPercentage == depositPercentage) &&
             (identical(other.cancellationPolicy, cancellationPolicy) ||
                 other.cancellationPolicy == cancellationPolicy) &&
             (identical(other.cancellationPolicyText, cancellationPolicyText) ||
                 other.cancellationPolicyText == cancellationPolicyText) &&
-            (identical(other.hasInsurance, hasInsurance) ||
-                other.hasInsurance == hasInsurance) &&
-            (identical(other.isVerified, isVerified) ||
-                other.isVerified == isVerified) &&
-            (identical(other.verifiedAt, verifiedAt) ||
-                other.verifiedAt == verifiedAt) &&
-            (identical(other.portfolioVideoUrl, portfolioVideoUrl) ||
-                other.portfolioVideoUrl == portfolioVideoUrl) &&
-            const DeepCollectionEquality()
-                .equals(other.pressMentions, pressMentions) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.hasInsurance, hasInsurance) || other.hasInsurance == hasInsurance) &&
+            (identical(other.isVerified, isVerified) || other.isVerified == isVerified) &&
+            (identical(other.verifiedAt, verifiedAt) || other.verifiedAt == verifiedAt) &&
+            (identical(other.portfolioVideoUrl, portfolioVideoUrl) || other.portfolioVideoUrl == portfolioVideoUrl) &&
+            const DeepCollectionEquality().equals(other.pressMentions, pressMentions) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -567,8 +521,7 @@ mixin _$ProfessionalProfileDM {
 
 /// @nodoc
 abstract mixin class $ProfessionalProfileDMCopyWith<$Res> {
-  factory $ProfessionalProfileDMCopyWith(ProfessionalProfileDM value,
-          $Res Function(ProfessionalProfileDM) _then) =
+  factory $ProfessionalProfileDMCopyWith(ProfessionalProfileDM value, $Res Function(ProfessionalProfileDM) _then) =
       _$ProfessionalProfileDMCopyWithImpl;
   @useResult
   $Res call(
@@ -581,18 +534,13 @@ abstract mixin class $ProfessionalProfileDMCopyWith<$Res> {
       List<String> certifications,
       @JsonKey(name: 'languages_spoken') List<String> languagesSpoken,
       @JsonKey(name: 'team_size') TeamSize? teamSize,
-      @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson)
-      double? serviceRadiusKm,
-      @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson)
-      double? travelFeePerKm,
-      @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson)
-      double? minBookingAmount,
+      @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson) double? serviceRadiusKm,
+      @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson) double? travelFeePerKm,
+      @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson) double? minBookingAmount,
       @JsonKey(name: 'min_booking_currency') String? minBookingCurrency,
       @JsonKey(name: 'deposit_required') bool depositRequired,
-      @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson)
-      double? depositPercentage,
-      @JsonKey(name: 'cancellation_policy')
-      CancellationPolicy? cancellationPolicy,
+      @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson) double? depositPercentage,
+      @JsonKey(name: 'cancellation_policy') CancellationPolicy? cancellationPolicy,
       @JsonKey(name: 'cancellation_policy_text') String? cancellationPolicyText,
       @JsonKey(name: 'has_insurance') bool hasInsurance,
       @JsonKey(name: 'is_verified') bool isVerified,
@@ -604,8 +552,7 @@ abstract mixin class $ProfessionalProfileDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ProfessionalProfileDMCopyWithImpl<$Res>
-    implements $ProfessionalProfileDMCopyWith<$Res> {
+class _$ProfessionalProfileDMCopyWithImpl<$Res> implements $ProfessionalProfileDMCopyWith<$Res> {
   _$ProfessionalProfileDMCopyWithImpl(this._self, this._then);
 
   final ProfessionalProfileDM _self;
@@ -845,20 +792,14 @@ extension ProfessionalProfileDMPatterns on ProfessionalProfileDM {
             List<String> certifications,
             @JsonKey(name: 'languages_spoken') List<String> languagesSpoken,
             @JsonKey(name: 'team_size') TeamSize? teamSize,
-            @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson)
-            double? serviceRadiusKm,
-            @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson)
-            double? travelFeePerKm,
-            @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson)
-            double? minBookingAmount,
+            @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson) double? serviceRadiusKm,
+            @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson) double? travelFeePerKm,
+            @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson) double? minBookingAmount,
             @JsonKey(name: 'min_booking_currency') String? minBookingCurrency,
             @JsonKey(name: 'deposit_required') bool depositRequired,
-            @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson)
-            double? depositPercentage,
-            @JsonKey(name: 'cancellation_policy')
-            CancellationPolicy? cancellationPolicy,
-            @JsonKey(name: 'cancellation_policy_text')
-            String? cancellationPolicyText,
+            @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson) double? depositPercentage,
+            @JsonKey(name: 'cancellation_policy') CancellationPolicy? cancellationPolicy,
+            @JsonKey(name: 'cancellation_policy_text') String? cancellationPolicyText,
             @JsonKey(name: 'has_insurance') bool hasInsurance,
             @JsonKey(name: 'is_verified') bool isVerified,
             @JsonKey(name: 'verified_at') DateTime? verifiedAt,
@@ -927,20 +868,14 @@ extension ProfessionalProfileDMPatterns on ProfessionalProfileDM {
             List<String> certifications,
             @JsonKey(name: 'languages_spoken') List<String> languagesSpoken,
             @JsonKey(name: 'team_size') TeamSize? teamSize,
-            @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson)
-            double? serviceRadiusKm,
-            @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson)
-            double? travelFeePerKm,
-            @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson)
-            double? minBookingAmount,
+            @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson) double? serviceRadiusKm,
+            @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson) double? travelFeePerKm,
+            @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson) double? minBookingAmount,
             @JsonKey(name: 'min_booking_currency') String? minBookingCurrency,
             @JsonKey(name: 'deposit_required') bool depositRequired,
-            @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson)
-            double? depositPercentage,
-            @JsonKey(name: 'cancellation_policy')
-            CancellationPolicy? cancellationPolicy,
-            @JsonKey(name: 'cancellation_policy_text')
-            String? cancellationPolicyText,
+            @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson) double? depositPercentage,
+            @JsonKey(name: 'cancellation_policy') CancellationPolicy? cancellationPolicy,
+            @JsonKey(name: 'cancellation_policy_text') String? cancellationPolicyText,
             @JsonKey(name: 'has_insurance') bool hasInsurance,
             @JsonKey(name: 'is_verified') bool isVerified,
             @JsonKey(name: 'verified_at') DateTime? verifiedAt,
@@ -1007,20 +942,14 @@ extension ProfessionalProfileDMPatterns on ProfessionalProfileDM {
             List<String> certifications,
             @JsonKey(name: 'languages_spoken') List<String> languagesSpoken,
             @JsonKey(name: 'team_size') TeamSize? teamSize,
-            @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson)
-            double? serviceRadiusKm,
-            @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson)
-            double? travelFeePerKm,
-            @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson)
-            double? minBookingAmount,
+            @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson) double? serviceRadiusKm,
+            @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson) double? travelFeePerKm,
+            @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson) double? minBookingAmount,
             @JsonKey(name: 'min_booking_currency') String? minBookingCurrency,
             @JsonKey(name: 'deposit_required') bool depositRequired,
-            @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson)
-            double? depositPercentage,
-            @JsonKey(name: 'cancellation_policy')
-            CancellationPolicy? cancellationPolicy,
-            @JsonKey(name: 'cancellation_policy_text')
-            String? cancellationPolicyText,
+            @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson) double? depositPercentage,
+            @JsonKey(name: 'cancellation_policy') CancellationPolicy? cancellationPolicy,
+            @JsonKey(name: 'cancellation_policy_text') String? cancellationPolicyText,
             @JsonKey(name: 'has_insurance') bool hasInsurance,
             @JsonKey(name: 'is_verified') bool isVerified,
             @JsonKey(name: 'verified_at') DateTime? verifiedAt,
@@ -1075,27 +1004,21 @@ class _ProfessionalProfileDM extends ProfessionalProfileDM {
       final List<String> cuisines = const [],
       @JsonKey(name: 'years_experience') this.yearsExperience,
       final List<String> certifications = const [],
-      @JsonKey(name: 'languages_spoken')
-      final List<String> languagesSpoken = const [],
+      @JsonKey(name: 'languages_spoken') final List<String> languagesSpoken = const [],
       @JsonKey(name: 'team_size') this.teamSize,
-      @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson)
-      this.serviceRadiusKm,
-      @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson)
-      this.travelFeePerKm,
-      @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson)
-      this.minBookingAmount,
+      @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson) this.serviceRadiusKm,
+      @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson) this.travelFeePerKm,
+      @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson) this.minBookingAmount,
       @JsonKey(name: 'min_booking_currency') this.minBookingCurrency,
       @JsonKey(name: 'deposit_required') this.depositRequired = false,
-      @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson)
-      this.depositPercentage,
+      @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson) this.depositPercentage,
       @JsonKey(name: 'cancellation_policy') this.cancellationPolicy,
       @JsonKey(name: 'cancellation_policy_text') this.cancellationPolicyText,
       @JsonKey(name: 'has_insurance') this.hasInsurance = false,
       @JsonKey(name: 'is_verified') this.isVerified = false,
       @JsonKey(name: 'verified_at') this.verifiedAt,
       @JsonKey(name: 'portfolio_video_url') this.portfolioVideoUrl,
-      @JsonKey(name: 'press_mentions')
-      final List<String> pressMentions = const [],
+      @JsonKey(name: 'press_mentions') final List<String> pressMentions = const [],
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'updated_at') this.updatedAt})
       : _specialties = specialties,
@@ -1104,8 +1027,7 @@ class _ProfessionalProfileDM extends ProfessionalProfileDM {
         _languagesSpoken = languagesSpoken,
         _pressMentions = pressMentions,
         super._();
-  factory _ProfessionalProfileDM.fromJson(Map<String, dynamic> json) =>
-      _$ProfessionalProfileDMFromJson(json);
+  factory _ProfessionalProfileDM.fromJson(Map<String, dynamic> json) => _$ProfessionalProfileDMFromJson(json);
 
   @override
   final int? id;
@@ -1214,8 +1136,7 @@ class _ProfessionalProfileDM extends ProfessionalProfileDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$ProfessionalProfileDMCopyWith<_ProfessionalProfileDM> get copyWith =>
-      __$ProfessionalProfileDMCopyWithImpl<_ProfessionalProfileDM>(
-          this, _$identity);
+      __$ProfessionalProfileDMCopyWithImpl<_ProfessionalProfileDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1231,49 +1152,31 @@ class _ProfessionalProfileDM extends ProfessionalProfileDM {
             other is _ProfessionalProfileDM &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.businessId, businessId) ||
-                other.businessId == businessId) &&
-            const DeepCollectionEquality()
-                .equals(other._specialties, _specialties) &&
+            (identical(other.businessId, businessId) || other.businessId == businessId) &&
+            const DeepCollectionEquality().equals(other._specialties, _specialties) &&
             const DeepCollectionEquality().equals(other._cuisines, _cuisines) &&
-            (identical(other.yearsExperience, yearsExperience) ||
-                other.yearsExperience == yearsExperience) &&
-            const DeepCollectionEquality()
-                .equals(other._certifications, _certifications) &&
-            const DeepCollectionEquality()
-                .equals(other._languagesSpoken, _languagesSpoken) &&
-            (identical(other.teamSize, teamSize) ||
-                other.teamSize == teamSize) &&
-            (identical(other.serviceRadiusKm, serviceRadiusKm) ||
-                other.serviceRadiusKm == serviceRadiusKm) &&
-            (identical(other.travelFeePerKm, travelFeePerKm) ||
-                other.travelFeePerKm == travelFeePerKm) &&
-            (identical(other.minBookingAmount, minBookingAmount) ||
-                other.minBookingAmount == minBookingAmount) &&
+            (identical(other.yearsExperience, yearsExperience) || other.yearsExperience == yearsExperience) &&
+            const DeepCollectionEquality().equals(other._certifications, _certifications) &&
+            const DeepCollectionEquality().equals(other._languagesSpoken, _languagesSpoken) &&
+            (identical(other.teamSize, teamSize) || other.teamSize == teamSize) &&
+            (identical(other.serviceRadiusKm, serviceRadiusKm) || other.serviceRadiusKm == serviceRadiusKm) &&
+            (identical(other.travelFeePerKm, travelFeePerKm) || other.travelFeePerKm == travelFeePerKm) &&
+            (identical(other.minBookingAmount, minBookingAmount) || other.minBookingAmount == minBookingAmount) &&
             (identical(other.minBookingCurrency, minBookingCurrency) ||
                 other.minBookingCurrency == minBookingCurrency) &&
-            (identical(other.depositRequired, depositRequired) ||
-                other.depositRequired == depositRequired) &&
-            (identical(other.depositPercentage, depositPercentage) ||
-                other.depositPercentage == depositPercentage) &&
+            (identical(other.depositRequired, depositRequired) || other.depositRequired == depositRequired) &&
+            (identical(other.depositPercentage, depositPercentage) || other.depositPercentage == depositPercentage) &&
             (identical(other.cancellationPolicy, cancellationPolicy) ||
                 other.cancellationPolicy == cancellationPolicy) &&
             (identical(other.cancellationPolicyText, cancellationPolicyText) ||
                 other.cancellationPolicyText == cancellationPolicyText) &&
-            (identical(other.hasInsurance, hasInsurance) ||
-                other.hasInsurance == hasInsurance) &&
-            (identical(other.isVerified, isVerified) ||
-                other.isVerified == isVerified) &&
-            (identical(other.verifiedAt, verifiedAt) ||
-                other.verifiedAt == verifiedAt) &&
-            (identical(other.portfolioVideoUrl, portfolioVideoUrl) ||
-                other.portfolioVideoUrl == portfolioVideoUrl) &&
-            const DeepCollectionEquality()
-                .equals(other._pressMentions, _pressMentions) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.hasInsurance, hasInsurance) || other.hasInsurance == hasInsurance) &&
+            (identical(other.isVerified, isVerified) || other.isVerified == isVerified) &&
+            (identical(other.verifiedAt, verifiedAt) || other.verifiedAt == verifiedAt) &&
+            (identical(other.portfolioVideoUrl, portfolioVideoUrl) || other.portfolioVideoUrl == portfolioVideoUrl) &&
+            const DeepCollectionEquality().equals(other._pressMentions, _pressMentions) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1313,10 +1216,8 @@ class _ProfessionalProfileDM extends ProfessionalProfileDM {
 }
 
 /// @nodoc
-abstract mixin class _$ProfessionalProfileDMCopyWith<$Res>
-    implements $ProfessionalProfileDMCopyWith<$Res> {
-  factory _$ProfessionalProfileDMCopyWith(_ProfessionalProfileDM value,
-          $Res Function(_ProfessionalProfileDM) _then) =
+abstract mixin class _$ProfessionalProfileDMCopyWith<$Res> implements $ProfessionalProfileDMCopyWith<$Res> {
+  factory _$ProfessionalProfileDMCopyWith(_ProfessionalProfileDM value, $Res Function(_ProfessionalProfileDM) _then) =
       __$ProfessionalProfileDMCopyWithImpl;
   @override
   @useResult
@@ -1330,18 +1231,13 @@ abstract mixin class _$ProfessionalProfileDMCopyWith<$Res>
       List<String> certifications,
       @JsonKey(name: 'languages_spoken') List<String> languagesSpoken,
       @JsonKey(name: 'team_size') TeamSize? teamSize,
-      @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson)
-      double? serviceRadiusKm,
-      @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson)
-      double? travelFeePerKm,
-      @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson)
-      double? minBookingAmount,
+      @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson) double? serviceRadiusKm,
+      @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson) double? travelFeePerKm,
+      @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson) double? minBookingAmount,
       @JsonKey(name: 'min_booking_currency') String? minBookingCurrency,
       @JsonKey(name: 'deposit_required') bool depositRequired,
-      @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson)
-      double? depositPercentage,
-      @JsonKey(name: 'cancellation_policy')
-      CancellationPolicy? cancellationPolicy,
+      @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson) double? depositPercentage,
+      @JsonKey(name: 'cancellation_policy') CancellationPolicy? cancellationPolicy,
       @JsonKey(name: 'cancellation_policy_text') String? cancellationPolicyText,
       @JsonKey(name: 'has_insurance') bool hasInsurance,
       @JsonKey(name: 'is_verified') bool isVerified,
@@ -1353,8 +1249,7 @@ abstract mixin class _$ProfessionalProfileDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ProfessionalProfileDMCopyWithImpl<$Res>
-    implements _$ProfessionalProfileDMCopyWith<$Res> {
+class __$ProfessionalProfileDMCopyWithImpl<$Res> implements _$ProfessionalProfileDMCopyWith<$Res> {
   __$ProfessionalProfileDMCopyWithImpl(this._self, this._then);
 
   final _ProfessionalProfileDM _self;

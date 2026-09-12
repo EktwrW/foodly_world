@@ -38,8 +38,7 @@ class FirstLaunchService {
 
   final SecureTokenService _secureTokenService;
 
-  FirstLaunchService({required SecureTokenService secureTokenService})
-      : _secureTokenService = secureTokenService;
+  FirstLaunchService({required SecureTokenService secureTokenService}) : _secureTokenService = secureTokenService;
 
   /// Si es la primera ejecución del binario actual, borra cualquier token
   /// residual del Keychain y persiste el flag para que las siguientes

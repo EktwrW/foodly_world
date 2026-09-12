@@ -6,8 +6,7 @@ part of 'geocoding_reverse_request_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-GeocodingReverseRequestDTO _$GeocodingReverseRequestDTOFromJson(
-        Map<String, dynamic> json) =>
+GeocodingReverseRequestDTO _$GeocodingReverseRequestDTOFromJson(Map<String, dynamic> json) =>
     GeocodingReverseRequestDTO(
       lat: (json['lat'] as num).toDouble(),
       lng: (json['lng'] as num).toDouble(),
@@ -15,9 +14,7 @@ GeocodingReverseRequestDTO _$GeocodingReverseRequestDTOFromJson(
       region: json['region'] as String?,
     );
 
-Map<String, dynamic> _$GeocodingReverseRequestDTOToJson(
-        GeocodingReverseRequestDTO instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$GeocodingReverseRequestDTOToJson(GeocodingReverseRequestDTO instance) => <String, dynamic>{
       'lat': instance.lat,
       'lng': instance.lng,
       if (instance.language case final value?) 'language': value,

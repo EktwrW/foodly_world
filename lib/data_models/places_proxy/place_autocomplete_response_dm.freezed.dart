@@ -22,9 +22,8 @@ mixin _$PlaceAutocompleteResponseDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $PlaceAutocompleteResponseDMCopyWith<PlaceAutocompleteResponseDM>
-      get copyWith => _$PlaceAutocompleteResponseDMCopyWithImpl<
-              PlaceAutocompleteResponseDM>(
+  $PlaceAutocompleteResponseDMCopyWith<PlaceAutocompleteResponseDM> get copyWith =>
+      _$PlaceAutocompleteResponseDMCopyWithImpl<PlaceAutocompleteResponseDM>(
           this as PlaceAutocompleteResponseDM, _$identity);
 
   /// Serializes this PlaceAutocompleteResponseDM to a JSON map.
@@ -36,14 +35,12 @@ mixin _$PlaceAutocompleteResponseDM {
         (other.runtimeType == runtimeType &&
             other is PlaceAutocompleteResponseDM &&
             (identical(other.status, status) || other.status == status) &&
-            const DeepCollectionEquality()
-                .equals(other.predictions, predictions));
+            const DeepCollectionEquality().equals(other.predictions, predictions));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, status, const DeepCollectionEquality().hash(predictions));
+  int get hashCode => Object.hash(runtimeType, status, const DeepCollectionEquality().hash(predictions));
 
   @override
   String toString() {
@@ -54,19 +51,16 @@ mixin _$PlaceAutocompleteResponseDM {
 /// @nodoc
 abstract mixin class $PlaceAutocompleteResponseDMCopyWith<$Res> {
   factory $PlaceAutocompleteResponseDMCopyWith(
-          PlaceAutocompleteResponseDM value,
-          $Res Function(PlaceAutocompleteResponseDM) _then) =
+          PlaceAutocompleteResponseDM value, $Res Function(PlaceAutocompleteResponseDM) _then) =
       _$PlaceAutocompleteResponseDMCopyWithImpl;
   @useResult
   $Res call(
-      {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-      ProxyStatusEnum status,
+      {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) ProxyStatusEnum status,
       List<PlacePredictionDM> predictions});
 }
 
 /// @nodoc
-class _$PlaceAutocompleteResponseDMCopyWithImpl<$Res>
-    implements $PlaceAutocompleteResponseDMCopyWith<$Res> {
+class _$PlaceAutocompleteResponseDMCopyWithImpl<$Res> implements $PlaceAutocompleteResponseDMCopyWith<$Res> {
   _$PlaceAutocompleteResponseDMCopyWithImpl(this._self, this._then);
 
   final PlaceAutocompleteResponseDM _self;
@@ -186,9 +180,7 @@ extension PlaceAutocompleteResponseDMPatterns on PlaceAutocompleteResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-            ProxyStatusEnum status,
+    TResult Function(@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) ProxyStatusEnum status,
             List<PlacePredictionDM> predictions)?
         $default, {
     required TResult orElse(),
@@ -217,9 +209,7 @@ extension PlaceAutocompleteResponseDMPatterns on PlaceAutocompleteResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-            ProxyStatusEnum status,
+    TResult Function(@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) ProxyStatusEnum status,
             List<PlacePredictionDM> predictions)
         $default,
   ) {
@@ -246,9 +236,7 @@ extension PlaceAutocompleteResponseDMPatterns on PlaceAutocompleteResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-            ProxyStatusEnum status,
+    TResult? Function(@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) ProxyStatusEnum status,
             List<PlacePredictionDM> predictions)?
         $default,
   ) {
@@ -289,9 +277,8 @@ class _PlaceAutocompleteResponseDM implements PlaceAutocompleteResponseDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PlaceAutocompleteResponseDMCopyWith<_PlaceAutocompleteResponseDM>
-      get copyWith => __$PlaceAutocompleteResponseDMCopyWithImpl<
-          _PlaceAutocompleteResponseDM>(this, _$identity);
+  _$PlaceAutocompleteResponseDMCopyWith<_PlaceAutocompleteResponseDM> get copyWith =>
+      __$PlaceAutocompleteResponseDMCopyWithImpl<_PlaceAutocompleteResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -306,14 +293,12 @@ class _PlaceAutocompleteResponseDM implements PlaceAutocompleteResponseDM {
         (other.runtimeType == runtimeType &&
             other is _PlaceAutocompleteResponseDM &&
             (identical(other.status, status) || other.status == status) &&
-            const DeepCollectionEquality()
-                .equals(other._predictions, _predictions));
+            const DeepCollectionEquality().equals(other._predictions, _predictions));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, status, const DeepCollectionEquality().hash(_predictions));
+  int get hashCode => Object.hash(runtimeType, status, const DeepCollectionEquality().hash(_predictions));
 
   @override
   String toString() {
@@ -322,23 +307,19 @@ class _PlaceAutocompleteResponseDM implements PlaceAutocompleteResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$PlaceAutocompleteResponseDMCopyWith<$Res>
-    implements $PlaceAutocompleteResponseDMCopyWith<$Res> {
+abstract mixin class _$PlaceAutocompleteResponseDMCopyWith<$Res> implements $PlaceAutocompleteResponseDMCopyWith<$Res> {
   factory _$PlaceAutocompleteResponseDMCopyWith(
-          _PlaceAutocompleteResponseDM value,
-          $Res Function(_PlaceAutocompleteResponseDM) _then) =
+          _PlaceAutocompleteResponseDM value, $Res Function(_PlaceAutocompleteResponseDM) _then) =
       __$PlaceAutocompleteResponseDMCopyWithImpl;
   @override
   @useResult
   $Res call(
-      {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-      ProxyStatusEnum status,
+      {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) ProxyStatusEnum status,
       List<PlacePredictionDM> predictions});
 }
 
 /// @nodoc
-class __$PlaceAutocompleteResponseDMCopyWithImpl<$Res>
-    implements _$PlaceAutocompleteResponseDMCopyWith<$Res> {
+class __$PlaceAutocompleteResponseDMCopyWithImpl<$Res> implements _$PlaceAutocompleteResponseDMCopyWith<$Res> {
   __$PlaceAutocompleteResponseDMCopyWithImpl(this._self, this._then);
 
   final _PlaceAutocompleteResponseDM _self;

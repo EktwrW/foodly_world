@@ -13,8 +13,7 @@ class MenuImportBulkResponseDM {
 
   const MenuImportBulkResponseDM({required this.success, required this.stats});
 
-  factory MenuImportBulkResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$MenuImportBulkResponseDMFromJson(json);
+  factory MenuImportBulkResponseDM.fromJson(Map<String, dynamic> json) => _$MenuImportBulkResponseDMFromJson(json);
   Map<String, dynamic> toJson() => _$MenuImportBulkResponseDMToJson(this);
 }
 
@@ -46,8 +45,7 @@ class MenuImportBulkStatsDM {
     required this.combosCreated,
   });
 
-  factory MenuImportBulkStatsDM.fromJson(Map<String, dynamic> json) =>
-      _$MenuImportBulkStatsDMFromJson(json);
+  factory MenuImportBulkStatsDM.fromJson(Map<String, dynamic> json) => _$MenuImportBulkStatsDMFromJson(json);
   Map<String, dynamic> toJson() => _$MenuImportBulkStatsDMToJson(this);
 
   /// Total de items creados (food + drink + combo). Usado para el dialog

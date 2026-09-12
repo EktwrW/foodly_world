@@ -345,7 +345,8 @@ void main() {
       expect(find.byIcon(Icons.circle_outlined), findsOneWidget); // pendiente
     });
 
-    testWidgets('CUENTA ABIERTA: un ítem YA EN COCINA se puede marcar '
+    testWidgets(
+        'CUENTA ABIERTA: un ítem YA EN COCINA se puede marcar '
         'compartido, pero no borrar', (tester) async {
       // e2e 2026-08-09 — la jarra de sangría para la mesa. "Compartido" es de
       // REPARTO, no de cocina: no cambia el plato, cambia entre quiénes se
@@ -379,12 +380,10 @@ void main() {
 
       expect(find.byIcon(Icons.group_outlined), findsOneWidget,
           reason: 'Sin este toggle no hay forma de dividir la jarra.');
-      expect(find.byIcon(iconoEliminar), findsNothing,
-          reason: 'Borrar sí toca a la cocina: la jarra ya se sirvió.');
+      expect(find.byIcon(iconoEliminar), findsNothing, reason: 'Borrar sí toca a la cocina: la jarra ya se sirvió.');
     });
 
-    testWidgets('CUENTA ABIERTA en curso: subtotal VIVO, no el reparto vacío',
-        (tester) async {
+    testWidgets('CUENTA ABIERTA en curso: subtotal VIVO, no el reparto vacío', (tester) async {
       // e2e 2026-08-08. `liveSubtotalFor` devolvía `amount_due` en cuanto la
       // orden dejaba de estar `open`. En cuenta abierta eso pasa con la
       // PRIMERA tanda —o sea, durante toda la comida— y el backend no reparte

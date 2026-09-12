@@ -21,8 +21,7 @@ mixin _$UserProfileState implements DiagnosticableTreeMixin {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $UserProfileStateCopyWith<UserProfileState> get copyWith =>
-      _$UserProfileStateCopyWithImpl<UserProfileState>(
-          this as UserProfileState, _$identity);
+      _$UserProfileStateCopyWithImpl<UserProfileState>(this as UserProfileState, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -34,9 +33,7 @@ mixin _$UserProfileState implements DiagnosticableTreeMixin {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is UserProfileState &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is UserProfileState && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -50,8 +47,7 @@ mixin _$UserProfileState implements DiagnosticableTreeMixin {
 
 /// @nodoc
 abstract mixin class $UserProfileStateCopyWith<$Res> {
-  factory $UserProfileStateCopyWith(
-          UserProfileState value, $Res Function(UserProfileState) _then) =
+  factory $UserProfileStateCopyWith(UserProfileState value, $Res Function(UserProfileState) _then) =
       _$UserProfileStateCopyWithImpl;
   @useResult
   $Res call({UserProfileVM vm});
@@ -60,8 +56,7 @@ abstract mixin class $UserProfileStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserProfileStateCopyWithImpl<$Res>
-    implements $UserProfileStateCopyWith<$Res> {
+class _$UserProfileStateCopyWithImpl<$Res> implements $UserProfileStateCopyWith<$Res> {
   _$UserProfileStateCopyWithImpl(this._self, this._then);
 
   final UserProfileState _self;
@@ -153,8 +148,7 @@ extension UserProfileStatePatterns on UserProfileState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_UpdatingProfilePicture value)
-        updatingProfilePicture,
+    required TResult Function(_UpdatingProfilePicture value) updatingProfilePicture,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_UserUpdated value) userUpdated,
     required TResult Function(_Error value) error,
@@ -350,8 +344,7 @@ class _Initial with DiagnosticableTreeMixin implements UserProfileState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -363,9 +356,7 @@ class _Initial with DiagnosticableTreeMixin implements UserProfileState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Initial &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Initial && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -378,10 +369,8 @@ class _Initial with DiagnosticableTreeMixin implements UserProfileState {
 }
 
 /// @nodoc
-abstract mixin class _$InitialCopyWith<$Res>
-    implements $UserProfileStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
-      __$InitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $UserProfileStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({UserProfileVM vm});
@@ -436,8 +425,7 @@ class _Loading with DiagnosticableTreeMixin implements UserProfileState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadingCopyWith<_Loading> get copyWith =>
-      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+  _$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -449,9 +437,7 @@ class _Loading with DiagnosticableTreeMixin implements UserProfileState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loading &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loading && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -464,10 +450,8 @@ class _Loading with DiagnosticableTreeMixin implements UserProfileState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadingCopyWith<$Res>
-    implements $UserProfileStateCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
-      __$LoadingCopyWithImpl;
+abstract mixin class _$LoadingCopyWith<$Res> implements $UserProfileStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
   @override
   @useResult
   $Res call({UserProfileVM vm});
@@ -511,9 +495,7 @@ class __$LoadingCopyWithImpl<$Res> implements _$LoadingCopyWith<$Res> {
 
 /// @nodoc
 
-class _UpdatingProfilePicture
-    with DiagnosticableTreeMixin
-    implements UserProfileState {
+class _UpdatingProfilePicture with DiagnosticableTreeMixin implements UserProfileState {
   _UpdatingProfilePicture(this.vm);
 
   @override
@@ -525,14 +507,12 @@ class _UpdatingProfilePicture
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$UpdatingProfilePictureCopyWith<_UpdatingProfilePicture> get copyWith =>
-      __$UpdatingProfilePictureCopyWithImpl<_UpdatingProfilePicture>(
-          this, _$identity);
+      __$UpdatingProfilePictureCopyWithImpl<_UpdatingProfilePicture>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties
-      ..add(DiagnosticsProperty(
-          'type', 'UserProfileState.updatingProfilePicture'))
+      ..add(DiagnosticsProperty('type', 'UserProfileState.updatingProfilePicture'))
       ..add(DiagnosticsProperty('vm', vm));
   }
 
@@ -554,10 +534,9 @@ class _UpdatingProfilePicture
 }
 
 /// @nodoc
-abstract mixin class _$UpdatingProfilePictureCopyWith<$Res>
-    implements $UserProfileStateCopyWith<$Res> {
-  factory _$UpdatingProfilePictureCopyWith(_UpdatingProfilePicture value,
-          $Res Function(_UpdatingProfilePicture) _then) =
+abstract mixin class _$UpdatingProfilePictureCopyWith<$Res> implements $UserProfileStateCopyWith<$Res> {
+  factory _$UpdatingProfilePictureCopyWith(
+          _UpdatingProfilePicture value, $Res Function(_UpdatingProfilePicture) _then) =
       __$UpdatingProfilePictureCopyWithImpl;
   @override
   @useResult
@@ -568,8 +547,7 @@ abstract mixin class _$UpdatingProfilePictureCopyWith<$Res>
 }
 
 /// @nodoc
-class __$UpdatingProfilePictureCopyWithImpl<$Res>
-    implements _$UpdatingProfilePictureCopyWith<$Res> {
+class __$UpdatingProfilePictureCopyWithImpl<$Res> implements _$UpdatingProfilePictureCopyWith<$Res> {
   __$UpdatingProfilePictureCopyWithImpl(this._self, this._then);
 
   final _UpdatingProfilePicture _self;
@@ -614,8 +592,7 @@ class _Loaded with DiagnosticableTreeMixin implements UserProfileState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -627,9 +604,7 @@ class _Loaded with DiagnosticableTreeMixin implements UserProfileState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loaded &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loaded && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -642,10 +617,8 @@ class _Loaded with DiagnosticableTreeMixin implements UserProfileState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res>
-    implements $UserProfileStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
-      __$LoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $UserProfileStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
   @override
   @useResult
   $Res call({UserProfileVM vm});
@@ -701,8 +674,7 @@ class _UserUpdated with DiagnosticableTreeMixin implements UserProfileState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$UserUpdatedCopyWith<_UserUpdated> get copyWith =>
-      __$UserUpdatedCopyWithImpl<_UserUpdated>(this, _$identity);
+  _$UserUpdatedCopyWith<_UserUpdated> get copyWith => __$UserUpdatedCopyWithImpl<_UserUpdated>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -731,11 +703,8 @@ class _UserUpdated with DiagnosticableTreeMixin implements UserProfileState {
 }
 
 /// @nodoc
-abstract mixin class _$UserUpdatedCopyWith<$Res>
-    implements $UserProfileStateCopyWith<$Res> {
-  factory _$UserUpdatedCopyWith(
-          _UserUpdated value, $Res Function(_UserUpdated) _then) =
-      __$UserUpdatedCopyWithImpl;
+abstract mixin class _$UserUpdatedCopyWith<$Res> implements $UserProfileStateCopyWith<$Res> {
+  factory _$UserUpdatedCopyWith(_UserUpdated value, $Res Function(_UserUpdated) _then) = __$UserUpdatedCopyWithImpl;
   @override
   @useResult
   $Res call({UserProfileVM vm, String msg});
@@ -796,8 +765,7 @@ class _Error with DiagnosticableTreeMixin implements UserProfileState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -826,10 +794,8 @@ class _Error with DiagnosticableTreeMixin implements UserProfileState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $UserProfileStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $UserProfileStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({String message, UserProfileVM vm});

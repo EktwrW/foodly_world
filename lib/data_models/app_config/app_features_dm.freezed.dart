@@ -35,8 +35,7 @@ mixin _$AppFeaturesDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $AppFeaturesDMCopyWith<AppFeaturesDM> get copyWith =>
-      _$AppFeaturesDMCopyWithImpl<AppFeaturesDM>(
-          this as AppFeaturesDM, _$identity);
+      _$AppFeaturesDMCopyWithImpl<AppFeaturesDM>(this as AppFeaturesDM, _$identity);
 
   /// Serializes this AppFeaturesDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -54,8 +53,7 @@ mixin _$AppFeaturesDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, placesProxyEnabled, groupOrdersEnabled);
+  int get hashCode => Object.hash(runtimeType, placesProxyEnabled, groupOrdersEnabled);
 
   @override
   String toString() {
@@ -65,9 +63,7 @@ mixin _$AppFeaturesDM {
 
 /// @nodoc
 abstract mixin class $AppFeaturesDMCopyWith<$Res> {
-  factory $AppFeaturesDMCopyWith(
-          AppFeaturesDM value, $Res Function(AppFeaturesDM) _then) =
-      _$AppFeaturesDMCopyWithImpl;
+  factory $AppFeaturesDMCopyWith(AppFeaturesDM value, $Res Function(AppFeaturesDM) _then) = _$AppFeaturesDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'places_proxy_enabled') bool placesProxyEnabled,
@@ -75,8 +71,7 @@ abstract mixin class $AppFeaturesDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AppFeaturesDMCopyWithImpl<$Res>
-    implements $AppFeaturesDMCopyWith<$Res> {
+class _$AppFeaturesDMCopyWithImpl<$Res> implements $AppFeaturesDMCopyWith<$Res> {
   _$AppFeaturesDMCopyWithImpl(this._self, this._then);
 
   final AppFeaturesDM _self;
@@ -196,8 +191,7 @@ extension AppFeaturesDMPatterns on AppFeaturesDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(name: 'places_proxy_enabled') bool placesProxyEnabled,
+    TResult Function(@JsonKey(name: 'places_proxy_enabled') bool placesProxyEnabled,
             @JsonKey(name: 'group_orders_enabled') bool groupOrdersEnabled)?
         $default, {
     required TResult orElse(),
@@ -226,8 +220,7 @@ extension AppFeaturesDMPatterns on AppFeaturesDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(name: 'places_proxy_enabled') bool placesProxyEnabled,
+    TResult Function(@JsonKey(name: 'places_proxy_enabled') bool placesProxyEnabled,
             @JsonKey(name: 'group_orders_enabled') bool groupOrdersEnabled)
         $default,
   ) {
@@ -254,8 +247,7 @@ extension AppFeaturesDMPatterns on AppFeaturesDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            @JsonKey(name: 'places_proxy_enabled') bool placesProxyEnabled,
+    TResult? Function(@JsonKey(name: 'places_proxy_enabled') bool placesProxyEnabled,
             @JsonKey(name: 'group_orders_enabled') bool groupOrdersEnabled)?
         $default,
   ) {
@@ -275,8 +267,7 @@ class _AppFeaturesDM implements AppFeaturesDM {
   const _AppFeaturesDM(
       {@JsonKey(name: 'places_proxy_enabled') this.placesProxyEnabled = true,
       @JsonKey(name: 'group_orders_enabled') this.groupOrdersEnabled = false});
-  factory _AppFeaturesDM.fromJson(Map<String, dynamic> json) =>
-      _$AppFeaturesDMFromJson(json);
+  factory _AppFeaturesDM.fromJson(Map<String, dynamic> json) => _$AppFeaturesDMFromJson(json);
 
   /// Controla si la app usa el backend Foodly Places Proxy
   /// (true → nuestro proxy; false → nova_places_api directo).
@@ -324,8 +315,7 @@ class _AppFeaturesDM implements AppFeaturesDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, placesProxyEnabled, groupOrdersEnabled);
+  int get hashCode => Object.hash(runtimeType, placesProxyEnabled, groupOrdersEnabled);
 
   @override
   String toString() {
@@ -334,10 +324,8 @@ class _AppFeaturesDM implements AppFeaturesDM {
 }
 
 /// @nodoc
-abstract mixin class _$AppFeaturesDMCopyWith<$Res>
-    implements $AppFeaturesDMCopyWith<$Res> {
-  factory _$AppFeaturesDMCopyWith(
-          _AppFeaturesDM value, $Res Function(_AppFeaturesDM) _then) =
+abstract mixin class _$AppFeaturesDMCopyWith<$Res> implements $AppFeaturesDMCopyWith<$Res> {
+  factory _$AppFeaturesDMCopyWith(_AppFeaturesDM value, $Res Function(_AppFeaturesDM) _then) =
       __$AppFeaturesDMCopyWithImpl;
   @override
   @useResult
@@ -347,8 +335,7 @@ abstract mixin class _$AppFeaturesDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$AppFeaturesDMCopyWithImpl<$Res>
-    implements _$AppFeaturesDMCopyWith<$Res> {
+class __$AppFeaturesDMCopyWithImpl<$Res> implements _$AppFeaturesDMCopyWith<$Res> {
   __$AppFeaturesDMCopyWithImpl(this._self, this._then);
 
   final _AppFeaturesDM _self;

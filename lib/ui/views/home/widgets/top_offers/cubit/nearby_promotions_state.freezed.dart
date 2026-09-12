@@ -21,8 +21,7 @@ mixin _$NearbyPromotionsState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $NearbyPromotionsStateCopyWith<NearbyPromotionsState> get copyWith =>
-      _$NearbyPromotionsStateCopyWithImpl<NearbyPromotionsState>(
-          this as NearbyPromotionsState, _$identity);
+      _$NearbyPromotionsStateCopyWithImpl<NearbyPromotionsState>(this as NearbyPromotionsState, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -43,8 +42,7 @@ mixin _$NearbyPromotionsState {
 
 /// @nodoc
 abstract mixin class $NearbyPromotionsStateCopyWith<$Res> {
-  factory $NearbyPromotionsStateCopyWith(NearbyPromotionsState value,
-          $Res Function(NearbyPromotionsState) _then) =
+  factory $NearbyPromotionsStateCopyWith(NearbyPromotionsState value, $Res Function(NearbyPromotionsState) _then) =
       _$NearbyPromotionsStateCopyWithImpl;
   @useResult
   $Res call({NearbyPromotionsVM vm});
@@ -53,8 +51,7 @@ abstract mixin class $NearbyPromotionsStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NearbyPromotionsStateCopyWithImpl<$Res>
-    implements $NearbyPromotionsStateCopyWith<$Res> {
+class _$NearbyPromotionsStateCopyWithImpl<$Res> implements $NearbyPromotionsStateCopyWith<$Res> {
   _$NearbyPromotionsStateCopyWithImpl(this._self, this._then);
 
   final NearbyPromotionsState _self;
@@ -324,15 +321,12 @@ class _Initial implements NearbyPromotionsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Initial &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Initial && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -345,10 +339,8 @@ class _Initial implements NearbyPromotionsState {
 }
 
 /// @nodoc
-abstract mixin class _$InitialCopyWith<$Res>
-    implements $NearbyPromotionsStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
-      __$InitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $NearbyPromotionsStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({NearbyPromotionsVM vm});
@@ -403,15 +395,12 @@ class _Loading implements NearbyPromotionsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadingCopyWith<_Loading> get copyWith =>
-      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+  _$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loading &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loading && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -424,10 +413,8 @@ class _Loading implements NearbyPromotionsState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadingCopyWith<$Res>
-    implements $NearbyPromotionsStateCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
-      __$LoadingCopyWithImpl;
+abstract mixin class _$LoadingCopyWith<$Res> implements $NearbyPromotionsStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
   @override
   @useResult
   $Res call({NearbyPromotionsVM vm});
@@ -482,15 +469,12 @@ class _Loaded implements NearbyPromotionsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loaded &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loaded && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -503,10 +487,8 @@ class _Loaded implements NearbyPromotionsState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res>
-    implements $NearbyPromotionsStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
-      __$LoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $NearbyPromotionsStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
   @override
   @useResult
   $Res call({NearbyPromotionsVM vm});
@@ -561,15 +543,12 @@ class _LoadingMore implements NearbyPromotionsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadingMoreCopyWith<_LoadingMore> get copyWith =>
-      __$LoadingMoreCopyWithImpl<_LoadingMore>(this, _$identity);
+  _$LoadingMoreCopyWith<_LoadingMore> get copyWith => __$LoadingMoreCopyWithImpl<_LoadingMore>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _LoadingMore &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _LoadingMore && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -582,11 +561,8 @@ class _LoadingMore implements NearbyPromotionsState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadingMoreCopyWith<$Res>
-    implements $NearbyPromotionsStateCopyWith<$Res> {
-  factory _$LoadingMoreCopyWith(
-          _LoadingMore value, $Res Function(_LoadingMore) _then) =
-      __$LoadingMoreCopyWithImpl;
+abstract mixin class _$LoadingMoreCopyWith<$Res> implements $NearbyPromotionsStateCopyWith<$Res> {
+  factory _$LoadingMoreCopyWith(_LoadingMore value, $Res Function(_LoadingMore) _then) = __$LoadingMoreCopyWithImpl;
   @override
   @useResult
   $Res call({NearbyPromotionsVM vm});
@@ -642,8 +618,7 @@ class _Error implements NearbyPromotionsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -664,10 +639,8 @@ class _Error implements NearbyPromotionsState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $NearbyPromotionsStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $NearbyPromotionsStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({NearbyPromotionsVM vm, String message});

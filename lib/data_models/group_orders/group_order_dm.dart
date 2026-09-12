@@ -173,8 +173,7 @@ abstract class GroupOrderItemDM with _$GroupOrderItemDM {
     @JsonKey(name: 'voided_reason') String? voidedReason,
   }) = _GroupOrderItemDM;
 
-  factory GroupOrderItemDM.fromJson(Map<String, dynamic> json) =>
-      _$GroupOrderItemDMFromJson(json);
+  factory GroupOrderItemDM.fromJson(Map<String, dynamic> json) => _$GroupOrderItemDMFromJson(json);
 
   /// Precio unitario efectivo (congelado si existe, si no el preview).
   double get effectiveUnitPrice => unitPriceAtLock > 0 ? unitPriceAtLock : unitPricePreview;
@@ -212,8 +211,7 @@ abstract class GroupOrderParticipantDM with _$GroupOrderParticipantDM {
     @JsonKey(name: 'paid_by_participant_uuid') String? paidByParticipantUuid,
   }) = _GroupOrderParticipantDM;
 
-  factory GroupOrderParticipantDM.fromJson(Map<String, dynamic> json) =>
-      _$GroupOrderParticipantDMFromJson(json);
+  factory GroupOrderParticipantDM.fromJson(Map<String, dynamic> json) => _$GroupOrderParticipantDMFromJson(json);
 
   bool get isHost => role == GroupParticipantRole.host;
   bool get hasPaid => paymentStatus == GroupPaymentStatus.paid;
@@ -262,9 +260,11 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     GroupFulfillmentStatus? fulfillmentStatus,
     @JsonKey(name: 'round_number') @Default(1) int roundNumber,
     @JsonKey(name: 'table_label') String? tableLabel,
+
     /// ¿El negocio sirve EN MESA? Si sí y la orden no tiene mesa, hay que
     /// pedírsela al comensal antes de que el pedido salga a cocina.
     @JsonKey(name: 'business_table_service') @Default(false) bool businessTableService,
+
     /// ¿El restaurante puede cobrar el método local? Lo decide su cuenta de
     /// Stripe, no el país de nadie.
     ///
@@ -298,8 +298,7 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     @Default(<GroupOrderItemDM>[]) List<GroupOrderItemDM> items,
   }) = _GroupOrderDM;
 
-  factory GroupOrderDM.fromJson(Map<String, dynamic> json) =>
-      _$GroupOrderDMFromJson(json);
+  factory GroupOrderDM.fromJson(Map<String, dynamic> json) => _$GroupOrderDMFromJson(json);
 
   bool get isOpen => status == GroupOrderStatus.open;
   bool get isLocked => status == GroupOrderStatus.locked;
@@ -321,16 +320,13 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   List<GroupOrderItemDM> get liveItems => items.where((i) => !i.isVoided).toList();
 
   /// Ítems aún en el carrito (no enviados a cocina).
-  List<GroupOrderItemDM> get pendingItems =>
-      items.where((i) => !i.isSent && !i.isVoided).toList();
+  List<GroupOrderItemDM> get pendingItems => items.where((i) => !i.isSent && !i.isVoided).toList();
 
   /// Ítems ya enviados a cocina (inmutables).
-  List<GroupOrderItemDM> get sentItems =>
-      items.where((i) => i.isSent && !i.isVoided).toList();
+  List<GroupOrderItemDM> get sentItems => items.where((i) => i.isSent && !i.isVoided).toList();
 
   /// Número de la última tanda enviada (0 = ninguna).
-  int get lastBatchNo =>
-      sentItems.fold<int>(0, (acc, i) => (i.batchNo ?? 0) > acc ? i.batchNo! : acc);
+  int get lastBatchNo => sentItems.fold<int>(0, (acc, i) => (i.batchNo ?? 0) > acc ? i.batchNo! : acc);
 
   /// Total de lo ENVIADO a cocina (la cuenta de la mesa hasta ahora).
   double get sentTotal => sentItems.fold<double>(0, (acc, i) => acc + i.lineTotal);
@@ -340,8 +336,7 @@ abstract class GroupOrderDM with _$GroupOrderDM {
 
   /// F4b: la mesa avisó que paga en el mostrador y espera al mesero.
   /// Espeja `GroupOrder::isAwaitingCashPayment()` del backend.
-  bool get isAwaitingCashPayment =>
-      cashRequestedAt != null && !isTerminal && status == GroupOrderStatus.confirmed;
+  bool get isAwaitingCashPayment => cashRequestedAt != null && !isTerminal && status == GroupOrderStatus.confirmed;
 
   /// Máquina de estados del CTA en cuenta abierta (decisión Hector,
   /// maquetas A1-A4). PURA: la UI solo pinta lo que esto devuelve.
@@ -411,12 +406,10 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   double get totalRemaining => (totalAmount - totalPaid).clamp(0, double.infinity);
 
   /// En ventana de gracia (deadline vencido, aún no expirada).
-  bool get isInGracePeriod =>
-      isPayable && graceEndsAt != null && graceEndsAt!.isAfter(DateTime.now());
+  bool get isInGracePeriod => isPayable && graceEndsAt != null && graceEndsAt!.isAfter(DateTime.now());
 
   /// Progreso de pago [0, 1].
-  double get paymentProgress =>
-      totalAmount <= 0 ? 0 : (totalPaid / totalAmount).clamp(0, 1);
+  double get paymentProgress => totalAmount <= 0 ? 0 : (totalPaid / totalAmount).clamp(0, 1);
 
   /// ¿La orden sigue admitiendo ediciones de carrito? (sumar comensales,
   /// quitar o editar los ítems NO enviados).
@@ -541,9 +534,7 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   /// al día siguiente y pagaba, el historial del negocio seguía diciendo que
   /// lo habían estafado.
   bool get closureIsAmendable =>
-      closedAt != null &&
-      totalPaid <= 0 &&
-      (closedReason == 'unpaid' || closedReason == 'paid_offline');
+      closedAt != null && totalPaid <= 0 && (closedReason == 'unpaid' || closedReason == 'paid_offline');
 
   /// La cuenta está SALDADA: entró todo el dinero.
   ///
@@ -570,9 +561,7 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     if (billRequestedAt != null || isPayable || isTerminal) return p.amountDue;
 
     // Los anulados no se cobran, así que tampoco se muestran en su parte.
-    return itemsFor(p.uuid)
-        .where((i) => !i.isVoided)
-        .fold<double>(0, (acc, i) => acc + i.lineTotal);
+    return itemsFor(p.uuid).where((i) => !i.isVoided).fold<double>(0, (acc, i) => acc + i.lineTotal);
   }
 
   GroupOrderParticipantDM? participantByUuid(String? uuid) {
@@ -634,25 +623,22 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   ///    que la cocina no ha visto; contarlos hacía que el panel dijera
   ///    "2/5 entregados" incluyendo 3 que nadie pidió, y que un postre en el
   ///    carrito impidiera dar por servida una tanda completa.
-  List<GroupOrderItemDM> get kitchenItems => isOpenTab
-      ? items.where((i) => i.isSent && !i.isVoided).toList()
-      : liveItems;
+  List<GroupOrderItemDM> get kitchenItems =>
+      isOpenTab ? items.where((i) => i.isSent && !i.isVoided).toList() : liveItems;
 
   /// Ítems de un participante que la cocina realmente recibió.
   List<GroupOrderItemDM> kitchenItemsFor(String participantUuid) =>
       kitchenItems.where((i) => i.participantUuid == participantUuid).toList();
 
   /// Ítems ya entregados (checklist del manager).
-  int get deliveredItemsCount =>
-      kitchenItems.where((i) => i.deliveredAt != null).length;
+  int get deliveredItemsCount => kitchenItems.where((i) => i.deliveredAt != null).length;
 
   /// Total de ítems que el manager debe servir.
   int get liveItemsCount => kitchenItems.length;
 
   /// ¿Checklist completo? (habilita el CTA de ENTREGADA). Exige que haya algo
   /// que entregar: una comanda vacía no se puede dar por servida.
-  bool get allItemsDelivered =>
-      kitchenItems.isNotEmpty && deliveredItemsCount == kitchenItems.length;
+  bool get allItemsDelivered => kitchenItems.isNotEmpty && deliveredItemsCount == kitchenItems.length;
 
   /// ¿Queda algo esperando en cocina?
   ///
@@ -662,8 +648,7 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   /// degradara a PREPARANDO una orden que en la base estaba ENTREGADA y
   /// pagada, solo porque su checklist había quedado vacío. La UI no debe
   /// contradecir al backend cuando no tiene nada que objetar.
-  bool get hasPendingKitchenItems =>
-      kitchenItems.any((i) => i.deliveredAt == null);
+  bool get hasPendingKitchenItems => kitchenItems.any((i) => i.deliveredAt == null);
 }
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -680,8 +665,7 @@ abstract class GroupOrderResponseDM with _$GroupOrderResponseDM {
     @JsonKey(name: 'my_participant_uuid') String? myParticipantUuid,
   }) = _GroupOrderResponseDM;
 
-  factory GroupOrderResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$GroupOrderResponseDMFromJson(json);
+  factory GroupOrderResponseDM.fromJson(Map<String, dynamic> json) => _$GroupOrderResponseDMFromJson(json);
 }
 
 /// Lista de órdenes grupales del usuario.
@@ -692,8 +676,7 @@ abstract class GroupOrdersListResponseDM with _$GroupOrdersListResponseDM {
     @JsonKey(name: 'group_orders') @Default(<GroupOrderDM>[]) List<GroupOrderDM> groupOrders,
   }) = _GroupOrdersListResponseDM;
 
-  factory GroupOrdersListResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$GroupOrdersListResponseDMFromJson(json);
+  factory GroupOrdersListResponseDM.fromJson(Map<String, dynamic> json) => _$GroupOrdersListResponseDMFromJson(json);
 }
 
 /// Respuesta de las dos vías de cobro. Comparten todo salvo por dónde paga el
@@ -703,6 +686,7 @@ abstract class GroupOrdersListResponseDM with _$GroupOrdersListResponseDM {
 abstract class PayIntentResponseDM with _$PayIntentResponseDM {
   const factory PayIntentResponseDM({
     @JsonKey(name: 'client_secret') String? clientSecret,
+
     /// Checkout hosteado: para MB WAY y demás métodos que el PaymentSheet
     /// nativo no soporta.
     @JsonKey(name: 'checkout_url') String? checkoutUrl,
@@ -717,8 +701,7 @@ abstract class PayIntentResponseDM with _$PayIntentResponseDM {
     @JsonKey(name: 'covered_participant_uuids') @Default(<String>[]) List<String> coveredParticipantUuids,
   }) = _PayIntentResponseDM;
 
-  factory PayIntentResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$PayIntentResponseDMFromJson(json);
+  factory PayIntentResponseDM.fromJson(Map<String, dynamic> json) => _$PayIntentResponseDMFromJson(json);
 }
 
 /// Respuesta al generar una invitación por link universal.
@@ -732,6 +715,5 @@ abstract class GroupInviteResponseDM with _$GroupInviteResponseDM {
     @JsonKey(name: 'invite_url') String? inviteUrl,
   }) = _GroupInviteResponseDM;
 
-  factory GroupInviteResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$GroupInviteResponseDMFromJson(json);
+  factory GroupInviteResponseDM.fromJson(Map<String, dynamic> json) => _$GroupInviteResponseDMFromJson(json);
 }

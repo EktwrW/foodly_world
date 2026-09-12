@@ -84,7 +84,7 @@ abstract class Day with _$Day {
     }
 
     // Check if current time is between open and close times
-    return now.isAfter(openDateTime) && now.isBefore(closeDateTime) || 
+    return now.isAfter(openDateTime) && now.isBefore(closeDateTime) ||
         now.isAtSameMomentAs(openDateTime); // Also consider exact opening time as open
   }
 

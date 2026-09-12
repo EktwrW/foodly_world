@@ -22,8 +22,7 @@ mixin _$PostsResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PostsResponseDMCopyWith<PostsResponseDM> get copyWith =>
-      _$PostsResponseDMCopyWithImpl<PostsResponseDM>(
-          this as PostsResponseDM, _$identity);
+      _$PostsResponseDMCopyWithImpl<PostsResponseDM>(this as PostsResponseDM, _$identity);
 
   /// Serializes this PostsResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -39,8 +38,7 @@ mixin _$PostsResponseDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(posts), meta);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(posts), meta);
 
   @override
   String toString() {
@@ -50,8 +48,7 @@ mixin _$PostsResponseDM {
 
 /// @nodoc
 abstract mixin class $PostsResponseDMCopyWith<$Res> {
-  factory $PostsResponseDMCopyWith(
-          PostsResponseDM value, $Res Function(PostsResponseDM) _then) =
+  factory $PostsResponseDMCopyWith(PostsResponseDM value, $Res Function(PostsResponseDM) _then) =
       _$PostsResponseDMCopyWithImpl;
   @useResult
   $Res call({List<PostDM> posts, PostsMetaDM? meta});
@@ -60,8 +57,7 @@ abstract mixin class $PostsResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PostsResponseDMCopyWithImpl<$Res>
-    implements $PostsResponseDMCopyWith<$Res> {
+class _$PostsResponseDMCopyWithImpl<$Res> implements $PostsResponseDMCopyWith<$Res> {
   _$PostsResponseDMCopyWithImpl(this._self, this._then);
 
   final PostsResponseDM _self;
@@ -262,10 +258,8 @@ extension PostsResponseDMPatterns on PostsResponseDM {
 /// @nodoc
 @JsonSerializable()
 class _PostsResponseDM implements PostsResponseDM {
-  const _PostsResponseDM({final List<PostDM> posts = const [], this.meta})
-      : _posts = posts;
-  factory _PostsResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$PostsResponseDMFromJson(json);
+  const _PostsResponseDM({final List<PostDM> posts = const [], this.meta}) : _posts = posts;
+  factory _PostsResponseDM.fromJson(Map<String, dynamic> json) => _$PostsResponseDMFromJson(json);
 
   final List<PostDM> _posts;
   @override
@@ -305,8 +299,7 @@ class _PostsResponseDM implements PostsResponseDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_posts), meta);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_posts), meta);
 
   @override
   String toString() {
@@ -315,10 +308,8 @@ class _PostsResponseDM implements PostsResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$PostsResponseDMCopyWith<$Res>
-    implements $PostsResponseDMCopyWith<$Res> {
-  factory _$PostsResponseDMCopyWith(
-          _PostsResponseDM value, $Res Function(_PostsResponseDM) _then) =
+abstract mixin class _$PostsResponseDMCopyWith<$Res> implements $PostsResponseDMCopyWith<$Res> {
+  factory _$PostsResponseDMCopyWith(_PostsResponseDM value, $Res Function(_PostsResponseDM) _then) =
       __$PostsResponseDMCopyWithImpl;
   @override
   @useResult
@@ -329,8 +320,7 @@ abstract mixin class _$PostsResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PostsResponseDMCopyWithImpl<$Res>
-    implements _$PostsResponseDMCopyWith<$Res> {
+class __$PostsResponseDMCopyWithImpl<$Res> implements _$PostsResponseDMCopyWith<$Res> {
   __$PostsResponseDMCopyWithImpl(this._self, this._then);
 
   final _PostsResponseDM _self;
@@ -396,18 +386,15 @@ mixin _$PostsMetaDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is PostsMetaDM &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.lastPage, lastPage) ||
-                other.lastPage == lastPage) &&
+            (identical(other.currentPage, currentPage) || other.currentPage == currentPage) &&
+            (identical(other.lastPage, lastPage) || other.lastPage == lastPage) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
             (identical(other.total, total) || other.total == total));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, currentPage, lastPage, perPage, total);
+  int get hashCode => Object.hash(runtimeType, currentPage, lastPage, perPage, total);
 
   @override
   String toString() {
@@ -417,9 +404,7 @@ mixin _$PostsMetaDM {
 
 /// @nodoc
 abstract mixin class $PostsMetaDMCopyWith<$Res> {
-  factory $PostsMetaDMCopyWith(
-          PostsMetaDM value, $Res Function(PostsMetaDM) _then) =
-      _$PostsMetaDMCopyWithImpl;
+  factory $PostsMetaDMCopyWith(PostsMetaDM value, $Res Function(PostsMetaDM) _then) = _$PostsMetaDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'current_page') int currentPage,
@@ -559,19 +544,15 @@ extension PostsMetaDMPatterns on PostsMetaDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(name: 'current_page') int currentPage,
-            @JsonKey(name: 'last_page') int lastPage,
-            @JsonKey(name: 'per_page') int perPage,
-            int total)?
+    TResult Function(@JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage,
+            @JsonKey(name: 'per_page') int perPage, int total)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _PostsMetaDM() when $default != null:
-        return $default(
-            _that.currentPage, _that.lastPage, _that.perPage, _that.total);
+        return $default(_that.currentPage, _that.lastPage, _that.perPage, _that.total);
       case _:
         return orElse();
     }
@@ -592,18 +573,14 @@ extension PostsMetaDMPatterns on PostsMetaDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(name: 'current_page') int currentPage,
-            @JsonKey(name: 'last_page') int lastPage,
-            @JsonKey(name: 'per_page') int perPage,
-            int total)
+    TResult Function(@JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage,
+            @JsonKey(name: 'per_page') int perPage, int total)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PostsMetaDM():
-        return $default(
-            _that.currentPage, _that.lastPage, _that.perPage, _that.total);
+        return $default(_that.currentPage, _that.lastPage, _that.perPage, _that.total);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -623,18 +600,14 @@ extension PostsMetaDMPatterns on PostsMetaDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            @JsonKey(name: 'current_page') int currentPage,
-            @JsonKey(name: 'last_page') int lastPage,
-            @JsonKey(name: 'per_page') int perPage,
-            int total)?
+    TResult? Function(@JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage,
+            @JsonKey(name: 'per_page') int perPage, int total)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PostsMetaDM() when $default != null:
-        return $default(
-            _that.currentPage, _that.lastPage, _that.perPage, _that.total);
+        return $default(_that.currentPage, _that.lastPage, _that.perPage, _that.total);
       case _:
         return null;
     }
@@ -649,8 +622,7 @@ class _PostsMetaDM implements PostsMetaDM {
       @JsonKey(name: 'last_page') this.lastPage = 1,
       @JsonKey(name: 'per_page') this.perPage = 20,
       this.total = 0});
-  factory _PostsMetaDM.fromJson(Map<String, dynamic> json) =>
-      _$PostsMetaDMFromJson(json);
+  factory _PostsMetaDM.fromJson(Map<String, dynamic> json) => _$PostsMetaDMFromJson(json);
 
   @override
   @JsonKey(name: 'current_page')
@@ -670,8 +642,7 @@ class _PostsMetaDM implements PostsMetaDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PostsMetaDMCopyWith<_PostsMetaDM> get copyWith =>
-      __$PostsMetaDMCopyWithImpl<_PostsMetaDM>(this, _$identity);
+  _$PostsMetaDMCopyWith<_PostsMetaDM> get copyWith => __$PostsMetaDMCopyWithImpl<_PostsMetaDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -685,18 +656,15 @@ class _PostsMetaDM implements PostsMetaDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _PostsMetaDM &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.lastPage, lastPage) ||
-                other.lastPage == lastPage) &&
+            (identical(other.currentPage, currentPage) || other.currentPage == currentPage) &&
+            (identical(other.lastPage, lastPage) || other.lastPage == lastPage) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
             (identical(other.total, total) || other.total == total));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, currentPage, lastPage, perPage, total);
+  int get hashCode => Object.hash(runtimeType, currentPage, lastPage, perPage, total);
 
   @override
   String toString() {
@@ -705,11 +673,8 @@ class _PostsMetaDM implements PostsMetaDM {
 }
 
 /// @nodoc
-abstract mixin class _$PostsMetaDMCopyWith<$Res>
-    implements $PostsMetaDMCopyWith<$Res> {
-  factory _$PostsMetaDMCopyWith(
-          _PostsMetaDM value, $Res Function(_PostsMetaDM) _then) =
-      __$PostsMetaDMCopyWithImpl;
+abstract mixin class _$PostsMetaDMCopyWith<$Res> implements $PostsMetaDMCopyWith<$Res> {
+  factory _$PostsMetaDMCopyWith(_PostsMetaDM value, $Res Function(_PostsMetaDM) _then) = __$PostsMetaDMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -773,8 +738,7 @@ mixin _$PostDM {
   @JsonKey(name: 'user_name')
   String get userName;
   @JsonKey(name: 'user_photo')
-  String?
-      get userPhoto; // Follow Loop (mayo 2026): true cuando el usuario actual sigue al
+  String? get userPhoto; // Follow Loop (mayo 2026): true cuando el usuario actual sigue al
 // autor. La PostCard pinta un anillo purple al avatar como cue
 // visual de "esta persona ya está en tu red". Default false para
 // que un BE viejo (sin la key) no rompa el parser.
@@ -791,8 +755,7 @@ mixin _$PostDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $PostDMCopyWith<PostDM> get copyWith =>
-      _$PostDMCopyWithImpl<PostDM>(this as PostDM, _$identity);
+  $PostDMCopyWith<PostDM> get copyWith => _$PostDMCopyWithImpl<PostDM>(this as PostDM, _$identity);
 
   /// Serializes this PostDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -805,47 +768,23 @@ mixin _$PostDM {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.content, content) || other.content == content) &&
-            (identical(other.photoUrl, photoUrl) ||
-                other.photoUrl == photoUrl) &&
-            (identical(other.likesCount, likesCount) ||
-                other.likesCount == likesCount) &&
+            (identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl) &&
+            (identical(other.likesCount, likesCount) || other.likesCount == likesCount) &&
             (identical(other.isLiked, isLiked) || other.isLiked == isLiked) &&
-            (identical(other.userUuid, userUuid) ||
-                other.userUuid == userUuid) &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.userPhoto, userPhoto) ||
-                other.userPhoto == userPhoto) &&
-            (identical(other.isFollowedByMe, isFollowedByMe) ||
-                other.isFollowedByMe == isFollowedByMe) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.userUuid, userUuid) || other.userUuid == userUuid) &&
+            (identical(other.userName, userName) || other.userName == userName) &&
+            (identical(other.userPhoto, userPhoto) || other.userPhoto == userPhoto) &&
+            (identical(other.isFollowedByMe, isFollowedByMe) || other.isFollowedByMe == isFollowedByMe) &&
+            (identical(other.latitude, latitude) || other.latitude == latitude) &&
+            (identical(other.longitude, longitude) || other.longitude == longitude) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      uuid,
-      content,
-      photoUrl,
-      likesCount,
-      isLiked,
-      userUuid,
-      userName,
-      userPhoto,
-      isFollowedByMe,
-      latitude,
-      longitude,
-      createdAt,
-      updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, uuid, content, photoUrl, likesCount, isLiked, userUuid, userName,
+      userPhoto, isFollowedByMe, latitude, longitude, createdAt, updatedAt);
 
   @override
   String toString() {
@@ -855,8 +794,7 @@ mixin _$PostDM {
 
 /// @nodoc
 abstract mixin class $PostDMCopyWith<$Res> {
-  factory $PostDMCopyWith(PostDM value, $Res Function(PostDM) _then) =
-      _$PostDMCopyWithImpl;
+  factory $PostDMCopyWith(PostDM value, $Res Function(PostDM) _then) = _$PostDMCopyWithImpl;
   @useResult
   $Res call(
       {int? id,
@@ -1275,8 +1213,7 @@ class _PostDM extends PostDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PostDMCopyWith<_PostDM> get copyWith =>
-      __$PostDMCopyWithImpl<_PostDM>(this, _$identity);
+  _$PostDMCopyWith<_PostDM> get copyWith => __$PostDMCopyWithImpl<_PostDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1293,47 +1230,23 @@ class _PostDM extends PostDM {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.content, content) || other.content == content) &&
-            (identical(other.photoUrl, photoUrl) ||
-                other.photoUrl == photoUrl) &&
-            (identical(other.likesCount, likesCount) ||
-                other.likesCount == likesCount) &&
+            (identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl) &&
+            (identical(other.likesCount, likesCount) || other.likesCount == likesCount) &&
             (identical(other.isLiked, isLiked) || other.isLiked == isLiked) &&
-            (identical(other.userUuid, userUuid) ||
-                other.userUuid == userUuid) &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.userPhoto, userPhoto) ||
-                other.userPhoto == userPhoto) &&
-            (identical(other.isFollowedByMe, isFollowedByMe) ||
-                other.isFollowedByMe == isFollowedByMe) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.userUuid, userUuid) || other.userUuid == userUuid) &&
+            (identical(other.userName, userName) || other.userName == userName) &&
+            (identical(other.userPhoto, userPhoto) || other.userPhoto == userPhoto) &&
+            (identical(other.isFollowedByMe, isFollowedByMe) || other.isFollowedByMe == isFollowedByMe) &&
+            (identical(other.latitude, latitude) || other.latitude == latitude) &&
+            (identical(other.longitude, longitude) || other.longitude == longitude) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      uuid,
-      content,
-      photoUrl,
-      likesCount,
-      isLiked,
-      userUuid,
-      userName,
-      userPhoto,
-      isFollowedByMe,
-      latitude,
-      longitude,
-      createdAt,
-      updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, uuid, content, photoUrl, likesCount, isLiked, userUuid, userName,
+      userPhoto, isFollowedByMe, latitude, longitude, createdAt, updatedAt);
 
   @override
   String toString() {
@@ -1343,8 +1256,7 @@ class _PostDM extends PostDM {
 
 /// @nodoc
 abstract mixin class _$PostDMCopyWith<$Res> implements $PostDMCopyWith<$Res> {
-  factory _$PostDMCopyWith(_PostDM value, $Res Function(_PostDM) _then) =
-      __$PostDMCopyWithImpl;
+  factory _$PostDMCopyWith(_PostDM value, $Res Function(_PostDM) _then) = __$PostDMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -1464,8 +1376,7 @@ mixin _$ToggleLikeResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ToggleLikeResponseDMCopyWith<ToggleLikeResponseDM> get copyWith =>
-      _$ToggleLikeResponseDMCopyWithImpl<ToggleLikeResponseDM>(
-          this as ToggleLikeResponseDM, _$identity);
+      _$ToggleLikeResponseDMCopyWithImpl<ToggleLikeResponseDM>(this as ToggleLikeResponseDM, _$identity);
 
   /// Serializes this ToggleLikeResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1476,8 +1387,7 @@ mixin _$ToggleLikeResponseDM {
         (other.runtimeType == runtimeType &&
             other is ToggleLikeResponseDM &&
             (identical(other.isLiked, isLiked) || other.isLiked == isLiked) &&
-            (identical(other.likesCount, likesCount) ||
-                other.likesCount == likesCount));
+            (identical(other.likesCount, likesCount) || other.likesCount == likesCount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1492,18 +1402,14 @@ mixin _$ToggleLikeResponseDM {
 
 /// @nodoc
 abstract mixin class $ToggleLikeResponseDMCopyWith<$Res> {
-  factory $ToggleLikeResponseDMCopyWith(ToggleLikeResponseDM value,
-          $Res Function(ToggleLikeResponseDM) _then) =
+  factory $ToggleLikeResponseDMCopyWith(ToggleLikeResponseDM value, $Res Function(ToggleLikeResponseDM) _then) =
       _$ToggleLikeResponseDMCopyWithImpl;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'is_liked') bool isLiked,
-      @JsonKey(name: 'likes_count') int likesCount});
+  $Res call({@JsonKey(name: 'is_liked') bool isLiked, @JsonKey(name: 'likes_count') int likesCount});
 }
 
 /// @nodoc
-class _$ToggleLikeResponseDMCopyWithImpl<$Res>
-    implements $ToggleLikeResponseDMCopyWith<$Res> {
+class _$ToggleLikeResponseDMCopyWithImpl<$Res> implements $ToggleLikeResponseDMCopyWith<$Res> {
   _$ToggleLikeResponseDMCopyWithImpl(this._self, this._then);
 
   final ToggleLikeResponseDM _self;
@@ -1623,9 +1529,7 @@ extension ToggleLikeResponseDMPatterns on ToggleLikeResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'is_liked') bool isLiked,
-            @JsonKey(name: 'likes_count') int likesCount)?
-        $default, {
+    TResult Function(@JsonKey(name: 'is_liked') bool isLiked, @JsonKey(name: 'likes_count') int likesCount)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -1652,9 +1556,7 @@ extension ToggleLikeResponseDMPatterns on ToggleLikeResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'is_liked') bool isLiked,
-            @JsonKey(name: 'likes_count') int likesCount)
-        $default,
+    TResult Function(@JsonKey(name: 'is_liked') bool isLiked, @JsonKey(name: 'likes_count') int likesCount) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -1679,9 +1581,7 @@ extension ToggleLikeResponseDMPatterns on ToggleLikeResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(@JsonKey(name: 'is_liked') bool isLiked,
-            @JsonKey(name: 'likes_count') int likesCount)?
-        $default,
+    TResult? Function(@JsonKey(name: 'is_liked') bool isLiked, @JsonKey(name: 'likes_count') int likesCount)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -1697,10 +1597,8 @@ extension ToggleLikeResponseDMPatterns on ToggleLikeResponseDM {
 @JsonSerializable()
 class _ToggleLikeResponseDM implements ToggleLikeResponseDM {
   const _ToggleLikeResponseDM(
-      {@JsonKey(name: 'is_liked') this.isLiked = false,
-      @JsonKey(name: 'likes_count') this.likesCount = 0});
-  factory _ToggleLikeResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$ToggleLikeResponseDMFromJson(json);
+      {@JsonKey(name: 'is_liked') this.isLiked = false, @JsonKey(name: 'likes_count') this.likesCount = 0});
+  factory _ToggleLikeResponseDM.fromJson(Map<String, dynamic> json) => _$ToggleLikeResponseDMFromJson(json);
 
   @override
   @JsonKey(name: 'is_liked')
@@ -1715,8 +1613,7 @@ class _ToggleLikeResponseDM implements ToggleLikeResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$ToggleLikeResponseDMCopyWith<_ToggleLikeResponseDM> get copyWith =>
-      __$ToggleLikeResponseDMCopyWithImpl<_ToggleLikeResponseDM>(
-          this, _$identity);
+      __$ToggleLikeResponseDMCopyWithImpl<_ToggleLikeResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1731,8 +1628,7 @@ class _ToggleLikeResponseDM implements ToggleLikeResponseDM {
         (other.runtimeType == runtimeType &&
             other is _ToggleLikeResponseDM &&
             (identical(other.isLiked, isLiked) || other.isLiked == isLiked) &&
-            (identical(other.likesCount, likesCount) ||
-                other.likesCount == likesCount));
+            (identical(other.likesCount, likesCount) || other.likesCount == likesCount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1746,21 +1642,16 @@ class _ToggleLikeResponseDM implements ToggleLikeResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$ToggleLikeResponseDMCopyWith<$Res>
-    implements $ToggleLikeResponseDMCopyWith<$Res> {
-  factory _$ToggleLikeResponseDMCopyWith(_ToggleLikeResponseDM value,
-          $Res Function(_ToggleLikeResponseDM) _then) =
+abstract mixin class _$ToggleLikeResponseDMCopyWith<$Res> implements $ToggleLikeResponseDMCopyWith<$Res> {
+  factory _$ToggleLikeResponseDMCopyWith(_ToggleLikeResponseDM value, $Res Function(_ToggleLikeResponseDM) _then) =
       __$ToggleLikeResponseDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: 'is_liked') bool isLiked,
-      @JsonKey(name: 'likes_count') int likesCount});
+  $Res call({@JsonKey(name: 'is_liked') bool isLiked, @JsonKey(name: 'likes_count') int likesCount});
 }
 
 /// @nodoc
-class __$ToggleLikeResponseDMCopyWithImpl<$Res>
-    implements _$ToggleLikeResponseDMCopyWith<$Res> {
+class __$ToggleLikeResponseDMCopyWithImpl<$Res> implements _$ToggleLikeResponseDMCopyWith<$Res> {
   __$ToggleLikeResponseDMCopyWithImpl(this._self, this._then);
 
   final _ToggleLikeResponseDM _self;

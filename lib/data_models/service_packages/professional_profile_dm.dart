@@ -92,8 +92,7 @@ abstract class ProfessionalProfileDM with _$ProfessionalProfileDM {
     @JsonKey(name: 'updated_at') DateTime? updatedAt,
   }) = _ProfessionalProfileDM;
 
-  factory ProfessionalProfileDM.fromJson(Map<String, dynamic> json) =>
-      _$ProfessionalProfileDMFromJson(json);
+  factory ProfessionalProfileDM.fromJson(Map<String, dynamic> json) => _$ProfessionalProfileDMFromJson(json);
 
   bool get isSolo => teamSize == TeamSize.solo;
   bool get hasPortfolioVideo => portfolioVideoUrl != null && portfolioVideoUrl!.isNotEmpty;

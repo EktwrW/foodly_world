@@ -29,8 +29,7 @@ mixin _$ManageMenuVM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ManageMenuVMCopyWith<ManageMenuVM> get copyWith =>
-      _$ManageMenuVMCopyWithImpl<ManageMenuVM>(
-          this as ManageMenuVM, _$identity);
+      _$ManageMenuVMCopyWithImpl<ManageMenuVM>(this as ManageMenuVM, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -38,35 +37,19 @@ mixin _$ManageMenuVM {
         (other.runtimeType == runtimeType &&
             other is ManageMenuVM &&
             (identical(other.menuDM, menuDM) || other.menuDM == menuDM) &&
-            (identical(other.editMenuDM, editMenuDM) ||
-                other.editMenuDM == editMenuDM) &&
-            (identical(other.indexView, indexView) ||
-                other.indexView == indexView) &&
-            (identical(other.controller, controller) ||
-                other.controller == controller) &&
-            (identical(other.floatingButtonKey, floatingButtonKey) ||
-                other.floatingButtonKey == floatingButtonKey) &&
-            (identical(other.editMode, editMode) ||
-                other.editMode == editMode) &&
-            (identical(other.avoidFocus, avoidFocus) ||
-                other.avoidFocus == avoidFocus) &&
+            (identical(other.editMenuDM, editMenuDM) || other.editMenuDM == editMenuDM) &&
+            (identical(other.indexView, indexView) || other.indexView == indexView) &&
+            (identical(other.controller, controller) || other.controller == controller) &&
+            (identical(other.floatingButtonKey, floatingButtonKey) || other.floatingButtonKey == floatingButtonKey) &&
+            (identical(other.editMode, editMode) || other.editMode == editMode) &&
+            (identical(other.avoidFocus, avoidFocus) || other.avoidFocus == avoidFocus) &&
             (identical(other.formKey, formKey) || other.formKey == formKey) &&
-            (identical(other.autovalidateMode, autovalidateMode) ||
-                other.autovalidateMode == autovalidateMode));
+            (identical(other.autovalidateMode, autovalidateMode) || other.autovalidateMode == autovalidateMode));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      menuDM,
-      editMenuDM,
-      indexView,
-      controller,
-      floatingButtonKey,
-      editMode,
-      avoidFocus,
-      formKey,
-      autovalidateMode);
+  int get hashCode => Object.hash(runtimeType, menuDM, editMenuDM, indexView, controller, floatingButtonKey, editMode,
+      avoidFocus, formKey, autovalidateMode);
 
   @override
   String toString() {
@@ -76,9 +59,7 @@ mixin _$ManageMenuVM {
 
 /// @nodoc
 abstract mixin class $ManageMenuVMCopyWith<$Res> {
-  factory $ManageMenuVMCopyWith(
-          ManageMenuVM value, $Res Function(ManageMenuVM) _then) =
-      _$ManageMenuVMCopyWithImpl;
+  factory $ManageMenuVMCopyWith(ManageMenuVM value, $Res Function(ManageMenuVM) _then) = _$ManageMenuVMCopyWithImpl;
   @useResult
   $Res call(
       {MenuDM? menuDM,
@@ -295,16 +276,8 @@ extension ManageMenuVMPatterns on ManageMenuVM {
     final _that = this;
     switch (_that) {
       case _ManageMenuVM() when $default != null:
-        return $default(
-            _that.menuDM,
-            _that.editMenuDM,
-            _that.indexView,
-            _that.controller,
-            _that.floatingButtonKey,
-            _that.editMode,
-            _that.avoidFocus,
-            _that.formKey,
-            _that.autovalidateMode);
+        return $default(_that.menuDM, _that.editMenuDM, _that.indexView, _that.controller, _that.floatingButtonKey,
+            _that.editMode, _that.avoidFocus, _that.formKey, _that.autovalidateMode);
       case _:
         return orElse();
     }
@@ -340,16 +313,8 @@ extension ManageMenuVMPatterns on ManageMenuVM {
     final _that = this;
     switch (_that) {
       case _ManageMenuVM():
-        return $default(
-            _that.menuDM,
-            _that.editMenuDM,
-            _that.indexView,
-            _that.controller,
-            _that.floatingButtonKey,
-            _that.editMode,
-            _that.avoidFocus,
-            _that.formKey,
-            _that.autovalidateMode);
+        return $default(_that.menuDM, _that.editMenuDM, _that.indexView, _that.controller, _that.floatingButtonKey,
+            _that.editMode, _that.avoidFocus, _that.formKey, _that.autovalidateMode);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -384,16 +349,8 @@ extension ManageMenuVMPatterns on ManageMenuVM {
     final _that = this;
     switch (_that) {
       case _ManageMenuVM() when $default != null:
-        return $default(
-            _that.menuDM,
-            _that.editMenuDM,
-            _that.indexView,
-            _that.controller,
-            _that.floatingButtonKey,
-            _that.editMode,
-            _that.avoidFocus,
-            _that.formKey,
-            _that.autovalidateMode);
+        return $default(_that.menuDM, _that.editMenuDM, _that.indexView, _that.controller, _that.floatingButtonKey,
+            _that.editMode, _that.avoidFocus, _that.formKey, _that.autovalidateMode);
       case _:
         return null;
     }
@@ -443,8 +400,7 @@ class _ManageMenuVM extends ManageMenuVM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ManageMenuVMCopyWith<_ManageMenuVM> get copyWith =>
-      __$ManageMenuVMCopyWithImpl<_ManageMenuVM>(this, _$identity);
+  _$ManageMenuVMCopyWith<_ManageMenuVM> get copyWith => __$ManageMenuVMCopyWithImpl<_ManageMenuVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -452,35 +408,19 @@ class _ManageMenuVM extends ManageMenuVM {
         (other.runtimeType == runtimeType &&
             other is _ManageMenuVM &&
             (identical(other.menuDM, menuDM) || other.menuDM == menuDM) &&
-            (identical(other.editMenuDM, editMenuDM) ||
-                other.editMenuDM == editMenuDM) &&
-            (identical(other.indexView, indexView) ||
-                other.indexView == indexView) &&
-            (identical(other.controller, controller) ||
-                other.controller == controller) &&
-            (identical(other.floatingButtonKey, floatingButtonKey) ||
-                other.floatingButtonKey == floatingButtonKey) &&
-            (identical(other.editMode, editMode) ||
-                other.editMode == editMode) &&
-            (identical(other.avoidFocus, avoidFocus) ||
-                other.avoidFocus == avoidFocus) &&
+            (identical(other.editMenuDM, editMenuDM) || other.editMenuDM == editMenuDM) &&
+            (identical(other.indexView, indexView) || other.indexView == indexView) &&
+            (identical(other.controller, controller) || other.controller == controller) &&
+            (identical(other.floatingButtonKey, floatingButtonKey) || other.floatingButtonKey == floatingButtonKey) &&
+            (identical(other.editMode, editMode) || other.editMode == editMode) &&
+            (identical(other.avoidFocus, avoidFocus) || other.avoidFocus == avoidFocus) &&
             (identical(other.formKey, formKey) || other.formKey == formKey) &&
-            (identical(other.autovalidateMode, autovalidateMode) ||
-                other.autovalidateMode == autovalidateMode));
+            (identical(other.autovalidateMode, autovalidateMode) || other.autovalidateMode == autovalidateMode));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      menuDM,
-      editMenuDM,
-      indexView,
-      controller,
-      floatingButtonKey,
-      editMode,
-      avoidFocus,
-      formKey,
-      autovalidateMode);
+  int get hashCode => Object.hash(runtimeType, menuDM, editMenuDM, indexView, controller, floatingButtonKey, editMode,
+      avoidFocus, formKey, autovalidateMode);
 
   @override
   String toString() {
@@ -489,11 +429,8 @@ class _ManageMenuVM extends ManageMenuVM {
 }
 
 /// @nodoc
-abstract mixin class _$ManageMenuVMCopyWith<$Res>
-    implements $ManageMenuVMCopyWith<$Res> {
-  factory _$ManageMenuVMCopyWith(
-          _ManageMenuVM value, $Res Function(_ManageMenuVM) _then) =
-      __$ManageMenuVMCopyWithImpl;
+abstract mixin class _$ManageMenuVMCopyWith<$Res> implements $ManageMenuVMCopyWith<$Res> {
+  factory _$ManageMenuVMCopyWith(_ManageMenuVM value, $Res Function(_ManageMenuVM) _then) = __$ManageMenuVMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -514,8 +451,7 @@ abstract mixin class _$ManageMenuVMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ManageMenuVMCopyWithImpl<$Res>
-    implements _$ManageMenuVMCopyWith<$Res> {
+class __$ManageMenuVMCopyWithImpl<$Res> implements _$ManageMenuVMCopyWith<$Res> {
   __$ManageMenuVMCopyWithImpl(this._self, this._then);
 
   final _ManageMenuVM _self;

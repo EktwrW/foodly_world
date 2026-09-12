@@ -122,7 +122,8 @@ class _DownloadAppButton extends StatelessWidget {
             value: _AppStore.apple,
             child: Row(
               children: [
-                Brand(Brands.apple_logo, size: 26, colorFilter: const ColorFilter.mode(Colors.black87, BlendMode.srcIn)),
+                Brand(Brands.apple_logo,
+                    size: 26, colorFilter: const ColorFilter.mode(Colors.black87, BlendMode.srcIn)),
                 const SizedBox(width: 12),
                 const Text('App Store', style: FoodlyTextStyles.label),
               ],

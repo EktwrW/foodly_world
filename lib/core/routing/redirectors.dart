@@ -55,8 +55,7 @@ abstract class GoRouterRedirector {
               // redirect sign-up to /login, which looks identical to /start,
               // making the button appear broken on any device with prior session.
               final loc = state.matchedLocation;
-              final isSignUpRoute =
-                  loc == AppRoutes.signUp.path || loc == AppRoutes.signUpBusiness.path;
+              final isSignUpRoute = loc == AppRoutes.signUp.path || loc == AppRoutes.signUpBusiness.path;
               path = isSignUpRoute ? null : AppRoutes.login.path;
             }
           },
@@ -72,8 +71,7 @@ abstract class GoRouterRedirector {
           // Modo invitado (5.1.1.v): las rutas de descubrimiento no tienen
           // módulo de permiso (no hay sesión). Sin este bypass el invitado
           // caería a /no-access. Se permiten solo las rutas browsable.
-          guestBrowsable:
-              authSessionService.isGuest && GuestRoutes.isBrowsable(state.matchedLocation),
+          guestBrowsable: authSessionService.isGuest && GuestRoutes.isBrowsable(state.matchedLocation),
           // While a session restore is in progress (tokens loading from secure
           // storage), userSessionDM is still null so hasAccessToModule() would
           // always return false. Allow through — the biometric/auto-login flow
@@ -97,10 +95,9 @@ abstract class GoRouterRedirector {
   /// decisión pura): con negocio → su panel "Órdenes en vivo" (el banner
   /// consulta el estado real contra Stripe al montarse); sin sesión o sin
   /// negocio (p. ej. cold start con restore pendiente) → start.
-  static String stripeBridgeLandingPath({required String? ownerBusinessUuid}) =>
-      ownerBusinessUuid == null
-          ? AppRoutes.start.path
-          : AppRoutes.liveOrders.path.replaceFirst(':id', ownerBusinessUuid);
+  static String stripeBridgeLandingPath({required String? ownerBusinessUuid}) => ownerBusinessUuid == null
+      ? AppRoutes.start.path
+      : AppRoutes.liveOrders.path.replaceFirst(':id', ownerBusinessUuid);
 
   /// Aterrizaje de la vuelta del Checkout hosteado (decisión pura).
   ///
@@ -161,8 +158,7 @@ abstract class GoRouterRedirector {
   static const String checkoutQueryParam = 'checkout';
   static const String checkoutCanceledResult = 'cancel';
 
-  static final RegExp _uuid =
-      RegExp(r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$');
+  static final RegExp _uuid = RegExp(r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$');
 
   /// A dónde lleva TOCAR un push (decisión pura). `null` = no navega.
   ///
@@ -203,9 +199,7 @@ abstract class GoRouterRedirector {
 
     // Aviso al COMENSAL (pagos, estado de cocina): su mesa.
     if (type == 'group_order' || type == 'group_order_fulfillment') {
-      return _uuid.hasMatch(orderUuid)
-          ? AppRoutes.groupOrder.path.replaceFirst(':id', orderUuid)
-          : null;
+      return _uuid.hasMatch(orderUuid) ? AppRoutes.groupOrder.path.replaceFirst(':id', orderUuid) : null;
     }
 
     // Reservas y servicios. La condición era
@@ -226,8 +220,7 @@ abstract class GoRouterRedirector {
   /// Destino de /no-access según sesión (decisión pura, testeable):
   /// CON sesión → su home (denegación real de permisos: jamás al login
   /// teniendo sesión); SIN sesión → login.
-  static String noAccessLandingPath({required bool isLoggedIn, required String userUuid}) =>
-      isLoggedIn
-          ? '${AppRoutes.home.path}/${AppRoutes.foodlyMainPage.path.replaceFirst(':id', userUuid)}'
-          : AppRoutes.login.path;
+  static String noAccessLandingPath({required bool isLoggedIn, required String userUuid}) => isLoggedIn
+      ? '${AppRoutes.home.path}/${AppRoutes.foodlyMainPage.path.replaceFirst(':id', userUuid)}'
+      : AppRoutes.login.path;
 }

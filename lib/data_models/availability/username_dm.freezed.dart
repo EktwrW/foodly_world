@@ -20,8 +20,7 @@ mixin _$UsernameDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $UsernameDMCopyWith<UsernameDM> get copyWith =>
-      _$UsernameDMCopyWithImpl<UsernameDM>(this as UsernameDM, _$identity);
+  $UsernameDMCopyWith<UsernameDM> get copyWith => _$UsernameDMCopyWithImpl<UsernameDM>(this as UsernameDM, _$identity);
 
   /// Serializes this UsernameDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -31,8 +30,7 @@ mixin _$UsernameDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is UsernameDM &&
-            (identical(other.username, username) ||
-                other.username == username));
+            (identical(other.username, username) || other.username == username));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -47,9 +45,7 @@ mixin _$UsernameDM {
 
 /// @nodoc
 abstract mixin class $UsernameDMCopyWith<$Res> {
-  factory $UsernameDMCopyWith(
-          UsernameDM value, $Res Function(UsernameDM) _then) =
-      _$UsernameDMCopyWithImpl;
+  factory $UsernameDMCopyWith(UsernameDM value, $Res Function(UsernameDM) _then) = _$UsernameDMCopyWithImpl;
   @useResult
   $Res call({String username});
 }
@@ -238,8 +234,7 @@ extension UsernameDMPatterns on UsernameDM {
 @JsonSerializable()
 class _UsernameDM extends UsernameDM {
   const _UsernameDM({required this.username}) : super._();
-  factory _UsernameDM.fromJson(Map<String, dynamic> json) =>
-      _$UsernameDMFromJson(json);
+  factory _UsernameDM.fromJson(Map<String, dynamic> json) => _$UsernameDMFromJson(json);
 
   @override
   final String username;
@@ -249,8 +244,7 @@ class _UsernameDM extends UsernameDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$UsernameDMCopyWith<_UsernameDM> get copyWith =>
-      __$UsernameDMCopyWithImpl<_UsernameDM>(this, _$identity);
+  _$UsernameDMCopyWith<_UsernameDM> get copyWith => __$UsernameDMCopyWithImpl<_UsernameDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -264,8 +258,7 @@ class _UsernameDM extends UsernameDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _UsernameDM &&
-            (identical(other.username, username) ||
-                other.username == username));
+            (identical(other.username, username) || other.username == username));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -279,11 +272,8 @@ class _UsernameDM extends UsernameDM {
 }
 
 /// @nodoc
-abstract mixin class _$UsernameDMCopyWith<$Res>
-    implements $UsernameDMCopyWith<$Res> {
-  factory _$UsernameDMCopyWith(
-          _UsernameDM value, $Res Function(_UsernameDM) _then) =
-      __$UsernameDMCopyWithImpl;
+abstract mixin class _$UsernameDMCopyWith<$Res> implements $UsernameDMCopyWith<$Res> {
+  factory _$UsernameDMCopyWith(_UsernameDM value, $Res Function(_UsernameDM) _then) = __$UsernameDMCopyWithImpl;
   @override
   @useResult
   $Res call({String username});

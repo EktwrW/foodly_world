@@ -179,6 +179,7 @@ abstract class GroupOrderClient {
   });
 
   @PATCH('/manager/businesses/{businessUuid}/payment-mode')
+
   ///
   /// Va con `@Body` y no con `@Field` por el mínimo de pago: Retrofit OMITE
   /// del body los `@Field` en null, y el backend distingue "campo ausente"

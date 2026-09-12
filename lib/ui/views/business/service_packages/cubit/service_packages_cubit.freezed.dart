@@ -21,8 +21,7 @@ mixin _$ServicePackagesState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $ServicePackagesStateCopyWith<ServicePackagesState> get copyWith =>
-      _$ServicePackagesStateCopyWithImpl<ServicePackagesState>(
-          this as ServicePackagesState, _$identity);
+      _$ServicePackagesStateCopyWithImpl<ServicePackagesState>(this as ServicePackagesState, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -43,8 +42,7 @@ mixin _$ServicePackagesState {
 
 /// @nodoc
 abstract mixin class $ServicePackagesStateCopyWith<$Res> {
-  factory $ServicePackagesStateCopyWith(ServicePackagesState value,
-          $Res Function(ServicePackagesState) _then) =
+  factory $ServicePackagesStateCopyWith(ServicePackagesState value, $Res Function(ServicePackagesState) _then) =
       _$ServicePackagesStateCopyWithImpl;
   @useResult
   $Res call({ServicePackagesVM vm});
@@ -53,8 +51,7 @@ abstract mixin class $ServicePackagesStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ServicePackagesStateCopyWithImpl<$Res>
-    implements $ServicePackagesStateCopyWith<$Res> {
+class _$ServicePackagesStateCopyWithImpl<$Res> implements $ServicePackagesStateCopyWith<$Res> {
   _$ServicePackagesStateCopyWithImpl(this._self, this._then);
 
   final ServicePackagesState _self;
@@ -360,15 +357,12 @@ class _Initial implements ServicePackagesState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Initial &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Initial && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -381,10 +375,8 @@ class _Initial implements ServicePackagesState {
 }
 
 /// @nodoc
-abstract mixin class _$InitialCopyWith<$Res>
-    implements $ServicePackagesStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
-      __$InitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $ServicePackagesStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({ServicePackagesVM vm});
@@ -439,15 +431,12 @@ class _Loading implements ServicePackagesState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadingCopyWith<_Loading> get copyWith =>
-      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+  _$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loading &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loading && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -460,10 +449,8 @@ class _Loading implements ServicePackagesState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadingCopyWith<$Res>
-    implements $ServicePackagesStateCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
-      __$LoadingCopyWithImpl;
+abstract mixin class _$LoadingCopyWith<$Res> implements $ServicePackagesStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
   @override
   @useResult
   $Res call({ServicePackagesVM vm});
@@ -518,15 +505,12 @@ class _Loaded implements ServicePackagesState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loaded &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loaded && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -539,10 +523,8 @@ class _Loaded implements ServicePackagesState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res>
-    implements $ServicePackagesStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
-      __$LoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $ServicePackagesStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
   @override
   @useResult
   $Res call({ServicePackagesVM vm});
@@ -597,15 +579,12 @@ class _Saving implements ServicePackagesState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$SavingCopyWith<_Saving> get copyWith =>
-      __$SavingCopyWithImpl<_Saving>(this, _$identity);
+  _$SavingCopyWith<_Saving> get copyWith => __$SavingCopyWithImpl<_Saving>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Saving &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Saving && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -618,10 +597,8 @@ class _Saving implements ServicePackagesState {
 }
 
 /// @nodoc
-abstract mixin class _$SavingCopyWith<$Res>
-    implements $ServicePackagesStateCopyWith<$Res> {
-  factory _$SavingCopyWith(_Saving value, $Res Function(_Saving) _then) =
-      __$SavingCopyWithImpl;
+abstract mixin class _$SavingCopyWith<$Res> implements $ServicePackagesStateCopyWith<$Res> {
+  factory _$SavingCopyWith(_Saving value, $Res Function(_Saving) _then) = __$SavingCopyWithImpl;
   @override
   @useResult
   $Res call({ServicePackagesVM vm});
@@ -677,8 +654,7 @@ class _Saved implements ServicePackagesState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$SavedCopyWith<_Saved> get copyWith =>
-      __$SavedCopyWithImpl<_Saved>(this, _$identity);
+  _$SavedCopyWith<_Saved> get copyWith => __$SavedCopyWithImpl<_Saved>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -699,10 +675,8 @@ class _Saved implements ServicePackagesState {
 }
 
 /// @nodoc
-abstract mixin class _$SavedCopyWith<$Res>
-    implements $ServicePackagesStateCopyWith<$Res> {
-  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) _then) =
-      __$SavedCopyWithImpl;
+abstract mixin class _$SavedCopyWith<$Res> implements $ServicePackagesStateCopyWith<$Res> {
+  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) _then) = __$SavedCopyWithImpl;
   @override
   @useResult
   $Res call({ServicePackagesVM vm, String message});
@@ -763,8 +737,7 @@ class _Deleted implements ServicePackagesState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$DeletedCopyWith<_Deleted> get copyWith =>
-      __$DeletedCopyWithImpl<_Deleted>(this, _$identity);
+  _$DeletedCopyWith<_Deleted> get copyWith => __$DeletedCopyWithImpl<_Deleted>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -785,10 +758,8 @@ class _Deleted implements ServicePackagesState {
 }
 
 /// @nodoc
-abstract mixin class _$DeletedCopyWith<$Res>
-    implements $ServicePackagesStateCopyWith<$Res> {
-  factory _$DeletedCopyWith(_Deleted value, $Res Function(_Deleted) _then) =
-      __$DeletedCopyWithImpl;
+abstract mixin class _$DeletedCopyWith<$Res> implements $ServicePackagesStateCopyWith<$Res> {
+  factory _$DeletedCopyWith(_Deleted value, $Res Function(_Deleted) _then) = __$DeletedCopyWithImpl;
   @override
   @useResult
   $Res call({ServicePackagesVM vm, String message});
@@ -849,8 +820,7 @@ class _Error implements ServicePackagesState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -871,10 +841,8 @@ class _Error implements ServicePackagesState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $ServicePackagesStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $ServicePackagesStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({ServicePackagesVM vm, String message});

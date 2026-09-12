@@ -22,8 +22,7 @@ mixin _$NotificationsResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $NotificationsResponseDMCopyWith<NotificationsResponseDM> get copyWith =>
-      _$NotificationsResponseDMCopyWithImpl<NotificationsResponseDM>(
-          this as NotificationsResponseDM, _$identity);
+      _$NotificationsResponseDMCopyWithImpl<NotificationsResponseDM>(this as NotificationsResponseDM, _$identity);
 
   /// Serializes this NotificationsResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -33,15 +32,13 @@ mixin _$NotificationsResponseDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is NotificationsResponseDM &&
-            const DeepCollectionEquality()
-                .equals(other.notifications, notifications) &&
+            const DeepCollectionEquality().equals(other.notifications, notifications) &&
             (identical(other.meta, meta) || other.meta == meta));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(notifications), meta);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(notifications), meta);
 
   @override
   String toString() {
@@ -51,8 +48,8 @@ mixin _$NotificationsResponseDM {
 
 /// @nodoc
 abstract mixin class $NotificationsResponseDMCopyWith<$Res> {
-  factory $NotificationsResponseDMCopyWith(NotificationsResponseDM value,
-          $Res Function(NotificationsResponseDM) _then) =
+  factory $NotificationsResponseDMCopyWith(
+          NotificationsResponseDM value, $Res Function(NotificationsResponseDM) _then) =
       _$NotificationsResponseDMCopyWithImpl;
   @useResult
   $Res call({List<NotificationDM> notifications, NotificationsMetaDM? meta});
@@ -61,8 +58,7 @@ abstract mixin class $NotificationsResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NotificationsResponseDMCopyWithImpl<$Res>
-    implements $NotificationsResponseDMCopyWith<$Res> {
+class _$NotificationsResponseDMCopyWithImpl<$Res> implements $NotificationsResponseDMCopyWith<$Res> {
   _$NotificationsResponseDMCopyWithImpl(this._self, this._then);
 
   final NotificationsResponseDM _self;
@@ -196,9 +192,7 @@ extension NotificationsResponseDMPatterns on NotificationsResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            List<NotificationDM> notifications, NotificationsMetaDM? meta)?
-        $default, {
+    TResult Function(List<NotificationDM> notifications, NotificationsMetaDM? meta)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -225,9 +219,7 @@ extension NotificationsResponseDMPatterns on NotificationsResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            List<NotificationDM> notifications, NotificationsMetaDM? meta)
-        $default,
+    TResult Function(List<NotificationDM> notifications, NotificationsMetaDM? meta) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -252,9 +244,7 @@ extension NotificationsResponseDMPatterns on NotificationsResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            List<NotificationDM> notifications, NotificationsMetaDM? meta)?
-        $default,
+    TResult? Function(List<NotificationDM> notifications, NotificationsMetaDM? meta)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -269,11 +259,9 @@ extension NotificationsResponseDMPatterns on NotificationsResponseDM {
 /// @nodoc
 @JsonSerializable()
 class _NotificationsResponseDM implements NotificationsResponseDM {
-  const _NotificationsResponseDM(
-      {final List<NotificationDM> notifications = const [], this.meta})
+  const _NotificationsResponseDM({final List<NotificationDM> notifications = const [], this.meta})
       : _notifications = notifications;
-  factory _NotificationsResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$NotificationsResponseDMFromJson(json);
+  factory _NotificationsResponseDM.fromJson(Map<String, dynamic> json) => _$NotificationsResponseDMFromJson(json);
 
   final List<NotificationDM> _notifications;
   @override
@@ -293,8 +281,7 @@ class _NotificationsResponseDM implements NotificationsResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$NotificationsResponseDMCopyWith<_NotificationsResponseDM> get copyWith =>
-      __$NotificationsResponseDMCopyWithImpl<_NotificationsResponseDM>(
-          this, _$identity);
+      __$NotificationsResponseDMCopyWithImpl<_NotificationsResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -308,15 +295,13 @@ class _NotificationsResponseDM implements NotificationsResponseDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _NotificationsResponseDM &&
-            const DeepCollectionEquality()
-                .equals(other._notifications, _notifications) &&
+            const DeepCollectionEquality().equals(other._notifications, _notifications) &&
             (identical(other.meta, meta) || other.meta == meta));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_notifications), meta);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_notifications), meta);
 
   @override
   String toString() {
@@ -325,10 +310,9 @@ class _NotificationsResponseDM implements NotificationsResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$NotificationsResponseDMCopyWith<$Res>
-    implements $NotificationsResponseDMCopyWith<$Res> {
-  factory _$NotificationsResponseDMCopyWith(_NotificationsResponseDM value,
-          $Res Function(_NotificationsResponseDM) _then) =
+abstract mixin class _$NotificationsResponseDMCopyWith<$Res> implements $NotificationsResponseDMCopyWith<$Res> {
+  factory _$NotificationsResponseDMCopyWith(
+          _NotificationsResponseDM value, $Res Function(_NotificationsResponseDM) _then) =
       __$NotificationsResponseDMCopyWithImpl;
   @override
   @useResult
@@ -339,8 +323,7 @@ abstract mixin class _$NotificationsResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$NotificationsResponseDMCopyWithImpl<$Res>
-    implements _$NotificationsResponseDMCopyWith<$Res> {
+class __$NotificationsResponseDMCopyWithImpl<$Res> implements _$NotificationsResponseDMCopyWith<$Res> {
   __$NotificationsResponseDMCopyWithImpl(this._self, this._then);
 
   final _NotificationsResponseDM _self;
@@ -398,8 +381,7 @@ mixin _$NotificationsMetaDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $NotificationsMetaDMCopyWith<NotificationsMetaDM> get copyWith =>
-      _$NotificationsMetaDMCopyWithImpl<NotificationsMetaDM>(
-          this as NotificationsMetaDM, _$identity);
+      _$NotificationsMetaDMCopyWithImpl<NotificationsMetaDM>(this as NotificationsMetaDM, _$identity);
 
   /// Serializes this NotificationsMetaDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -409,20 +391,16 @@ mixin _$NotificationsMetaDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is NotificationsMetaDM &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.lastPage, lastPage) ||
-                other.lastPage == lastPage) &&
+            (identical(other.currentPage, currentPage) || other.currentPage == currentPage) &&
+            (identical(other.lastPage, lastPage) || other.lastPage == lastPage) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
             (identical(other.total, total) || other.total == total) &&
-            (identical(other.unreadCount, unreadCount) ||
-                other.unreadCount == unreadCount));
+            (identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, currentPage, lastPage, perPage, total, unreadCount);
+  int get hashCode => Object.hash(runtimeType, currentPage, lastPage, perPage, total, unreadCount);
 
   @override
   String toString() {
@@ -432,8 +410,7 @@ mixin _$NotificationsMetaDM {
 
 /// @nodoc
 abstract mixin class $NotificationsMetaDMCopyWith<$Res> {
-  factory $NotificationsMetaDMCopyWith(
-          NotificationsMetaDM value, $Res Function(NotificationsMetaDM) _then) =
+  factory $NotificationsMetaDMCopyWith(NotificationsMetaDM value, $Res Function(NotificationsMetaDM) _then) =
       _$NotificationsMetaDMCopyWithImpl;
   @useResult
   $Res call(
@@ -445,8 +422,7 @@ abstract mixin class $NotificationsMetaDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NotificationsMetaDMCopyWithImpl<$Res>
-    implements $NotificationsMetaDMCopyWith<$Res> {
+class _$NotificationsMetaDMCopyWithImpl<$Res> implements $NotificationsMetaDMCopyWith<$Res> {
   _$NotificationsMetaDMCopyWithImpl(this._self, this._then);
 
   final NotificationsMetaDM _self;
@@ -581,20 +557,15 @@ extension NotificationsMetaDMPatterns on NotificationsMetaDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(name: 'current_page') int currentPage,
-            @JsonKey(name: 'last_page') int lastPage,
-            @JsonKey(name: 'per_page') int perPage,
-            int total,
-            @JsonKey(name: 'unread_count') int unreadCount)?
+    TResult Function(@JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage,
+            @JsonKey(name: 'per_page') int perPage, int total, @JsonKey(name: 'unread_count') int unreadCount)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _NotificationsMetaDM() when $default != null:
-        return $default(_that.currentPage, _that.lastPage, _that.perPage,
-            _that.total, _that.unreadCount);
+        return $default(_that.currentPage, _that.lastPage, _that.perPage, _that.total, _that.unreadCount);
       case _:
         return orElse();
     }
@@ -615,19 +586,14 @@ extension NotificationsMetaDMPatterns on NotificationsMetaDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(name: 'current_page') int currentPage,
-            @JsonKey(name: 'last_page') int lastPage,
-            @JsonKey(name: 'per_page') int perPage,
-            int total,
-            @JsonKey(name: 'unread_count') int unreadCount)
+    TResult Function(@JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage,
+            @JsonKey(name: 'per_page') int perPage, int total, @JsonKey(name: 'unread_count') int unreadCount)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _NotificationsMetaDM():
-        return $default(_that.currentPage, _that.lastPage, _that.perPage,
-            _that.total, _that.unreadCount);
+        return $default(_that.currentPage, _that.lastPage, _that.perPage, _that.total, _that.unreadCount);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -647,19 +613,14 @@ extension NotificationsMetaDMPatterns on NotificationsMetaDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            @JsonKey(name: 'current_page') int currentPage,
-            @JsonKey(name: 'last_page') int lastPage,
-            @JsonKey(name: 'per_page') int perPage,
-            int total,
-            @JsonKey(name: 'unread_count') int unreadCount)?
+    TResult? Function(@JsonKey(name: 'current_page') int currentPage, @JsonKey(name: 'last_page') int lastPage,
+            @JsonKey(name: 'per_page') int perPage, int total, @JsonKey(name: 'unread_count') int unreadCount)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _NotificationsMetaDM() when $default != null:
-        return $default(_that.currentPage, _that.lastPage, _that.perPage,
-            _that.total, _that.unreadCount);
+        return $default(_that.currentPage, _that.lastPage, _that.perPage, _that.total, _that.unreadCount);
       case _:
         return null;
     }
@@ -675,8 +636,7 @@ class _NotificationsMetaDM implements NotificationsMetaDM {
       @JsonKey(name: 'per_page') this.perPage = 20,
       this.total = 0,
       @JsonKey(name: 'unread_count') this.unreadCount = 0});
-  factory _NotificationsMetaDM.fromJson(Map<String, dynamic> json) =>
-      _$NotificationsMetaDMFromJson(json);
+  factory _NotificationsMetaDM.fromJson(Map<String, dynamic> json) => _$NotificationsMetaDMFromJson(json);
 
   @override
   @JsonKey(name: 'current_page')
@@ -700,8 +660,7 @@ class _NotificationsMetaDM implements NotificationsMetaDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$NotificationsMetaDMCopyWith<_NotificationsMetaDM> get copyWith =>
-      __$NotificationsMetaDMCopyWithImpl<_NotificationsMetaDM>(
-          this, _$identity);
+      __$NotificationsMetaDMCopyWithImpl<_NotificationsMetaDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -715,20 +674,16 @@ class _NotificationsMetaDM implements NotificationsMetaDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _NotificationsMetaDM &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
-            (identical(other.lastPage, lastPage) ||
-                other.lastPage == lastPage) &&
+            (identical(other.currentPage, currentPage) || other.currentPage == currentPage) &&
+            (identical(other.lastPage, lastPage) || other.lastPage == lastPage) &&
             (identical(other.perPage, perPage) || other.perPage == perPage) &&
             (identical(other.total, total) || other.total == total) &&
-            (identical(other.unreadCount, unreadCount) ||
-                other.unreadCount == unreadCount));
+            (identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, currentPage, lastPage, perPage, total, unreadCount);
+  int get hashCode => Object.hash(runtimeType, currentPage, lastPage, perPage, total, unreadCount);
 
   @override
   String toString() {
@@ -737,10 +692,8 @@ class _NotificationsMetaDM implements NotificationsMetaDM {
 }
 
 /// @nodoc
-abstract mixin class _$NotificationsMetaDMCopyWith<$Res>
-    implements $NotificationsMetaDMCopyWith<$Res> {
-  factory _$NotificationsMetaDMCopyWith(_NotificationsMetaDM value,
-          $Res Function(_NotificationsMetaDM) _then) =
+abstract mixin class _$NotificationsMetaDMCopyWith<$Res> implements $NotificationsMetaDMCopyWith<$Res> {
+  factory _$NotificationsMetaDMCopyWith(_NotificationsMetaDM value, $Res Function(_NotificationsMetaDM) _then) =
       __$NotificationsMetaDMCopyWithImpl;
   @override
   @useResult
@@ -753,8 +706,7 @@ abstract mixin class _$NotificationsMetaDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$NotificationsMetaDMCopyWithImpl<$Res>
-    implements _$NotificationsMetaDMCopyWith<$Res> {
+class __$NotificationsMetaDMCopyWithImpl<$Res> implements _$NotificationsMetaDMCopyWith<$Res> {
   __$NotificationsMetaDMCopyWithImpl(this._self, this._then);
 
   final _NotificationsMetaDM _self;
@@ -806,8 +758,7 @@ mixin _$UnreadCountResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $UnreadCountResponseDMCopyWith<UnreadCountResponseDM> get copyWith =>
-      _$UnreadCountResponseDMCopyWithImpl<UnreadCountResponseDM>(
-          this as UnreadCountResponseDM, _$identity);
+      _$UnreadCountResponseDMCopyWithImpl<UnreadCountResponseDM>(this as UnreadCountResponseDM, _$identity);
 
   /// Serializes this UnreadCountResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -817,8 +768,7 @@ mixin _$UnreadCountResponseDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is UnreadCountResponseDM &&
-            (identical(other.unreadCount, unreadCount) ||
-                other.unreadCount == unreadCount));
+            (identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -833,16 +783,14 @@ mixin _$UnreadCountResponseDM {
 
 /// @nodoc
 abstract mixin class $UnreadCountResponseDMCopyWith<$Res> {
-  factory $UnreadCountResponseDMCopyWith(UnreadCountResponseDM value,
-          $Res Function(UnreadCountResponseDM) _then) =
+  factory $UnreadCountResponseDMCopyWith(UnreadCountResponseDM value, $Res Function(UnreadCountResponseDM) _then) =
       _$UnreadCountResponseDMCopyWithImpl;
   @useResult
   $Res call({@JsonKey(name: 'unread_count') int unreadCount});
 }
 
 /// @nodoc
-class _$UnreadCountResponseDMCopyWithImpl<$Res>
-    implements $UnreadCountResponseDMCopyWith<$Res> {
+class _$UnreadCountResponseDMCopyWithImpl<$Res> implements $UnreadCountResponseDMCopyWith<$Res> {
   _$UnreadCountResponseDMCopyWithImpl(this._self, this._then);
 
   final UnreadCountResponseDM _self;
@@ -957,8 +905,7 @@ extension UnreadCountResponseDMPatterns on UnreadCountResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(@JsonKey(name: 'unread_count') int unreadCount)?
-        $default, {
+    TResult Function(@JsonKey(name: 'unread_count') int unreadCount)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -1025,10 +972,8 @@ extension UnreadCountResponseDMPatterns on UnreadCountResponseDM {
 /// @nodoc
 @JsonSerializable()
 class _UnreadCountResponseDM implements UnreadCountResponseDM {
-  const _UnreadCountResponseDM(
-      {@JsonKey(name: 'unread_count') this.unreadCount = 0});
-  factory _UnreadCountResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$UnreadCountResponseDMFromJson(json);
+  const _UnreadCountResponseDM({@JsonKey(name: 'unread_count') this.unreadCount = 0});
+  factory _UnreadCountResponseDM.fromJson(Map<String, dynamic> json) => _$UnreadCountResponseDMFromJson(json);
 
   @override
   @JsonKey(name: 'unread_count')
@@ -1040,8 +985,7 @@ class _UnreadCountResponseDM implements UnreadCountResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$UnreadCountResponseDMCopyWith<_UnreadCountResponseDM> get copyWith =>
-      __$UnreadCountResponseDMCopyWithImpl<_UnreadCountResponseDM>(
-          this, _$identity);
+      __$UnreadCountResponseDMCopyWithImpl<_UnreadCountResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1055,8 +999,7 @@ class _UnreadCountResponseDM implements UnreadCountResponseDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _UnreadCountResponseDM &&
-            (identical(other.unreadCount, unreadCount) ||
-                other.unreadCount == unreadCount));
+            (identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1070,10 +1013,8 @@ class _UnreadCountResponseDM implements UnreadCountResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$UnreadCountResponseDMCopyWith<$Res>
-    implements $UnreadCountResponseDMCopyWith<$Res> {
-  factory _$UnreadCountResponseDMCopyWith(_UnreadCountResponseDM value,
-          $Res Function(_UnreadCountResponseDM) _then) =
+abstract mixin class _$UnreadCountResponseDMCopyWith<$Res> implements $UnreadCountResponseDMCopyWith<$Res> {
+  factory _$UnreadCountResponseDMCopyWith(_UnreadCountResponseDM value, $Res Function(_UnreadCountResponseDM) _then) =
       __$UnreadCountResponseDMCopyWithImpl;
   @override
   @useResult
@@ -1081,8 +1022,7 @@ abstract mixin class _$UnreadCountResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$UnreadCountResponseDMCopyWithImpl<$Res>
-    implements _$UnreadCountResponseDMCopyWith<$Res> {
+class __$UnreadCountResponseDMCopyWithImpl<$Res> implements _$UnreadCountResponseDMCopyWith<$Res> {
   __$UnreadCountResponseDMCopyWithImpl(this._self, this._then);
 
   final _UnreadCountResponseDM _self;
@@ -1137,8 +1077,7 @@ mixin _$NotificationDataDM {
   @JsonKey(name: 'promotion_uuid')
   String? get promotionUuid;
   @JsonKey(name: 'reservation_uuid')
-  String?
-      get reservationUuid; // Social graph: post creado por un user seguido (Follow Loop). Lo
+  String? get reservationUuid; // Social graph: post creado por un user seguido (Follow Loop). Lo
 // poblamos por completitud aunque hoy el tap-target del switch de
 // entityUuid es el perfil del actor (no hay aún una ruta a un post
 // individual). Si más adelante agregamos PostDetailPage, basta con
@@ -1151,8 +1090,7 @@ mixin _$NotificationDataDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $NotificationDataDMCopyWith<NotificationDataDM> get copyWith =>
-      _$NotificationDataDMCopyWithImpl<NotificationDataDM>(
-          this as NotificationDataDM, _$identity);
+      _$NotificationDataDMCopyWithImpl<NotificationDataDM>(this as NotificationDataDM, _$identity);
 
   /// Serializes this NotificationDataDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1163,36 +1101,22 @@ mixin _$NotificationDataDM {
         (other.runtimeType == runtimeType &&
             other is NotificationDataDM &&
             (identical(other.actorId, actorId) || other.actorId == actorId) &&
-            (identical(other.actorUuid, actorUuid) ||
-                other.actorUuid == actorUuid) &&
-            (identical(other.actorPhotoUrl, actorPhotoUrl) ||
-                other.actorPhotoUrl == actorPhotoUrl) &&
-            (identical(other.businessId, businessId) ||
-                other.businessId == businessId) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
+            (identical(other.actorUuid, actorUuid) || other.actorUuid == actorUuid) &&
+            (identical(other.actorPhotoUrl, actorPhotoUrl) || other.actorPhotoUrl == actorPhotoUrl) &&
+            (identical(other.businessId, businessId) || other.businessId == businessId) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
             (identical(other.menuId, menuId) || other.menuId == menuId) &&
-            (identical(other.menuUuid, menuUuid) ||
-                other.menuUuid == menuUuid) &&
-            (identical(other.foodItemId, foodItemId) ||
-                other.foodItemId == foodItemId) &&
-            (identical(other.foodItemUuid, foodItemUuid) ||
-                other.foodItemUuid == foodItemUuid) &&
-            (identical(other.drinkItemId, drinkItemId) ||
-                other.drinkItemId == drinkItemId) &&
-            (identical(other.drinkItemUuid, drinkItemUuid) ||
-                other.drinkItemUuid == drinkItemUuid) &&
+            (identical(other.menuUuid, menuUuid) || other.menuUuid == menuUuid) &&
+            (identical(other.foodItemId, foodItemId) || other.foodItemId == foodItemId) &&
+            (identical(other.foodItemUuid, foodItemUuid) || other.foodItemUuid == foodItemUuid) &&
+            (identical(other.drinkItemId, drinkItemId) || other.drinkItemId == drinkItemId) &&
+            (identical(other.drinkItemUuid, drinkItemUuid) || other.drinkItemUuid == drinkItemUuid) &&
             (identical(other.comboId, comboId) || other.comboId == comboId) &&
-            (identical(other.comboUuid, comboUuid) ||
-                other.comboUuid == comboUuid) &&
-            (identical(other.promotionId, promotionId) ||
-                other.promotionId == promotionId) &&
-            (identical(other.promotionUuid, promotionUuid) ||
-                other.promotionUuid == promotionUuid) &&
-            (identical(other.reservationUuid, reservationUuid) ||
-                other.reservationUuid == reservationUuid) &&
-            (identical(other.postUuid, postUuid) ||
-                other.postUuid == postUuid));
+            (identical(other.comboUuid, comboUuid) || other.comboUuid == comboUuid) &&
+            (identical(other.promotionId, promotionId) || other.promotionId == promotionId) &&
+            (identical(other.promotionUuid, promotionUuid) || other.promotionUuid == promotionUuid) &&
+            (identical(other.reservationUuid, reservationUuid) || other.reservationUuid == reservationUuid) &&
+            (identical(other.postUuid, postUuid) || other.postUuid == postUuid));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1225,8 +1149,7 @@ mixin _$NotificationDataDM {
 
 /// @nodoc
 abstract mixin class $NotificationDataDMCopyWith<$Res> {
-  factory $NotificationDataDMCopyWith(
-          NotificationDataDM value, $Res Function(NotificationDataDM) _then) =
+  factory $NotificationDataDMCopyWith(NotificationDataDM value, $Res Function(NotificationDataDM) _then) =
       _$NotificationDataDMCopyWithImpl;
   @useResult
   $Res call(
@@ -1250,8 +1173,7 @@ abstract mixin class $NotificationDataDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NotificationDataDMCopyWithImpl<$Res>
-    implements $NotificationDataDMCopyWith<$Res> {
+class _$NotificationDataDMCopyWithImpl<$Res> implements $NotificationDataDMCopyWith<$Res> {
   _$NotificationDataDMCopyWithImpl(this._self, this._then);
 
   final NotificationDataDM _self;
@@ -1636,8 +1558,7 @@ class _NotificationDataDM implements NotificationDataDM {
       @JsonKey(name: 'promotion_uuid') this.promotionUuid,
       @JsonKey(name: 'reservation_uuid') this.reservationUuid,
       @JsonKey(name: 'post_uuid') this.postUuid});
-  factory _NotificationDataDM.fromJson(Map<String, dynamic> json) =>
-      _$NotificationDataDMFromJson(json);
+  factory _NotificationDataDM.fromJson(Map<String, dynamic> json) => _$NotificationDataDMFromJson(json);
 
   @override
   @JsonKey(name: 'actor_id')
@@ -1717,36 +1638,22 @@ class _NotificationDataDM implements NotificationDataDM {
         (other.runtimeType == runtimeType &&
             other is _NotificationDataDM &&
             (identical(other.actorId, actorId) || other.actorId == actorId) &&
-            (identical(other.actorUuid, actorUuid) ||
-                other.actorUuid == actorUuid) &&
-            (identical(other.actorPhotoUrl, actorPhotoUrl) ||
-                other.actorPhotoUrl == actorPhotoUrl) &&
-            (identical(other.businessId, businessId) ||
-                other.businessId == businessId) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid) &&
+            (identical(other.actorUuid, actorUuid) || other.actorUuid == actorUuid) &&
+            (identical(other.actorPhotoUrl, actorPhotoUrl) || other.actorPhotoUrl == actorPhotoUrl) &&
+            (identical(other.businessId, businessId) || other.businessId == businessId) &&
+            (identical(other.businessUuid, businessUuid) || other.businessUuid == businessUuid) &&
             (identical(other.menuId, menuId) || other.menuId == menuId) &&
-            (identical(other.menuUuid, menuUuid) ||
-                other.menuUuid == menuUuid) &&
-            (identical(other.foodItemId, foodItemId) ||
-                other.foodItemId == foodItemId) &&
-            (identical(other.foodItemUuid, foodItemUuid) ||
-                other.foodItemUuid == foodItemUuid) &&
-            (identical(other.drinkItemId, drinkItemId) ||
-                other.drinkItemId == drinkItemId) &&
-            (identical(other.drinkItemUuid, drinkItemUuid) ||
-                other.drinkItemUuid == drinkItemUuid) &&
+            (identical(other.menuUuid, menuUuid) || other.menuUuid == menuUuid) &&
+            (identical(other.foodItemId, foodItemId) || other.foodItemId == foodItemId) &&
+            (identical(other.foodItemUuid, foodItemUuid) || other.foodItemUuid == foodItemUuid) &&
+            (identical(other.drinkItemId, drinkItemId) || other.drinkItemId == drinkItemId) &&
+            (identical(other.drinkItemUuid, drinkItemUuid) || other.drinkItemUuid == drinkItemUuid) &&
             (identical(other.comboId, comboId) || other.comboId == comboId) &&
-            (identical(other.comboUuid, comboUuid) ||
-                other.comboUuid == comboUuid) &&
-            (identical(other.promotionId, promotionId) ||
-                other.promotionId == promotionId) &&
-            (identical(other.promotionUuid, promotionUuid) ||
-                other.promotionUuid == promotionUuid) &&
-            (identical(other.reservationUuid, reservationUuid) ||
-                other.reservationUuid == reservationUuid) &&
-            (identical(other.postUuid, postUuid) ||
-                other.postUuid == postUuid));
+            (identical(other.comboUuid, comboUuid) || other.comboUuid == comboUuid) &&
+            (identical(other.promotionId, promotionId) || other.promotionId == promotionId) &&
+            (identical(other.promotionUuid, promotionUuid) || other.promotionUuid == promotionUuid) &&
+            (identical(other.reservationUuid, reservationUuid) || other.reservationUuid == reservationUuid) &&
+            (identical(other.postUuid, postUuid) || other.postUuid == postUuid));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1778,10 +1685,8 @@ class _NotificationDataDM implements NotificationDataDM {
 }
 
 /// @nodoc
-abstract mixin class _$NotificationDataDMCopyWith<$Res>
-    implements $NotificationDataDMCopyWith<$Res> {
-  factory _$NotificationDataDMCopyWith(
-          _NotificationDataDM value, $Res Function(_NotificationDataDM) _then) =
+abstract mixin class _$NotificationDataDMCopyWith<$Res> implements $NotificationDataDMCopyWith<$Res> {
+  factory _$NotificationDataDMCopyWith(_NotificationDataDM value, $Res Function(_NotificationDataDM) _then) =
       __$NotificationDataDMCopyWithImpl;
   @override
   @useResult
@@ -1806,8 +1711,7 @@ abstract mixin class _$NotificationDataDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$NotificationDataDMCopyWithImpl<$Res>
-    implements _$NotificationDataDMCopyWith<$Res> {
+class __$NotificationDataDMCopyWithImpl<$Res> implements _$NotificationDataDMCopyWith<$Res> {
   __$NotificationDataDMCopyWithImpl(this._self, this._then);
 
   final _NotificationDataDM _self;
@@ -1913,8 +1817,7 @@ class __$NotificationDataDMCopyWithImpl<$Res>
 mixin _$NotificationDM {
   int get id;
   String get uuid;
-  FoodlyNotificationType?
-      get type; // Defensive parsing: if the BE ships a subType the FE enum doesn't know
+  FoodlyNotificationType? get type; // Defensive parsing: if the BE ships a subType the FE enum doesn't know
 // about (e.g. a new vertical rolled out ahead of the FE patch), fall
 // back to `generalUpdate` instead of throwing ArgumentError. Without
 // this, a single unknown subtype in a page of results aborts the whole
@@ -1922,9 +1825,7 @@ mixin _$NotificationDM {
 // list + the generic Dio error modal. Seen live on 2026-04-20 when the
 // BE started emitting service_booking_* subtypes for the Catering &
 // Chefs vertical before this enum was updated.
-  @JsonKey(
-      name: 'sub_type',
-      unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
+  @JsonKey(name: 'sub_type', unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
   FoodlyNotificationSubType? get subType;
   String get title;
   String get message;
@@ -1941,8 +1842,7 @@ mixin _$NotificationDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $NotificationDMCopyWith<NotificationDM> get copyWith =>
-      _$NotificationDMCopyWithImpl<NotificationDM>(
-          this as NotificationDM, _$identity);
+      _$NotificationDMCopyWithImpl<NotificationDM>(this as NotificationDM, _$identity);
 
   /// Serializes this NotificationDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1960,16 +1860,14 @@ mixin _$NotificationDM {
             (identical(other.message, message) || other.message == message) &&
             (identical(other.isRead, isRead) || other.isRead == isRead) &&
             (identical(other.data, data) || other.data == data) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, uuid, type, subType, title,
-      message, isRead, data, createdAt, updatedAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, uuid, type, subType, title, message, isRead, data, createdAt, updatedAt);
 
   @override
   String toString() {
@@ -1979,17 +1877,14 @@ mixin _$NotificationDM {
 
 /// @nodoc
 abstract mixin class $NotificationDMCopyWith<$Res> {
-  factory $NotificationDMCopyWith(
-          NotificationDM value, $Res Function(NotificationDM) _then) =
+  factory $NotificationDMCopyWith(NotificationDM value, $Res Function(NotificationDM) _then) =
       _$NotificationDMCopyWithImpl;
   @useResult
   $Res call(
       {int id,
       String uuid,
       FoodlyNotificationType? type,
-      @JsonKey(
-          name: 'sub_type',
-          unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
+      @JsonKey(name: 'sub_type', unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
       FoodlyNotificationSubType? subType,
       String title,
       String message,
@@ -2002,8 +1897,7 @@ abstract mixin class $NotificationDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NotificationDMCopyWithImpl<$Res>
-    implements $NotificationDMCopyWith<$Res> {
+class _$NotificationDMCopyWithImpl<$Res> implements $NotificationDMCopyWith<$Res> {
   _$NotificationDMCopyWithImpl(this._self, this._then);
 
   final NotificationDM _self;
@@ -2181,9 +2075,7 @@ extension NotificationDMPatterns on NotificationDM {
             int id,
             String uuid,
             FoodlyNotificationType? type,
-            @JsonKey(
-                name: 'sub_type',
-                unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
+            @JsonKey(name: 'sub_type', unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
             FoodlyNotificationSubType? subType,
             String title,
             String message,
@@ -2197,17 +2089,8 @@ extension NotificationDMPatterns on NotificationDM {
     final _that = this;
     switch (_that) {
       case _NotificationDM() when $default != null:
-        return $default(
-            _that.id,
-            _that.uuid,
-            _that.type,
-            _that.subType,
-            _that.title,
-            _that.message,
-            _that.isRead,
-            _that.data,
-            _that.createdAt,
-            _that.updatedAt);
+        return $default(_that.id, _that.uuid, _that.type, _that.subType, _that.title, _that.message, _that.isRead,
+            _that.data, _that.createdAt, _that.updatedAt);
       case _:
         return orElse();
     }
@@ -2232,9 +2115,7 @@ extension NotificationDMPatterns on NotificationDM {
             int id,
             String uuid,
             FoodlyNotificationType? type,
-            @JsonKey(
-                name: 'sub_type',
-                unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
+            @JsonKey(name: 'sub_type', unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
             FoodlyNotificationSubType? subType,
             String title,
             String message,
@@ -2247,17 +2128,8 @@ extension NotificationDMPatterns on NotificationDM {
     final _that = this;
     switch (_that) {
       case _NotificationDM():
-        return $default(
-            _that.id,
-            _that.uuid,
-            _that.type,
-            _that.subType,
-            _that.title,
-            _that.message,
-            _that.isRead,
-            _that.data,
-            _that.createdAt,
-            _that.updatedAt);
+        return $default(_that.id, _that.uuid, _that.type, _that.subType, _that.title, _that.message, _that.isRead,
+            _that.data, _that.createdAt, _that.updatedAt);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -2281,9 +2153,7 @@ extension NotificationDMPatterns on NotificationDM {
             int id,
             String uuid,
             FoodlyNotificationType? type,
-            @JsonKey(
-                name: 'sub_type',
-                unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
+            @JsonKey(name: 'sub_type', unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
             FoodlyNotificationSubType? subType,
             String title,
             String message,
@@ -2296,17 +2166,8 @@ extension NotificationDMPatterns on NotificationDM {
     final _that = this;
     switch (_that) {
       case _NotificationDM() when $default != null:
-        return $default(
-            _that.id,
-            _that.uuid,
-            _that.type,
-            _that.subType,
-            _that.title,
-            _that.message,
-            _that.isRead,
-            _that.data,
-            _that.createdAt,
-            _that.updatedAt);
+        return $default(_that.id, _that.uuid, _that.type, _that.subType, _that.title, _that.message, _that.isRead,
+            _that.data, _that.createdAt, _that.updatedAt);
       case _:
         return null;
     }
@@ -2320,10 +2181,7 @@ class _NotificationDM extends NotificationDM {
       {required this.id,
       required this.uuid,
       this.type,
-      @JsonKey(
-          name: 'sub_type',
-          unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
-      this.subType,
+      @JsonKey(name: 'sub_type', unknownEnumValue: FoodlyNotificationSubType.generalUpdate) this.subType,
       this.title = '',
       this.message = '',
       @JsonKey(name: 'is_read') this.isRead = false,
@@ -2331,8 +2189,7 @@ class _NotificationDM extends NotificationDM {
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'updated_at') this.updatedAt})
       : super._();
-  factory _NotificationDM.fromJson(Map<String, dynamic> json) =>
-      _$NotificationDMFromJson(json);
+  factory _NotificationDM.fromJson(Map<String, dynamic> json) => _$NotificationDMFromJson(json);
 
   @override
   final int id;
@@ -2349,9 +2206,7 @@ class _NotificationDM extends NotificationDM {
 // BE started emitting service_booking_* subtypes for the Catering &
 // Chefs vertical before this enum was updated.
   @override
-  @JsonKey(
-      name: 'sub_type',
-      unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
+  @JsonKey(name: 'sub_type', unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
   final FoodlyNotificationSubType? subType;
   @override
   @JsonKey()
@@ -2399,16 +2254,14 @@ class _NotificationDM extends NotificationDM {
             (identical(other.message, message) || other.message == message) &&
             (identical(other.isRead, isRead) || other.isRead == isRead) &&
             (identical(other.data, data) || other.data == data) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, uuid, type, subType, title,
-      message, isRead, data, createdAt, updatedAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, uuid, type, subType, title, message, isRead, data, createdAt, updatedAt);
 
   @override
   String toString() {
@@ -2417,10 +2270,8 @@ class _NotificationDM extends NotificationDM {
 }
 
 /// @nodoc
-abstract mixin class _$NotificationDMCopyWith<$Res>
-    implements $NotificationDMCopyWith<$Res> {
-  factory _$NotificationDMCopyWith(
-          _NotificationDM value, $Res Function(_NotificationDM) _then) =
+abstract mixin class _$NotificationDMCopyWith<$Res> implements $NotificationDMCopyWith<$Res> {
+  factory _$NotificationDMCopyWith(_NotificationDM value, $Res Function(_NotificationDM) _then) =
       __$NotificationDMCopyWithImpl;
   @override
   @useResult
@@ -2428,9 +2279,7 @@ abstract mixin class _$NotificationDMCopyWith<$Res>
       {int id,
       String uuid,
       FoodlyNotificationType? type,
-      @JsonKey(
-          name: 'sub_type',
-          unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
+      @JsonKey(name: 'sub_type', unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
       FoodlyNotificationSubType? subType,
       String title,
       String message,
@@ -2444,8 +2293,7 @@ abstract mixin class _$NotificationDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$NotificationDMCopyWithImpl<$Res>
-    implements _$NotificationDMCopyWith<$Res> {
+class __$NotificationDMCopyWithImpl<$Res> implements _$NotificationDMCopyWith<$Res> {
   __$NotificationDMCopyWithImpl(this._self, this._then);
 
   final _NotificationDM _self;

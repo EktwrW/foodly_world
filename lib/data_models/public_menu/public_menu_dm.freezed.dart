@@ -22,8 +22,7 @@ mixin _$PublicMenuResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $PublicMenuResponseDMCopyWith<PublicMenuResponseDM> get copyWith =>
-      _$PublicMenuResponseDMCopyWithImpl<PublicMenuResponseDM>(
-          this as PublicMenuResponseDM, _$identity);
+      _$PublicMenuResponseDMCopyWithImpl<PublicMenuResponseDM>(this as PublicMenuResponseDM, _$identity);
 
   /// Serializes this PublicMenuResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -33,8 +32,7 @@ mixin _$PublicMenuResponseDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is PublicMenuResponseDM &&
-            (identical(other.business, business) ||
-                other.business == business) &&
+            (identical(other.business, business) || other.business == business) &&
             (identical(other.menu, menu) || other.menu == menu));
   }
 
@@ -50,8 +48,7 @@ mixin _$PublicMenuResponseDM {
 
 /// @nodoc
 abstract mixin class $PublicMenuResponseDMCopyWith<$Res> {
-  factory $PublicMenuResponseDMCopyWith(PublicMenuResponseDM value,
-          $Res Function(PublicMenuResponseDM) _then) =
+  factory $PublicMenuResponseDMCopyWith(PublicMenuResponseDM value, $Res Function(PublicMenuResponseDM) _then) =
       _$PublicMenuResponseDMCopyWithImpl;
   @useResult
   $Res call({BusinessDM business, MenuDM menu});
@@ -61,8 +58,7 @@ abstract mixin class $PublicMenuResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PublicMenuResponseDMCopyWithImpl<$Res>
-    implements $PublicMenuResponseDMCopyWith<$Res> {
+class _$PublicMenuResponseDMCopyWithImpl<$Res> implements $PublicMenuResponseDMCopyWith<$Res> {
   _$PublicMenuResponseDMCopyWithImpl(this._self, this._then);
 
   final PublicMenuResponseDM _self;
@@ -270,8 +266,7 @@ extension PublicMenuResponseDMPatterns on PublicMenuResponseDM {
 @JsonSerializable()
 class _PublicMenuResponseDM implements PublicMenuResponseDM {
   _PublicMenuResponseDM({required this.business, required this.menu});
-  factory _PublicMenuResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$PublicMenuResponseDMFromJson(json);
+  factory _PublicMenuResponseDM.fromJson(Map<String, dynamic> json) => _$PublicMenuResponseDMFromJson(json);
 
   @override
   final BusinessDM business;
@@ -284,8 +279,7 @@ class _PublicMenuResponseDM implements PublicMenuResponseDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$PublicMenuResponseDMCopyWith<_PublicMenuResponseDM> get copyWith =>
-      __$PublicMenuResponseDMCopyWithImpl<_PublicMenuResponseDM>(
-          this, _$identity);
+      __$PublicMenuResponseDMCopyWithImpl<_PublicMenuResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -299,8 +293,7 @@ class _PublicMenuResponseDM implements PublicMenuResponseDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _PublicMenuResponseDM &&
-            (identical(other.business, business) ||
-                other.business == business) &&
+            (identical(other.business, business) || other.business == business) &&
             (identical(other.menu, menu) || other.menu == menu));
   }
 
@@ -315,10 +308,8 @@ class _PublicMenuResponseDM implements PublicMenuResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$PublicMenuResponseDMCopyWith<$Res>
-    implements $PublicMenuResponseDMCopyWith<$Res> {
-  factory _$PublicMenuResponseDMCopyWith(_PublicMenuResponseDM value,
-          $Res Function(_PublicMenuResponseDM) _then) =
+abstract mixin class _$PublicMenuResponseDMCopyWith<$Res> implements $PublicMenuResponseDMCopyWith<$Res> {
+  factory _$PublicMenuResponseDMCopyWith(_PublicMenuResponseDM value, $Res Function(_PublicMenuResponseDM) _then) =
       __$PublicMenuResponseDMCopyWithImpl;
   @override
   @useResult
@@ -331,8 +322,7 @@ abstract mixin class _$PublicMenuResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PublicMenuResponseDMCopyWithImpl<$Res>
-    implements _$PublicMenuResponseDMCopyWith<$Res> {
+class __$PublicMenuResponseDMCopyWithImpl<$Res> implements _$PublicMenuResponseDMCopyWith<$Res> {
   __$PublicMenuResponseDMCopyWithImpl(this._self, this._then);
 
   final _PublicMenuResponseDM _self;

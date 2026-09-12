@@ -82,8 +82,7 @@ void main() {
 
   Finder inviteBtn() => find.byTooltip(S.current.groupOrderInviteCta);
 
-  testWidgets('el chip suelto NO trae botón: sin quién lo atienda, no se ofrece',
-      (tester) async {
+  testWidgets('el chip suelto NO trae botón: sin quién lo atienda, no se ofrece', (tester) async {
     await tester.pumpWidget(
       MaterialApp(home: Scaffold(body: ActiveGroupOrderChip(order: order, onTap: () {}))),
     );
@@ -95,8 +94,7 @@ void main() {
     expect(inviteBtn(), findsOneWidget);
   });
 
-  testWidgets('tocarlo pide el código y muestra el QR — sin provider arriba',
-      (tester) async {
+  testWidgets('tocarlo pide el código y muestra el QR — sin provider arriba', (tester) async {
     repo.inviteOutcome = const ApiResult.success(GroupInviteResponseDM(inviteCode: 'K7QP42'));
 
     await pumpHost(tester);
@@ -109,8 +107,7 @@ void main() {
     expect(find.text('K7QP42'), findsOneWidget);
   });
 
-  testWidgets('si el backend rechaza, se muestra SU motivo y no un QR vacío',
-      (tester) async {
+  testWidgets('si el backend rechaza, se muestra SU motivo y no un QR vacío', (tester) async {
     repo.inviteOutcome = ApiResult.failure(
       AppRequestException(
         error: DioException(

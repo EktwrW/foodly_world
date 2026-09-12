@@ -98,8 +98,7 @@ void main() {
       service.setSession(_sesion(uuid: 'u1', accessToken: 'nuevo'));
       await dejarCorrerElSync();
 
-      expect(ordenActiva.vecesSincronizado, 1,
-          reason: 'refrescar el token no es empezar una sesión');
+      expect(ordenActiva.vecesSincronizado, 1, reason: 'refrescar el token no es empezar una sesión');
     });
 
     test('el silentRefresh real tampoco la dispara', () async {
@@ -114,8 +113,7 @@ void main() {
 
       expect(ok, isTrue);
       expect(meRepo.vecesRefrescado, 1);
-      expect(ordenActiva.vecesSincronizado, 1,
-          reason: 'el refresco pasa por setSession pero no abre sesión nueva');
+      expect(ordenActiva.vecesSincronizado, 1, reason: 'el refresco pasa por setSession pero no abre sesión nueva');
     });
 
     test('sin el cubit registrado en el locator no revienta', () async {
@@ -165,8 +163,7 @@ void main() {
       service.setSession(_sesion(uuid: 'usuario-B'));
       await dejarCorrerElSync();
 
-      expect(cubit.state?.uuid, 'orden-de-B',
-          reason: 'el login de B tiene que recuperar la orden de B');
+      expect(cubit.state?.uuid, 'orden-de-B', reason: 'el login de B tiene que recuperar la orden de B');
       expect(repo.llamadasAMine, 2, reason: 'una consulta por sesión, no más');
     });
   });
@@ -198,16 +195,14 @@ void main() {
       // Que de verdad haya algo en vuelo es parte de lo que se prueba: sin el
       // cableado nuevo no sale ninguna petición y el resto del test sería
       // vacío (pasaría por no hacer nada, que es justo el bug).
-      expect(repo.llamadasAMine, 1,
-          reason: 'setSession tiene que haber lanzado el sync');
+      expect(repo.llamadasAMine, 1, reason: 'setSession tiene que haber lanzado el sync');
 
       // El token cacheado resultó inválido.
       service.clearInvalidSession();
       repo.liberarRespuesta();
       await dejarCorrerElSync();
 
-      expect(cubit.state, isNull,
-          reason: 'la orden de una sesión que ya se cerró no puede resucitar');
+      expect(cubit.state, isNull, reason: 'la orden de una sesión que ya se cerró no puede resucitar');
     });
 
     /// El mismo escenario pero por el camino REAL, sin simular la secuencia a
@@ -233,8 +228,7 @@ void main() {
       await dejarCorrerElSync();
 
       expect(service.isLoggedIn, isFalse, reason: 'la sesión cacheada se descartó');
-      expect(cubit.state, isNull,
-          reason: 'el chip no puede quedar con la orden de una sesión inválida');
+      expect(cubit.state, isNull, reason: 'el chip no puede quedar con la orden de una sesión inválida');
     });
   });
 
@@ -272,8 +266,7 @@ void main() {
       await dejarCorrerElSync();
 
       expect(meRepo.vecesRefrescado, 1, reason: 'el refresco tiene que haber corrido');
-      expect(repo.llamadasAMine, 1,
-          reason: 'el setSession del refresco no puede lanzar otro sync');
+      expect(repo.llamadasAMine, 1, reason: 'el setSession del refresco no puede lanzar otro sync');
       expect(cubit.state, isNull, reason: 'un 401 no deja estado');
     });
 
@@ -287,8 +280,7 @@ void main() {
       // por no hacer nada, que es exactamente el bug que se está arreglando.
       expect(repo.llamadasAMine, 1);
       expect(cubit.state, isNull);
-      expect(service.isLoggedIn, isTrue,
-          reason: 'el fallo del chip no puede tirar abajo el login');
+      expect(service.isLoggedIn, isTrue, reason: 'el fallo del chip no puede tirar abajo el login');
     });
   });
 }
@@ -305,8 +297,7 @@ ActiveGroupOrderCubit _registrarCubitReal(GroupOrderRepo repo) {
   return cubit;
 }
 
-FakeActiveGroupOrderCubit _cubitFalsoRegistrado() =>
-    di<ActiveGroupOrderCubit>() as FakeActiveGroupOrderCubit;
+FakeActiveGroupOrderCubit _cubitFalsoRegistrado() => di<ActiveGroupOrderCubit>() as FakeActiveGroupOrderCubit;
 
 AppRequestException _http(int status) => AppRequestException(
       error: DioException(

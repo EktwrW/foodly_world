@@ -407,13 +407,9 @@ class FoodlyPlacesAutocompleteWdgState extends State<FoodlyPlacesAutocompleteWdg
       // components: nova espera `List<String>` tipo `["country:pt", ...]`.
       // El backend espera un único string pipe-joined. Si widget.components
       // es null o vacío, no mandamos la key (@JsonKey includeIfNull: false).
-      components: (widget.components == null || widget.components!.isEmpty)
-          ? null
-          : widget.components!.join('|'),
+      components: (widget.components == null || widget.components!.isEmpty) ? null : widget.components!.join('|'),
       // location: nova toma LatLngLiteral; backend toma string "lat,lng".
-      location: widget.location != null
-          ? '${widget.location!.lat},${widget.location!.lng}'
-          : null,
+      location: widget.location != null ? '${widget.location!.lat},${widget.location!.lng}' : null,
       // radius: nova acepta double, backend int (metros). Casteo seguro —
       // los valores que mandamos hoy son enteros (20, 50, etc.).
       radius: widget.radius?.toInt(),

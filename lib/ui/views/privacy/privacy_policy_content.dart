@@ -75,7 +75,8 @@ const _en = [
   ),
   PolicySection(
     heading: 'Business Data & Manager Accounts',
-    body: 'When you register a business on Foodly and become a Manager, we collect and process additional data specific to business operations.\n\n'
+    body:
+        'When you register a business on Foodly and become a Manager, we collect and process additional data specific to business operations.\n\n'
         'BUSINESS DATA COLLECTED\n\n'
         '• Business identity information: legal business name, trade name, address, category, contact channels, and opening hours.\n'
         '• Business media: logo, cover images, menu photos, and promotional content.\n'
@@ -236,7 +237,8 @@ const _es = [
   ),
   PolicySection(
     heading: 'Datos de Negocio y Cuentas Manager',
-    body: 'Cuando registras un negocio en Foodly y te conviertes en Manager, recopilamos y procesamos datos adicionales específicos de las operaciones del negocio.\n\n'
+    body:
+        'Cuando registras un negocio en Foodly y te conviertes en Manager, recopilamos y procesamos datos adicionales específicos de las operaciones del negocio.\n\n'
         'DATOS DE NEGOCIO RECOPILADOS\n\n'
         '• Información de identidad del negocio: razón social, nombre comercial, dirección, categoría, canales de contacto y horarios.\n'
         '• Medios del negocio: logotipo, imágenes de portada, fotos de menú y contenido promocional.\n'
@@ -397,7 +399,8 @@ const _pt = [
   ),
   PolicySection(
     heading: 'Dados de Negócio e Contas Manager',
-    body: 'Quando regista um negócio na Foodly e se torna Manager, recolhemos e processamos dados adicionais específicos das operações do negócio.\n\n'
+    body:
+        'Quando regista um negócio na Foodly e se torna Manager, recolhemos e processamos dados adicionais específicos das operações do negócio.\n\n'
         'DADOS DE NEGÓCIO RECOLHIDOS\n\n'
         '• Informação de identidade do negócio: denominação social, nome comercial, morada, categoria, canais de contacto e horários.\n'
         '• Multimédia do negócio: logótipo, imagens de capa, fotografias de menus e conteúdo promocional.\n'

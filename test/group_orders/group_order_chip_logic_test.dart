@@ -44,26 +44,25 @@ void main() {
       }
     });
 
-    test('e2e F4a: confirmada RECIENTE sin entregar sigue visible (tracking); '
+    test(
+        'e2e F4a: confirmada RECIENTE sin entregar sigue visible (tracking); '
         'entregada, cancelada o confirmada VIEJA (TTL 12h) → oculto', () {
       expect(GroupOrderChipLogic.shouldShow(order: tracking, location: '/visit-menu/m1'), isTrue);
       expect(GroupOrderChipLogic.shouldShow(order: delivered, location: '/visit-menu/m1'), isFalse);
       expect(GroupOrderChipLogic.shouldShow(order: cancelled, location: '/visit-menu/m1'), isFalse);
       // El fantasma de €163: pagada hace días sin fulfillment NO es tracking.
-      expect(
-          GroupOrderChipLogic.shouldShow(order: trackingStale, location: '/visit-menu/m1'), isFalse);
+      expect(GroupOrderChipLogic.shouldShow(order: trackingStale, location: '/visit-menu/m1'), isFalse);
     });
 
-    test('e2e F4a: oculto en el módulo del MANAGER (el chip de cliente '
+    test(
+        'e2e F4a: oculto en el módulo del MANAGER (el chip de cliente '
         'encima del panel de órdenes es ruido de otro rol)', () {
       expect(
-        GroupOrderChipLogic.shouldShow(
-            order: open, location: '/main/biz-1/my-business/live-orders'),
+        GroupOrderChipLogic.shouldShow(order: open, location: '/main/biz-1/my-business/live-orders'),
         isFalse,
       );
       expect(
-        GroupOrderChipLogic.shouldShow(
-            order: tracking, location: '/main/biz-1/my-business/live-orders'),
+        GroupOrderChipLogic.shouldShow(order: tracking, location: '/main/biz-1/my-business/live-orders'),
         isFalse,
       );
     });
@@ -84,7 +83,8 @@ void main() {
       expect(GroupOrderChipLogic.shouldShow(order: open, location: '/login?from=x'), isFalse);
     });
 
-    test('e2e r6: con la PÁGINA de la orden abierta el chip se oculta '
+    test(
+        'e2e r6: con la PÁGINA de la orden abierta el chip se oculta '
         'SIEMPRE, sin importar la URI (los pushes imperativos no la mueven)', () {
       // Aunque la URI diga menú/home (push imperativo no reflejado), el
       // marcador de ciclo de vida manda.
@@ -106,8 +106,7 @@ void main() {
   group('GroupOrderPageVisibility (marcador de ciclo de vida)', () {
     tearDown(GroupOrderPageVisibility.reset);
 
-    test('abre/cierra con contador (soporta apilado) y nunca queda negativo',
-        () async {
+    test('abre/cierra con contador (soporta apilado) y nunca queda negativo', () async {
       expect(GroupOrderPageVisibility.isOpen, isFalse);
       GroupOrderPageVisibility.markOpened();
       expect(GroupOrderPageVisibility.isOpen, isTrue);
@@ -254,8 +253,7 @@ void main() {
       expect(GroupOrderPageVisibility.isOpen, isFalse);
 
       GroupOrderPageVisibility.markOpened();
-      expect(GroupOrderPageVisibility.isOpen, isTrue,
-          reason: 'Debe valer ya, aunque la notificación se difiera.');
+      expect(GroupOrderPageVisibility.isOpen, isTrue, reason: 'Debe valer ya, aunque la notificación se difiera.');
 
       GroupOrderPageVisibility.markClosed();
       expect(GroupOrderPageVisibility.isOpen, isFalse);

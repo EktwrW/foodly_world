@@ -40,8 +40,8 @@ void main() {
     });
 
     test('respeta el tope de páginas', () {
-      expect(QrBatchSpec.labelsForRange(from: 1, to: QrBatchSpec.maxTables, prefix: 'Mesa').length,
-          QrBatchSpec.maxTables);
+      expect(
+          QrBatchSpec.labelsForRange(from: 1, to: QrBatchSpec.maxTables, prefix: 'Mesa').length, QrBatchSpec.maxTables);
       expect(QrBatchSpec.labelsForRange(from: 1, to: QrBatchSpec.maxTables + 1, prefix: 'Mesa'), isEmpty);
     });
   });

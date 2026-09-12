@@ -43,7 +43,9 @@ Future<void> downloadMenuQrBatch(
     // Los logos se resuelven UNA vez y se reusan en todas las páginas: son la
     // única parte del lote que toca la red.
     final businessLogo = await MenuQrBatchPdf.imageProviderFrom(
-      _hasRealLogo(logoUrl) ? await resolveImage(CachedNetworkImageProvider(logoUrl!, cacheManager: FoodlyImageCache.manager)) : null,
+      _hasRealLogo(logoUrl)
+          ? await resolveImage(CachedNetworkImageProvider(logoUrl!, cacheManager: FoodlyImageCache.manager))
+          : null,
     );
     final foodlyLogo = await MenuQrBatchPdf.imageProviderFrom(
       await resolveImage(AssetImage(FoodlyAssets.logo.assetPath)),
@@ -115,6 +117,7 @@ void showMenuQrBatchSheet(
   required String menuUrl,
   required String businessName,
   String? logoUrl,
+
   /// F4c: con el uuid, generar el lote declara "sirvo en mesa" — ver
   /// `_QrBatchFormState._generate`. null = no se puede declarar (no debería
   /// pasar desde el menú propio, pero el PDF se genera igual).

@@ -21,8 +21,7 @@ mixin _$FavoritesState implements DiagnosticableTreeMixin {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $FavoritesStateCopyWith<FavoritesState> get copyWith =>
-      _$FavoritesStateCopyWithImpl<FavoritesState>(
-          this as FavoritesState, _$identity);
+      _$FavoritesStateCopyWithImpl<FavoritesState>(this as FavoritesState, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -34,9 +33,7 @@ mixin _$FavoritesState implements DiagnosticableTreeMixin {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is FavoritesState &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is FavoritesState && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -50,16 +47,14 @@ mixin _$FavoritesState implements DiagnosticableTreeMixin {
 
 /// @nodoc
 abstract mixin class $FavoritesStateCopyWith<$Res> {
-  factory $FavoritesStateCopyWith(
-          FavoritesState value, $Res Function(FavoritesState) _then) =
+  factory $FavoritesStateCopyWith(FavoritesState value, $Res Function(FavoritesState) _then) =
       _$FavoritesStateCopyWithImpl;
   @useResult
   $Res call({FavoritesVM vm});
 }
 
 /// @nodoc
-class _$FavoritesStateCopyWithImpl<$Res>
-    implements $FavoritesStateCopyWith<$Res> {
+class _$FavoritesStateCopyWithImpl<$Res> implements $FavoritesStateCopyWith<$Res> {
   _$FavoritesStateCopyWithImpl(this._self, this._then);
 
   final FavoritesState _self;
@@ -301,8 +296,7 @@ class _Initial with DiagnosticableTreeMixin implements FavoritesState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -314,9 +308,7 @@ class _Initial with DiagnosticableTreeMixin implements FavoritesState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Initial &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Initial && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -329,10 +321,8 @@ class _Initial with DiagnosticableTreeMixin implements FavoritesState {
 }
 
 /// @nodoc
-abstract mixin class _$InitialCopyWith<$Res>
-    implements $FavoritesStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
-      __$InitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $FavoritesStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({FavoritesVM vm});
@@ -374,8 +364,7 @@ class _Loading with DiagnosticableTreeMixin implements FavoritesState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadingCopyWith<_Loading> get copyWith =>
-      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+  _$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -387,9 +376,7 @@ class _Loading with DiagnosticableTreeMixin implements FavoritesState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loading &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loading && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -402,10 +389,8 @@ class _Loading with DiagnosticableTreeMixin implements FavoritesState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadingCopyWith<$Res>
-    implements $FavoritesStateCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
-      __$LoadingCopyWithImpl;
+abstract mixin class _$LoadingCopyWith<$Res> implements $FavoritesStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
   @override
   @useResult
   $Res call({FavoritesVM vm});
@@ -447,8 +432,7 @@ class _Loaded with DiagnosticableTreeMixin implements FavoritesState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -460,9 +444,7 @@ class _Loaded with DiagnosticableTreeMixin implements FavoritesState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loaded &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loaded && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -475,10 +457,8 @@ class _Loaded with DiagnosticableTreeMixin implements FavoritesState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res>
-    implements $FavoritesStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
-      __$LoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $FavoritesStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
   @override
   @useResult
   $Res call({FavoritesVM vm});
@@ -521,8 +501,7 @@ class _Error with DiagnosticableTreeMixin implements FavoritesState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -538,8 +517,7 @@ class _Error with DiagnosticableTreeMixin implements FavoritesState {
         (other.runtimeType == runtimeType &&
             other is _Error &&
             (identical(other.vm, vm) || other.vm == vm) &&
-            (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+            (identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
   }
 
   @override
@@ -552,10 +530,8 @@ class _Error with DiagnosticableTreeMixin implements FavoritesState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $FavoritesStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $FavoritesStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({FavoritesVM vm, String errorMessage});

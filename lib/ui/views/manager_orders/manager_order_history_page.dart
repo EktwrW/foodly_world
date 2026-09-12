@@ -102,95 +102,95 @@ class _ManagerOrderHistoryPageState extends State<ManagerOrderHistoryPage> {
         centerTitle: true,
       ),
       body: SafeArea(
-          top: false,
-          child: BlocBuilder<ManagerHistoryCubit, ManagerHistoryState>(
-            builder: (context, state) {
-              if (state.loading) {
-                return const Center(child: CircularProgressIndicator(color: FoodlyThemes.primaryFoodly));
-              }
-              if (state.orders.isEmpty) {
-                return Center(
-                  child: Column(
-                    spacing: 12,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Iconsax.receipt_minus_outline, color: FoodlyThemes.primaryFoodly),
-                      Text(S.current.managerHistoryEmpty, style: FoodlyTextStyles.caption),
-                    ],
+        top: false,
+        child: BlocBuilder<ManagerHistoryCubit, ManagerHistoryState>(
+          builder: (context, state) {
+            if (state.loading) {
+              return const Center(child: CircularProgressIndicator(color: FoodlyThemes.primaryFoodly));
+            }
+            if (state.orders.isEmpty) {
+              return Center(
+                child: Column(
+                  spacing: 12,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Iconsax.receipt_minus_outline, color: FoodlyThemes.primaryFoodly),
+                    Text(S.current.managerHistoryEmpty, style: FoodlyTextStyles.caption),
+                  ],
+                ),
+              );
+            }
+
+            final groups = groupOrdersByDay(state.orders);
+
+            // Las columnas se deciden con el ancho REAL, no con el de
+            // pantalla: esta lista vive dentro de su propio hueco.
+            final columnas = columnasDeLista(MediaQuery.sizeOf(context).width);
+
+            return ListView(
+              controller: _scroll,
+              padding: const EdgeInsets.fromLTRB(14, 10, 14, 20),
+              children: [
+                for (final g in groups) ...[
+                  // Header del día: etiqueta + resumen (N órdenes · €total).
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(2, 16, 2, 8),
+                    child: Row(
+                      children: [
+                        Text(
+                          _dayLabel(g.day).toUpperCase(),
+                          style: FoodlyTextStyles.captionPurpleBold.copyWith(letterSpacing: 0.5),
+                        ),
+                        const Expanded(child: Divider(indent: 10, endIndent: 10)),
+                        Text(
+                          S.current.managerHistoryDaySummary(
+                            g.orders.length,
+                            formatMoney(g.dayTotal, g.orders.first.currency),
+                          ),
+                          style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
+                        ),
+                      ],
+                    ),
                   ),
-                );
-              }
-
-              final groups = groupOrdersByDay(state.orders);
-
-              // Las columnas se deciden con el ancho REAL, no con el de
-              // pantalla: esta lista vive dentro de su propio hueco.
-              final columnas = columnasDeLista(MediaQuery.sizeOf(context).width);
-
-              return ListView(
-                controller: _scroll,
-                padding: const EdgeInsets.fromLTRB(14, 10, 14, 20),
-                children: [
-                  for (final g in groups) ...[
-                    // Header del día: etiqueta + resumen (N órdenes · €total).
+                  // La cabecera del dia ocupa todo el ancho; sus ordenes se
+                  // reparten debajo. Con una columna sale exactamente igual
+                  // que antes.
+                  for (final fila in enFilasDe(g.orders, columnas))
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(2, 16, 2, 8),
+                      padding: const EdgeInsets.only(bottom: 10),
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            _dayLabel(g.day).toUpperCase(),
-                            style: FoodlyTextStyles.captionPurpleBold.copyWith(letterSpacing: 0.5),
-                          ),
-                          const Expanded(child: Divider(indent: 10, endIndent: 10)),
-                          Text(
-                            S.current.managerHistoryDaySummary(
-                              g.orders.length,
-                              formatMoney(g.dayTotal, g.orders.first.currency),
+                          for (var c = 0; c < fila.length; c++) ...[
+                            if (c > 0) const SizedBox(width: 12),
+                            Expanded(
+                              child: fila[c] == null
+                                  ? const SizedBox.shrink()
+                                  : ManagerOrderCard(
+                                      order: fila[c]!,
+                                      onTap: () => _showOrderSheet(context, fila[c]!),
+                                    ),
                             ),
-                            style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
-                          ),
+                          ],
                         ],
                       ),
                     ),
-                    // La cabecera del dia ocupa todo el ancho; sus ordenes se
-                    // reparten debajo. Con una columna sale exactamente igual
-                    // que antes.
-                    for (final fila in enFilasDe(g.orders, columnas))
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            for (var c = 0; c < fila.length; c++) ...[
-                              if (c > 0) const SizedBox(width: 12),
-                              Expanded(
-                                child: fila[c] == null
-                                    ? const SizedBox.shrink()
-                                    : ManagerOrderCard(
-                                        order: fila[c]!,
-                                        onTap: () => _showOrderSheet(context, fila[c]!),
-                                      ),
-                              ),
-                            ],
-                          ],
-                        ),
-                      ),
-                  ],
-                  if (state.loadingMore)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 14),
-                      child: Center(
-                        child: SizedBox(
-                          width: 22,
-                          height: 22,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: FoodlyThemes.primaryFoodly),
-                        ),
+                ],
+                if (state.loadingMore)
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 14),
+                    child: Center(
+                      child: SizedBox(
+                        width: 22,
+                        height: 22,
+                        child: CircularProgressIndicator(strokeWidth: 2, color: FoodlyThemes.primaryFoodly),
                       ),
                     ),
-                ],
-              );
-            },
-          ),
+                  ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

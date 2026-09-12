@@ -21,8 +21,7 @@ mixin _$MyReservationsState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $MyReservationsStateCopyWith<MyReservationsState> get copyWith =>
-      _$MyReservationsStateCopyWithImpl<MyReservationsState>(
-          this as MyReservationsState, _$identity);
+      _$MyReservationsStateCopyWithImpl<MyReservationsState>(this as MyReservationsState, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -43,8 +42,7 @@ mixin _$MyReservationsState {
 
 /// @nodoc
 abstract mixin class $MyReservationsStateCopyWith<$Res> {
-  factory $MyReservationsStateCopyWith(
-          MyReservationsState value, $Res Function(MyReservationsState) _then) =
+  factory $MyReservationsStateCopyWith(MyReservationsState value, $Res Function(MyReservationsState) _then) =
       _$MyReservationsStateCopyWithImpl;
   @useResult
   $Res call({MyReservationsVM vm});
@@ -53,8 +51,7 @@ abstract mixin class $MyReservationsStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MyReservationsStateCopyWithImpl<$Res>
-    implements $MyReservationsStateCopyWith<$Res> {
+class _$MyReservationsStateCopyWithImpl<$Res> implements $MyReservationsStateCopyWith<$Res> {
   _$MyReservationsStateCopyWithImpl(this._self, this._then);
 
   final MyReservationsState _self;
@@ -306,15 +303,12 @@ class _Initial implements MyReservationsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Initial &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Initial && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -327,10 +321,8 @@ class _Initial implements MyReservationsState {
 }
 
 /// @nodoc
-abstract mixin class _$InitialCopyWith<$Res>
-    implements $MyReservationsStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
-      __$InitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $MyReservationsStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({MyReservationsVM vm});
@@ -385,15 +377,12 @@ class _Loading implements MyReservationsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadingCopyWith<_Loading> get copyWith =>
-      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+  _$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loading &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loading && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -406,10 +395,8 @@ class _Loading implements MyReservationsState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadingCopyWith<$Res>
-    implements $MyReservationsStateCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
-      __$LoadingCopyWithImpl;
+abstract mixin class _$LoadingCopyWith<$Res> implements $MyReservationsStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
   @override
   @useResult
   $Res call({MyReservationsVM vm});
@@ -464,15 +451,12 @@ class _Loaded implements MyReservationsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Loaded &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Loaded && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -485,10 +469,8 @@ class _Loaded implements MyReservationsState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res>
-    implements $MyReservationsStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
-      __$LoadedCopyWithImpl;
+abstract mixin class _$LoadedCopyWith<$Res> implements $MyReservationsStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
   @override
   @useResult
   $Res call({MyReservationsVM vm});
@@ -544,8 +526,7 @@ class _Error implements MyReservationsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -566,10 +547,8 @@ class _Error implements MyReservationsState {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
-    implements $MyReservationsStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<$Res> implements $MyReservationsStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({MyReservationsVM vm, String message});

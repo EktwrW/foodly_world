@@ -25,8 +25,7 @@ mixin _$PlaceDM {
   @JsonKey(name: 'formatted_phone_number')
   String? get formattedPhoneNumber;
   @JsonKey(name: 'international_phone_number')
-  String?
-      get internationalPhoneNumber; // `types` top-level del Place (ej. `["locality", "political"]`). Lo
+  String? get internationalPhoneNumber; // `types` top-level del Place (ej. `["locality", "political"]`). Lo
 // pedimos en el field mask del backend porque algunos consumers
 // (p.ej. distinguir street_address de route) lo necesitan. Default
 // a lista vacía para que los consumers puedan hacer `.contains(...)`
@@ -37,8 +36,7 @@ mixin _$PlaceDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $PlaceDMCopyWith<PlaceDM> get copyWith =>
-      _$PlaceDMCopyWithImpl<PlaceDM>(this as PlaceDM, _$identity);
+  $PlaceDMCopyWith<PlaceDM> get copyWith => _$PlaceDMCopyWithImpl<PlaceDM>(this as PlaceDM, _$identity);
 
   /// Serializes this PlaceDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -50,16 +48,12 @@ mixin _$PlaceDM {
             other is PlaceDM &&
             (identical(other.placeId, placeId) || other.placeId == placeId) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.formattedAddress, formattedAddress) ||
-                other.formattedAddress == formattedAddress) &&
-            const DeepCollectionEquality()
-                .equals(other.addressComponents, addressComponents) &&
-            (identical(other.geometry, geometry) ||
-                other.geometry == geometry) &&
+            (identical(other.formattedAddress, formattedAddress) || other.formattedAddress == formattedAddress) &&
+            const DeepCollectionEquality().equals(other.addressComponents, addressComponents) &&
+            (identical(other.geometry, geometry) || other.geometry == geometry) &&
             (identical(other.formattedPhoneNumber, formattedPhoneNumber) ||
                 other.formattedPhoneNumber == formattedPhoneNumber) &&
-            (identical(
-                    other.internationalPhoneNumber, internationalPhoneNumber) ||
+            (identical(other.internationalPhoneNumber, internationalPhoneNumber) ||
                 other.internationalPhoneNumber == internationalPhoneNumber) &&
             const DeepCollectionEquality().equals(other.types, types));
   }
@@ -85,19 +79,16 @@ mixin _$PlaceDM {
 
 /// @nodoc
 abstract mixin class $PlaceDMCopyWith<$Res> {
-  factory $PlaceDMCopyWith(PlaceDM value, $Res Function(PlaceDM) _then) =
-      _$PlaceDMCopyWithImpl;
+  factory $PlaceDMCopyWith(PlaceDM value, $Res Function(PlaceDM) _then) = _$PlaceDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'place_id') String? placeId,
       String? name,
       @JsonKey(name: 'formatted_address') String? formattedAddress,
-      @JsonKey(name: 'address_components')
-      List<PlaceAddressComponentDM> addressComponents,
+      @JsonKey(name: 'address_components') List<PlaceAddressComponentDM> addressComponents,
       PlaceGeometryDM? geometry,
       @JsonKey(name: 'formatted_phone_number') String? formattedPhoneNumber,
-      @JsonKey(name: 'international_phone_number')
-      String? internationalPhoneNumber,
+      @JsonKey(name: 'international_phone_number') String? internationalPhoneNumber,
       List<String> types});
 
   $PlaceGeometryDMCopyWith<$Res>? get geometry;
@@ -272,13 +263,10 @@ extension PlaceDMPatterns on PlaceDM {
             @JsonKey(name: 'place_id') String? placeId,
             String? name,
             @JsonKey(name: 'formatted_address') String? formattedAddress,
-            @JsonKey(name: 'address_components')
-            List<PlaceAddressComponentDM> addressComponents,
+            @JsonKey(name: 'address_components') List<PlaceAddressComponentDM> addressComponents,
             PlaceGeometryDM? geometry,
-            @JsonKey(name: 'formatted_phone_number')
-            String? formattedPhoneNumber,
-            @JsonKey(name: 'international_phone_number')
-            String? internationalPhoneNumber,
+            @JsonKey(name: 'formatted_phone_number') String? formattedPhoneNumber,
+            @JsonKey(name: 'international_phone_number') String? internationalPhoneNumber,
             List<String> types)?
         $default, {
     required TResult orElse(),
@@ -286,15 +274,8 @@ extension PlaceDMPatterns on PlaceDM {
     final _that = this;
     switch (_that) {
       case _PlaceDM() when $default != null:
-        return $default(
-            _that.placeId,
-            _that.name,
-            _that.formattedAddress,
-            _that.addressComponents,
-            _that.geometry,
-            _that.formattedPhoneNumber,
-            _that.internationalPhoneNumber,
-            _that.types);
+        return $default(_that.placeId, _that.name, _that.formattedAddress, _that.addressComponents, _that.geometry,
+            _that.formattedPhoneNumber, _that.internationalPhoneNumber, _that.types);
       case _:
         return orElse();
     }
@@ -319,28 +300,18 @@ extension PlaceDMPatterns on PlaceDM {
             @JsonKey(name: 'place_id') String? placeId,
             String? name,
             @JsonKey(name: 'formatted_address') String? formattedAddress,
-            @JsonKey(name: 'address_components')
-            List<PlaceAddressComponentDM> addressComponents,
+            @JsonKey(name: 'address_components') List<PlaceAddressComponentDM> addressComponents,
             PlaceGeometryDM? geometry,
-            @JsonKey(name: 'formatted_phone_number')
-            String? formattedPhoneNumber,
-            @JsonKey(name: 'international_phone_number')
-            String? internationalPhoneNumber,
+            @JsonKey(name: 'formatted_phone_number') String? formattedPhoneNumber,
+            @JsonKey(name: 'international_phone_number') String? internationalPhoneNumber,
             List<String> types)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PlaceDM():
-        return $default(
-            _that.placeId,
-            _that.name,
-            _that.formattedAddress,
-            _that.addressComponents,
-            _that.geometry,
-            _that.formattedPhoneNumber,
-            _that.internationalPhoneNumber,
-            _that.types);
+        return $default(_that.placeId, _that.name, _that.formattedAddress, _that.addressComponents, _that.geometry,
+            _that.formattedPhoneNumber, _that.internationalPhoneNumber, _that.types);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -364,28 +335,18 @@ extension PlaceDMPatterns on PlaceDM {
             @JsonKey(name: 'place_id') String? placeId,
             String? name,
             @JsonKey(name: 'formatted_address') String? formattedAddress,
-            @JsonKey(name: 'address_components')
-            List<PlaceAddressComponentDM> addressComponents,
+            @JsonKey(name: 'address_components') List<PlaceAddressComponentDM> addressComponents,
             PlaceGeometryDM? geometry,
-            @JsonKey(name: 'formatted_phone_number')
-            String? formattedPhoneNumber,
-            @JsonKey(name: 'international_phone_number')
-            String? internationalPhoneNumber,
+            @JsonKey(name: 'formatted_phone_number') String? formattedPhoneNumber,
+            @JsonKey(name: 'international_phone_number') String? internationalPhoneNumber,
             List<String> types)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PlaceDM() when $default != null:
-        return $default(
-            _that.placeId,
-            _that.name,
-            _that.formattedAddress,
-            _that.addressComponents,
-            _that.geometry,
-            _that.formattedPhoneNumber,
-            _that.internationalPhoneNumber,
-            _that.types);
+        return $default(_that.placeId, _that.name, _that.formattedAddress, _that.addressComponents, _that.geometry,
+            _that.formattedPhoneNumber, _that.internationalPhoneNumber, _that.types);
       case _:
         return null;
     }
@@ -400,17 +361,14 @@ class _PlaceDM implements PlaceDM {
       this.name,
       @JsonKey(name: 'formatted_address') this.formattedAddress,
       @JsonKey(name: 'address_components')
-      final List<PlaceAddressComponentDM> addressComponents =
-          const <PlaceAddressComponentDM>[],
+      final List<PlaceAddressComponentDM> addressComponents = const <PlaceAddressComponentDM>[],
       this.geometry,
       @JsonKey(name: 'formatted_phone_number') this.formattedPhoneNumber,
-      @JsonKey(name: 'international_phone_number')
-      this.internationalPhoneNumber,
+      @JsonKey(name: 'international_phone_number') this.internationalPhoneNumber,
       final List<String> types = const <String>[]})
       : _addressComponents = addressComponents,
         _types = types;
-  factory _PlaceDM.fromJson(Map<String, dynamic> json) =>
-      _$PlaceDMFromJson(json);
+  factory _PlaceDM.fromJson(Map<String, dynamic> json) => _$PlaceDMFromJson(json);
 
   @override
   @JsonKey(name: 'place_id')
@@ -424,8 +382,7 @@ class _PlaceDM implements PlaceDM {
   @override
   @JsonKey(name: 'address_components')
   List<PlaceAddressComponentDM> get addressComponents {
-    if (_addressComponents is EqualUnmodifiableListView)
-      return _addressComponents;
+    if (_addressComponents is EqualUnmodifiableListView) return _addressComponents;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_addressComponents);
   }
@@ -462,8 +419,7 @@ class _PlaceDM implements PlaceDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$PlaceDMCopyWith<_PlaceDM> get copyWith =>
-      __$PlaceDMCopyWithImpl<_PlaceDM>(this, _$identity);
+  _$PlaceDMCopyWith<_PlaceDM> get copyWith => __$PlaceDMCopyWithImpl<_PlaceDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -479,16 +435,12 @@ class _PlaceDM implements PlaceDM {
             other is _PlaceDM &&
             (identical(other.placeId, placeId) || other.placeId == placeId) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.formattedAddress, formattedAddress) ||
-                other.formattedAddress == formattedAddress) &&
-            const DeepCollectionEquality()
-                .equals(other._addressComponents, _addressComponents) &&
-            (identical(other.geometry, geometry) ||
-                other.geometry == geometry) &&
+            (identical(other.formattedAddress, formattedAddress) || other.formattedAddress == formattedAddress) &&
+            const DeepCollectionEquality().equals(other._addressComponents, _addressComponents) &&
+            (identical(other.geometry, geometry) || other.geometry == geometry) &&
             (identical(other.formattedPhoneNumber, formattedPhoneNumber) ||
                 other.formattedPhoneNumber == formattedPhoneNumber) &&
-            (identical(
-                    other.internationalPhoneNumber, internationalPhoneNumber) ||
+            (identical(other.internationalPhoneNumber, internationalPhoneNumber) ||
                 other.internationalPhoneNumber == internationalPhoneNumber) &&
             const DeepCollectionEquality().equals(other._types, _types));
   }
@@ -514,20 +466,17 @@ class _PlaceDM implements PlaceDM {
 
 /// @nodoc
 abstract mixin class _$PlaceDMCopyWith<$Res> implements $PlaceDMCopyWith<$Res> {
-  factory _$PlaceDMCopyWith(_PlaceDM value, $Res Function(_PlaceDM) _then) =
-      __$PlaceDMCopyWithImpl;
+  factory _$PlaceDMCopyWith(_PlaceDM value, $Res Function(_PlaceDM) _then) = __$PlaceDMCopyWithImpl;
   @override
   @useResult
   $Res call(
       {@JsonKey(name: 'place_id') String? placeId,
       String? name,
       @JsonKey(name: 'formatted_address') String? formattedAddress,
-      @JsonKey(name: 'address_components')
-      List<PlaceAddressComponentDM> addressComponents,
+      @JsonKey(name: 'address_components') List<PlaceAddressComponentDM> addressComponents,
       PlaceGeometryDM? geometry,
       @JsonKey(name: 'formatted_phone_number') String? formattedPhoneNumber,
-      @JsonKey(name: 'international_phone_number')
-      String? internationalPhoneNumber,
+      @JsonKey(name: 'international_phone_number') String? internationalPhoneNumber,
       List<String> types});
 
   @override

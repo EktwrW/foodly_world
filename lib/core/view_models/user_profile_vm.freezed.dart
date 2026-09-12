@@ -59,8 +59,7 @@ mixin _$UserProfileVM {
   UserDM? get visitedUser;
   bool get termsAndContiditionsAccepted;
   bool get businessTermsAndContiditionsAccepted;
-  String?
-      get importedAvatar; // Social provider context populated when the user arrives at sign-up from
+  String? get importedAvatar; // Social provider context populated when the user arrives at sign-up from
 // a social login (e.g. Google). Forwarded to /register so the backend can
 // waive the password requirement for provider-verified sign-ups.
   String? get provider;
@@ -74,8 +73,7 @@ mixin _$UserProfileVM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $UserProfileVMCopyWith<UserProfileVM> get copyWith =>
-      _$UserProfileVMCopyWithImpl<UserProfileVM>(
-          this as UserProfileVM, _$identity);
+      _$UserProfileVMCopyWithImpl<UserProfileVM>(this as UserProfileVM, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -88,25 +86,20 @@ mixin _$UserProfileVM {
                 other.firstNameController == firstNameController) &&
             (identical(other.lastNameController, lastNameController) ||
                 other.lastNameController == lastNameController) &&
-            (identical(other.emailController, emailController) ||
-                other.emailController == emailController) &&
+            (identical(other.emailController, emailController) || other.emailController == emailController) &&
             (identical(other.passwordController, passwordController) ||
                 other.passwordController == passwordController) &&
             (identical(other.newPasswordController, newPasswordController) ||
                 other.newPasswordController == newPasswordController) &&
             (identical(other.phoneNumberController, phoneNumberController) ||
                 other.phoneNumberController == phoneNumberController) &&
-            (identical(other.addressController, addressController) ||
-                other.addressController == addressController) &&
-            (identical(other.cityController, cityController) ||
-                other.cityController == cityController) &&
-            (identical(other.zipCodeController, zipCodeController) ||
-                other.zipCodeController == zipCodeController) &&
+            (identical(other.addressController, addressController) || other.addressController == addressController) &&
+            (identical(other.cityController, cityController) || other.cityController == cityController) &&
+            (identical(other.zipCodeController, zipCodeController) || other.zipCodeController == zipCodeController) &&
             (identical(other.businessNameController, businessNameController) ||
                 other.businessNameController == businessNameController) &&
             (identical(other.businessPhoneNumberController, businessPhoneNumberController) ||
-                other.businessPhoneNumberController ==
-                    businessPhoneNumberController) &&
+                other.businessPhoneNumberController == businessPhoneNumberController) &&
             (identical(other.businessEmailController, businessEmailController) ||
                 other.businessEmailController == businessEmailController) &&
             (identical(other.businessCityController, businessCityController) ||
@@ -116,53 +109,46 @@ mixin _$UserProfileVM {
             (identical(other.businessZipCodeController, businessZipCodeController) ||
                 other.businessZipCodeController == businessZipCodeController) &&
             (identical(other.businessIntroMessageController, businessIntroMessageController) ||
-                other.businessIntroMessageController ==
-                    businessIntroMessageController) &&
-            (identical(other.dateOfBirthNode, dateOfBirthNode) ||
-                other.dateOfBirthNode == dateOfBirthNode) &&
-            (identical(other.placesFocusNode, placesFocusNode) ||
-                other.placesFocusNode == placesFocusNode) &&
-            (identical(other.genderNode, genderNode) ||
-                other.genderNode == genderNode) &&
+                other.businessIntroMessageController == businessIntroMessageController) &&
+            (identical(other.dateOfBirthNode, dateOfBirthNode) || other.dateOfBirthNode == dateOfBirthNode) &&
+            (identical(other.placesFocusNode, placesFocusNode) || other.placesFocusNode == placesFocusNode) &&
+            (identical(other.genderNode, genderNode) || other.genderNode == genderNode) &&
             (identical(other.country, country) || other.country == country) &&
-            (identical(other.countryNode, countryNode) ||
-                other.countryNode == countryNode) &&
-            (identical(other.businessCountry, businessCountry) ||
-                other.businessCountry == businessCountry) &&
+            (identical(other.countryNode, countryNode) || other.countryNode == countryNode) &&
+            (identical(other.businessCountry, businessCountry) || other.businessCountry == businessCountry) &&
             (identical(other.businessCountryNode, businessCountryNode) ||
                 other.businessCountryNode == businessCountryNode) &&
             (identical(other.formKey, formKey) || other.formKey == formKey) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.roleId, roleId) || other.roleId == roleId) &&
-            (identical(other.autovalidateMode, autovalidateMode) ||
-                other.autovalidateMode == autovalidateMode) &&
-            (identical(other.userSessionDM, userSessionDM) ||
-                other.userSessionDM == userSessionDM) &&
+            (identical(other.autovalidateMode, autovalidateMode) || other.autovalidateMode == autovalidateMode) &&
+            (identical(other.userSessionDM, userSessionDM) || other.userSessionDM == userSessionDM) &&
             const DeepCollectionEquality().equals(other.business, business) &&
-            (identical(other.dateOfBirth, dateOfBirth) ||
-                other.dateOfBirth == dateOfBirth) &&
-            (identical(other.businessCategory, businessCategory) ||
-                other.businessCategory == businessCategory) &&
-            (identical(other.imagePath, imagePath) ||
-                other.imagePath == imagePath) &&
+            (identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth) &&
+            (identical(other.businessCategory, businessCategory) || other.businessCategory == businessCategory) &&
+            (identical(other.imagePath, imagePath) || other.imagePath == imagePath) &&
             (identical(other.logoPath, logoPath) || other.logoPath == logoPath) &&
             (identical(other.tooltipActive, tooltipActive) || other.tooltipActive == tooltipActive) &&
             (identical(other.mapController, mapController) || other.mapController == mapController) &&
             const DeepCollectionEquality().equals(other.markers, markers) &&
             (identical(other.businessLocation, businessLocation) || other.businessLocation == businessLocation) &&
             (identical(other.userLocation, userLocation) || other.userLocation == userLocation) &&
-            (identical(other.businessCountryCode, businessCountryCode) || other.businessCountryCode == businessCountryCode) &&
+            (identical(other.businessCountryCode, businessCountryCode) ||
+                other.businessCountryCode == businessCountryCode) &&
             (identical(other.loggedUserCanEdit, loggedUserCanEdit) || other.loggedUserCanEdit == loggedUserCanEdit) &&
             (identical(other.edition, edition) || other.edition == edition) &&
             (identical(other.visitedUser, visitedUser) || other.visitedUser == visitedUser) &&
-            (identical(other.termsAndContiditionsAccepted, termsAndContiditionsAccepted) || other.termsAndContiditionsAccepted == termsAndContiditionsAccepted) &&
-            (identical(other.businessTermsAndContiditionsAccepted, businessTermsAndContiditionsAccepted) || other.businessTermsAndContiditionsAccepted == businessTermsAndContiditionsAccepted) &&
+            (identical(other.termsAndContiditionsAccepted, termsAndContiditionsAccepted) ||
+                other.termsAndContiditionsAccepted == termsAndContiditionsAccepted) &&
+            (identical(other.businessTermsAndContiditionsAccepted, businessTermsAndContiditionsAccepted) ||
+                other.businessTermsAndContiditionsAccepted == businessTermsAndContiditionsAccepted) &&
             (identical(other.importedAvatar, importedAvatar) || other.importedAvatar == importedAvatar) &&
             (identical(other.provider, provider) || other.provider == provider) &&
             (identical(other.providerId, providerId) || other.providerId == providerId) &&
             const DeepCollectionEquality().equals(other.myReviews, myReviews) &&
             (identical(other.reviewsMeta, reviewsMeta) || other.reviewsMeta == reviewsMeta) &&
-            (identical(other.isLoadingMoreReviews, isLoadingMoreReviews) || other.isLoadingMoreReviews == isLoadingMoreReviews));
+            (identical(other.isLoadingMoreReviews, isLoadingMoreReviews) ||
+                other.isLoadingMoreReviews == isLoadingMoreReviews));
   }
 
   @override
@@ -229,9 +215,7 @@ mixin _$UserProfileVM {
 
 /// @nodoc
 abstract mixin class $UserProfileVMCopyWith<$Res> {
-  factory $UserProfileVMCopyWith(
-          UserProfileVM value, $Res Function(UserProfileVM) _then) =
-      _$UserProfileVMCopyWithImpl;
+  factory $UserProfileVMCopyWith(UserProfileVM value, $Res Function(UserProfileVM) _then) = _$UserProfileVMCopyWithImpl;
   @useResult
   $Res call(
       {InputController? nickNameController,
@@ -309,8 +293,7 @@ abstract mixin class $UserProfileVMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserProfileVMCopyWithImpl<$Res>
-    implements $UserProfileVMCopyWith<$Res> {
+class _$UserProfileVMCopyWithImpl<$Res> implements $UserProfileVMCopyWith<$Res> {
   _$UserProfileVMCopyWithImpl(this._self, this._then);
 
   final UserProfileVM _self;
@@ -550,8 +533,7 @@ class _$UserProfileVMCopyWithImpl<$Res>
           ? _self.termsAndContiditionsAccepted
           : termsAndContiditionsAccepted // ignore: cast_nullable_to_non_nullable
               as bool,
-      businessTermsAndContiditionsAccepted: null ==
-              businessTermsAndContiditionsAccepted
+      businessTermsAndContiditionsAccepted: null == businessTermsAndContiditionsAccepted
           ? _self.businessTermsAndContiditionsAccepted
           : businessTermsAndContiditionsAccepted // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -661,8 +643,7 @@ class _$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.newPasswordController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.newPasswordController!, (value) {
       return _then(_self.copyWith(newPasswordController: value));
     });
   }
@@ -676,8 +657,7 @@ class _$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.phoneNumberController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.phoneNumberController!, (value) {
       return _then(_self.copyWith(phoneNumberController: value));
     });
   }
@@ -733,8 +713,7 @@ class _$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.businessNameController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.businessNameController!, (value) {
       return _then(_self.copyWith(businessNameController: value));
     });
   }
@@ -748,8 +727,7 @@ class _$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.businessPhoneNumberController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.businessPhoneNumberController!, (value) {
       return _then(_self.copyWith(businessPhoneNumberController: value));
     });
   }
@@ -763,8 +741,7 @@ class _$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.businessEmailController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.businessEmailController!, (value) {
       return _then(_self.copyWith(businessEmailController: value));
     });
   }
@@ -778,8 +755,7 @@ class _$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.businessCityController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.businessCityController!, (value) {
       return _then(_self.copyWith(businessCityController: value));
     });
   }
@@ -793,8 +769,7 @@ class _$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.businessAddressController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.businessAddressController!, (value) {
       return _then(_self.copyWith(businessAddressController: value));
     });
   }
@@ -808,8 +783,7 @@ class _$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.businessZipCodeController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.businessZipCodeController!, (value) {
       return _then(_self.copyWith(businessZipCodeController: value));
     });
   }
@@ -823,8 +797,7 @@ class _$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.businessIntroMessageController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.businessIntroMessageController!, (value) {
       return _then(_self.copyWith(businessIntroMessageController: value));
     });
   }
@@ -1550,25 +1523,20 @@ class _UserProfileVM extends UserProfileVM {
                 other.firstNameController == firstNameController) &&
             (identical(other.lastNameController, lastNameController) ||
                 other.lastNameController == lastNameController) &&
-            (identical(other.emailController, emailController) ||
-                other.emailController == emailController) &&
+            (identical(other.emailController, emailController) || other.emailController == emailController) &&
             (identical(other.passwordController, passwordController) ||
                 other.passwordController == passwordController) &&
             (identical(other.newPasswordController, newPasswordController) ||
                 other.newPasswordController == newPasswordController) &&
             (identical(other.phoneNumberController, phoneNumberController) ||
                 other.phoneNumberController == phoneNumberController) &&
-            (identical(other.addressController, addressController) ||
-                other.addressController == addressController) &&
-            (identical(other.cityController, cityController) ||
-                other.cityController == cityController) &&
-            (identical(other.zipCodeController, zipCodeController) ||
-                other.zipCodeController == zipCodeController) &&
+            (identical(other.addressController, addressController) || other.addressController == addressController) &&
+            (identical(other.cityController, cityController) || other.cityController == cityController) &&
+            (identical(other.zipCodeController, zipCodeController) || other.zipCodeController == zipCodeController) &&
             (identical(other.businessNameController, businessNameController) ||
                 other.businessNameController == businessNameController) &&
             (identical(other.businessPhoneNumberController, businessPhoneNumberController) ||
-                other.businessPhoneNumberController ==
-                    businessPhoneNumberController) &&
+                other.businessPhoneNumberController == businessPhoneNumberController) &&
             (identical(other.businessEmailController, businessEmailController) ||
                 other.businessEmailController == businessEmailController) &&
             (identical(other.businessCityController, businessCityController) ||
@@ -1578,53 +1546,46 @@ class _UserProfileVM extends UserProfileVM {
             (identical(other.businessZipCodeController, businessZipCodeController) ||
                 other.businessZipCodeController == businessZipCodeController) &&
             (identical(other.businessIntroMessageController, businessIntroMessageController) ||
-                other.businessIntroMessageController ==
-                    businessIntroMessageController) &&
-            (identical(other.dateOfBirthNode, dateOfBirthNode) ||
-                other.dateOfBirthNode == dateOfBirthNode) &&
-            (identical(other.placesFocusNode, placesFocusNode) ||
-                other.placesFocusNode == placesFocusNode) &&
-            (identical(other.genderNode, genderNode) ||
-                other.genderNode == genderNode) &&
+                other.businessIntroMessageController == businessIntroMessageController) &&
+            (identical(other.dateOfBirthNode, dateOfBirthNode) || other.dateOfBirthNode == dateOfBirthNode) &&
+            (identical(other.placesFocusNode, placesFocusNode) || other.placesFocusNode == placesFocusNode) &&
+            (identical(other.genderNode, genderNode) || other.genderNode == genderNode) &&
             (identical(other.country, country) || other.country == country) &&
-            (identical(other.countryNode, countryNode) ||
-                other.countryNode == countryNode) &&
-            (identical(other.businessCountry, businessCountry) ||
-                other.businessCountry == businessCountry) &&
+            (identical(other.countryNode, countryNode) || other.countryNode == countryNode) &&
+            (identical(other.businessCountry, businessCountry) || other.businessCountry == businessCountry) &&
             (identical(other.businessCountryNode, businessCountryNode) ||
                 other.businessCountryNode == businessCountryNode) &&
             (identical(other.formKey, formKey) || other.formKey == formKey) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.roleId, roleId) || other.roleId == roleId) &&
-            (identical(other.autovalidateMode, autovalidateMode) ||
-                other.autovalidateMode == autovalidateMode) &&
-            (identical(other.userSessionDM, userSessionDM) ||
-                other.userSessionDM == userSessionDM) &&
+            (identical(other.autovalidateMode, autovalidateMode) || other.autovalidateMode == autovalidateMode) &&
+            (identical(other.userSessionDM, userSessionDM) || other.userSessionDM == userSessionDM) &&
             const DeepCollectionEquality().equals(other._business, _business) &&
-            (identical(other.dateOfBirth, dateOfBirth) ||
-                other.dateOfBirth == dateOfBirth) &&
-            (identical(other.businessCategory, businessCategory) ||
-                other.businessCategory == businessCategory) &&
-            (identical(other.imagePath, imagePath) ||
-                other.imagePath == imagePath) &&
+            (identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth) &&
+            (identical(other.businessCategory, businessCategory) || other.businessCategory == businessCategory) &&
+            (identical(other.imagePath, imagePath) || other.imagePath == imagePath) &&
             (identical(other.logoPath, logoPath) || other.logoPath == logoPath) &&
             (identical(other.tooltipActive, tooltipActive) || other.tooltipActive == tooltipActive) &&
             (identical(other.mapController, mapController) || other.mapController == mapController) &&
             const DeepCollectionEquality().equals(other._markers, _markers) &&
             (identical(other.businessLocation, businessLocation) || other.businessLocation == businessLocation) &&
             (identical(other.userLocation, userLocation) || other.userLocation == userLocation) &&
-            (identical(other.businessCountryCode, businessCountryCode) || other.businessCountryCode == businessCountryCode) &&
+            (identical(other.businessCountryCode, businessCountryCode) ||
+                other.businessCountryCode == businessCountryCode) &&
             (identical(other.loggedUserCanEdit, loggedUserCanEdit) || other.loggedUserCanEdit == loggedUserCanEdit) &&
             (identical(other.edition, edition) || other.edition == edition) &&
             (identical(other.visitedUser, visitedUser) || other.visitedUser == visitedUser) &&
-            (identical(other.termsAndContiditionsAccepted, termsAndContiditionsAccepted) || other.termsAndContiditionsAccepted == termsAndContiditionsAccepted) &&
-            (identical(other.businessTermsAndContiditionsAccepted, businessTermsAndContiditionsAccepted) || other.businessTermsAndContiditionsAccepted == businessTermsAndContiditionsAccepted) &&
+            (identical(other.termsAndContiditionsAccepted, termsAndContiditionsAccepted) ||
+                other.termsAndContiditionsAccepted == termsAndContiditionsAccepted) &&
+            (identical(other.businessTermsAndContiditionsAccepted, businessTermsAndContiditionsAccepted) ||
+                other.businessTermsAndContiditionsAccepted == businessTermsAndContiditionsAccepted) &&
             (identical(other.importedAvatar, importedAvatar) || other.importedAvatar == importedAvatar) &&
             (identical(other.provider, provider) || other.provider == provider) &&
             (identical(other.providerId, providerId) || other.providerId == providerId) &&
             const DeepCollectionEquality().equals(other._myReviews, _myReviews) &&
             (identical(other.reviewsMeta, reviewsMeta) || other.reviewsMeta == reviewsMeta) &&
-            (identical(other.isLoadingMoreReviews, isLoadingMoreReviews) || other.isLoadingMoreReviews == isLoadingMoreReviews));
+            (identical(other.isLoadingMoreReviews, isLoadingMoreReviews) ||
+                other.isLoadingMoreReviews == isLoadingMoreReviews));
   }
 
   @override
@@ -1690,10 +1651,8 @@ class _UserProfileVM extends UserProfileVM {
 }
 
 /// @nodoc
-abstract mixin class _$UserProfileVMCopyWith<$Res>
-    implements $UserProfileVMCopyWith<$Res> {
-  factory _$UserProfileVMCopyWith(
-          _UserProfileVM value, $Res Function(_UserProfileVM) _then) =
+abstract mixin class _$UserProfileVMCopyWith<$Res> implements $UserProfileVMCopyWith<$Res> {
+  factory _$UserProfileVMCopyWith(_UserProfileVM value, $Res Function(_UserProfileVM) _then) =
       __$UserProfileVMCopyWithImpl;
   @override
   @useResult
@@ -1793,8 +1752,7 @@ abstract mixin class _$UserProfileVMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$UserProfileVMCopyWithImpl<$Res>
-    implements _$UserProfileVMCopyWith<$Res> {
+class __$UserProfileVMCopyWithImpl<$Res> implements _$UserProfileVMCopyWith<$Res> {
   __$UserProfileVMCopyWithImpl(this._self, this._then);
 
   final _UserProfileVM _self;
@@ -2034,8 +1992,7 @@ class __$UserProfileVMCopyWithImpl<$Res>
           ? _self.termsAndContiditionsAccepted
           : termsAndContiditionsAccepted // ignore: cast_nullable_to_non_nullable
               as bool,
-      businessTermsAndContiditionsAccepted: null ==
-              businessTermsAndContiditionsAccepted
+      businessTermsAndContiditionsAccepted: null == businessTermsAndContiditionsAccepted
           ? _self.businessTermsAndContiditionsAccepted
           : businessTermsAndContiditionsAccepted // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -2145,8 +2102,7 @@ class __$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.newPasswordController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.newPasswordController!, (value) {
       return _then(_self.copyWith(newPasswordController: value));
     });
   }
@@ -2160,8 +2116,7 @@ class __$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.phoneNumberController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.phoneNumberController!, (value) {
       return _then(_self.copyWith(phoneNumberController: value));
     });
   }
@@ -2217,8 +2172,7 @@ class __$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.businessNameController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.businessNameController!, (value) {
       return _then(_self.copyWith(businessNameController: value));
     });
   }
@@ -2232,8 +2186,7 @@ class __$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.businessPhoneNumberController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.businessPhoneNumberController!, (value) {
       return _then(_self.copyWith(businessPhoneNumberController: value));
     });
   }
@@ -2247,8 +2200,7 @@ class __$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.businessEmailController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.businessEmailController!, (value) {
       return _then(_self.copyWith(businessEmailController: value));
     });
   }
@@ -2262,8 +2214,7 @@ class __$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.businessCityController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.businessCityController!, (value) {
       return _then(_self.copyWith(businessCityController: value));
     });
   }
@@ -2277,8 +2228,7 @@ class __$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.businessAddressController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.businessAddressController!, (value) {
       return _then(_self.copyWith(businessAddressController: value));
     });
   }
@@ -2292,8 +2242,7 @@ class __$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.businessZipCodeController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.businessZipCodeController!, (value) {
       return _then(_self.copyWith(businessZipCodeController: value));
     });
   }
@@ -2307,8 +2256,7 @@ class __$UserProfileVMCopyWithImpl<$Res>
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_self.businessIntroMessageController!,
-        (value) {
+    return $InputControllerCopyWith<$Res>(_self.businessIntroMessageController!, (value) {
       return _then(_self.copyWith(businessIntroMessageController: value));
     });
   }

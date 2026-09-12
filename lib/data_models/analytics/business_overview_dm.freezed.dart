@@ -20,10 +20,9 @@ mixin _$BusinessOverviewResponseDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $BusinessOverviewResponseDMCopyWith<BusinessOverviewResponseDM>
-      get copyWith =>
-          _$BusinessOverviewResponseDMCopyWithImpl<BusinessOverviewResponseDM>(
-              this as BusinessOverviewResponseDM, _$identity);
+  $BusinessOverviewResponseDMCopyWith<BusinessOverviewResponseDM> get copyWith =>
+      _$BusinessOverviewResponseDMCopyWithImpl<BusinessOverviewResponseDM>(
+          this as BusinessOverviewResponseDM, _$identity);
 
   /// Serializes this BusinessOverviewResponseDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -48,8 +47,8 @@ mixin _$BusinessOverviewResponseDM {
 
 /// @nodoc
 abstract mixin class $BusinessOverviewResponseDMCopyWith<$Res> {
-  factory $BusinessOverviewResponseDMCopyWith(BusinessOverviewResponseDM value,
-          $Res Function(BusinessOverviewResponseDM) _then) =
+  factory $BusinessOverviewResponseDMCopyWith(
+          BusinessOverviewResponseDM value, $Res Function(BusinessOverviewResponseDM) _then) =
       _$BusinessOverviewResponseDMCopyWithImpl;
   @useResult
   $Res call({BusinessOverviewDataDM? data});
@@ -58,8 +57,7 @@ abstract mixin class $BusinessOverviewResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BusinessOverviewResponseDMCopyWithImpl<$Res>
-    implements $BusinessOverviewResponseDMCopyWith<$Res> {
+class _$BusinessOverviewResponseDMCopyWithImpl<$Res> implements $BusinessOverviewResponseDMCopyWith<$Res> {
   _$BusinessOverviewResponseDMCopyWithImpl(this._self, this._then);
 
   final BusinessOverviewResponseDM _self;
@@ -256,8 +254,7 @@ extension BusinessOverviewResponseDMPatterns on BusinessOverviewResponseDM {
 @JsonSerializable()
 class _BusinessOverviewResponseDM implements BusinessOverviewResponseDM {
   const _BusinessOverviewResponseDM({this.data});
-  factory _BusinessOverviewResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$BusinessOverviewResponseDMFromJson(json);
+  factory _BusinessOverviewResponseDM.fromJson(Map<String, dynamic> json) => _$BusinessOverviewResponseDMFromJson(json);
 
   @override
   final BusinessOverviewDataDM? data;
@@ -267,9 +264,8 @@ class _BusinessOverviewResponseDM implements BusinessOverviewResponseDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$BusinessOverviewResponseDMCopyWith<_BusinessOverviewResponseDM>
-      get copyWith => __$BusinessOverviewResponseDMCopyWithImpl<
-          _BusinessOverviewResponseDM>(this, _$identity);
+  _$BusinessOverviewResponseDMCopyWith<_BusinessOverviewResponseDM> get copyWith =>
+      __$BusinessOverviewResponseDMCopyWithImpl<_BusinessOverviewResponseDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -297,11 +293,9 @@ class _BusinessOverviewResponseDM implements BusinessOverviewResponseDM {
 }
 
 /// @nodoc
-abstract mixin class _$BusinessOverviewResponseDMCopyWith<$Res>
-    implements $BusinessOverviewResponseDMCopyWith<$Res> {
+abstract mixin class _$BusinessOverviewResponseDMCopyWith<$Res> implements $BusinessOverviewResponseDMCopyWith<$Res> {
   factory _$BusinessOverviewResponseDMCopyWith(
-          _BusinessOverviewResponseDM value,
-          $Res Function(_BusinessOverviewResponseDM) _then) =
+          _BusinessOverviewResponseDM value, $Res Function(_BusinessOverviewResponseDM) _then) =
       __$BusinessOverviewResponseDMCopyWithImpl;
   @override
   @useResult
@@ -312,8 +306,7 @@ abstract mixin class _$BusinessOverviewResponseDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$BusinessOverviewResponseDMCopyWithImpl<$Res>
-    implements _$BusinessOverviewResponseDMCopyWith<$Res> {
+class __$BusinessOverviewResponseDMCopyWithImpl<$Res> implements _$BusinessOverviewResponseDMCopyWith<$Res> {
   __$BusinessOverviewResponseDMCopyWithImpl(this._self, this._then);
 
   final _BusinessOverviewResponseDM _self;
@@ -362,8 +355,7 @@ mixin _$BusinessOverviewDataDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $BusinessOverviewDataDMCopyWith<BusinessOverviewDataDM> get copyWith =>
-      _$BusinessOverviewDataDMCopyWithImpl<BusinessOverviewDataDM>(
-          this as BusinessOverviewDataDM, _$identity);
+      _$BusinessOverviewDataDMCopyWithImpl<BusinessOverviewDataDM>(this as BusinessOverviewDataDM, _$identity);
 
   /// Serializes this BusinessOverviewDataDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -376,14 +368,12 @@ mixin _$BusinessOverviewDataDM {
             (identical(other.kpis, kpis) || other.kpis == kpis) &&
             (identical(other.funnel, funnel) || other.funnel == funnel) &&
             (identical(other.series, series) || other.series == series) &&
-            (identical(other.breakdowns, breakdowns) ||
-                other.breakdowns == breakdowns));
+            (identical(other.breakdowns, breakdowns) || other.breakdowns == breakdowns));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, kpis, funnel, series, breakdowns);
+  int get hashCode => Object.hash(runtimeType, kpis, funnel, series, breakdowns);
 
   @override
   String toString() {
@@ -393,15 +383,10 @@ mixin _$BusinessOverviewDataDM {
 
 /// @nodoc
 abstract mixin class $BusinessOverviewDataDMCopyWith<$Res> {
-  factory $BusinessOverviewDataDMCopyWith(BusinessOverviewDataDM value,
-          $Res Function(BusinessOverviewDataDM) _then) =
+  factory $BusinessOverviewDataDMCopyWith(BusinessOverviewDataDM value, $Res Function(BusinessOverviewDataDM) _then) =
       _$BusinessOverviewDataDMCopyWithImpl;
   @useResult
-  $Res call(
-      {KpisDM? kpis,
-      FunnelDM? funnel,
-      @JsonKey(name: 'series') DailySeriesDM? series,
-      BreakdownsDM? breakdowns});
+  $Res call({KpisDM? kpis, FunnelDM? funnel, @JsonKey(name: 'series') DailySeriesDM? series, BreakdownsDM? breakdowns});
 
   $KpisDMCopyWith<$Res>? get kpis;
   $FunnelDMCopyWith<$Res>? get funnel;
@@ -410,8 +395,7 @@ abstract mixin class $BusinessOverviewDataDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BusinessOverviewDataDMCopyWithImpl<$Res>
-    implements $BusinessOverviewDataDMCopyWith<$Res> {
+class _$BusinessOverviewDataDMCopyWithImpl<$Res> implements $BusinessOverviewDataDMCopyWith<$Res> {
   _$BusinessOverviewDataDMCopyWithImpl(this._self, this._then);
 
   final BusinessOverviewDataDM _self;
@@ -598,18 +582,14 @@ extension BusinessOverviewDataDMPatterns on BusinessOverviewDataDM {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
-            KpisDM? kpis,
-            FunnelDM? funnel,
-            @JsonKey(name: 'series') DailySeriesDM? series,
-            BreakdownsDM? breakdowns)?
+            KpisDM? kpis, FunnelDM? funnel, @JsonKey(name: 'series') DailySeriesDM? series, BreakdownsDM? breakdowns)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _BusinessOverviewDataDM() when $default != null:
-        return $default(
-            _that.kpis, _that.funnel, _that.series, _that.breakdowns);
+        return $default(_that.kpis, _that.funnel, _that.series, _that.breakdowns);
       case _:
         return orElse();
     }
@@ -631,17 +611,13 @@ extension BusinessOverviewDataDMPatterns on BusinessOverviewDataDM {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
-            KpisDM? kpis,
-            FunnelDM? funnel,
-            @JsonKey(name: 'series') DailySeriesDM? series,
-            BreakdownsDM? breakdowns)
+            KpisDM? kpis, FunnelDM? funnel, @JsonKey(name: 'series') DailySeriesDM? series, BreakdownsDM? breakdowns)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _BusinessOverviewDataDM():
-        return $default(
-            _that.kpis, _that.funnel, _that.series, _that.breakdowns);
+        return $default(_that.kpis, _that.funnel, _that.series, _that.breakdowns);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -662,17 +638,13 @@ extension BusinessOverviewDataDMPatterns on BusinessOverviewDataDM {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
-            KpisDM? kpis,
-            FunnelDM? funnel,
-            @JsonKey(name: 'series') DailySeriesDM? series,
-            BreakdownsDM? breakdowns)?
+            KpisDM? kpis, FunnelDM? funnel, @JsonKey(name: 'series') DailySeriesDM? series, BreakdownsDM? breakdowns)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _BusinessOverviewDataDM() when $default != null:
-        return $default(
-            _that.kpis, _that.funnel, _that.series, _that.breakdowns);
+        return $default(_that.kpis, _that.funnel, _that.series, _that.breakdowns);
       case _:
         return null;
     }
@@ -682,13 +654,8 @@ extension BusinessOverviewDataDMPatterns on BusinessOverviewDataDM {
 /// @nodoc
 @JsonSerializable()
 class _BusinessOverviewDataDM implements BusinessOverviewDataDM {
-  const _BusinessOverviewDataDM(
-      {this.kpis,
-      this.funnel,
-      @JsonKey(name: 'series') this.series,
-      this.breakdowns});
-  factory _BusinessOverviewDataDM.fromJson(Map<String, dynamic> json) =>
-      _$BusinessOverviewDataDMFromJson(json);
+  const _BusinessOverviewDataDM({this.kpis, this.funnel, @JsonKey(name: 'series') this.series, this.breakdowns});
+  factory _BusinessOverviewDataDM.fromJson(Map<String, dynamic> json) => _$BusinessOverviewDataDMFromJson(json);
 
   @override
   final KpisDM? kpis;
@@ -706,8 +673,7 @@ class _BusinessOverviewDataDM implements BusinessOverviewDataDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$BusinessOverviewDataDMCopyWith<_BusinessOverviewDataDM> get copyWith =>
-      __$BusinessOverviewDataDMCopyWithImpl<_BusinessOverviewDataDM>(
-          this, _$identity);
+      __$BusinessOverviewDataDMCopyWithImpl<_BusinessOverviewDataDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -724,14 +690,12 @@ class _BusinessOverviewDataDM implements BusinessOverviewDataDM {
             (identical(other.kpis, kpis) || other.kpis == kpis) &&
             (identical(other.funnel, funnel) || other.funnel == funnel) &&
             (identical(other.series, series) || other.series == series) &&
-            (identical(other.breakdowns, breakdowns) ||
-                other.breakdowns == breakdowns));
+            (identical(other.breakdowns, breakdowns) || other.breakdowns == breakdowns));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, kpis, funnel, series, breakdowns);
+  int get hashCode => Object.hash(runtimeType, kpis, funnel, series, breakdowns);
 
   @override
   String toString() {
@@ -740,18 +704,13 @@ class _BusinessOverviewDataDM implements BusinessOverviewDataDM {
 }
 
 /// @nodoc
-abstract mixin class _$BusinessOverviewDataDMCopyWith<$Res>
-    implements $BusinessOverviewDataDMCopyWith<$Res> {
-  factory _$BusinessOverviewDataDMCopyWith(_BusinessOverviewDataDM value,
-          $Res Function(_BusinessOverviewDataDM) _then) =
+abstract mixin class _$BusinessOverviewDataDMCopyWith<$Res> implements $BusinessOverviewDataDMCopyWith<$Res> {
+  factory _$BusinessOverviewDataDMCopyWith(
+          _BusinessOverviewDataDM value, $Res Function(_BusinessOverviewDataDM) _then) =
       __$BusinessOverviewDataDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {KpisDM? kpis,
-      FunnelDM? funnel,
-      @JsonKey(name: 'series') DailySeriesDM? series,
-      BreakdownsDM? breakdowns});
+  $Res call({KpisDM? kpis, FunnelDM? funnel, @JsonKey(name: 'series') DailySeriesDM? series, BreakdownsDM? breakdowns});
 
   @override
   $KpisDMCopyWith<$Res>? get kpis;
@@ -764,8 +723,7 @@ abstract mixin class _$BusinessOverviewDataDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$BusinessOverviewDataDMCopyWithImpl<$Res>
-    implements _$BusinessOverviewDataDMCopyWith<$Res> {
+class __$BusinessOverviewDataDMCopyWithImpl<$Res> implements _$BusinessOverviewDataDMCopyWith<$Res> {
   __$BusinessOverviewDataDMCopyWithImpl(this._self, this._then);
 
   final _BusinessOverviewDataDM _self;
@@ -879,8 +837,7 @@ mixin _$KpisDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $KpisDMCopyWith<KpisDM> get copyWith =>
-      _$KpisDMCopyWithImpl<KpisDM>(this as KpisDM, _$identity);
+  $KpisDMCopyWith<KpisDM> get copyWith => _$KpisDMCopyWithImpl<KpisDM>(this as KpisDM, _$identity);
 
   /// Serializes this KpisDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -890,33 +847,21 @@ mixin _$KpisDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is KpisDM &&
-            (identical(other.reservationsTotal, reservationsTotal) ||
-                other.reservationsTotal == reservationsTotal) &&
+            (identical(other.reservationsTotal, reservationsTotal) || other.reservationsTotal == reservationsTotal) &&
             (identical(other.reservationSuccessRate, reservationSuccessRate) ||
                 other.reservationSuccessRate == reservationSuccessRate) &&
-            (identical(other.reviewsTotal, reviewsTotal) ||
-                other.reviewsTotal == reviewsTotal) &&
-            (identical(other.reviewsAvgRating, reviewsAvgRating) ||
-                other.reviewsAvgRating == reviewsAvgRating) &&
-            (identical(other.favoritesTotal, favoritesTotal) ||
-                other.favoritesTotal == favoritesTotal) &&
+            (identical(other.reviewsTotal, reviewsTotal) || other.reviewsTotal == reviewsTotal) &&
+            (identical(other.reviewsAvgRating, reviewsAvgRating) || other.reviewsAvgRating == reviewsAvgRating) &&
+            (identical(other.favoritesTotal, favoritesTotal) || other.favoritesTotal == favoritesTotal) &&
             (identical(other.favoritesUniqueUsers, favoritesUniqueUsers) ||
                 other.favoritesUniqueUsers == favoritesUniqueUsers) &&
-            (identical(other.eventsTotal, eventsTotal) ||
-                other.eventsTotal == eventsTotal));
+            (identical(other.eventsTotal, eventsTotal) || other.eventsTotal == eventsTotal));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      reservationsTotal,
-      reservationSuccessRate,
-      reviewsTotal,
-      reviewsAvgRating,
-      favoritesTotal,
-      favoritesUniqueUsers,
-      eventsTotal);
+  int get hashCode => Object.hash(runtimeType, reservationsTotal, reservationSuccessRate, reviewsTotal,
+      reviewsAvgRating, favoritesTotal, favoritesUniqueUsers, eventsTotal);
 
   @override
   String toString() {
@@ -926,8 +871,7 @@ mixin _$KpisDM {
 
 /// @nodoc
 abstract mixin class $KpisDMCopyWith<$Res> {
-  factory $KpisDMCopyWith(KpisDM value, $Res Function(KpisDM) _then) =
-      _$KpisDMCopyWithImpl;
+  factory $KpisDMCopyWith(KpisDM value, $Res Function(KpisDM) _then) = _$KpisDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'reservations_total') int reservationsTotal,
@@ -1087,8 +1031,7 @@ extension KpisDMPatterns on KpisDM {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
             @JsonKey(name: 'reservations_total') int reservationsTotal,
-            @JsonKey(name: 'reservation_success_rate')
-            double reservationSuccessRate,
+            @JsonKey(name: 'reservation_success_rate') double reservationSuccessRate,
             @JsonKey(name: 'reviews_total') int reviewsTotal,
             @JsonKey(name: 'reviews_avg_rating') double reviewsAvgRating,
             @JsonKey(name: 'favorites_total') int favoritesTotal,
@@ -1100,14 +1043,8 @@ extension KpisDMPatterns on KpisDM {
     final _that = this;
     switch (_that) {
       case _KpisDM() when $default != null:
-        return $default(
-            _that.reservationsTotal,
-            _that.reservationSuccessRate,
-            _that.reviewsTotal,
-            _that.reviewsAvgRating,
-            _that.favoritesTotal,
-            _that.favoritesUniqueUsers,
-            _that.eventsTotal);
+        return $default(_that.reservationsTotal, _that.reservationSuccessRate, _that.reviewsTotal,
+            _that.reviewsAvgRating, _that.favoritesTotal, _that.favoritesUniqueUsers, _that.eventsTotal);
       case _:
         return orElse();
     }
@@ -1130,8 +1067,7 @@ extension KpisDMPatterns on KpisDM {
   TResult when<TResult extends Object?>(
     TResult Function(
             @JsonKey(name: 'reservations_total') int reservationsTotal,
-            @JsonKey(name: 'reservation_success_rate')
-            double reservationSuccessRate,
+            @JsonKey(name: 'reservation_success_rate') double reservationSuccessRate,
             @JsonKey(name: 'reviews_total') int reviewsTotal,
             @JsonKey(name: 'reviews_avg_rating') double reviewsAvgRating,
             @JsonKey(name: 'favorites_total') int favoritesTotal,
@@ -1142,14 +1078,8 @@ extension KpisDMPatterns on KpisDM {
     final _that = this;
     switch (_that) {
       case _KpisDM():
-        return $default(
-            _that.reservationsTotal,
-            _that.reservationSuccessRate,
-            _that.reviewsTotal,
-            _that.reviewsAvgRating,
-            _that.favoritesTotal,
-            _that.favoritesUniqueUsers,
-            _that.eventsTotal);
+        return $default(_that.reservationsTotal, _that.reservationSuccessRate, _that.reviewsTotal,
+            _that.reviewsAvgRating, _that.favoritesTotal, _that.favoritesUniqueUsers, _that.eventsTotal);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -1171,8 +1101,7 @@ extension KpisDMPatterns on KpisDM {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
             @JsonKey(name: 'reservations_total') int reservationsTotal,
-            @JsonKey(name: 'reservation_success_rate')
-            double reservationSuccessRate,
+            @JsonKey(name: 'reservation_success_rate') double reservationSuccessRate,
             @JsonKey(name: 'reviews_total') int reviewsTotal,
             @JsonKey(name: 'reviews_avg_rating') double reviewsAvgRating,
             @JsonKey(name: 'favorites_total') int favoritesTotal,
@@ -1183,14 +1112,8 @@ extension KpisDMPatterns on KpisDM {
     final _that = this;
     switch (_that) {
       case _KpisDM() when $default != null:
-        return $default(
-            _that.reservationsTotal,
-            _that.reservationSuccessRate,
-            _that.reviewsTotal,
-            _that.reviewsAvgRating,
-            _that.favoritesTotal,
-            _that.favoritesUniqueUsers,
-            _that.eventsTotal);
+        return $default(_that.reservationsTotal, _that.reservationSuccessRate, _that.reviewsTotal,
+            _that.reviewsAvgRating, _that.favoritesTotal, _that.favoritesUniqueUsers, _that.eventsTotal);
       case _:
         return null;
     }
@@ -1202,8 +1125,7 @@ extension KpisDMPatterns on KpisDM {
 class _KpisDM implements KpisDM {
   const _KpisDM(
       {@JsonKey(name: 'reservations_total') this.reservationsTotal = 0,
-      @JsonKey(name: 'reservation_success_rate')
-      this.reservationSuccessRate = 0.0,
+      @JsonKey(name: 'reservation_success_rate') this.reservationSuccessRate = 0.0,
       @JsonKey(name: 'reviews_total') this.reviewsTotal = 0,
       @JsonKey(name: 'reviews_avg_rating') this.reviewsAvgRating = 0.0,
       @JsonKey(name: 'favorites_total') this.favoritesTotal = 0,
@@ -1238,8 +1160,7 @@ class _KpisDM implements KpisDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$KpisDMCopyWith<_KpisDM> get copyWith =>
-      __$KpisDMCopyWithImpl<_KpisDM>(this, _$identity);
+  _$KpisDMCopyWith<_KpisDM> get copyWith => __$KpisDMCopyWithImpl<_KpisDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1253,33 +1174,21 @@ class _KpisDM implements KpisDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _KpisDM &&
-            (identical(other.reservationsTotal, reservationsTotal) ||
-                other.reservationsTotal == reservationsTotal) &&
+            (identical(other.reservationsTotal, reservationsTotal) || other.reservationsTotal == reservationsTotal) &&
             (identical(other.reservationSuccessRate, reservationSuccessRate) ||
                 other.reservationSuccessRate == reservationSuccessRate) &&
-            (identical(other.reviewsTotal, reviewsTotal) ||
-                other.reviewsTotal == reviewsTotal) &&
-            (identical(other.reviewsAvgRating, reviewsAvgRating) ||
-                other.reviewsAvgRating == reviewsAvgRating) &&
-            (identical(other.favoritesTotal, favoritesTotal) ||
-                other.favoritesTotal == favoritesTotal) &&
+            (identical(other.reviewsTotal, reviewsTotal) || other.reviewsTotal == reviewsTotal) &&
+            (identical(other.reviewsAvgRating, reviewsAvgRating) || other.reviewsAvgRating == reviewsAvgRating) &&
+            (identical(other.favoritesTotal, favoritesTotal) || other.favoritesTotal == favoritesTotal) &&
             (identical(other.favoritesUniqueUsers, favoritesUniqueUsers) ||
                 other.favoritesUniqueUsers == favoritesUniqueUsers) &&
-            (identical(other.eventsTotal, eventsTotal) ||
-                other.eventsTotal == eventsTotal));
+            (identical(other.eventsTotal, eventsTotal) || other.eventsTotal == eventsTotal));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      reservationsTotal,
-      reservationSuccessRate,
-      reviewsTotal,
-      reviewsAvgRating,
-      favoritesTotal,
-      favoritesUniqueUsers,
-      eventsTotal);
+  int get hashCode => Object.hash(runtimeType, reservationsTotal, reservationSuccessRate, reviewsTotal,
+      reviewsAvgRating, favoritesTotal, favoritesUniqueUsers, eventsTotal);
 
   @override
   String toString() {
@@ -1289,8 +1198,7 @@ class _KpisDM implements KpisDM {
 
 /// @nodoc
 abstract mixin class _$KpisDMCopyWith<$Res> implements $KpisDMCopyWith<$Res> {
-  factory _$KpisDMCopyWith(_KpisDM value, $Res Function(_KpisDM) _then) =
-      __$KpisDMCopyWithImpl;
+  factory _$KpisDMCopyWith(_KpisDM value, $Res Function(_KpisDM) _then) = __$KpisDMCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -1366,8 +1274,7 @@ mixin _$FunnelDM {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $FunnelDMCopyWith<FunnelDM> get copyWith =>
-      _$FunnelDMCopyWithImpl<FunnelDM>(this as FunnelDM, _$identity);
+  $FunnelDMCopyWith<FunnelDM> get copyWith => _$FunnelDMCopyWithImpl<FunnelDM>(this as FunnelDM, _$identity);
 
   /// Serializes this FunnelDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1378,14 +1285,12 @@ mixin _$FunnelDM {
         (other.runtimeType == runtimeType &&
             other is FunnelDM &&
             const DeepCollectionEquality().equals(other.steps, steps) &&
-            (identical(other.conversion, conversion) ||
-                other.conversion == conversion));
+            (identical(other.conversion, conversion) || other.conversion == conversion));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(steps), conversion);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(steps), conversion);
 
   @override
   String toString() {
@@ -1395,12 +1300,9 @@ mixin _$FunnelDM {
 
 /// @nodoc
 abstract mixin class $FunnelDMCopyWith<$Res> {
-  factory $FunnelDMCopyWith(FunnelDM value, $Res Function(FunnelDM) _then) =
-      _$FunnelDMCopyWithImpl;
+  factory $FunnelDMCopyWith(FunnelDM value, $Res Function(FunnelDM) _then) = _$FunnelDMCopyWithImpl;
   @useResult
-  $Res call(
-      {@JsonKey(fromJson: parseFunnelSteps) List<FunnelStepDM> steps,
-      FunnelConversionDM? conversion});
+  $Res call({@JsonKey(fromJson: parseFunnelSteps) List<FunnelStepDM> steps, FunnelConversionDM? conversion});
 
   $FunnelConversionDMCopyWith<$Res>? get conversion;
 }
@@ -1540,9 +1442,7 @@ extension FunnelDMPatterns on FunnelDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(fromJson: parseFunnelSteps) List<FunnelStepDM> steps,
-            FunnelConversionDM? conversion)?
+    TResult Function(@JsonKey(fromJson: parseFunnelSteps) List<FunnelStepDM> steps, FunnelConversionDM? conversion)?
         $default, {
     required TResult orElse(),
   }) {
@@ -1570,9 +1470,7 @@ extension FunnelDMPatterns on FunnelDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            @JsonKey(fromJson: parseFunnelSteps) List<FunnelStepDM> steps,
-            FunnelConversionDM? conversion)
+    TResult Function(@JsonKey(fromJson: parseFunnelSteps) List<FunnelStepDM> steps, FunnelConversionDM? conversion)
         $default,
   ) {
     final _that = this;
@@ -1598,9 +1496,7 @@ extension FunnelDMPatterns on FunnelDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            @JsonKey(fromJson: parseFunnelSteps) List<FunnelStepDM> steps,
-            FunnelConversionDM? conversion)?
+    TResult? Function(@JsonKey(fromJson: parseFunnelSteps) List<FunnelStepDM> steps, FunnelConversionDM? conversion)?
         $default,
   ) {
     final _that = this;
@@ -1616,13 +1512,9 @@ extension FunnelDMPatterns on FunnelDM {
 /// @nodoc
 @JsonSerializable()
 class _FunnelDM implements FunnelDM {
-  const _FunnelDM(
-      {@JsonKey(fromJson: parseFunnelSteps)
-      final List<FunnelStepDM> steps = const [],
-      this.conversion})
+  const _FunnelDM({@JsonKey(fromJson: parseFunnelSteps) final List<FunnelStepDM> steps = const [], this.conversion})
       : _steps = steps;
-  factory _FunnelDM.fromJson(Map<String, dynamic> json) =>
-      _$FunnelDMFromJson(json);
+  factory _FunnelDM.fromJson(Map<String, dynamic> json) => _$FunnelDMFromJson(json);
 
   final List<FunnelStepDM> _steps;
   @override
@@ -1641,8 +1533,7 @@ class _FunnelDM implements FunnelDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$FunnelDMCopyWith<_FunnelDM> get copyWith =>
-      __$FunnelDMCopyWithImpl<_FunnelDM>(this, _$identity);
+  _$FunnelDMCopyWith<_FunnelDM> get copyWith => __$FunnelDMCopyWithImpl<_FunnelDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1657,14 +1548,12 @@ class _FunnelDM implements FunnelDM {
         (other.runtimeType == runtimeType &&
             other is _FunnelDM &&
             const DeepCollectionEquality().equals(other._steps, _steps) &&
-            (identical(other.conversion, conversion) ||
-                other.conversion == conversion));
+            (identical(other.conversion, conversion) || other.conversion == conversion));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_steps), conversion);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_steps), conversion);
 
   @override
   String toString() {
@@ -1673,15 +1562,11 @@ class _FunnelDM implements FunnelDM {
 }
 
 /// @nodoc
-abstract mixin class _$FunnelDMCopyWith<$Res>
-    implements $FunnelDMCopyWith<$Res> {
-  factory _$FunnelDMCopyWith(_FunnelDM value, $Res Function(_FunnelDM) _then) =
-      __$FunnelDMCopyWithImpl;
+abstract mixin class _$FunnelDMCopyWith<$Res> implements $FunnelDMCopyWith<$Res> {
+  factory _$FunnelDMCopyWith(_FunnelDM value, $Res Function(_FunnelDM) _then) = __$FunnelDMCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(fromJson: parseFunnelSteps) List<FunnelStepDM> steps,
-      FunnelConversionDM? conversion});
+  $Res call({@JsonKey(fromJson: parseFunnelSteps) List<FunnelStepDM> steps, FunnelConversionDM? conversion});
 
   @override
   $FunnelConversionDMCopyWith<$Res>? get conversion;
@@ -1739,8 +1624,7 @@ mixin _$FunnelStepDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $FunnelStepDMCopyWith<FunnelStepDM> get copyWith =>
-      _$FunnelStepDMCopyWithImpl<FunnelStepDM>(
-          this as FunnelStepDM, _$identity);
+      _$FunnelStepDMCopyWithImpl<FunnelStepDM>(this as FunnelStepDM, _$identity);
 
   /// Serializes this FunnelStepDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -1766,9 +1650,7 @@ mixin _$FunnelStepDM {
 
 /// @nodoc
 abstract mixin class $FunnelStepDMCopyWith<$Res> {
-  factory $FunnelStepDMCopyWith(
-          FunnelStepDM value, $Res Function(FunnelStepDM) _then) =
-      _$FunnelStepDMCopyWithImpl;
+  factory $FunnelStepDMCopyWith(FunnelStepDM value, $Res Function(FunnelStepDM) _then) = _$FunnelStepDMCopyWithImpl;
   @useResult
   $Res call({String label, int value});
 }
@@ -1962,8 +1844,7 @@ extension FunnelStepDMPatterns on FunnelStepDM {
 @JsonSerializable()
 class _FunnelStepDM implements FunnelStepDM {
   const _FunnelStepDM({this.label = '', this.value = 0});
-  factory _FunnelStepDM.fromJson(Map<String, dynamic> json) =>
-      _$FunnelStepDMFromJson(json);
+  factory _FunnelStepDM.fromJson(Map<String, dynamic> json) => _$FunnelStepDMFromJson(json);
 
   @override
   @JsonKey()
@@ -1977,8 +1858,7 @@ class _FunnelStepDM implements FunnelStepDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$FunnelStepDMCopyWith<_FunnelStepDM> get copyWith =>
-      __$FunnelStepDMCopyWithImpl<_FunnelStepDM>(this, _$identity);
+  _$FunnelStepDMCopyWith<_FunnelStepDM> get copyWith => __$FunnelStepDMCopyWithImpl<_FunnelStepDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -2007,19 +1887,15 @@ class _FunnelStepDM implements FunnelStepDM {
 }
 
 /// @nodoc
-abstract mixin class _$FunnelStepDMCopyWith<$Res>
-    implements $FunnelStepDMCopyWith<$Res> {
-  factory _$FunnelStepDMCopyWith(
-          _FunnelStepDM value, $Res Function(_FunnelStepDM) _then) =
-      __$FunnelStepDMCopyWithImpl;
+abstract mixin class _$FunnelStepDMCopyWith<$Res> implements $FunnelStepDMCopyWith<$Res> {
+  factory _$FunnelStepDMCopyWith(_FunnelStepDM value, $Res Function(_FunnelStepDM) _then) = __$FunnelStepDMCopyWithImpl;
   @override
   @useResult
   $Res call({String label, int value});
 }
 
 /// @nodoc
-class __$FunnelStepDMCopyWithImpl<$Res>
-    implements _$FunnelStepDMCopyWith<$Res> {
+class __$FunnelStepDMCopyWithImpl<$Res> implements _$FunnelStepDMCopyWith<$Res> {
   __$FunnelStepDMCopyWithImpl(this._self, this._then);
 
   final _FunnelStepDM _self;
@@ -2060,8 +1936,7 @@ mixin _$FunnelConversionDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $FunnelConversionDMCopyWith<FunnelConversionDM> get copyWith =>
-      _$FunnelConversionDMCopyWithImpl<FunnelConversionDM>(
-          this as FunnelConversionDM, _$identity);
+      _$FunnelConversionDMCopyWithImpl<FunnelConversionDM>(this as FunnelConversionDM, _$identity);
 
   /// Serializes this FunnelConversionDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -2071,8 +1946,7 @@ mixin _$FunnelConversionDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is FunnelConversionDM &&
-            (identical(other.openToCtaRate, openToCtaRate) ||
-                other.openToCtaRate == openToCtaRate) &&
+            (identical(other.openToCtaRate, openToCtaRate) || other.openToCtaRate == openToCtaRate) &&
             (identical(other.openToReservationRate, openToReservationRate) ||
                 other.openToReservationRate == openToReservationRate) &&
             (identical(other.ctaToReservationRate, ctaToReservationRate) ||
@@ -2081,8 +1955,7 @@ mixin _$FunnelConversionDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, openToCtaRate, openToReservationRate, ctaToReservationRate);
+  int get hashCode => Object.hash(runtimeType, openToCtaRate, openToReservationRate, ctaToReservationRate);
 
   @override
   String toString() {
@@ -2092,8 +1965,7 @@ mixin _$FunnelConversionDM {
 
 /// @nodoc
 abstract mixin class $FunnelConversionDMCopyWith<$Res> {
-  factory $FunnelConversionDMCopyWith(
-          FunnelConversionDM value, $Res Function(FunnelConversionDM) _then) =
+  factory $FunnelConversionDMCopyWith(FunnelConversionDM value, $Res Function(FunnelConversionDM) _then) =
       _$FunnelConversionDMCopyWithImpl;
   @useResult
   $Res call(
@@ -2103,8 +1975,7 @@ abstract mixin class $FunnelConversionDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$FunnelConversionDMCopyWithImpl<$Res>
-    implements $FunnelConversionDMCopyWith<$Res> {
+class _$FunnelConversionDMCopyWithImpl<$Res> implements $FunnelConversionDMCopyWith<$Res> {
   _$FunnelConversionDMCopyWithImpl(this._self, this._then);
 
   final FunnelConversionDM _self;
@@ -2231,18 +2102,15 @@ extension FunnelConversionDMPatterns on FunnelConversionDM {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
             @JsonKey(name: 'open_to_cta_rate') double openToCtaRate,
-            @JsonKey(name: 'open_to_reservation_rate')
-            double openToReservationRate,
-            @JsonKey(name: 'cta_to_reservation_rate')
-            double ctaToReservationRate)?
+            @JsonKey(name: 'open_to_reservation_rate') double openToReservationRate,
+            @JsonKey(name: 'cta_to_reservation_rate') double ctaToReservationRate)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _FunnelConversionDM() when $default != null:
-        return $default(_that.openToCtaRate, _that.openToReservationRate,
-            _that.ctaToReservationRate);
+        return $default(_that.openToCtaRate, _that.openToReservationRate, _that.ctaToReservationRate);
       case _:
         return orElse();
     }
@@ -2265,17 +2133,14 @@ extension FunnelConversionDMPatterns on FunnelConversionDM {
   TResult when<TResult extends Object?>(
     TResult Function(
             @JsonKey(name: 'open_to_cta_rate') double openToCtaRate,
-            @JsonKey(name: 'open_to_reservation_rate')
-            double openToReservationRate,
-            @JsonKey(name: 'cta_to_reservation_rate')
-            double ctaToReservationRate)
+            @JsonKey(name: 'open_to_reservation_rate') double openToReservationRate,
+            @JsonKey(name: 'cta_to_reservation_rate') double ctaToReservationRate)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _FunnelConversionDM():
-        return $default(_that.openToCtaRate, _that.openToReservationRate,
-            _that.ctaToReservationRate);
+        return $default(_that.openToCtaRate, _that.openToReservationRate, _that.ctaToReservationRate);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -2297,17 +2162,14 @@ extension FunnelConversionDMPatterns on FunnelConversionDM {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
             @JsonKey(name: 'open_to_cta_rate') double openToCtaRate,
-            @JsonKey(name: 'open_to_reservation_rate')
-            double openToReservationRate,
-            @JsonKey(name: 'cta_to_reservation_rate')
-            double ctaToReservationRate)?
+            @JsonKey(name: 'open_to_reservation_rate') double openToReservationRate,
+            @JsonKey(name: 'cta_to_reservation_rate') double ctaToReservationRate)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _FunnelConversionDM() when $default != null:
-        return $default(_that.openToCtaRate, _that.openToReservationRate,
-            _that.ctaToReservationRate);
+        return $default(_that.openToCtaRate, _that.openToReservationRate, _that.ctaToReservationRate);
       case _:
         return null;
     }
@@ -2319,12 +2181,9 @@ extension FunnelConversionDMPatterns on FunnelConversionDM {
 class _FunnelConversionDM implements FunnelConversionDM {
   const _FunnelConversionDM(
       {@JsonKey(name: 'open_to_cta_rate') this.openToCtaRate = 0.0,
-      @JsonKey(name: 'open_to_reservation_rate')
-      this.openToReservationRate = 0.0,
-      @JsonKey(name: 'cta_to_reservation_rate')
-      this.ctaToReservationRate = 0.0});
-  factory _FunnelConversionDM.fromJson(Map<String, dynamic> json) =>
-      _$FunnelConversionDMFromJson(json);
+      @JsonKey(name: 'open_to_reservation_rate') this.openToReservationRate = 0.0,
+      @JsonKey(name: 'cta_to_reservation_rate') this.ctaToReservationRate = 0.0});
+  factory _FunnelConversionDM.fromJson(Map<String, dynamic> json) => _$FunnelConversionDMFromJson(json);
 
   @override
   @JsonKey(name: 'open_to_cta_rate')
@@ -2356,8 +2215,7 @@ class _FunnelConversionDM implements FunnelConversionDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _FunnelConversionDM &&
-            (identical(other.openToCtaRate, openToCtaRate) ||
-                other.openToCtaRate == openToCtaRate) &&
+            (identical(other.openToCtaRate, openToCtaRate) || other.openToCtaRate == openToCtaRate) &&
             (identical(other.openToReservationRate, openToReservationRate) ||
                 other.openToReservationRate == openToReservationRate) &&
             (identical(other.ctaToReservationRate, ctaToReservationRate) ||
@@ -2366,8 +2224,7 @@ class _FunnelConversionDM implements FunnelConversionDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, openToCtaRate, openToReservationRate, ctaToReservationRate);
+  int get hashCode => Object.hash(runtimeType, openToCtaRate, openToReservationRate, ctaToReservationRate);
 
   @override
   String toString() {
@@ -2376,10 +2233,8 @@ class _FunnelConversionDM implements FunnelConversionDM {
 }
 
 /// @nodoc
-abstract mixin class _$FunnelConversionDMCopyWith<$Res>
-    implements $FunnelConversionDMCopyWith<$Res> {
-  factory _$FunnelConversionDMCopyWith(
-          _FunnelConversionDM value, $Res Function(_FunnelConversionDM) _then) =
+abstract mixin class _$FunnelConversionDMCopyWith<$Res> implements $FunnelConversionDMCopyWith<$Res> {
+  factory _$FunnelConversionDMCopyWith(_FunnelConversionDM value, $Res Function(_FunnelConversionDM) _then) =
       __$FunnelConversionDMCopyWithImpl;
   @override
   @useResult
@@ -2390,8 +2245,7 @@ abstract mixin class _$FunnelConversionDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$FunnelConversionDMCopyWithImpl<$Res>
-    implements _$FunnelConversionDMCopyWith<$Res> {
+class __$FunnelConversionDMCopyWithImpl<$Res> implements _$FunnelConversionDMCopyWith<$Res> {
   __$FunnelConversionDMCopyWithImpl(this._self, this._then);
 
   final _FunnelConversionDM _self;
@@ -2439,8 +2293,7 @@ mixin _$DailySeriesDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $DailySeriesDMCopyWith<DailySeriesDM> get copyWith =>
-      _$DailySeriesDMCopyWithImpl<DailySeriesDM>(
-          this as DailySeriesDM, _$identity);
+      _$DailySeriesDMCopyWithImpl<DailySeriesDM>(this as DailySeriesDM, _$identity);
 
   /// Serializes this DailySeriesDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -2450,14 +2303,10 @@ mixin _$DailySeriesDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is DailySeriesDM &&
-            const DeepCollectionEquality()
-                .equals(other.reservationsDaily, reservationsDaily) &&
-            const DeepCollectionEquality()
-                .equals(other.reviewsDaily, reviewsDaily) &&
-            const DeepCollectionEquality()
-                .equals(other.favoritesDaily, favoritesDaily) &&
-            const DeepCollectionEquality()
-                .equals(other.eventsDaily, eventsDaily));
+            const DeepCollectionEquality().equals(other.reservationsDaily, reservationsDaily) &&
+            const DeepCollectionEquality().equals(other.reviewsDaily, reviewsDaily) &&
+            const DeepCollectionEquality().equals(other.favoritesDaily, favoritesDaily) &&
+            const DeepCollectionEquality().equals(other.eventsDaily, eventsDaily));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -2477,21 +2326,17 @@ mixin _$DailySeriesDM {
 
 /// @nodoc
 abstract mixin class $DailySeriesDMCopyWith<$Res> {
-  factory $DailySeriesDMCopyWith(
-          DailySeriesDM value, $Res Function(DailySeriesDM) _then) =
-      _$DailySeriesDMCopyWithImpl;
+  factory $DailySeriesDMCopyWith(DailySeriesDM value, $Res Function(DailySeriesDM) _then) = _$DailySeriesDMCopyWithImpl;
   @useResult
   $Res call(
-      {@JsonKey(name: 'reservations_daily')
-      List<DailyPointDM> reservationsDaily,
+      {@JsonKey(name: 'reservations_daily') List<DailyPointDM> reservationsDaily,
       @JsonKey(name: 'reviews_daily') List<DailyPointDM> reviewsDaily,
       @JsonKey(name: 'favorites_daily') List<DailyPointDM> favoritesDaily,
       @JsonKey(name: 'events_daily') List<DailyPointDM> eventsDaily});
 }
 
 /// @nodoc
-class _$DailySeriesDMCopyWithImpl<$Res>
-    implements $DailySeriesDMCopyWith<$Res> {
+class _$DailySeriesDMCopyWithImpl<$Res> implements $DailySeriesDMCopyWith<$Res> {
   _$DailySeriesDMCopyWithImpl(this._self, this._then);
 
   final DailySeriesDM _self;
@@ -2622,8 +2467,7 @@ extension DailySeriesDMPatterns on DailySeriesDM {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
-            @JsonKey(name: 'reservations_daily')
-            List<DailyPointDM> reservationsDaily,
+            @JsonKey(name: 'reservations_daily') List<DailyPointDM> reservationsDaily,
             @JsonKey(name: 'reviews_daily') List<DailyPointDM> reviewsDaily,
             @JsonKey(name: 'favorites_daily') List<DailyPointDM> favoritesDaily,
             @JsonKey(name: 'events_daily') List<DailyPointDM> eventsDaily)?
@@ -2633,8 +2477,7 @@ extension DailySeriesDMPatterns on DailySeriesDM {
     final _that = this;
     switch (_that) {
       case _DailySeriesDM() when $default != null:
-        return $default(_that.reservationsDaily, _that.reviewsDaily,
-            _that.favoritesDaily, _that.eventsDaily);
+        return $default(_that.reservationsDaily, _that.reviewsDaily, _that.favoritesDaily, _that.eventsDaily);
       case _:
         return orElse();
     }
@@ -2656,8 +2499,7 @@ extension DailySeriesDMPatterns on DailySeriesDM {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
-            @JsonKey(name: 'reservations_daily')
-            List<DailyPointDM> reservationsDaily,
+            @JsonKey(name: 'reservations_daily') List<DailyPointDM> reservationsDaily,
             @JsonKey(name: 'reviews_daily') List<DailyPointDM> reviewsDaily,
             @JsonKey(name: 'favorites_daily') List<DailyPointDM> favoritesDaily,
             @JsonKey(name: 'events_daily') List<DailyPointDM> eventsDaily)
@@ -2666,8 +2508,7 @@ extension DailySeriesDMPatterns on DailySeriesDM {
     final _that = this;
     switch (_that) {
       case _DailySeriesDM():
-        return $default(_that.reservationsDaily, _that.reviewsDaily,
-            _that.favoritesDaily, _that.eventsDaily);
+        return $default(_that.reservationsDaily, _that.reviewsDaily, _that.favoritesDaily, _that.eventsDaily);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -2688,8 +2529,7 @@ extension DailySeriesDMPatterns on DailySeriesDM {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
-            @JsonKey(name: 'reservations_daily')
-            List<DailyPointDM> reservationsDaily,
+            @JsonKey(name: 'reservations_daily') List<DailyPointDM> reservationsDaily,
             @JsonKey(name: 'reviews_daily') List<DailyPointDM> reviewsDaily,
             @JsonKey(name: 'favorites_daily') List<DailyPointDM> favoritesDaily,
             @JsonKey(name: 'events_daily') List<DailyPointDM> eventsDaily)?
@@ -2698,8 +2538,7 @@ extension DailySeriesDMPatterns on DailySeriesDM {
     final _that = this;
     switch (_that) {
       case _DailySeriesDM() when $default != null:
-        return $default(_that.reservationsDaily, _that.reviewsDaily,
-            _that.favoritesDaily, _that.eventsDaily);
+        return $default(_that.reservationsDaily, _that.reviewsDaily, _that.favoritesDaily, _that.eventsDaily);
       case _:
         return null;
     }
@@ -2710,27 +2549,21 @@ extension DailySeriesDMPatterns on DailySeriesDM {
 @JsonSerializable()
 class _DailySeriesDM implements DailySeriesDM {
   const _DailySeriesDM(
-      {@JsonKey(name: 'reservations_daily')
-      final List<DailyPointDM> reservationsDaily = const [],
-      @JsonKey(name: 'reviews_daily')
-      final List<DailyPointDM> reviewsDaily = const [],
-      @JsonKey(name: 'favorites_daily')
-      final List<DailyPointDM> favoritesDaily = const [],
-      @JsonKey(name: 'events_daily')
-      final List<DailyPointDM> eventsDaily = const []})
+      {@JsonKey(name: 'reservations_daily') final List<DailyPointDM> reservationsDaily = const [],
+      @JsonKey(name: 'reviews_daily') final List<DailyPointDM> reviewsDaily = const [],
+      @JsonKey(name: 'favorites_daily') final List<DailyPointDM> favoritesDaily = const [],
+      @JsonKey(name: 'events_daily') final List<DailyPointDM> eventsDaily = const []})
       : _reservationsDaily = reservationsDaily,
         _reviewsDaily = reviewsDaily,
         _favoritesDaily = favoritesDaily,
         _eventsDaily = eventsDaily;
-  factory _DailySeriesDM.fromJson(Map<String, dynamic> json) =>
-      _$DailySeriesDMFromJson(json);
+  factory _DailySeriesDM.fromJson(Map<String, dynamic> json) => _$DailySeriesDMFromJson(json);
 
   final List<DailyPointDM> _reservationsDaily;
   @override
   @JsonKey(name: 'reservations_daily')
   List<DailyPointDM> get reservationsDaily {
-    if (_reservationsDaily is EqualUnmodifiableListView)
-      return _reservationsDaily;
+    if (_reservationsDaily is EqualUnmodifiableListView) return _reservationsDaily;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_reservationsDaily);
   }
@@ -2782,14 +2615,10 @@ class _DailySeriesDM implements DailySeriesDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _DailySeriesDM &&
-            const DeepCollectionEquality()
-                .equals(other._reservationsDaily, _reservationsDaily) &&
-            const DeepCollectionEquality()
-                .equals(other._reviewsDaily, _reviewsDaily) &&
-            const DeepCollectionEquality()
-                .equals(other._favoritesDaily, _favoritesDaily) &&
-            const DeepCollectionEquality()
-                .equals(other._eventsDaily, _eventsDaily));
+            const DeepCollectionEquality().equals(other._reservationsDaily, _reservationsDaily) &&
+            const DeepCollectionEquality().equals(other._reviewsDaily, _reviewsDaily) &&
+            const DeepCollectionEquality().equals(other._favoritesDaily, _favoritesDaily) &&
+            const DeepCollectionEquality().equals(other._eventsDaily, _eventsDaily));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -2808,24 +2637,20 @@ class _DailySeriesDM implements DailySeriesDM {
 }
 
 /// @nodoc
-abstract mixin class _$DailySeriesDMCopyWith<$Res>
-    implements $DailySeriesDMCopyWith<$Res> {
-  factory _$DailySeriesDMCopyWith(
-          _DailySeriesDM value, $Res Function(_DailySeriesDM) _then) =
+abstract mixin class _$DailySeriesDMCopyWith<$Res> implements $DailySeriesDMCopyWith<$Res> {
+  factory _$DailySeriesDMCopyWith(_DailySeriesDM value, $Res Function(_DailySeriesDM) _then) =
       __$DailySeriesDMCopyWithImpl;
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'reservations_daily')
-      List<DailyPointDM> reservationsDaily,
+      {@JsonKey(name: 'reservations_daily') List<DailyPointDM> reservationsDaily,
       @JsonKey(name: 'reviews_daily') List<DailyPointDM> reviewsDaily,
       @JsonKey(name: 'favorites_daily') List<DailyPointDM> favoritesDaily,
       @JsonKey(name: 'events_daily') List<DailyPointDM> eventsDaily});
 }
 
 /// @nodoc
-class __$DailySeriesDMCopyWithImpl<$Res>
-    implements _$DailySeriesDMCopyWith<$Res> {
+class __$DailySeriesDMCopyWithImpl<$Res> implements _$DailySeriesDMCopyWith<$Res> {
   __$DailySeriesDMCopyWithImpl(this._self, this._then);
 
   final _DailySeriesDM _self;
@@ -2872,8 +2697,7 @@ mixin _$DailyPointDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $DailyPointDMCopyWith<DailyPointDM> get copyWith =>
-      _$DailyPointDMCopyWithImpl<DailyPointDM>(
-          this as DailyPointDM, _$identity);
+      _$DailyPointDMCopyWithImpl<DailyPointDM>(this as DailyPointDM, _$identity);
 
   /// Serializes this DailyPointDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -2899,9 +2723,7 @@ mixin _$DailyPointDM {
 
 /// @nodoc
 abstract mixin class $DailyPointDMCopyWith<$Res> {
-  factory $DailyPointDMCopyWith(
-          DailyPointDM value, $Res Function(DailyPointDM) _then) =
-      _$DailyPointDMCopyWithImpl;
+  factory $DailyPointDMCopyWith(DailyPointDM value, $Res Function(DailyPointDM) _then) = _$DailyPointDMCopyWithImpl;
   @useResult
   $Res call({String date, int value});
 }
@@ -3095,8 +2917,7 @@ extension DailyPointDMPatterns on DailyPointDM {
 @JsonSerializable()
 class _DailyPointDM implements DailyPointDM {
   const _DailyPointDM({this.date = '', this.value = 0});
-  factory _DailyPointDM.fromJson(Map<String, dynamic> json) =>
-      _$DailyPointDMFromJson(json);
+  factory _DailyPointDM.fromJson(Map<String, dynamic> json) => _$DailyPointDMFromJson(json);
 
   @override
   @JsonKey()
@@ -3110,8 +2931,7 @@ class _DailyPointDM implements DailyPointDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$DailyPointDMCopyWith<_DailyPointDM> get copyWith =>
-      __$DailyPointDMCopyWithImpl<_DailyPointDM>(this, _$identity);
+  _$DailyPointDMCopyWith<_DailyPointDM> get copyWith => __$DailyPointDMCopyWithImpl<_DailyPointDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -3140,19 +2960,15 @@ class _DailyPointDM implements DailyPointDM {
 }
 
 /// @nodoc
-abstract mixin class _$DailyPointDMCopyWith<$Res>
-    implements $DailyPointDMCopyWith<$Res> {
-  factory _$DailyPointDMCopyWith(
-          _DailyPointDM value, $Res Function(_DailyPointDM) _then) =
-      __$DailyPointDMCopyWithImpl;
+abstract mixin class _$DailyPointDMCopyWith<$Res> implements $DailyPointDMCopyWith<$Res> {
+  factory _$DailyPointDMCopyWith(_DailyPointDM value, $Res Function(_DailyPointDM) _then) = __$DailyPointDMCopyWithImpl;
   @override
   @useResult
   $Res call({String date, int value});
 }
 
 /// @nodoc
-class __$DailyPointDMCopyWithImpl<$Res>
-    implements _$DailyPointDMCopyWith<$Res> {
+class __$DailyPointDMCopyWithImpl<$Res> implements _$DailyPointDMCopyWith<$Res> {
   __$DailyPointDMCopyWithImpl(this._self, this._then);
 
   final _DailyPointDM _self;
@@ -3191,8 +3007,7 @@ mixin _$BreakdownsDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $BreakdownsDMCopyWith<BreakdownsDM> get copyWith =>
-      _$BreakdownsDMCopyWithImpl<BreakdownsDM>(
-          this as BreakdownsDM, _$identity);
+      _$BreakdownsDMCopyWithImpl<BreakdownsDM>(this as BreakdownsDM, _$identity);
 
   /// Serializes this BreakdownsDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -3202,17 +3017,13 @@ mixin _$BreakdownsDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is BreakdownsDM &&
-            const DeepCollectionEquality()
-                .equals(other.reservationsByStatus, reservationsByStatus) &&
-            const DeepCollectionEquality()
-                .equals(other.topEventTypes, topEventTypes));
+            const DeepCollectionEquality().equals(other.reservationsByStatus, reservationsByStatus) &&
+            const DeepCollectionEquality().equals(other.topEventTypes, topEventTypes));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(reservationsByStatus),
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(reservationsByStatus),
       const DeepCollectionEquality().hash(topEventTypes));
 
   @override
@@ -3223,16 +3034,12 @@ mixin _$BreakdownsDM {
 
 /// @nodoc
 abstract mixin class $BreakdownsDMCopyWith<$Res> {
-  factory $BreakdownsDMCopyWith(
-          BreakdownsDM value, $Res Function(BreakdownsDM) _then) =
-      _$BreakdownsDMCopyWithImpl;
+  factory $BreakdownsDMCopyWith(BreakdownsDM value, $Res Function(BreakdownsDM) _then) = _$BreakdownsDMCopyWithImpl;
   @useResult
   $Res call(
-      {@JsonKey(
-          name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
+      {@JsonKey(name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
       List<BreakdownItemDM> reservationsByStatus,
-      @JsonKey(name: 'top_event_types', fromJson: parseEventTypes)
-      List<BreakdownItemDM> topEventTypes});
+      @JsonKey(name: 'top_event_types', fromJson: parseEventTypes) List<BreakdownItemDM> topEventTypes});
 }
 
 /// @nodoc
@@ -3357,12 +3164,9 @@ extension BreakdownsDMPatterns on BreakdownsDM {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
-            @JsonKey(
-                name: 'reservations_by_status',
-                fromJson: parseBreakdownMapOrList)
+            @JsonKey(name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
             List<BreakdownItemDM> reservationsByStatus,
-            @JsonKey(name: 'top_event_types', fromJson: parseEventTypes)
-            List<BreakdownItemDM> topEventTypes)?
+            @JsonKey(name: 'top_event_types', fromJson: parseEventTypes) List<BreakdownItemDM> topEventTypes)?
         $default, {
     required TResult orElse(),
   }) {
@@ -3391,12 +3195,9 @@ extension BreakdownsDMPatterns on BreakdownsDM {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
-            @JsonKey(
-                name: 'reservations_by_status',
-                fromJson: parseBreakdownMapOrList)
+            @JsonKey(name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
             List<BreakdownItemDM> reservationsByStatus,
-            @JsonKey(name: 'top_event_types', fromJson: parseEventTypes)
-            List<BreakdownItemDM> topEventTypes)
+            @JsonKey(name: 'top_event_types', fromJson: parseEventTypes) List<BreakdownItemDM> topEventTypes)
         $default,
   ) {
     final _that = this;
@@ -3423,12 +3224,9 @@ extension BreakdownsDMPatterns on BreakdownsDM {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
-            @JsonKey(
-                name: 'reservations_by_status',
-                fromJson: parseBreakdownMapOrList)
+            @JsonKey(name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
             List<BreakdownItemDM> reservationsByStatus,
-            @JsonKey(name: 'top_event_types', fromJson: parseEventTypes)
-            List<BreakdownItemDM> topEventTypes)?
+            @JsonKey(name: 'top_event_types', fromJson: parseEventTypes) List<BreakdownItemDM> topEventTypes)?
         $default,
   ) {
     final _that = this;
@@ -3445,22 +3243,19 @@ extension BreakdownsDMPatterns on BreakdownsDM {
 @JsonSerializable()
 class _BreakdownsDM implements BreakdownsDM {
   const _BreakdownsDM(
-      {@JsonKey(
-          name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
+      {@JsonKey(name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
       final List<BreakdownItemDM> reservationsByStatus = const [],
       @JsonKey(name: 'top_event_types', fromJson: parseEventTypes)
       final List<BreakdownItemDM> topEventTypes = const []})
       : _reservationsByStatus = reservationsByStatus,
         _topEventTypes = topEventTypes;
-  factory _BreakdownsDM.fromJson(Map<String, dynamic> json) =>
-      _$BreakdownsDMFromJson(json);
+  factory _BreakdownsDM.fromJson(Map<String, dynamic> json) => _$BreakdownsDMFromJson(json);
 
   final List<BreakdownItemDM> _reservationsByStatus;
   @override
   @JsonKey(name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
   List<BreakdownItemDM> get reservationsByStatus {
-    if (_reservationsByStatus is EqualUnmodifiableListView)
-      return _reservationsByStatus;
+    if (_reservationsByStatus is EqualUnmodifiableListView) return _reservationsByStatus;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_reservationsByStatus);
   }
@@ -3479,8 +3274,7 @@ class _BreakdownsDM implements BreakdownsDM {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$BreakdownsDMCopyWith<_BreakdownsDM> get copyWith =>
-      __$BreakdownsDMCopyWithImpl<_BreakdownsDM>(this, _$identity);
+  _$BreakdownsDMCopyWith<_BreakdownsDM> get copyWith => __$BreakdownsDMCopyWithImpl<_BreakdownsDM>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -3494,17 +3288,13 @@ class _BreakdownsDM implements BreakdownsDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _BreakdownsDM &&
-            const DeepCollectionEquality()
-                .equals(other._reservationsByStatus, _reservationsByStatus) &&
-            const DeepCollectionEquality()
-                .equals(other._topEventTypes, _topEventTypes));
+            const DeepCollectionEquality().equals(other._reservationsByStatus, _reservationsByStatus) &&
+            const DeepCollectionEquality().equals(other._topEventTypes, _topEventTypes));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_reservationsByStatus),
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_reservationsByStatus),
       const DeepCollectionEquality().hash(_topEventTypes));
 
   @override
@@ -3514,24 +3304,18 @@ class _BreakdownsDM implements BreakdownsDM {
 }
 
 /// @nodoc
-abstract mixin class _$BreakdownsDMCopyWith<$Res>
-    implements $BreakdownsDMCopyWith<$Res> {
-  factory _$BreakdownsDMCopyWith(
-          _BreakdownsDM value, $Res Function(_BreakdownsDM) _then) =
-      __$BreakdownsDMCopyWithImpl;
+abstract mixin class _$BreakdownsDMCopyWith<$Res> implements $BreakdownsDMCopyWith<$Res> {
+  factory _$BreakdownsDMCopyWith(_BreakdownsDM value, $Res Function(_BreakdownsDM) _then) = __$BreakdownsDMCopyWithImpl;
   @override
   @useResult
   $Res call(
-      {@JsonKey(
-          name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
+      {@JsonKey(name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
       List<BreakdownItemDM> reservationsByStatus,
-      @JsonKey(name: 'top_event_types', fromJson: parseEventTypes)
-      List<BreakdownItemDM> topEventTypes});
+      @JsonKey(name: 'top_event_types', fromJson: parseEventTypes) List<BreakdownItemDM> topEventTypes});
 }
 
 /// @nodoc
-class __$BreakdownsDMCopyWithImpl<$Res>
-    implements _$BreakdownsDMCopyWith<$Res> {
+class __$BreakdownsDMCopyWithImpl<$Res> implements _$BreakdownsDMCopyWith<$Res> {
   __$BreakdownsDMCopyWithImpl(this._self, this._then);
 
   final _BreakdownsDM _self;
@@ -3568,8 +3352,7 @@ mixin _$BreakdownItemDM {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $BreakdownItemDMCopyWith<BreakdownItemDM> get copyWith =>
-      _$BreakdownItemDMCopyWithImpl<BreakdownItemDM>(
-          this as BreakdownItemDM, _$identity);
+      _$BreakdownItemDMCopyWithImpl<BreakdownItemDM>(this as BreakdownItemDM, _$identity);
 
   /// Serializes this BreakdownItemDM to a JSON map.
   Map<String, dynamic> toJson();
@@ -3595,16 +3378,14 @@ mixin _$BreakdownItemDM {
 
 /// @nodoc
 abstract mixin class $BreakdownItemDMCopyWith<$Res> {
-  factory $BreakdownItemDMCopyWith(
-          BreakdownItemDM value, $Res Function(BreakdownItemDM) _then) =
+  factory $BreakdownItemDMCopyWith(BreakdownItemDM value, $Res Function(BreakdownItemDM) _then) =
       _$BreakdownItemDMCopyWithImpl;
   @useResult
   $Res call({String label, int value});
 }
 
 /// @nodoc
-class _$BreakdownItemDMCopyWithImpl<$Res>
-    implements $BreakdownItemDMCopyWith<$Res> {
+class _$BreakdownItemDMCopyWithImpl<$Res> implements $BreakdownItemDMCopyWith<$Res> {
   _$BreakdownItemDMCopyWithImpl(this._self, this._then);
 
   final BreakdownItemDM _self;
@@ -3792,8 +3573,7 @@ extension BreakdownItemDMPatterns on BreakdownItemDM {
 @JsonSerializable()
 class _BreakdownItemDM implements BreakdownItemDM {
   const _BreakdownItemDM({this.label = '', this.value = 0});
-  factory _BreakdownItemDM.fromJson(Map<String, dynamic> json) =>
-      _$BreakdownItemDMFromJson(json);
+  factory _BreakdownItemDM.fromJson(Map<String, dynamic> json) => _$BreakdownItemDMFromJson(json);
 
   @override
   @JsonKey()
@@ -3837,10 +3617,8 @@ class _BreakdownItemDM implements BreakdownItemDM {
 }
 
 /// @nodoc
-abstract mixin class _$BreakdownItemDMCopyWith<$Res>
-    implements $BreakdownItemDMCopyWith<$Res> {
-  factory _$BreakdownItemDMCopyWith(
-          _BreakdownItemDM value, $Res Function(_BreakdownItemDM) _then) =
+abstract mixin class _$BreakdownItemDMCopyWith<$Res> implements $BreakdownItemDMCopyWith<$Res> {
+  factory _$BreakdownItemDMCopyWith(_BreakdownItemDM value, $Res Function(_BreakdownItemDM) _then) =
       __$BreakdownItemDMCopyWithImpl;
   @override
   @useResult
@@ -3848,8 +3626,7 @@ abstract mixin class _$BreakdownItemDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$BreakdownItemDMCopyWithImpl<$Res>
-    implements _$BreakdownItemDMCopyWith<$Res> {
+class __$BreakdownItemDMCopyWithImpl<$Res> implements _$BreakdownItemDMCopyWith<$Res> {
   __$BreakdownItemDMCopyWithImpl(this._self, this._then);
 
   final _BreakdownItemDM _self;

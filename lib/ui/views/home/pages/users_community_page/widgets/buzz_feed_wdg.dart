@@ -113,11 +113,13 @@ class _BuzzItemCard extends StatelessWidget {
         'new_review' => S.current.buzzNewReviewSocial(actor, name),
         'new_promotion' => S.current.buzzNewPromotion(name),
         'promotion_update' => S.current.buzzPromotionUpdate(name),
-        'new_favorite_menu_item' when entity != null => S.current.buzzNewFavoriteMenuItemSocialNamed(actor, entity, name),
+        'new_favorite_menu_item' when entity != null =>
+          S.current.buzzNewFavoriteMenuItemSocialNamed(actor, entity, name),
         'new_favorite_menu_item' => S.current.buzzNewFavoriteMenuItemSocial(actor, name),
         'new_favorite_menu' when entity != null => S.current.buzzNewFavoriteMenuSocialNamed(actor, entity, name),
         'new_favorite_menu' => S.current.buzzNewFavoriteMenuSocial(actor, name),
-        'new_favorite_promotion' when entity != null => S.current.buzzNewFavoritePromotionSocialNamed(actor, entity, name),
+        'new_favorite_promotion' when entity != null =>
+          S.current.buzzNewFavoritePromotionSocialNamed(actor, entity, name),
         'new_favorite_promotion' => S.current.buzzNewFavoritePromotionSocial(actor, name),
         _ => S.current.buzzDefaultActivitySocial(actor, name),
       };

@@ -22,18 +22,15 @@ mixin _$InputController {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $InputControllerCopyWith<InputController> get copyWith =>
-      _$InputControllerCopyWithImpl<InputController>(
-          this as InputController, _$identity);
+      _$InputControllerCopyWithImpl<InputController>(this as InputController, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is InputController &&
-            (identical(other.controller, controller) ||
-                other.controller == controller) &&
-            (identical(other.focusNode, focusNode) ||
-                other.focusNode == focusNode));
+            (identical(other.controller, controller) || other.controller == controller) &&
+            (identical(other.focusNode, focusNode) || other.focusNode == focusNode));
   }
 
   @override
@@ -47,16 +44,14 @@ mixin _$InputController {
 
 /// @nodoc
 abstract mixin class $InputControllerCopyWith<$Res> {
-  factory $InputControllerCopyWith(
-          InputController value, $Res Function(InputController) _then) =
+  factory $InputControllerCopyWith(InputController value, $Res Function(InputController) _then) =
       _$InputControllerCopyWithImpl;
   @useResult
   $Res call({TextEditingController? controller, FocusNode? focusNode});
 }
 
 /// @nodoc
-class _$InputControllerCopyWithImpl<$Res>
-    implements $InputControllerCopyWith<$Res> {
+class _$InputControllerCopyWithImpl<$Res> implements $InputControllerCopyWith<$Res> {
   _$InputControllerCopyWithImpl(this._self, this._then);
 
   final InputController _self;
@@ -176,8 +171,7 @@ extension InputControllerPatterns on InputController {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(TextEditingController? controller, FocusNode? focusNode)?
-        $default, {
+    TResult Function(TextEditingController? controller, FocusNode? focusNode)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
@@ -204,8 +198,7 @@ extension InputControllerPatterns on InputController {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(TextEditingController? controller, FocusNode? focusNode)
-        $default,
+    TResult Function(TextEditingController? controller, FocusNode? focusNode) $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -230,8 +223,7 @@ extension InputControllerPatterns on InputController {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(TextEditingController? controller, FocusNode? focusNode)?
-        $default,
+    TResult? Function(TextEditingController? controller, FocusNode? focusNode)? $default,
   ) {
     final _that = this;
     switch (_that) {
@@ -266,10 +258,8 @@ class _InputController extends InputController {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _InputController &&
-            (identical(other.controller, controller) ||
-                other.controller == controller) &&
-            (identical(other.focusNode, focusNode) ||
-                other.focusNode == focusNode));
+            (identical(other.controller, controller) || other.controller == controller) &&
+            (identical(other.focusNode, focusNode) || other.focusNode == focusNode));
   }
 
   @override
@@ -282,10 +272,8 @@ class _InputController extends InputController {
 }
 
 /// @nodoc
-abstract mixin class _$InputControllerCopyWith<$Res>
-    implements $InputControllerCopyWith<$Res> {
-  factory _$InputControllerCopyWith(
-          _InputController value, $Res Function(_InputController) _then) =
+abstract mixin class _$InputControllerCopyWith<$Res> implements $InputControllerCopyWith<$Res> {
+  factory _$InputControllerCopyWith(_InputController value, $Res Function(_InputController) _then) =
       __$InputControllerCopyWithImpl;
   @override
   @useResult
@@ -293,8 +281,7 @@ abstract mixin class _$InputControllerCopyWith<$Res>
 }
 
 /// @nodoc
-class __$InputControllerCopyWithImpl<$Res>
-    implements _$InputControllerCopyWith<$Res> {
+class __$InputControllerCopyWithImpl<$Res> implements _$InputControllerCopyWith<$Res> {
   __$InputControllerCopyWithImpl(this._self, this._then);
 
   final _InputController _self;

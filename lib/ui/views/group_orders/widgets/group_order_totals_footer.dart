@@ -146,9 +146,7 @@ class _GroupOrderTotalsFooterState extends State<GroupOrderTotalsFooter> {
     if (_showSelector) return S.current.groupOrderPayAmount(monto);
     // Ya pagué lo mío y lo único que queda es cubrir al resto.
     if (!_iOwe) return S.current.groupOrderPayAllRemaining(monto);
-    return solo
-        ? S.current.groupOrderPayFullOrder(monto)
-        : S.current.groupOrderPayMyShare(monto);
+    return solo ? S.current.groupOrderPayFullOrder(monto) : S.current.groupOrderPayMyShare(monto);
   }
 
   /// El segundo botón (el método local del comensal) se rige por la MISMA
