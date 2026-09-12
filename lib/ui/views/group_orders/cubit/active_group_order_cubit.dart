@@ -31,11 +31,8 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   RealtimeSubscription? _sub;
   bool _busy = false;
 
-  /// Sube en cada [end]. Un `syncAnyActive` que quedó en vuelo compara contra
-  /// este valor antes de emitir: si la sesión se limpió mientras la respuesta
-  /// viajaba, el resultado ya no corresponde a nadie y se descarta. Sin esto,
-  /// `_validateRestoredSession` podía invalidar la sesión y el sync repoblaba
-  /// el chip igual, resucitando la orden del usuario anterior.
+  /// Sube al lanzar una lectura y al emitir: la respuesta que vuelve con una
+  /// generación vieja llega tarde y se descarta (2026-09-12).
   int _generacion = 0;
 
   ActiveGroupOrderCubit({
@@ -82,6 +79,17 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     }
   }
 
+  /// El embudo de la generación. En `emit` y no en `onChange` porque bloc
+  /// deduplica los estados iguales y entonces `onChange` NO corre — y una
+  /// respuesta idéntica a la que ya hay sigue siendo una foto aplicada. Aquí
+  /// vale porque todo estado de este cubit es una foto o un vaciado; en la
+  /// página no valdría (ver `_applyResponse`).
+  @override
+  void emit(GroupOrderDM? state) {
+    _generacion++;
+    super.emit(state);
+  }
+
   /// ¿Hay una orden activa para este negocio?
   bool isActiveFor(String businessUuid) => state != null && state!.businessUuid == businessUuid;
 
@@ -91,7 +99,9 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   /// servidor tiene una orden activa para este negocio, se adopta.
   Future<void> syncForBusiness(String businessUuid) async {
     if (isActiveFor(businessUuid) || _busy) return;
+    final generacion = ++_generacion;
     final res = await _repo.getMyGroupOrders();
+    if (isClosed || generacion != _generacion) return; // llegó tarde
     res.when(
       success: (r) {
         // F4b: en cuenta abierta la orden CONFIRMADA sigue siendo el carrito
@@ -112,9 +122,9 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   /// sin entregar). No-op si ya hay estado o sin sesión (401 silencioso).
   Future<void> syncAnyActive() async {
     if (state != null || _busy) return;
-    final generacionAlPedir = _generacion;
+    final generacion = ++_generacion;
     final res = await _repo.getMyGroupOrders();
-    if (generacionAlPedir != _generacion) return; // la sesión se limpió mientras viajaba
+    if (isClosed || generacion != _generacion) return; // llegó tarde
     res.when(
       success: (r) {
         final cart = r.groupOrders.where((o) => o.isOpen || o.isPayable).toList();
@@ -298,12 +308,16 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   }
 
   /// Re-lee la orden activa desde el backend (p. ej. al volver del detalle).
-  Future<void> refresh({bool coalesce = false}) async {
+  Future<void> refresh({bool coalesce = false, bool esReintento = false}) async {
     final order = state;
     if (order == null) return;
+    final generacion = ++_generacion;
     final res = await _repo.getGroupOrder(order.uuid, coalesce: coalesce);
+    if (isClosed) return;
     res.when(
-      success: (r) => emit(r.groupOrder),
+      success: (r) {
+        if (generacion == _generacion) emit(r.groupOrder);
+      },
       failure: (e) {
         _logger.e(e);
         // La orden dejó de ser mía. El backend ya avisaba —`destroy` emite
@@ -322,7 +336,21 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
         // vaciarle el carrito a nadie: ahí la orden sigue existiendo y lo
         // correcto es conservarla hasta poder confirmarlo.
         final code = e.statusCode;
-        if (code == 404 || code == 403) end();
+        if (code != 404 && code != 403) return;
+
+        // El carrito ya es OTRA orden: este veredicto no habla de ella.
+        if (state?.uuid != order.uuid) return;
+
+        // Si nadie tocó el carrito mientras esto viajaba, es la última palabra.
+        // Si algo lo tocó, NO se cree a ciegas —pude RE-UNIRME a la misma orden
+        // en esa ventana— pero tampoco se tira: se vuelve a preguntar, una sola
+        // vez. Descartarlo sin más dejaba el chip con una orden borrada, y no
+        // hay segundo evento que lo repare: `deleted` se emite ANTES de borrar.
+        if (generacion == _generacion || esReintento) {
+          end();
+        } else {
+          unawaited(refresh(esReintento: true));
+        }
       },
     );
   }
@@ -377,7 +405,6 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     // realtime, así que un evento de Pusher soltaría un cerrojo que sostiene
     // otra operación en vuelo y dos peticiones saldrían a la vez. Para el
     // caso de cierre de sesión existe `resetForLogout()`.
-    _generacion++;
     emit(null);
   }
 

@@ -2056,6 +2056,8 @@ distintos, y la respuesta del segundo llega antes que la del primero, así que
 la vieja pisa a la nueva—. Eso ya pasaba antes de esta PR y la PR lo estrecha
 (de 2 peticiones en vuelo por evento a 1), pero no lo cierra. Cerrarlo pide una
 guarda de generación: descartar una respuesta más vieja que la última aplicada.
+**Hecho el 2026-09-12**, en «Una respuesta que llegaba tarde dejaba la orden
+rancia», más abajo.
 
 **Trampa al medir esto**: mi primer barrido de mutaciones dio "M3 sobrevive" y
 era mentira del detector, no del test. Con esa mutación un test se queda
@@ -2342,6 +2344,213 @@ volver al `Dio()` sin techo.
 **Lo que NO está medido:** con qué frecuencia se cuelga ese POST en producción.
 El argumento no es que pase mucho, es que cuando pasa no hay nada que lo
 recupere.
+
+## Una respuesta que llegaba tarde dejaba la orden rancia (2026-09-12)
+
+Cola de «Un evento de realtime hacía DOS lecturas idénticas», más arriba. Aquella
+entrada acaba diciendo que quedaba viva la ruta de **respuestas fuera de orden**
+y que cerrarla pedía una guarda de generación. Esto es esa guarda.
+
+**El fallo.** Llegan dos eventos de Pusher en turnos distintos. L1 (del evento
+viejo) y L2 (del nuevo, que trae la mutación) salen las dos — el coalescer no las
+junta, y hace bien: viven en turnos distintos, y colgar la segunda de la primera
+devolvería justo la foto que no contiene la mutación. Si **L2 responde antes que
+L1**, la respuesta de L1 se aplica después y pisa el estado nuevo.
+
+La orden se queda mostrando datos anteriores a la última mutación hasta el
+siguiente evento, un resume o abrir y cerrar la página. **El polling de 10 s no
+rescata nada**: sólo corre con el socket caído (`group_order_realtime_service.dart:237`
+lo apaga al conectar), o sea que justo con el socket sano no hay red debajo.
+
+No es una regresión de la #69: pasaba antes, y aquella PR lo estrecha (de 2
+peticiones en vuelo por evento a 1) sin cerrarlo. Verificado ejecutando los
+cubits reales, no deducido.
+
+**La guarda**: un contador monótono **por cubit**. Sube al lanzar una lectura
+silenciosa y con cada cambio de estado; una respuesta cuya generación ya no es la
+última salió antes de algo que ya se aplicó, así que se descarta.
+
+```dart
+final generacion = ++_generacion;
+final result = await _repo.getGroupOrder(uuid, coalesce: coalesce);
+if (isClosed || generacion != _generacion) return;
+```
+
+**POR QUÉ EL CONTADOR VA POR CUBIT Y NO EN UN PUNTO COMÚN.** Es la decisión de
+diseño de esta PR y el «punto común» —el repo, que es donde ya vive el
+coalescer— parece más limpio y está **mal**. El coalescer hace que los dos
+oyentes del mismo evento compartan UN Future; con un contador único, el
+lanzamiento del segundo cubit invalidaría la lectura del primero **sobre la misma
+petición**, y uno de los dos se quedaría sin aplicar nada. La página y el chip
+son cubits distintos, con estados distintos y lecturas propias (pull-to-refresh
+en una, `syncAnyActive` en el otro): lo que para uno es «viejo» para el otro no
+lo es. Hay un test que lo fija, y la mutación que mueve el contador al repo lo
+pone en rojo.
+
+**El bump NO cuelga de cada mutación**: olvidarlo en un método nuevo no daría
+ningún error —la misma trampa del `coalesce` con default `false` de la entrada
+anterior—, así que va en un embudo. Pero **el embudo no es el mismo en los dos
+cubits, y creer que sí era el fallo de la primera versión**:
+
+- **La página** lo sube en `_applyResponse`, que es por donde pasa toda
+  respuesta con foto del servidor.
+- **El chip** lo sube sobrescribiendo **`emit`**, porque ahí *todo* estado es una
+  foto o un vaciado: su estado ES la orden, no tiene `loading` ni `error`.
+
+**POR QUÉ NO VALE `onChange` EN LA PÁGINA, que es lo que yo había puesto.** Su
+estado tiene emisiones que NO traen foto —`loading`, `error`, el `isPaying` de
+`createPayIntent`— y con el bump ahí **mataban la lectura que traía la verdad**.
+Dos regresiones reales, las dos encontradas por la revisión independiente y
+reproducidas antes de tocar nada:
+
+1. **Una mutación que FALLA tapaba el cierre de la cuenta.** El host cierra; su
+   evento lanza L1. Dentro de esa ventana el comensal toca «compartir» un ítem y
+   el backend responde 409 porque la orden ya está cerrada. Ese `_onError` subía
+   el contador y L1 —la única lectura que traía el cierre— se descartaba. La
+   pantalla se quedaba ABIERTA, con sus botones, y cada toque repetía el 409 sin
+   explicar nada. **Era peor que antes de la PR**: sin guarda, L1 se aplicaba.
+2. **Abrir el pago tapaba el evento en vuelo.** `createPayIntent` emite
+   `isPaying` ANTES de pedir, y su rama de éxito sólo apaga el flag: nunca
+   vuelve a leer. Con el bump en `onChange`, pulsar «Pagar» descartaba la
+   lectura en vuelo, y si el PaymentSheet devuelve `failed` no hay recargue.
+
+La regla que queda, y es la que hay que conservar: **sólo una foto del servidor
+puede invalidar una lectura.** Un error no sabe nada de la orden; un spinner,
+tampoco.
+
+**La asimetría, deliberada: las lecturas COMPROBAN, las mutaciones sólo SUBEN.**
+Un refetch silencioso es mejor-esfuerzo y descartarlo no cuesta nada. Una
+mutación —y `load`— emite `loading` antes y el comensal espera esa respuesta
+concreta: descartarla colgaría el spinner o se tragaría el error.
+
+**Y hacen falta LAS DOS mitades: el bump al lanzar y el de al aplicar.** Sin el
+de lanzar, con dos lecturas en vuelo gana **la primera en volver** en vez de la
+última lanzada, que es justo lo contrario de lo que se busca. No estaba medido
+—lo señaló la revisión— y ahora hay un test con las respuestas EN ORDEN.
+
+**Y el embudo del chip es `emit`, NO `onChange`, por la deduplicación de bloc.**
+Ésta me costó dos correcciones seguidas y la lección es la misma las dos veces.
+
+Bloc no propaga un `emit` igual al estado actual: la condición es
+`state == _state && _emitted` (`bloc-9.2.0/lib/src/bloc_base.dart:102`). Con el
+contador colgado de `onChange`, **una mutación cuya respuesta es idéntica a lo
+que ya hay no subía nada**, y una lectura más vieja en vuelo la pisaba. Es el
+caso corriente de un refetch coalescido sin cambios. `emit` sí corre siempre, y
+una respuesta idéntica **sigue siendo una foto aplicada**.
+
+De paso desapareció el `_generacion++` explícito que `end()` llevaba desde
+antes: existía justamente porque `emit(null)` sobre un estado ya null no
+dispara `onChange`, y con el embudo en `emit` pasó a ser redundante de verdad.
+**Antes no lo era, y este fichero llegó a afirmar lo contrario dos veces**: en
+un cubit recién nacido `_emitted` es false y `emit(null)` sí propaga, así que un
+test que monte la carrera sobre un cubit sin estrenar pasa con la mutación
+puesta. Si vuelves a tocar esto: estrena el cubit antes de medir.
+
+**El 404 y el 403 NO se juzgan por generación, y tampoco basta el uuid.** Ésta
+fue la parte que costó tres intentos, así que la regla entera:
+
+`refresh()` trata el 404/403 como «esta orden dejó de ser mía» y llama a
+`end()`, que vacía el carrito. Pasarlos por la guarda de generación los perdía:
+el backend emite `deleted` **antes** de borrar, justo para que refetcheemos, así
+que **no viene un segundo evento** y el chip se quedaba con una orden borrada
+—monto, notificación ongoing, y al tocarlo una pantalla de error—. «El sistema
+se cura solo» no aplica ahí.
+
+El segundo intento fue juzgarlo por uuid, y la revisión **predijo el agujero
+antes de que el código existiera**: el uuid no distingue épocas de pertenencia.
+El host me saca de la mesa (su evento lanza R1, que dará 403) y dentro de esa
+ventana me vuelvo a unir con el código: **mismo uuid**, así que el 403 tardío me
+vaciaba el carrito al que acababa de volver. Verificado con una sonda antes de
+tocar nada. Por ese eje la regla de uuid es **más débil** que la de generación.
+
+Lo que hay ahora no elige entre las dos: **una respuesta que llegó tarde no se
+cree a ciegas, se vuelve a preguntar.**
+
+```
+el carrito ya es OTRA orden          -> este veredicto no habla de ella: nada
+nadie tocó el carrito mientras viajaba -> es la última palabra: end()
+algo lo tocó                          -> re-preguntar, UNA vez; su respuesta manda
+```
+
+El caso corriente —un 404 sin nada concurrente— no cuesta ninguna petición
+extra. Y el **tope** no es decorativo: sin él, el reintento vuelve a llegar
+«tarde» si algo emite mientras viaja, y pide otro, y otro, mientras siga habiendo
+actividad. Hay test, y sólo se distingue metiendo una emisión DURANTE el
+reintento — sin eso la mutación sobrevive.
+
+**`syncForBusiness` tenía la misma carrera y se quedó fuera de la primera
+versión.** Lo encontró la segunda revisión escribiendo el test gemelo del de
+`syncAnyActive`. Se llama al abrir el menú de un negocio, así que basta con
+cerrar sesión antes de que vuelva `/mine` para que el chip se repueble con la
+orden del usuario anterior.
+
+**Y la re-lectura tras el pago iba por `load()`, que no está guardado.**
+`group_order_page.dart` la llamaba al volver del Checkout y al completarse el
+pago. `load()` aplica sin comprobar nada, así que una respuesta suya llegando
+tarde **revertía «pagada» a «procesando»** — el momento más visible de la app.
+Ahora esos dos sitios llaman a `refetch()`, que es el camino guardado; de paso
+deja de meter un spinner sobre una pantalla que ya tiene datos.
+
+**LO QUE ESTO NO CIERRA, y conviene tenerlo dicho.** La guarda ordena por
+**momento de lanzamiento**, y eso no es lo mismo que el momento de la foto que
+devuelve el servidor: una petición lanzada antes puede traer un snapshot más
+nuevo. Lo cierto por construcción es la dirección que importa: L2 se lanza
+**después** del evento, que el backend emite **después** de que la mutación
+cuajara, así que L2 la contiene con seguridad y L1 sólo quizá. Y si L1 llevaba
+otra mutación que L2 no tiene, esa otra emitió su propio evento y llegará su
+lectura. **Pero «se cura solo» sólo vale cuando hay un evento posterior**: los
+tres casos de arriba —el 409, el `isPaying` y el 404— son secuencias donde la
+lectura que moría era la única portadora, y por eso hubo que tratarlos aparte.
+Cerrar el hueco del todo pediría una versión o un `updated_at` en la respuesta;
+comprobado que hoy no existe ninguno en `GroupOrderDM` (hay `confirmedAt`,
+`closedAt`, `billRequestedAt`, pero no un orden global).
+
+**Fijado en** `test/group_orders/respuestas_fuera_de_orden_test.dart` (24 casos).
+Varios son CONTROLES y están a propósito, porque una guarda que descarte SIEMPRE
+también pondría verde al resto: en orden normal la última respuesta se aplica; el
+pull-to-refresh sigue aplicando la suya; un 404 de la orden actual sigue vaciando
+el carrito; una mutación con ÉXITO sigue invalidando lo anterior; y `/mine`, sin
+nada que la invalide, SÍ adopta la orden. **Ese último faltaba** y sin él se
+podía apagar entera la recuperación en frío del carrito (F4a) sin que nada se
+pusiera rojo.
+
+**Tres residuos que se aceptan a sabiendas**, los tres medidos por la revisión:
+
+- **El relevo sólo funciona si el relevista llega.** La rama de fallo de
+  `createPayIntent` lanza un `_refetchSilently`, y ese lanzamiento sube el
+  contador y mata la lectura del evento en vuelo. Si el refetch interno también
+  falla —red mala, que es justo cuando falla un pay-intent— la pantalla se queda
+  rancia. Mismo patrón que el 404, pero aquí no se trata aparte.
+- **Re-unirse a la misma orden DURANTE el reintento** vuelve a vaciar el
+  carrito: el tope corta antes de mirar la generación. Es el agujero del 403 una
+  ventana más adentro, y pide dos re-uniones en dos RTT consecutivos. **El tope
+  es lo que hace que esto termine**, así que se queda.
+- **404 y luego 500 en el reintento**: el carrito conserva una orden borrada.
+  «Ante la duda no vacío» es defendible, pero conviene saber que aquí tampoco
+  hay segundo evento.
+
+**Sobre el barrido de mutaciones, y es la lección que más vale de esta PR.**
+Ninguna sobrevive, pero eso sólo es verdad **después de tres rondas**. Mi primer
+barrido dio «7 de 7 mueren» y era insuficiente: la revisión encontró **nueve**
+mutaciones más que sobrevivían —el control positivo de `syncAnyActive` (sin él
+se podía apagar entera la recuperación en frío del carrito, F4a, sin que nada se
+pusiera rojo), el bump de lanzamiento en las tres lecturas, el `isClosed` en dos,
+y las tres de la rama del 404—. **Un barrido mide lo que se te ocurre romper**;
+que salga limpio dice bastante menos de lo que parece. Tres avisos para la
+próxima:
+
+- Dos de esas nueve sólo se distinguen **contando peticiones**, no mirando el
+  estado final: el tope del reintento y el «esto no habla de mi orden». Si todas
+  tus aserciones miran el estado, hay una familia entera que no estás midiendo.
+
+
+- **Un fallo de compilación también da exit ≠ 0.** La mutación que mueve el
+  contador al repo hay que verificarla mirando QUÉ falla: compila, deja el resto
+  en verde y tumba exactamente los dos casos del coalescer.
+- El barrido lleva una **mutación de control que debe SOBREVIVIR** (renombrar una
+  local). Si saliera muerta, el harness estaría dando muertes de regalo y ninguna
+  de las demás valdría nada.
+
 
 ## El modo «negocio visitado» (2026-04-12)
 
