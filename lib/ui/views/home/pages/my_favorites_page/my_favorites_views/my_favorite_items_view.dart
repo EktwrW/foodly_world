@@ -176,7 +176,6 @@ class _FavoriteItemsCard extends StatelessWidget {
                   menuCategory: menuCategory,
                   isLastScreenItem: false,
                   currency: currency,
-                  margin: EdgeInsets.zero,
                 ))
             .toList(),
       ),

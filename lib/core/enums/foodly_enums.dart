@@ -35,14 +35,11 @@ enum DeviceSize {
   /// Galaxy S24 Ultra (480), foldables folded, etc.
   mobile(start: 0, end: 599, name: MOBILE),
 
-  /// Small tablets & foldables unfolded: iPad Mini (744), Galaxy Z Fold open (674).
-  smallTablet(start: 600, end: 767, name: 'SMALL_TABLET'),
-
   /// Full-size tablets: iPad Air/10th (820), iPad Pro 11" (834).
-  tablet(start: 768, end: 1023, name: TABLET),
+  tablet(start: 600, end: 1200, name: TABLET),
 
   /// iPad Pro 12.9" landscape, laptops, desktops, monitors.
-  desktop(start: 1024, end: double.infinity, name: DESKTOP);
+  desktop(start: 1201, end: double.infinity, name: DESKTOP);
 
   final double start;
   final double end;
@@ -53,7 +50,6 @@ enum DeviceSize {
   static double get maxWidth => 1440;
   static List<Breakpoint> get breakpoints => [
         Breakpoint(start: mobile.start, end: mobile.end, name: mobile.name),
-        Breakpoint(start: smallTablet.start, end: smallTablet.end, name: smallTablet.name),
         Breakpoint(start: tablet.start, end: tablet.end, name: tablet.name),
         Breakpoint(start: desktop.start, end: desktop.end, name: desktop.name),
       ];

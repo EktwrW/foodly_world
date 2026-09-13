@@ -14,6 +14,10 @@ class _ManagePromotionsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Mismo techo que la lista de abajo, o las pestañas quedan mas anchas
+    // que las tarjetas que filtran. El degradado del Stack sigue a sangre.
+    final ancho = context.screenWidth;
+    final anchoDelCromo = ancho > UIDimens.LIST_MAX_WIDTH ? UIDimens.LIST_MAX_WIDTH : ancho;
     final cubit = context.read<ManagePromotionsCubit>();
 
     return Stack(
@@ -71,7 +75,7 @@ class _ManagePromotionsHeader extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                width: context.screenWidth,
+                width: anchoDelCromo,
                 child: Center(
                   child: AbsorbPointer(
                     absorbing: vm.isEditing,
@@ -88,8 +92,9 @@ class _ManagePromotionsHeader extends StatelessWidget {
                       animationDuration: 500,
                       minHeight: 32,
                       labels: PromotionStatus.values.map((c) => c.text).toList(),
-                      minWidth: context.screenWidth,
-                      cornerRadius: 6.0,
+                      minWidth: anchoDelCromo,
+                      cornerRadius: 16.0,
+                      radiusStyle: true,
                       activeFgColor: Colors.white,
                       inactiveBgColor: Colors.white,
                       totalSwitches: PromotionStatus.values.length,

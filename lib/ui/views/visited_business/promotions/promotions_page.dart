@@ -2,9 +2,11 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart' hide PromotionStatus;
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
+import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/cards/promotion_card_view.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/layout/lista_adaptativa.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/no_items_view_wdg.dart';
@@ -72,7 +74,8 @@ class PromotionsPage extends StatelessWidget {
                             // Tarjetas de promocion: en tableta se reparten
                             // en columnas manteniendo su tamaño de telefono
                             // (2026-09-12). Ver [ListaAdaptativa].
-                            child: ListaAdaptativa(
+                            child: ContentColumn.list(
+                              child: ListaAdaptativa(
                               claveDeLista: ValueKey(status),
                               controller: scrollController,
                               padding: const EdgeInsets.only(top: 180),
@@ -80,6 +83,7 @@ class PromotionsPage extends StatelessWidget {
                               constructor: (_, i) => PromotionCard(
                                 key: ValueKey('promo-${promos[i].uuid}'),
                                 promo: promos[i],
+                              ),
                               ),
                             ),
                           );

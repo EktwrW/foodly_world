@@ -27,12 +27,12 @@ class SearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      spacing: 8,
+    return Row(
+      spacing: context.isTablet ? 16 : 8,
       children: [
-        Expanded(child: CurrentLocationButton(style: CurrentLocationStyle.homeAppBar)),
-        TextSmartSearchButton(),
-        VoiceSearchButton(),
+        const Expanded(child: CurrentLocationButton(style: CurrentLocationStyle.homeAppBar)),
+        const TextSmartSearchButton(),
+        const VoiceSearchButton(),
       ],
     ).paddingSymmetric(horizontal: 12, vertical: 6);
   }

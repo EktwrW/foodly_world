@@ -7,11 +7,11 @@ import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 /// responsive dimensions.
 ///
 /// Mirrors the `DeviceSize` breakpoints wired into `responsive_framework`
-/// (see `screen_size_extension.dart`): mobile ≤599, smallTablet 600–767,
-/// tablet 768–1023, desktop ≥1024. Kept as a tiny standalone enum so the
+/// (see `screen_size_extension.dart`): mobile ≤599, tablet 600–1200,
+/// desktop ≥1201. Kept as a tiny standalone enum so the
 /// resolution math below can be unit-tested as pure functions, without a
 /// `BuildContext` or the Flutter test harness.
-enum FoodlyCarouselBreakpoint { mobile, smallTablet, tablet, desktop }
+enum FoodlyCarouselBreakpoint { mobile, tablet, desktop }
 
 /// El breakpoint de carrusel que corresponde a este contexto.
 ///
@@ -22,7 +22,6 @@ enum FoodlyCarouselBreakpoint { mobile, smallTablet, tablet, desktop }
 FoodlyCarouselBreakpoint foodlyCarouselBreakpointOf(BuildContext context) {
   if (context.isDesktop) return FoodlyCarouselBreakpoint.desktop;
   if (context.isTablet) return FoodlyCarouselBreakpoint.tablet;
-  if (context.isSmallTablet) return FoodlyCarouselBreakpoint.smallTablet;
   return FoodlyCarouselBreakpoint.mobile;
 }
 
@@ -45,7 +44,7 @@ const double kCarouselMinViewportFraction = 0.12;
 /// Resolution order:
 ///   1. An explicit per-breakpoint override, if provided. Missing larger
 ///      breakpoints fall back DOWN to the nearest supplied smaller one
-///      (desktop → tablet → smallTablet) so a single `tablet:` override also
+///      (desktop → tablet) so a single `tablet:` override also
 ///      covers desktop.
 ///   2. On [FoodlyCarouselBreakpoint.mobile] we ALWAYS return [base] untouched
 ///      — phone layouts were tuned by hand and must not shift.
@@ -59,16 +58,14 @@ double resolveCarouselViewportFraction({
   required double base,
   required FoodlyCarouselBreakpoint breakpoint,
   required double screenWidth,
-  double? smallTablet,
   double? tablet,
   double? desktop,
   double referenceWidth = kCarouselAdaptiveReferenceWidth,
   double minFraction = kCarouselMinViewportFraction,
 }) {
   final override = switch (breakpoint) {
-    FoodlyCarouselBreakpoint.desktop => desktop ?? tablet ?? smallTablet,
-    FoodlyCarouselBreakpoint.tablet => tablet ?? smallTablet,
-    FoodlyCarouselBreakpoint.smallTablet => smallTablet,
+    FoodlyCarouselBreakpoint.desktop => desktop ?? tablet,
+    FoodlyCarouselBreakpoint.tablet => tablet,
     FoodlyCarouselBreakpoint.mobile => null,
   };
   if (override != null) return override;
@@ -98,14 +95,12 @@ double resolveCarouselViewportFraction({
 double resolveCarouselHeight({
   required double base,
   required FoodlyCarouselBreakpoint breakpoint,
-  double? smallTablet,
   double? tablet,
   double? desktop,
 }) {
   final override = switch (breakpoint) {
-    FoodlyCarouselBreakpoint.desktop => desktop ?? tablet ?? smallTablet,
-    FoodlyCarouselBreakpoint.tablet => tablet ?? smallTablet,
-    FoodlyCarouselBreakpoint.smallTablet => smallTablet,
+    FoodlyCarouselBreakpoint.desktop => desktop ?? tablet,
+    FoodlyCarouselBreakpoint.tablet => tablet,
     FoodlyCarouselBreakpoint.mobile => null,
   };
   return override ?? base;
@@ -178,7 +173,7 @@ const double kHomePromoCarouselAspectRatio = 16 / 9;
 /// of them. Phones are never affected.
 ///
 /// Any breakpoint can be overridden per call site via
-/// [smallTabletViewportFraction] / [tabletViewportFraction] /
+/// [tabletViewportFraction] /
 /// [desktopViewportFraction] (and the matching `*Height` params) when a screen
 /// wants a specific item count rather than the constant-width default.
 class FoodlyCarousel extends StatefulWidget {
@@ -196,13 +191,11 @@ class FoodlyCarousel extends StatefulWidget {
 
   /// Optional per-breakpoint overrides for [viewportFraction]. When null, the
   /// constant-item-width default kicks in for that breakpoint.
-  final double? smallTabletViewportFraction;
   final double? tabletViewportFraction;
   final double? desktopViewportFraction;
 
   /// Optional per-breakpoint overrides for [height]. When null, [height] is
   /// reused on that breakpoint.
-  final double? smallTabletHeight;
   final double? tabletHeight;
   final double? desktopHeight;
 
@@ -248,10 +241,8 @@ class FoodlyCarousel extends StatefulWidget {
     required this.items,
     required this.height,
     this.viewportFraction = 1.0,
-    this.smallTabletViewportFraction,
     this.tabletViewportFraction,
     this.desktopViewportFraction,
-    this.smallTabletHeight,
     this.tabletHeight,
     this.desktopHeight,
     this.adaptiveReferenceWidth = kCarouselAdaptiveReferenceWidth,
@@ -309,7 +300,6 @@ class _FoodlyCarouselState extends State<FoodlyCarousel> {
       base: widget.viewportFraction,
       breakpoint: _breakpointOf(context),
       screenWidth: context.screenWidth,
-      smallTablet: widget.smallTabletViewportFraction,
       tablet: widget.tabletViewportFraction,
       desktop: widget.desktopViewportFraction,
       referenceWidth: widget.adaptiveReferenceWidth,
@@ -321,7 +311,6 @@ class _FoodlyCarouselState extends State<FoodlyCarousel> {
     return resolveCarouselHeight(
       base: widget.height,
       breakpoint: _breakpointOf(context),
-      smallTablet: widget.smallTabletHeight,
       tablet: widget.tabletHeight,
       desktop: widget.desktopHeight,
     );

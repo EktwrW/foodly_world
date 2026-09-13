@@ -8,7 +8,6 @@ class VisitedMenuItemWdg extends StatefulWidget {
     this.currency,
     required this.item,
     required this.isLastScreenItem,
-    this.margin,
   });
 
   final MenuCategory menuCategory;
@@ -16,7 +15,6 @@ class VisitedMenuItemWdg extends StatefulWidget {
   final String? currency;
   final ItemDM item;
   final bool isLastScreenItem;
-  final EdgeInsetsGeometry? margin;
 
   @override
   State<VisitedMenuItemWdg> createState() => _VisitedMenuItemWdgState();
@@ -71,7 +69,9 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
             elevation: 2,
             color: ui.NeumorphicColors.decorationMaxWhiteColor,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            margin: widget.margin ?? const EdgeInsets.symmetric(horizontal: 4),
+            margin: context.isTablet
+                ? const EdgeInsets.symmetric(horizontal: 16, vertical: 4)
+                : const EdgeInsets.symmetric(horizontal: 4),
             child: AnimatedSize(
               duration: Durations.medium3,
               child: Column(

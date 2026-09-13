@@ -19,6 +19,7 @@ import 'package:foodly_world/ui/shared_widgets/cards/promotion_card_view.dart';
 import 'package:foodly_world/ui/shared_widgets/glass/foodly_glass.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/image_slider_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/layout/lista_adaptativa.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/no_items_view_wdg.dart';
@@ -111,7 +112,8 @@ class ManagePromotionsPage extends StatelessWidget {
                             // Tarjetas de promocion: en tableta se reparten
                             // en columnas manteniendo su tamaño de telefono
                             // (2026-09-12). Ver [ListaAdaptativa].
-                            child: ListaAdaptativa(
+                            child: ContentColumn.list(
+                              child: ListaAdaptativa(
                               claveDeLista: ValueKey(status),
                               controller: scrollController,
                               padding: const EdgeInsets.only(top: 232),
@@ -119,6 +121,7 @@ class ManagePromotionsPage extends StatelessWidget {
                               constructor: (_, i) => PromotionCard(
                                 key: ValueKey('promo-${promos[i].uuid}'),
                                 promo: promos[i],
+                              ),
                               ),
                             ),
                           );

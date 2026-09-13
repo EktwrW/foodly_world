@@ -1,6 +1,7 @@
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/layout/lista_adaptativa.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/state/load_failure_view.dart';
@@ -161,7 +162,10 @@ class ManagerOrdersPage extends StatelessWidget {
             ),
             body: SafeArea(
               top: false,
-              child: Column(
+              // Cromo y contenido al mismo techo: el conmutador de cubos y las
+              // tarjetas de pedido comparten ancho.
+              child: ContentColumn.list(
+                child: Column(
                 children: [
                   // F4a-6: banner de onboarding de pagos (dos estados).
                   const StripeOnboardingBanner().paddingVertical(4),
@@ -173,7 +177,8 @@ class ManagerOrdersPage extends StatelessWidget {
                     animationDuration: 500,
                     minWidth: MediaQuery.sizeOf(context).width,
                     minHeight: 42,
-                    cornerRadius: 6.0,
+                    cornerRadius: 16.0,
+                    radiusStyle: true,
                     inactiveBgColor: Colors.white,
                     borderWidth: 1.5,
                     borderColor: const [
@@ -247,7 +252,8 @@ class ManagerOrdersPage extends StatelessWidget {
                                     ),
                                   ),
                   ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

@@ -20,10 +20,7 @@ extension ScreenSizeExtension on BuildContext {
   /// se encarga.
   double get screenLongestSide => screenWidth > screenHeight ? screenWidth : screenHeight;
   bool get isMobile => ResponsiveBreakpoints.of(this).isMobile;
-  bool get isSmallTablet => !isMobile & isScreenSmallerOrEqualTo(DeviceSize.smallTablet.name);
   bool get isTablet => ResponsiveBreakpoints.of(this).equals(TABLET);
-  @Deprecated('smallDesktop was merged into desktop. Use isDesktop instead.')
-  bool get isSmallDesktop => isDesktop;
   bool get isDesktop => ResponsiveBreakpoints.of(this).isDesktop;
   bool get isSmallerOrEqualsToTablet => isScreenSmallerOrEqualTo(DeviceSize.tablet.name);
   bool isDeviceType(String deviceType) => ResponsiveBreakpoints.of(this).equals(deviceType);

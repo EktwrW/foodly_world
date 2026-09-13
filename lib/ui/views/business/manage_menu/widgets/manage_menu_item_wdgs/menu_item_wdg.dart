@@ -35,7 +35,9 @@ class MenuItemWdg extends StatelessWidget {
             elevation: 2,
             color: ui.NeumorphicColors.decorationMaxWhiteColor,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            margin: const EdgeInsets.symmetric(horizontal: 4),
+            margin: context.isTablet
+                ? const EdgeInsets.symmetric(horizontal: 16, vertical: 4)
+                : const EdgeInsets.symmetric(horizontal: 4),
             child: AnimatedSize(
               duration: Durations.medium3,
               child: Column(

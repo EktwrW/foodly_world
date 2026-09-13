@@ -37,7 +37,7 @@ void main() {
       );
     });
 
-    test('desktop hereda del tablet, y tablet del smallTablet, si faltan', () {
+    test('desktop hereda del tablet si le falta valor propio', () {
       // desktop sin valor propio -> usa tablet
       expect(
         resolveCarouselViewportFraction(
@@ -47,16 +47,6 @@ void main() {
           tablet: 0.62,
         ),
         0.62,
-      );
-      // tablet sin valor propio -> usa smallTablet
-      expect(
-        resolveCarouselViewportFraction(
-          base: 1.0,
-          breakpoint: FoodlyCarouselBreakpoint.tablet,
-          screenWidth: 820,
-          smallTablet: 0.7,
-        ),
-        0.7,
       );
     });
 
@@ -75,7 +65,7 @@ void main() {
     test('el default nunca supera la base (solo achica = muestra más items)', () {
       final f = resolveCarouselViewportFraction(
         base: 0.3,
-        breakpoint: FoodlyCarouselBreakpoint.smallTablet,
+        breakpoint: FoodlyCarouselBreakpoint.tablet,
         screenWidth: 600,
       );
       expect(f, lessThanOrEqualTo(0.3));
@@ -122,7 +112,7 @@ void main() {
 
     double imageHeight(double f, double w) => (f * w - cardMargin) * 9 / 16;
 
-    test('f=0.62 no desborda en 600..1023 (rango smallTablet+tablet)', () {
+    test('f=0.62 no desborda en 600..1023 (rango de tableta)', () {
       for (var w = 600.0; w <= 1023.0; w += 1) {
         expect(
           imageHeight(0.62, w),

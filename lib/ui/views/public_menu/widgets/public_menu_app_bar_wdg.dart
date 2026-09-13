@@ -122,7 +122,8 @@ class _DownloadAppButton extends StatelessWidget {
             value: _AppStore.apple,
             child: Row(
               children: [
-                Brand(Brands.apple_logo, size: 26, colorFilter: const ColorFilter.mode(Colors.black87, BlendMode.srcIn)),
+                Brand(Brands.apple_logo,
+                    size: 26, colorFilter: const ColorFilter.mode(Colors.black87, BlendMode.srcIn)),
                 const SizedBox(width: 12),
                 const Text('App Store', style: FoodlyTextStyles.label),
               ],
@@ -173,7 +174,8 @@ class PublicSecondaryMenuSliverAppBar extends StatelessWidget {
                 minHeight: 32,
                 labels: MenuCategory.values.map((c) => c.textWith(combosLabel: combosLabel)).toList(),
                 minWidth: constraints.maxWidth * 0.3,
-                cornerRadius: 6.0,
+                cornerRadius: 16.0,
+                radiusStyle: true,
                 activeFgColor: Colors.white,
                 inactiveBgColor: Colors.white,
                 totalSwitches: MenuCategory.values.length,

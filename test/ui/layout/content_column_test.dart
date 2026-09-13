@@ -124,11 +124,21 @@ void main() {
     });
   });
 
-  /// El techo es de LECTURA, no de dispositivo: si alguien lo sube al
-  /// `DeviceSize.maxWidth` del build web (1440), deja de morder en cualquier
-  /// iPad y el widget no sirve para nada.
-  test('el techo de lectura está por debajo del iPad más estrecho', () {
-    expect(UIDimens.CONTENT_MAX_WIDTH, lessThan(744));
-    expect(UIDimens.LIST_MAX_WIDTH, lessThan(744));
+  /// Los techos NO muerden en telefono, y eso es lo unico innegociable: el
+  /// telefono esta en produccion. 440 es el mas ancho en vertical.
+  ///
+  /// Antes se exigia ademas que estuvieran por debajo de 744 —el iPad mini en
+  /// vertical— para que mordieran en CUALQUIER iPad. Se levanto a proposito
+  /// (2026-09-13): para como esta concebida la app el mini es un telefono
+  /// grande, y bajar el techo a 744 dejaba al de 13" con demasiado margen
+  /// muerto. Un solo numero no puede servir a los dos.
+  ///
+  /// El tope de arriba sigue existiendo: por encima de 1024 —el iPad Pro en
+  /// vertical— el techo dejaria de morder en el aparato para el que se hizo.
+  test('los techos no muerden en telefono y siguen mordiendo en tableta grande', () {
+    for (final techo in [UIDimens.CONTENT_MAX_WIDTH, UIDimens.LIST_MAX_WIDTH]) {
+      expect(techo, greaterThan(440), reason: 'no puede morder en el telefono mas ancho en vertical');
+      expect(techo, lessThan(1024), reason: 'y tiene que seguir mordiendo en un iPad Pro en vertical');
+    }
   });
 }

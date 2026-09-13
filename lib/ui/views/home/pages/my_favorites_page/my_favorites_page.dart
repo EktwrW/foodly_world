@@ -10,6 +10,7 @@ import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
 import 'package:foodly_world/ui/shared_widgets/cards/business_card.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/layout/lista_adaptativa.dart';
 import 'package:foodly_world/ui/shared_widgets/layout/rejilla_adaptativa.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
@@ -57,10 +58,12 @@ class MyFavoritesPage extends StatelessWidget {
             key: const Key('my-favorites-app-bar'),
             actionText: S.current.myFavorites,
           ),
-          body: NestedScrollView(
-            controller: ScrollController(),
-            headerSliverBuilder: (_, __) => const [_MyFavoritesToggleSwitch(key: Key('my-favorites-toggle-switch'))],
-            body: const _MyFavoritesPageContent(key: Key('my-favorites-content')),
+          body: ContentColumn.list(
+            child: NestedScrollView(
+              controller: ScrollController(),
+              headerSliverBuilder: (_, __) => const [_MyFavoritesToggleSwitch(key: Key('my-favorites-toggle-switch'))],
+              body: const _MyFavoritesPageContent(key: Key('my-favorites-content')),
+            ),
           ),
         ),
       ),

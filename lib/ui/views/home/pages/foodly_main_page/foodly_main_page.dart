@@ -59,7 +59,7 @@ class FoodlyMainPage extends StatelessWidget {
                         ).paddingOnly(top: labelsTopAndBottomPadding.$1, bottom: labelsTopAndBottomPadding.$2),
                         ConstrainedBox(
                             constraints: BoxConstraints.tightFor(
-                              width: context.isTablet ? context.screenWidth * .86 : double.infinity,
+                              width: context.isTablet ? context.screenWidth * .89 : double.infinity,
                             ),
                             child: const NewReleasesCard().paddingSymmetric(horizontal: newReleaseCardHorizPAdding)),
                       ],
