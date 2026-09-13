@@ -57,6 +57,11 @@ class UIDecorations {
     BoxShadow(color: Color(0x573B0A2C), blurRadius: 44, spreadRadius: -18, offset: Offset(0, 22)),
   ];
 
+  static const PROMO_CARD_SHADOW = [
+    BoxShadow(color: Color(0x123B0A2C), blurRadius: 6, offset: Offset(0, 2)),
+    BoxShadow(color: Color(0x573B0A2C), blurRadius: 26, spreadRadius: -10, offset: Offset(0, 12)),
+  ];
+
   /// Fondo del appbar del home (2026-09-05).
   ///
   /// Antes era blanco con `primaryFoodly` al 30% encima, o sea el morado de

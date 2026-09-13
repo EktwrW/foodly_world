@@ -114,14 +114,14 @@ class ManagePromotionsPage extends StatelessWidget {
                             // (2026-09-12). Ver [ListaAdaptativa].
                             child: ContentColumn.list(
                               child: ListaAdaptativa(
-                              claveDeLista: ValueKey(status),
-                              controller: scrollController,
-                              padding: const EdgeInsets.only(top: 232),
-                              elementos: promos.length,
-                              constructor: (_, i) => PromotionCard(
-                                key: ValueKey('promo-${promos[i].uuid}'),
-                                promo: promos[i],
-                              ),
+                                claveDeLista: ValueKey(status),
+                                controller: scrollController,
+                                padding: const EdgeInsets.only(top: 232),
+                                elementos: promos.length,
+                                constructor: (_, i) => PromotionCard(
+                                  key: ValueKey('promo-${promos[i].uuid}'),
+                                  promo: promos[i],
+                                ).paddingHorizontal(12),
                               ),
                             ),
                           );

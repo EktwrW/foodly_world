@@ -10,7 +10,7 @@
         "--dart-define=ENV=dev",
         "--dart-define=DOMAIN=https://api.foodly.solutions",
         "--dart-define=API_VERSION=/api",
-        "--dart-define=LOG_EMAIL=${env:LOG_EMAIL}",
+        "--dart-define=LOG_EMAIL=${input:cuentaDemo}",
         "--dart-define=LOG_PASS=${env:LOG_PASS}",
         "--dart-define=LOGGER_LEVEL=ALL",
         "--dart-define=REG_PREFILL=true",
@@ -31,7 +31,7 @@
         "--dart-define=ENV=dev",
         "--dart-define=DOMAIN=https://api.foodly.solutions",
         "--dart-define=API_VERSION=/api",
-        "--dart-define=LOG_EMAIL=${env:LOG_EMAIL}",
+        "--dart-define=LOG_EMAIL=${input:cuentaDemo}",
         "--dart-define=LOG_PASS=${env:LOG_PASS}",
         "--dart-define=LOGGER_LEVEL=ALL",
         "--dart-define=REG_PREFILL=true",
@@ -53,7 +53,7 @@
         "--dart-define=ENV=dev",
         "--dart-define=DOMAIN=https://api.foodly.solutions",
         "--dart-define=API_VERSION=/api",
-        "--dart-define=LOG_EMAIL=${env:LOG_EMAIL}",
+        "--dart-define=LOG_EMAIL=${input:cuentaDemo}",
         "--dart-define=LOG_PASS=${env:LOG_PASS}",
         "--dart-define=LOGGER_LEVEL=ALL",
         "--dart-define=REG_PREFILL=true",
@@ -74,7 +74,7 @@
         "--dart-define=ENV=dev",
         "--dart-define=DOMAIN=https://api.foodly.solutions",
         "--dart-define=API_VERSION=/api",
-        "--dart-define=LOG_EMAIL=${env:LOG_EMAIL}",
+        "--dart-define=LOG_EMAIL=${input:cuentaDemo}",
         "--dart-define=LOG_PASS=${env:LOG_PASS}",
         "--dart-define=LOGGER_LEVEL=ALL",
         "--dart-define=REG_PREFILL=true",
@@ -134,7 +134,7 @@
         "--dart-define=ENV=prod",
         "--dart-define=DOMAIN=https://api.foodly.solutions",
         "--dart-define=API_VERSION=/api",
-        "--dart-define=LOG_EMAIL=${env:LOG_EMAIL}",
+        "--dart-define=LOG_EMAIL=${input:cuentaDemo}",
         "--dart-define=LOG_PASS=${env:LOG_PASS}",
         "--dart-define=LOGGER_LEVEL=ALL",
         "--dart-define=REG_PREFILL=true",
@@ -155,7 +155,7 @@
         "--dart-define=ENV=dev",
         "--dart-define=DOMAIN=http://localhost:8000",
         "--dart-define=API_VERSION=/api",
-        "--dart-define=LOG_EMAIL=${env:LOG_EMAIL}",
+        "--dart-define=LOG_EMAIL=${input:cuentaDemo}",
         "--dart-define=LOG_PASS=${env:LOG_PASS}",
         "--dart-define=LOGGER_LEVEL=ALL",
         "--dart-define=REG_PREFILL=true",
@@ -176,7 +176,7 @@
         "--dart-define=ENV=dev",
         "--dart-define=DOMAIN=https://api.foodly.solutions",
         "--dart-define=API_VERSION=/api",
-        "--dart-define=LOG_EMAIL=${env:LOG_EMAIL}",
+        "--dart-define=LOG_EMAIL=${input:cuentaDemo}",
         "--dart-define=LOG_PASS=${env:LOG_PASS}",
         "--dart-define=LOGGER_LEVEL=ALL",
         "--dart-define=REG_PREFILL=true",
@@ -186,6 +186,22 @@
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
         "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}",
         "--dart-define=STRIPE_PUBLISHABLE_KEY=${env:STRIPE_PUBLISHABLE_KEY}"
+      ]
+    }
+  ],
+  // Las capturas de tienda van en tres idiomas y cada negocio demo tiene el
+  // menú en uno: el correo se elige al arrancar en vez de vivir en el entorno.
+  // La contraseña sigue en LOG_PASS, que es la misma para los tres.
+  "inputs": [
+    {
+      "id": "cuentaDemo",
+      "type": "pickString",
+      "description": "Con qué cuenta demo arrancar",
+      "default": "userdemo1@mail.com",
+      "options": [
+        { "label": "userdemo1 — The Pizzeria Restaurant (menú en inglés)", "value": "userdemo1@mail.com" },
+        { "label": "userdemo2 — Taberna da Cidade (menú en portugués)", "value": "userdemo2@mail.com" },
+        { "label": "userdemo3 — Mega Pizzas (menú en español)", "value": "userdemo3@mail.com" }
       ]
     }
   ]

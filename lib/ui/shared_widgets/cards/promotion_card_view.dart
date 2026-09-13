@@ -97,7 +97,7 @@ class _PromotionCardViewState extends State<PromotionCardView> with AutomaticKee
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(_cardRadius),
-        boxShadow: UIDecorations.CARD_SHADOW,
+        boxShadow: UIDecorations.PROMO_CARD_SHADOW,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
