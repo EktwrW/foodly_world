@@ -1,7 +1,7 @@
 import 'dart:async';
 
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
@@ -483,6 +483,159 @@ void main() {
     expect(cubit.state.loading, isFalse, reason: 'el aviso quedó tapado por el spinner');
   });
 
+  // ── Lo que encontró la CUARTA revisión ───────────────────────────────
+
+  /// EL RESCATE SE ABANDONABA EN SILENCIO, y desmiente lo que yo había escrito
+  /// —«toda acción acaba teniendo una lectura posterior a su propia mutación»—.
+  ///
+  /// `_applyAction` sube `_ultimaAplicada` al tocar una fila VISIBLE, y esa
+  /// marca descarta la lectura que el rescate tenía en vuelo para OTRA orden.
+  /// La cadena trataba «descartada» como «alguien se ocupa» y terminaba. No se
+  /// ocupa nadie: una acción no lee nada. Y con el socket vivo y el broadcast
+  /// tragado por `::safe`, el polling de 10 s no corre, así que la orden no
+  /// volvía hasta que otra mesa generase un evento.
+  test('una acción sobre otra fila no mata el rescate en vuelo', () async {
+    repo.listaDevuelta = const [_RepoEspia.visible]; // 'b' está, 'a' no
+    await cubit.load();
+
+    // El rescate sale a por 'a' y se queda en vuelo.
+    repo.retenerLasProximas = 1;
+    repo.uuidDeLaMutacion = 'a';
+    await cubit.advanceFulfillment('a', 'ready');
+    final lecturasDelRescate = repo.lecturas;
+
+    // Y mientras, el manager toca 'b', que SÍ está en la lista.
+    repo.uuidDeLaMutacion = 'b';
+    await cubit.advanceFulfillment('b', 'ready');
+
+    // La lectura del rescate vuelve y se descarta por la marca de generación.
+    repo.responderLectura();
+    await Future<void>.delayed(const Duration(milliseconds: 150));
+
+    expect(repo.lecturas, greaterThan(lecturasDelRescate),
+        reason: 'el rescate se rindió al ver su lectura descartada, y nadie trajo la orden');
+  });
+
+  /// Pero un descarte que SÍ significa «hay algo mejor en camino» sigue
+  /// abandonando: cambiar de chip trae su propia lectura.
+  test('un cambio de chip sí cierra el rescate', () async {
+    repo.ordenEnLaLista = false;
+    await cubit.load();
+
+    repo.retenerLasProximas = 1;
+    await cubit.advanceFulfillment('a', 'ready');
+    final trasElRescate = repo.lecturas;
+
+    await cubit.selectBucket('ready'); // su propia lectura
+    repo.responderLectura();
+    await Future<void>.delayed(const Duration(milliseconds: 150));
+
+    expect(repo.lecturas, trasElRescate + 1,
+        reason: 'el rescate siguió insistiendo pese al cambio de chip');
+  });
+
+  /// El aviso final no puede salir con la pantalla ya correcta.
+  test('si la orden acabó llegando, no se avisa de ningún fallo', () async {
+    repo.ordenEnLaLista = false;
+    await cubit.load();
+    repo.fallaLaLectura = true;
+
+    unawaited(cubit.advanceFulfillment('a', 'ready'));
+    await Future<void>.delayed(const Duration(milliseconds: 30));
+
+    // La orden aparece por otra vía mientras el rescate reintenta.
+    repo.fallaLaLectura = false;
+    repo.ordenEnLaLista = true;
+    await cubit.refetchSilently();
+    await Future<void>.delayed(const Duration(milliseconds: 200));
+
+    expect(cubit.state.error, isNull,
+        reason: 'snackbar de fallo con la pantalla correcta');
+  });
+
+  /// Y no pisa un mensaje del backend más informativo que el genérico.
+  test('el aviso no pisa un error mejor', () async {
+    repo.ordenEnLaLista = false;
+    await cubit.load();
+    repo.fallaLaLectura = true;
+
+    // El error tiene que llegar DURANTE el rescate: la propia acción emite
+    // `error: null` al aplicarse, así que ponerlo antes no prueba nada. Me
+    // pasó en el primer intento.
+    unawaited(cubit.advanceFulfillment('a', 'ready'));
+    await Future<void>.delayed(const Duration(milliseconds: 30));
+    cubit.emit(cubit.state.copyWith(error: 'La mesa 4 ya está cerrada'));
+
+    await Future<void>.delayed(const Duration(milliseconds: 250));
+
+    expect(cubit.state.error, 'La mesa 4 ya está cerrada',
+        reason: 'el aviso genérico pisó un mensaje del backend más informativo');
+  });
+
+  /// Si la orden llegó por otra vía, el rescate para. Sin esta salida seguiría
+  /// pidiendo la lista hasta agotar el tope para traer algo que ya está.
+  test('si la orden ya llegó, el rescate deja de insistir', () async {
+    repo.ordenEnLaLista = false;
+    await cubit.load();
+
+    repo.retenerLasProximas = 1;
+    await cubit.advanceFulfillment('a', 'ready'); // el rescate sale y se queda
+    final trasElRescate = repo.lecturas;
+
+    // Llega por otra vía: un evento trae la lista CON la orden.
+    repo.ordenEnLaLista = true;
+    await cubit.refetchSilently();
+
+    // Y ahora vuelve la lectura del rescate, descartada por generación.
+    repo.responderLectura();
+    await Future<void>.delayed(const Duration(milliseconds: 200));
+
+    expect(repo.lecturas, trasElRescate + 1,
+        reason: 'el rescate siguió pidiendo la lista para traer algo que ya estaba');
+  });
+
+  /// El retardo entre intentos tiene que ser CANCELABLE.
+  ///
+  /// Sólo lo caza un `testWidgets`: un `Future.delayed` suelto sobrevive a
+  /// `close()` y el binding falla con «A Timer is still pending», con una
+  /// traza que no señala a nada. En un `test()` normal pasa desapercibido.
+  testWidgets('el retardo del rescate no sobrevive al cierre', (tester) async {
+    final repoLocal = _RepoEspia()..ordenEnLaLista = false;
+    final cubitLocal = ManagerOrdersCubit(
+      businessUuid: 'b1',
+      repo: repoLocal,
+      logger: Logger(level: Level.off),
+      esperaEntreIntentos: const Duration(seconds: 30),
+    );
+
+    await tester.pumpWidget(const SizedBox.shrink());
+
+    await cubitLocal.load();
+    repoLocal.fallaLaLectura = true;
+    await cubitLocal.advanceFulfillment('a', 'ready');
+
+    // Hay que dejar que FALLE el primer intento: es entonces cuando se arma el
+    // retardo. Cerrando antes, la cadena ni llega ahí y el test pasaría sin
+    // probar nada — me pasó en el primer intento.
+    await tester.pump();
+
+    await cubitLocal.close();
+    await tester.pump();
+  });
+
+  /// Salir de la pantalla con una acción en vuelo no puede reventar.
+  /// Preexistente —no lo trajo esta cadena— pero los `onPressed` del detalle
+  /// no esperan el future, así que era un error asíncrono sin dueño.
+  test('cerrar el panel con una acción en vuelo no revienta', () async {
+    await cubit.load();
+    repo.retenerLasProximas = 0;
+
+    final accion = cubit.advanceFulfillment('a', 'ready');
+    await cubit.close();
+
+    await expectLater(accion, completes);
+  });
+
   /// Y el valor de PRODUCCIÓN, que los tests no ven porque inyectan 20 ms.
   test('la espera entre intentos ni martillea ni se duerme', () {
     final porDefecto = ManagerOrdersCubit(
@@ -622,6 +775,8 @@ void main() {
 }
 
 class _RepoEspia implements GroupOrderRepo {
+  static const visible = GroupOrderDM(uuid: 'b', businessUuid: 'b1');
+
   int lecturas = 0;
   ManagerOrderCountsDM? contadores = const ManagerOrderCountsDM();
   ManagerOrderCountsDM? contadoresDeLaLista;
@@ -654,11 +809,20 @@ class _RepoEspia implements GroupOrderRepo {
 
   ApiResult<ManagerOrdersResponseDM> _respuestaDeLista() =>
       ApiResult.success(ManagerOrdersResponseDM(
-        orders: ordenEnLaLista ? const [_orden] : const [],
+        orders: listaDevuelta ?? (ordenEnLaLista ? const [_orden] : const []),
         counts: contadoresDeLaLista ?? contadores ?? const ManagerOrderCountsDM(),
       ));
 
   static const _orden = GroupOrderDM(uuid: 'a', businessUuid: 'b1');
+  static const _otra = GroupOrderDM(uuid: 'b', businessUuid: 'b1');
+
+  /// Qué órdenes devuelve la lista. Hace falta para montar el caso de F1: una
+  /// visible (sobre la que se actúa) y otra ausente (la que persigue el
+  /// rescate).
+  List<GroupOrderDM>? listaDevuelta;
+
+  /// Sobre qué uuid responde la mutación.
+  String uuidDeLaMutacion = 'a';
 
   @override
   Future<ApiResult<ManagerOrdersResponseDM>> managerOrders(
@@ -692,7 +856,7 @@ class _RepoEspia implements GroupOrderRepo {
     required String status,
   }) async =>
       ApiResult.success(GroupOrderResponseDM(
-        groupOrder: _orden.copyWith(
+        groupOrder: (uuidDeLaMutacion == 'b' ? _otra : _orden).copyWith(
           fulfillmentStatus: estadoDevuelto != null
               ? estadoDevuelto!.valor
               : GroupFulfillmentStatus.values.byName(status),

@@ -2081,6 +2081,21 @@ traga los fallos, y el polling de 10 s **sólo corre con el socket caído**.
      que se marca y se encadena una más al terminar — sigue siendo constante,
      seis acciones o sesenta dan lo mismo.
 
+     **Y «descartada» tampoco es «alguien se ocupa».** Ésa fue la suposición
+     que rompía el rescate entero, y la encontró la cuarta revisión: cuando el
+     manager toca una fila VISIBLE, `_applyAction` sube `_ultimaAplicada`, y
+     esa marca descarta la lectura que el rescate tenía en vuelo **para otra
+     orden**. La cadena terminaba dando por hecho que alguien se ocupaba — y no
+     se ocupa nadie, porque una acción no lee nada. Con el socket vivo y el
+     broadcast tragado por `::safe`, el polling de 10 s **no corre**, así que
+     la orden no volvía hasta que otra mesa generase un evento. Desmentía mi
+     propia frase de «toda acción acaba teniendo una lectura posterior a su
+     mutación».
+
+     Por eso el rescate **persigue un uuid concreto** y sólo abandona ante un
+     descarte cuando significa algo de verdad: cambió el cubo —ese cambio trae
+     su propia lectura— o la orden ya está en la lista.
+
      **Y «descartada» no es «fallida».** `_fetch` devuelve tres desenlaces, no
      un booleano: con `false` para las dos, un descarte —hay algo más nuevo en
      marcha— se reintentaba, y tres seguidos acababan emitiendo un error que la
@@ -2088,7 +2103,11 @@ traga los fallos, y el polling de 10 s **sólo corre con el socket caído**.
      bien. El commit anterior afirmaba que el booleano ya lo arreglaba y era
      falso.
 
-  3. **Agotados los intentos, se emite error — con `loading: false`.** Sin
+  3. **Agotados los intentos, se avisa — pero sólo si sigue faltando y sólo si
+     algo falló de verdad, y sin pisar un error mejor.** Avisar
+     incondicionalmente pintaba un snackbar de fallo con la pantalla ya
+     correcta, y machacaba un mensaje del backend («La mesa 4 ya está
+     cerrada») con el genérico. Con `loading: false`: Sin
      apagar el spinner, una cadena que se agota con un cambio de chip en vuelo
      deja la página en la rama `loading && orders.isEmpty` y el aviso no llega
      a pintarse: spinner eterno en vez del botón de reintentar. Si no, el panel dice «No hay
@@ -2121,6 +2140,14 @@ FORMA (que no fueran constantes) pero no el MAPEO: cruzar `preparing` con
 igual con `'preparing' => false`, porque `false` también la saca. Es el mismo
 verde-por-razón-degenerada de siempre. Ahora hay un bucle sobre los cuatro
 pares (chip, estado) en las dos direcciones.
+
+**El retardo entre intentos va en un `Timer` cancelable, no en un
+`Future.delayed` suelto.** El suelto sobrevive a `close()` y revienta cualquier
+`testWidgets` del panel con «A Timer is still pending», con una traza que no
+señala a nada. La red anterior sí lo guardaba en un campo; la recursión se lo
+llevó por delante. **Sólo lo caza un `testWidgets`** — y hay que dejar fallar
+el primer intento antes de cerrar, o la cadena ni llega a armar el retardo y el
+test pasa sin probar nada.
 
 **Trampa del fake**: `null` es un valor VÁLIDO de `fulfillment_status` —es el
 cubo de pendientes— así que `estadoDevuelto ?? loQuePidió` no puede expresar

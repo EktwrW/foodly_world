@@ -191,61 +191,94 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   /// llevé por delante.
   Future<void>? _rescateEnVuelo;
   bool _otroRescatePendiente = false;
+  Timer? _esperaDelRescate;
 
   /// Una cadena a la vez, pero **sin unirse a la que ya está en vuelo**.
   ///
   /// Unirse era un fallo sutil y lo encontró la revisión: la acción B quedaba
   /// satisfecha por una lectura lanzada ANTES de la mutación de B, así que si
   /// esa lectura salía bien la cadena terminaba y B no se releía nunca — sin
-  /// error y sin reintento. Es la misma clase de rancidez que este rescate
-  /// viene a arreglar. La red vieja no lo tenía porque `_armarRed()` cancelaba
-  /// y re-armaba: una petición tardía conseguía siempre una lectura FRESCA.
+  /// error y sin reintento. La red vieja no lo tenía porque `_armarRed()`
+  /// cancelaba y re-armaba: una petición tardía conseguía siempre una lectura
+  /// FRESCA. Así que se marca y se encadena UNA más al terminar.
   ///
-  /// Así que se marca y se encadena UNA más al terminar. Sigue habiendo una
-  /// sola cadena viva —no hay tormenta— y toda acción acaba teniendo una
-  /// lectura posterior a su propia mutación.
-  void _traerLaOrdenQueFalta() {
+  /// El rescate **persigue un uuid concreto**, y eso no es un detalle: sin
+  /// saber a quién busca no puede distinguir un descarte que le afecta de uno
+  /// que no, y se abandonaba en silencio. Ver `_rescatar`.
+  void _traerLaOrdenQueFalta(String uuid) {
     if (_rescateEnVuelo != null) {
       _otroRescatePendiente = true;
       return;
     }
 
-    _rescateEnVuelo = _rescatar().whenComplete(() {
+    _rescateEnVuelo = _rescatar(uuid).whenComplete(() {
       _rescateEnVuelo = null;
       if (_otroRescatePendiente && !isClosed) {
         _otroRescatePendiente = false;
-        _traerLaOrdenQueFalta();
+        _traerLaOrdenQueFalta(uuid);
       }
     });
   }
 
-  Future<void> _rescatar([int intento = 1]) async {
+  Future<void> _rescatar(String uuid, [int intento = 1]) async {
+    final cuboAlSalir = state.bucket;
     final desenlace = await _fetch(silent: true);
 
-    // Aplicada: ya está. Descartada: hay algo más nuevo en marcha y ESO es lo
-    // que manda; ni se reintenta ni se avisa de nada, porque no ha fallado.
-    if (desenlace != _Lectura.fallida) return;
-
     if (isClosed) return;
+
+    // Aplicada: ya está.
+    if (desenlace == _Lectura.aplicada) return;
+
+    // DESCARTADA no es «alguien se ocupa». Ésa fue la suposición que rompía
+    // esto, y la encontró la revisión con una sonda: `_applyAction` sube
+    // `_ultimaAplicada` al tocar una fila VISIBLE de OTRA orden, y esa marca
+    // descarta la lectura que traía la nuestra. La cadena moría y nadie leía
+    // — porque una acción no lee nada. Resultado: la orden no volvía hasta
+    // que otra mesa generase un evento.
+    //
+    // Sólo se abandona cuando el descarte significa de verdad que hay algo
+    // mejor en camino:
+    //
+    //   · cambió el cubo   -> ese cambio trae su propia lectura;
+    //   · ya está la orden -> alguien la trajo, que era todo lo que queríamos.
+    if (desenlace == _Lectura.descartada) {
+      if (cuboAlSalir != state.bucket) return;
+      if (state.orders.any((o) => o.uuid == uuid)) return;
+    }
 
     if (intento >= _maxIntentosDeRescate) {
       // Agotados los intentos, el panel diría «No hay órdenes» con el chip
       // marcando 1. Este fichero ya decidió que «un dato falso es peor que un
-      // error» (ver `manager_orders_page.dart`), así que se emite para que
-      // salga el reintento en vez de una mentira. Es UN error al final de la
-      // cadena, no uno por tick: el bug de los diez snackbars del 2026-08-17
-      // era lo contrario.
+      // error» (ver `manager_orders_page.dart`), así que se avisa para que
+      // salga el reintento en vez de una mentira.
       //
-      // Con `loading: false`: si la cadena se agota con un `selectBucket` en
-      // vuelo, la página se queda en la rama del spinner y el aviso de fallo
-      // no llega a pintarse.
-      emit(state.copyWith(loading: false, error: ''));
+      // Pero sólo si sigue faltando y sólo si de verdad falló algo: avisar
+      // incondicionalmente pintaba un snackbar de fallo con la pantalla ya
+      // correcta, y encima pisaba un mensaje del backend más informativo que
+      // el genérico. Las dos cosas, medidas por la revisión.
+      //
+      // `loading: false` porque si la cadena se agota con un `selectBucket` en
+      // vuelo, la página se queda en la rama del spinner y el aviso no llega
+      // a pintarse.
+      if (desenlace == _Lectura.fallida && !state.orders.any((o) => o.uuid == uuid)) {
+        emit(state.copyWith(loading: false, error: state.error ?? ''));
+      }
 
       return;
     }
 
-    await Future<void>.delayed(_esperaEntreIntentos * intento);
-    if (!isClosed) await _rescatar(intento + 1);
+    // El retardo va en un `Timer` cancelable y no en un `Future.delayed`
+    // suelto: el suelto sobrevive a `close()` y revienta cualquier
+    // `testWidgets` del panel con «A Timer is still pending», con una traza
+    // que no señala a nada. La red anterior sí lo guardaba en un campo.
+    final espera = Completer<void>();
+    _esperaDelRescate?.cancel();
+    _esperaDelRescate = Timer(_esperaEntreIntentos * intento, () {
+      if (!espera.isCompleted) espera.complete();
+    });
+    await espera.future;
+
+    if (!isClosed) await _rescatar(uuid, intento + 1);
   }
 
   /// Espera entre intentos de rescate. Expuesta porque un valor mal puesto se
@@ -349,6 +382,13 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
     Future<ApiResult<GroupOrderResponseDM>> Function() call,
   ) async {
     final res = await call();
+
+    // Salir de la pantalla con una acción en vuelo lanzaba `Bad state: Cannot
+    // emit new states after calling close` — y como los `onPressed` del
+    // detalle no esperan el future, era un error asíncrono sin dueño.
+    // Preexistente, no de esta cadena, pero aquí se cierra.
+    if (isClosed) return false;
+
     return res.when(
       success: (r) {
         final updated = r.groupOrder;
@@ -430,7 +470,7 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
         // que esto importe tiene que fallar ADEMÁS el broadcast (`::safe` se
         // los traga) o estar el socket caído. Es un caso combinado, no el
         // camino normal. Con tope, que es la lección de la PR #87.
-        if (!estaba && visible) _traerLaOrdenQueFalta();
+        if (!estaba && visible) _traerLaOrdenQueFalta(updated.uuid);
 
         return true;
       },
@@ -444,6 +484,9 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
 
   @override
   Future<void> close() async {
+    _esperaDelRescate?.cancel();
+    _esperaDelRescate = null;
+    _otroRescatePendiente = false;
     _suscrito = false;
     GroupOrderRealtimeService.cancelarCuandoExista(_sub);
     _sub = null;
