@@ -191,6 +191,10 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   /// llevé por delante.
   Future<void>? _rescateEnVuelo;
   bool _otroRescatePendiente = false;
+
+  /// A quién busca la cadena encolada. Va aparte de la bandera porque la
+  /// bandera sola tiraba el uuid: ver `_traerLaOrdenQueFalta`.
+  String? _uuidPendiente;
   Timer? _esperaDelRescate;
 
   /// Una cadena a la vez, pero **sin unirse a la que ya está en vuelo**.
@@ -208,6 +212,12 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   void _traerLaOrdenQueFalta(String uuid) {
     if (_rescateEnVuelo != null) {
       _otroRescatePendiente = true;
+      // Y CON SU UUID. La primera versión sólo levantaba la bandera, así que
+      // la cadena encadenada salía a buscar a la orden de la PRIMERA acción:
+      // si ésa ya había llegado, el descarte la daba por satisfecha y la
+      // segunda no volvía nunca. El mismo fallo que esto arregla, una capa
+      // más adentro; lo encontró la revisión.
+      _uuidPendiente = uuid;
       return;
     }
 
@@ -215,7 +225,9 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
       _rescateEnVuelo = null;
       if (_otroRescatePendiente && !isClosed) {
         _otroRescatePendiente = false;
-        _traerLaOrdenQueFalta(uuid);
+        final siguiente = _uuidPendiente ?? uuid;
+        _uuidPendiente = null;
+        _traerLaOrdenQueFalta(siguiente);
       }
     });
   }
@@ -229,37 +241,21 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
     // Aplicada: ya está.
     if (desenlace == _Lectura.aplicada) return;
 
-    // DESCARTADA no es «alguien se ocupa». Ésa fue la suposición que rompía
-    // esto, y la encontró la revisión con una sonda: `_applyAction` sube
-    // `_ultimaAplicada` al tocar una fila VISIBLE de OTRA orden, y esa marca
-    // descarta la lectura que traía la nuestra. La cadena moría y nadie leía
-    // — porque una acción no lee nada. Resultado: la orden no volvía hasta
-    // que otra mesa generase un evento.
-    //
-    // Sólo se abandona cuando el descarte significa de verdad que hay algo
-    // mejor en camino:
-    //
-    //   · cambió el cubo   -> ese cambio trae su propia lectura;
-    //   · ya está la orden -> alguien la trajo, que era todo lo que queríamos.
+    // DESCARTADA no es «alguien se ocupa»: una acción sobre otra fila sube
+    // `_ultimaAplicada` y descarta esta lectura sin leer nada en su lugar.
+    // Sólo se abandona cuando el descarte significa algo de verdad: cambió el
+    // cubo —trae su propia lectura— o la orden ya llegó.
     if (desenlace == _Lectura.descartada) {
       if (cuboAlSalir != state.bucket) return;
       if (state.orders.any((o) => o.uuid == uuid)) return;
     }
 
     if (intento >= _maxIntentosDeRescate) {
-      // Agotados los intentos, el panel diría «No hay órdenes» con el chip
-      // marcando 1. Este fichero ya decidió que «un dato falso es peor que un
-      // error» (ver `manager_orders_page.dart`), así que se avisa para que
-      // salga el reintento en vez de una mentira.
-      //
-      // Pero sólo si sigue faltando y sólo si de verdad falló algo: avisar
-      // incondicionalmente pintaba un snackbar de fallo con la pantalla ya
-      // correcta, y encima pisaba un mensaje del backend más informativo que
-      // el genérico. Las dos cosas, medidas por la revisión.
-      //
-      // `loading: false` porque si la cadena se agota con un `selectBucket` en
-      // vuelo, la página se queda en la rama del spinner y el aviso no llega
-      // a pintarse.
+      // Sin aviso, el panel diría «No hay órdenes» con el chip marcando 1, y
+      // aquí «un dato falso es peor que un error». Pero sólo si sigue faltando
+      // y sólo si falló algo: avisar siempre pintaba un fallo con la pantalla
+      // ya correcta y pisaba un mensaje mejor del backend. `loading: false`
+      // porque con un `selectBucket` en vuelo el aviso queda bajo el spinner.
       if (desenlace == _Lectura.fallida && !state.orders.any((o) => o.uuid == uuid)) {
         emit(state.copyWith(loading: false, error: state.error ?? ''));
       }
@@ -273,6 +269,7 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
     // que no señala a nada. La red anterior sí lo guardaba en un campo.
     final espera = Completer<void>();
     _esperaDelRescate?.cancel();
+    _esperaDelRescateCompleta = espera;
     _esperaDelRescate = Timer(_esperaEntreIntentos * intento, () {
       if (!espera.isCompleted) espera.complete();
     });
@@ -286,6 +283,9 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   /// los tests inyectan uno corto: sin fijarla, cambiarla pasa la suite entera.
   /// Es la lección de la red anterior.
   static const Duration esperaEntreIntentosPorDefecto = Duration(milliseconds: 800);
+
+  /// El `Completer` que espera ese `Timer`, para poder soltarlo en `close()`.
+  Completer<void>? _esperaDelRescateCompleta;
 
   final Duration _esperaEntreIntentos;
 
@@ -486,7 +486,15 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   Future<void> close() async {
     _esperaDelRescate?.cancel();
     _esperaDelRescate = null;
+    // Cancelar el `Timer` deja al `Completer` de `_rescatar` sin completar
+    // nunca, y con él el `whenComplete` de la cadena. No es una fuga real —el
+    // ciclo es autorreferente y lo recoge el GC, y no queda ningún timer
+    // pendiente— pero completarlo hace que `close()` termine de verdad: el
+    // rescate reanuda, ve `isClosed` y sale por su pie.
+    if (_esperaDelRescateCompleta?.isCompleted == false) _esperaDelRescateCompleta!.complete();
+    _esperaDelRescateCompleta = null;
     _otroRescatePendiente = false;
+    _uuidPendiente = null;
     _suscrito = false;
     GroupOrderRealtimeService.cancelarCuandoExista(_sub);
     _sub = null;

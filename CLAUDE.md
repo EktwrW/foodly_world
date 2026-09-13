@@ -2104,17 +2104,47 @@ traga los fallos, y el polling de 10 s **sólo corre con el socket caído**.
      falso.
 
   3. **Agotados los intentos, se avisa — pero sólo si sigue faltando y sólo si
-     algo falló de verdad, y sin pisar un error mejor.** Avisar
-     incondicionalmente pintaba un snackbar de fallo con la pantalla ya
-     correcta, y machacaba un mensaje del backend («La mesa 4 ya está
-     cerrada») con el genérico. Con `loading: false`: Sin
-     apagar el spinner, una cadena que se agota con un cambio de chip en vuelo
-     deja la página en la rama `loading && orders.isEmpty` y el aviso no llega
-     a pintarse: spinner eterno en vez del botón de reintentar. Si no, el panel dice «No hay
-     órdenes» con el chip marcando 1 y sin botón de reintentar. Este feature ya
-     tenía escrito que «un dato falso es peor que un error»
+     algo falló de verdad, y sin pisar un error mejor.** Sin esas condiciones
+     el aviso pintaba un snackbar de fallo con la pantalla ya correcta, y
+     machacaba un mensaje del backend («La mesa 4 ya está cerrada») con el
+     genérico. Y si no se avisa cuando toca, el panel dice «No hay órdenes» con
+     el chip marcando 1 y sin botón de reintentar: este feature ya tenía
+     escrito que «un dato falso es peor que un error»
      (`manager_orders_page.dart`). Es UN error al final de la cadena, no uno
      por tick — el bug de los diez snackbars del 2026-08-17 era lo contrario.
+
+     Va con **`loading: false`**: sin apagar el spinner, una cadena que se
+     agota con un cambio de chip en vuelo deja la página en la rama
+     `loading && orders.isEmpty` y el aviso no llega a pintarse — spinner
+     eterno en vez del botón de reintentar.
+
+     **Trampa al testear esto, y la quinta revisión la cazó**: si tras traer la
+     orden por otra vía se dejan las lecturas SANAS, el siguiente intento del
+     rescate sale aplicado y la cadena termina por la salida de `aplicada` sin
+     llegar nunca al tope. El aviso no se ejercita y el test pasa igual con la
+     condición quitada. Hay que dejar las lecturas fallando **y** contar
+     lecturas para probar que el tope se alcanzó.
+
+  4. **La cadena encolada persigue SU uuid.** Encolar sólo levantaba una
+     bandera y el uuid de esa segunda acción se tiraba, así que la cadena
+     encadenada salía a buscar a la orden de la PRIMERA: si ésa ya había
+     llegado, el descarte la daba por satisfecha y la segunda no volvía nunca.
+     Es **el mismo fallo del punto anterior una capa más adentro**, y el código
+     llevaba escrito encima «el rescate persigue un uuid concreto» mientras la
+     cola no lo hacía. Lo encontró la quinta revisión. El test tiene que usar
+     **tres uuids distintos**: con el mismo en las dos acciones no se puede
+     distinguir a quién persigue la segunda cadena, que es justo por qué el
+     test que ya existía no lo veía.
+
+**DEUDA CONOCIDA, y queda escrito por qué se acepta**: una cadena agotada a
+base de DESCARTES —tres acciones sobre filas visibles interpuestas— no avisa de
+nada, porque la condición exige `_Lectura.fallida`. Quitar esa mitad parece el
+arreglo y **no lo es**: `descartada` mezcla «aterrizó una lectura más nueva»
+—pantalla correcta, avisar sería un snackbar falso— con «una acción subió el
+marcador» —pantalla quizá rancia—, y `_fetch` no distingue las dos. Separarlas
+pide tocar la maquinaria de generación de la PR #87, que es justo lo que no se
+toca a la ligera. El escenario necesita tres descartes por acción seguidos, así
+que se acepta a sabiendas.
 
 **Y una corrección a lo que escribí aquí**: decía que sin rescate el panel se
 queda mal «hasta que otra mesa genere un evento». **Es falso en el caso

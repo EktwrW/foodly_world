@@ -367,6 +367,53 @@ void main() {
         reason: 'la segunda acción se quedó con una lectura anterior a su propia mutación');
   });
 
+  /// LA COLA PERSEGUÍA A LA ORDEN DE LA PRIMERA ACCIÓN.
+  ///
+  /// Lo encontró la revisión, y es el MISMO fallo que este rescate arregla,
+  /// una capa más adentro: al encolar se ponía la bandera y el uuid de esa
+  /// llamada se tiraba, así que la cadena encadenada salía a buscar a la orden
+  /// de la primera. Si ésa ya había llegado, el descarte la daba por
+  /// satisfecha y la segunda orden no volvía nunca.
+  ///
+  /// El test de aquí arriba no podía verlo: usa `'a'` en las dos acciones, así
+  /// que no distingue a quién persigue la segunda cadena.
+  test('la cadena encolada persigue SU orden, no la de la primera', () async {
+    // 'b' visible; 'a' y 'c' fuera de la lista.
+    repo.listaDevuelta = const [_RepoEspia.visible];
+    await cubit.load();
+
+    repo.retenerLecturas = true;
+
+    repo.uuidDeLaMutacion = 'a';
+    await cubit.advanceFulfillment('a', 'ready'); // cadena 1: persigue 'a'
+
+    repo.uuidDeLaMutacion = 'c';
+    await cubit.advanceFulfillment('c', 'ready'); // se encola: persigue 'c'
+
+    // La lectura de la cadena 1 trae 'a': cadena 1 satisfecha, encadena la 2.
+    repo.listaDevuelta = const [_RepoEspia.visible, _RepoEspia._orden];
+    repo.responderLectura();
+    await Future<void>.delayed(const Duration(milliseconds: 10));
+
+    // Con la cadena 2 en vuelo, el manager toca la fila VISIBLE: sube
+    // `_ultimaAplicada` y esa marca descarta la lectura de la cadena 2.
+    repo.uuidDeLaMutacion = 'b';
+    await cubit.advanceFulfillment('b', 'ready');
+
+    repo.listaDevuelta = const [_RepoEspia.visible, _RepoEspia._orden, _RepoEspia.laDeC];
+    repo.retenerLecturas = false;
+    repo.responderLectura();
+
+    await Future<void>.delayed(const Duration(milliseconds: 200));
+
+    expect(
+      cubit.state.orders.any((o) => o.uuid == 'c'),
+      isTrue,
+      reason: 'la cadena encolada se dio por satisfecha con la orden de la '
+          'PRIMERA acción, y nadie fue a buscar la de la segunda',
+    );
+  });
+
   /// Una lectura DESCARTADA no es una lectura fallida: no se reintenta y, sobre
   /// todo, no se avisa de un fallo que no existe. El commit anterior decía que
   /// el `bool` ya lo arreglaba y no era verdad — `false` mezclaba las dos.
@@ -535,22 +582,47 @@ void main() {
   });
 
   /// El aviso final no puede salir con la pantalla ya correcta.
+  ///
+  /// OJO AL ESCRIBIR ESTE, que la primera versión pasaba en falso y lo cazó la
+  /// revisión: si tras traer la orden se dejan las lecturas SANAS, el
+  /// siguiente intento del rescate sale APLICADO y la cadena termina por la
+  /// salida de `aplicada` sin llegar nunca al tope — o sea que el aviso no se
+  /// ejercita y el test pasa igual con la condición quitada. Las lecturas
+  /// tienen que volver a fallar, y hay que comprobar contando lecturas que el
+  /// tope se alcanzó de verdad.
   test('si la orden acabó llegando, no se avisa de ningún fallo', () async {
+    // Espera larga a propósito: con los 20 ms del `setUp` los tres intentos
+    // caen antes de que dé tiempo a meter la lectura buena en medio.
+    final lento = ManagerOrdersCubit(
+      businessUuid: 'b1',
+      repo: repo,
+      logger: Logger(level: Level.off),
+      esperaEntreIntentos: const Duration(milliseconds: 60),
+    );
+    addTearDown(lento.close);
+
     repo.ordenEnLaLista = false;
-    await cubit.load();
+    await lento.load(); // lectura 1
     repo.fallaLaLectura = true;
 
-    unawaited(cubit.advanceFulfillment('a', 'ready'));
-    await Future<void>.delayed(const Duration(milliseconds: 30));
+    unawaited(lento.advanceFulfillment('a', 'ready')); // intento 1 (2) falla
+    await Future<void>.delayed(const Duration(milliseconds: 20));
 
-    // La orden aparece por otra vía mientras el rescate reintenta.
+    // La orden aparece por otra vía, y las lecturas vuelven a fallar: los
+    // intentos 2 (3) y 3 (4) fallan los dos y la cadena llega al tope.
     repo.fallaLaLectura = false;
     repo.ordenEnLaLista = true;
-    await cubit.refetchSilently();
-    await Future<void>.delayed(const Duration(milliseconds: 200));
+    await lento.refetchSilently(); // lectura 3
+    repo.fallaLaLectura = true;
 
-    expect(cubit.state.error, isNull,
-        reason: 'snackbar de fallo con la pantalla correcta');
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+
+    expect(lento.state.orders.any((o) => o.uuid == 'a'), isTrue, reason: 'premisa');
+    expect(repo.lecturas, 5,
+        reason: 'carga + refetch + los 3 intentos: con menos, la cadena no llegó al tope '
+            'y este test no ejercita el aviso');
+    expect(lento.state.error, isNull,
+        reason: 'snackbar de fallo con la pantalla ya correcta');
   });
 
   /// Y no pisa un mensaje del backend más informativo que el genérico.
@@ -814,7 +886,7 @@ class _RepoEspia implements GroupOrderRepo {
       ));
 
   static const _orden = GroupOrderDM(uuid: 'a', businessUuid: 'b1');
-  static const _otra = GroupOrderDM(uuid: 'b', businessUuid: 'b1');
+  static const laDeC = GroupOrderDM(uuid: 'c', businessUuid: 'b1');
 
   /// Qué órdenes devuelve la lista. Hace falta para montar el caso de F1: una
   /// visible (sobre la que se actúa) y otra ausente (la que persigue el
@@ -856,7 +928,7 @@ class _RepoEspia implements GroupOrderRepo {
     required String status,
   }) async =>
       ApiResult.success(GroupOrderResponseDM(
-        groupOrder: (uuidDeLaMutacion == 'b' ? _otra : _orden).copyWith(
+        groupOrder: GroupOrderDM(uuid: uuidDeLaMutacion, businessUuid: 'b1').copyWith(
           fulfillmentStatus: estadoDevuelto != null
               ? estadoDevuelto!.valor
               : GroupFulfillmentStatus.values.byName(status),
