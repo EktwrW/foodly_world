@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
@@ -82,9 +83,11 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
     required Logger logger,
     required this.businessUuid,
     GroupOrderRealtimeService? realtime,
+    Duration esperaEntreIntentos = esperaEntreIntentosPorDefecto,
   })  : _repo = repo,
         _logger = logger,
         _realtime = realtime,
+        _esperaEntreIntentos = esperaEntreIntentos,
         super(const ManagerOrdersState());
 
   /// Sube al LANZAR cada lectura. Nada más: no es un «algo cambió», es un
@@ -175,20 +178,73 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   /// un tick que falla no interrumpe al manager.
   Future<void> refetchSilently() => _fetch(silent: true);
 
-  Future<void> _fetch({bool silent = false}) async {
+  static const int _maxIntentosDeRescate = 3;
+
+  /// UNA cadena de rescate a la vez.
+  ///
+  /// Sin esto, cada acción sobre una orden ausente de la lista arrancaba su
+  /// propia cadena: medido por la revisión, 6 acciones encadenadas son 6
+  /// peticiones con el backend sano y **18** con el backend caído — del mismo
+  /// orden que las 22 contra 4 que motivaron el tope de la PR #87. La red
+  /// anterior ya lo evitaba con un único `Timer` («tres acciones seguidas no
+  /// pueden dejar tres lecturas encoladas»), y al pasar a recursión me lo
+  /// llevé por delante.
+  Future<void>? _rescateEnVuelo;
+
+  Future<void> _traerLaOrdenQueFalta() {
+    return _rescateEnVuelo ??= _rescatar().whenComplete(() => _rescateEnVuelo = null);
+  }
+
+  Future<void> _rescatar([int intento = 1]) async {
+    if (await _fetch(silent: true)) return; // se aplicó: no hay nada que reintentar
+    if (isClosed || intento >= _maxIntentosDeRescate) {
+      // Agotados los intentos, el panel diría «No hay órdenes» con el chip
+      // marcando 1. Este fichero ya decidió que «un dato falso es peor que un
+      // error» (ver `manager_orders_page.dart`), así que se emite para que
+      // salga el reintento en vez de una mentira. Es UN error al final de la
+      // cadena, no uno por tick: el bug de los diez snackbars del 2026-08-17
+      // era lo contrario.
+      if (!isClosed && intento >= _maxIntentosDeRescate) {
+        emit(state.copyWith(error: ''));
+      }
+
+      return;
+    }
+
+    await Future<void>.delayed(_esperaEntreIntentos * intento);
+    if (!isClosed) await _rescatar(intento + 1);
+  }
+
+  /// Espera entre intentos de rescate. Expuesta porque un valor mal puesto se
+  /// degrada en silencio —a cero es una tormenta, muy alta es no reintentar— y
+  /// los tests inyectan uno corto: sin fijarla, cambiarla pasa la suite entera.
+  /// Es la lección de la red anterior.
+  static const Duration esperaEntreIntentosPorDefecto = Duration(milliseconds: 800);
+
+  final Duration _esperaEntreIntentos;
+
+  @visibleForTesting
+  Duration get esperaEntreIntentos => _esperaEntreIntentos;
+
+  /// Devuelve si ESTA lectura se aplicó. Un booleano propio y no un contador
+  /// compartido: con el contador, cualquier otra lectura con éxito —el evento,
+  /// el polling, un pull-to-refresh— cancelaba un reintento que sí hacía
+  /// falta, y una lectura descartada por el cambio de chip lo disparaba sin
+  /// falta ninguna. Lo midió la revisión.
+  Future<bool> _fetch({bool silent = false}) async {
     final generacion = ++_generacion;
     final cubo = state.bucket;
     final res = await _repo.managerOrders(businessUuid, bucket: cubo);
-    if (isClosed) return;
+    if (isClosed) return false;
 
     // SE DESCARTA SÓLO SI YA HAY ALGO MEJOR EN PANTALLA, O SI ESTAS FILAS SON
     // DE OTRO CUBO. Que alguien haya lanzado después NO basta: esa otra lectura
     // puede fallar en silencio —un refetch de fondo no le cuenta errores al
     // manager— y entonces tirar ésta deja la pantalla con las filas viejas, sin
     // spinner y sin aviso, que es justo lo que esto existe para borrar.
-    if (generacion <= _ultimaAplicada || cubo != state.bucket) return;
+    if (generacion <= _ultimaAplicada || cubo != state.bucket) return false;
 
-    res.when(
+    return res.when(
       success: (r) {
         _ultimaAplicada = generacion;
         final contadoresAlDia = generacion > _ultimaAplicadaContadores;
@@ -203,6 +259,8 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
           total: contadoresAlDia ? (r.meta?.total ?? r.orders.length) : state.total,
           error: null,
         ));
+
+        return true;
       },
       failure: (e) {
         _logger.e(e);
@@ -213,10 +271,12 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
         // manager veía diez seguidos al encenderla (bug 2026-08-17). Los
         // errores que sí se muestran son los de `load`, `selectBucket` y las
         // acciones, que son los que el manager provocó.
-        if (silent) return;
+        if (silent) return false;
         // '' = error sin detalle (la UI muestra el genérico i18n). Nunca
         // e.toString(): resuelve DI por dentro y explota fuera de la app.
         emit(state.copyWith(loading: false, error: e.serverMessage ?? ''));
+
+        return false;
       },
     );
   }
@@ -316,11 +376,26 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
           error: null,
         ));
 
-        // El único caso que NO se puede resolver aquí: la orden debería ENTRAR
-        // en el cubo que se está mirando y no está en la lista. Falta su sitio
-        // en el orden, así que hay que leer. Es la red de seguridad de la
-        // PR #82, reducida a este único caso.
-        if (!estaba && visible && cubo != null) refetchSilently();
+        // El único caso que NO se puede resolver aquí: la orden debería estar
+        // en la lista y no está. Falta su sitio en el orden, así que hay que
+        // leer. Es todo lo que queda de la red de seguridad de la PR #82.
+        //
+        // SIN `cubo != null`: la primera versión lo llevaba y dejaba fuera el
+        // caso sin chip —que es el 90 % del uso—, donde una orden que debía
+        // aparecer no se recuperaba NUNCA. Antes de la #85 la red era
+        // incondicional, así que era una regresión mía. Lo encontró la segunda
+        // revisión.
+        //
+        // Y con reintento: esta lectura es silenciosa, así que si falla deja
+        // el chip diciendo «1» y la lista diciendo «No hay órdenes».
+        //
+        // Matiz que corrigió la revisión, porque yo lo había escrito mal: el
+        // evento de la PROPIA mutación sí vuelve a este dispositivo —se emite
+        // sin `toOthers()`— y repara la pantalla en unos cientos de ms. Para
+        // que esto importe tiene que fallar ADEMÁS el broadcast (`::safe` se
+        // los traga) o estar el socket caído. Es un caso combinado, no el
+        // camino normal. Con tope, que es la lección de la PR #87.
+        if (!estaba && visible) _traerLaOrdenQueFalta();
 
         return true;
       },
