@@ -151,7 +151,14 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
     final pendiente = realtime.watchBusiness(businessUuid, onTouched: refetchSilently);
     _sub = pendiente;
     GroupOrderRealtimeService.cancelarCuandoExista(anterior);
-    final sub = await pendiente;
+    final RealtimeSubscription sub;
+    try {
+      sub = await pendiente;
+    } catch (e) {
+      _suscrito = false; // o el panel se queda sin canal el resto de la sesión
+      _logger.e(e); // sin relanzar: `load()` se llama con `..load()`
+      return;
+    }
     if (isClosed) {
       await sub.cancel();
       _suscrito = false;

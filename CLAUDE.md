@@ -2699,11 +2699,21 @@ es null, así que un segundo `load()` **no encontraba nada que cancelar** y los
 dos oyentes quedaban vivos igual. Guardando el futuro, la anterior se cancela en
 cuanto exista.
 
-**Pero no es portante en los tres sitios, y eso también hay que decirlo.** En la
-página sí (quitarlo pone el banco en rojo). En el chip y en el panel es
-**redundante** con la comprobación de después del await: quitarlo solo no se
-nota, y hace falta quitar los dos —que es exactamente el código original— para
-que salga rojo. Lo midió la revisión y lo confirmé por pares.
+**Pero no es portante en ninguno de los tres por separado**, y llegar a esa
+frase costó dos correcciones. Primero dije que lo era en los tres; luego, tras la
+primera revisión, que «en la página sí». **También falso**, y lo desmontó la
+segunda pasada: el rojo de la página lo ponía un test de **camino imposible**
+—`load('o1')` seguido de `load('o2')` sobre el mismo cubit— y en producción `load`
+se llama siempre con `widget.orderUuid`, así que `anterior` es **SIEMPRE null**
+en los tres. Yo marqué la rama muerta del panel y no vi la idéntica de la página,
+y encima construí un argumento encima.
+
+Lo cierto es lo de siempre: son mecanismos **redundantes por pares**, y lo que se
+comprueba es que quitar los dos —que es el código original— sale rojo.
+
+**El comentario del panel sobre este orden no lo respalda ningún test**, y el de
+la página mata nueve: metiendo un microtask delante de `watchBusiness` la suite
+sigue verde. Está copiado del sitio donde sí se comprueba.
 
 **Y el orden importa: `watch` PRIMERO, cancelar después.** El servicio registra
 el oyente **sincrónicamente** y sólo luego espera a la conexión
@@ -2722,13 +2732,13 @@ es idempotente, así que cancelar dos veces no molesta.
 | par | quitar una | quitar las dos |
 |---|---|---|
 | idempotencia y cancelar la anterior **(panel)** | no se nota | rojo |
-| el `isClosed` de después del await y el cancelado de `close()` | no se nota | rojo |
+| el `isClosed` de después del await y el cancelado de `close()` **(página y chip; en el panel NO: la primera sola ya sale roja)** | no se nota | rojo |
 | guardar el futuro y la guarda de después del await **(chip)** | no se nota | rojo |
 
-**Y aquí escribí dos cosas que la revisión desmintió.** Decía «tres pares» con
-una tabla de dos filas. Y decía que en la primera fila quitar cualquiera de las
-dos no se nota: **en la página es falso** — quitar «cancelar la anterior» sola sí
-pone el banco en rojo; la simétrica es verde sólo en el panel.
+**Aquí llevo tres versiones y dos desmentidos**, así que conviene leer la tabla
+con desconfianza y volver a medirla antes de tocar nada. Las redundancias NO son
+las mismas en los tres consumidores, y ésa es justo la parte que se me escapó
+las dos veces.
 
 **Otra afirmación mía que nada sostiene:** que marcar la bandera ANTES del await
 «es lo que hace idempotente a esto». Moverla a después del await **no lo nota
@@ -2750,11 +2760,28 @@ de las dos guardas del cierre sobrevivía. Hay que esperar de verdad (`_asentar`
 60 ms): `watch` espera a `_connect()`, que sin socket falla y cae al polling. El
 panel no tiene ese problema porque su `load()` sí espera a `_suscribir`.
 
+**`close()` perdió el `await` del cancelado** y eso es un cambio semántico que
+conviene saber: en producción es mejor —no se espera a una suscripción que puede
+no llegar— pero en test `await cubit.close(); expect(pollingActivo, isFalse)` ya
+**no** es determinista sin un turno extra.
+
+**«`cancel()` es idempotente» sostiene medio razonamiento y no lo prueba nada**:
+quitar su guarda `if (_cancelled) return` deja la suite entera verde. La
+propiedad se cumple —está comprobada aparte— pero no hay red debajo.
+
+**Si `watch` FALLA, la bandera de idempotencia se quedaba puesta para siempre** y
+ninguna llamada posterior volvía a pedir el canal: el consumidor mudo el resto de
+la sesión. Hoy no se alcanza —`_connect()` se traga sus errores— pero era el
+único modo de fallo PERMANENTE que introducía este arreglo. Ahora se devuelve la
+bandera a su sitio y se registra el error **sin relanzar**: los tres se llaman en
+modo dispara-y-olvida (`unawaited`, `..load()`), así que relanzar sería un error
+asíncrono sin manejar.
+
 **El testigo es `pollingActivo`**: el servicio suelta sus timers cuando se va el
 último oyente, así que si tras cerrar el cubit sigue encendido es que quedó
 alguien oyendo. No hay getter del número de oyentes, y éste sirve.
 
-**Fijado en** `test/group_orders/suscripciones_huerfanas_test.dart` (8 casos),
+**Fijado en** `test/group_orders/suscripciones_huerfanas_test.dart` (14 casos),
 con su control positivo: con la pantalla abierta la suscripción SÍ tiene que
 quedar, porque «no suscribirse nunca» pasaría todo lo demás.
 

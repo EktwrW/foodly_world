@@ -15,8 +15,9 @@ import 'package:logger/logger.dart';
 
 /// Las suscripciones de realtime se quedaban HUÉRFANAS.
 ///
-/// Los dos cubits pedían su canal DESPUÉS de esperar la primera lectura, y
-/// guardaban la suscripción en `_sub` al volver. Salir de la pantalla mientras
+/// LOS TRES consumidores —la página de la orden, el panel del negocio y el chip
+/// flotante— pedían su canal DESPUÉS de esperar la primera lectura, y guardaban
+/// la suscripción en `_sub` al volver. Salir de la pantalla mientras
 /// esa lectura viajaba dejaba a `close()` cancelando un `_sub` todavía null, y
 /// al oyente naciendo sobre un cubit ya muerto: **nadie lo cancela nunca**.
 ///
@@ -276,6 +277,91 @@ void main() {
       expect(realtime.pollingActivo, isTrue);
     });
   });
+
+  /// F2: si `watch` falla, la bandera de idempotencia se quedaba puesta y
+  /// NINGUNA llamada posterior volvía a pedir el canal. Hoy no se alcanza
+  /// —`_connect()` se traga sus errores— pero es el único modo de fallo
+  /// permanente que introduce este arreglo, y nada lo fijaba.
+  group('un watch que falla no deja al consumidor mudo para siempre', () {
+    test('el chip vuelve a intentarlo', () async {
+      final roto = _RealtimeRoto();
+      addTearDown(roto.unwatchAll);
+      final cubit = ActiveGroupOrderCubit(repo: _RepoFalso(), logger: _mudo, realtime: roto);
+      addTearDown(cubit.close);
+
+      await cubit.watchActive('o1'); // falla y se registra, sin relanzar
+      roto.falla = false;
+      await cubit.watchActive('o1');
+
+      expect(roto.pollingActivo, isTrue, reason: 'se quedó marcado como suscrito');
+    });
+
+    test('y la página también', () async {
+      final roto = _RealtimeRoto();
+      addTearDown(roto.unwatchAll);
+      final repo = _RepoFalso();
+      final cubit = GroupOrderCubit(repo: repo, logger: _mudo, realtime: roto);
+      addTearDown(cubit.close);
+
+      final primera = cubit.load('o1');
+      repo.responderOrden(0);
+      await primera;
+      await _asentar();
+
+      roto.falla = false;
+      // El botón de reintentar: vuelve a llamar a `load` con el mismo uuid.
+      final segunda = cubit.load('o1');
+      repo.responderOrden(1);
+      await segunda;
+      await _asentar();
+
+      expect(roto.pollingActivo, isTrue, reason: 'se quedó marcada como suscrita');
+    });
+
+    test('y el panel también', () async {
+      final roto = _RealtimeRoto();
+      addTearDown(roto.unwatchAll);
+      final repo = _RepoFalso();
+      final cubit = ManagerOrdersCubit(
+        repo: repo,
+        logger: _mudo,
+        businessUuid: 'b1',
+        realtime: roto,
+      );
+      addTearDown(cubit.close);
+
+      final primera = cubit.load();
+      repo.responderLista(0);
+      await primera;
+
+      roto.falla = false;
+      final segunda = cubit.load();
+      repo.responderLista(1);
+      await segunda;
+
+      expect(roto.pollingActivo, isTrue);
+    });
+  });
+}
+
+/// Servicio real cuyo `watch` FALLA mientras [falla] esté puesto.
+class _RealtimeRoto extends GroupOrderRealtimeService {
+  _RealtimeRoto() : super(authSession: _AuthFalso());
+
+  bool falla = true;
+
+  @override
+  Future<RealtimeSubscription> watch(String orderUuid, {required VoidCallback onTouched}) =>
+      falla ? Future.error(StateError('sin canal')) : super.watch(orderUuid, onTouched: onTouched);
+
+  @override
+  Future<RealtimeSubscription> watchBusiness(
+    String businessUuid, {
+    required VoidCallback onTouched,
+  }) =>
+      falla
+          ? Future.error(StateError('sin canal'))
+          : super.watchBusiness(businessUuid, onTouched: onTouched);
 }
 
 /// Servicio real con una PUERTA delante de la suscripción: deja cerrar el cubit
@@ -285,19 +371,23 @@ class _RealtimeLento extends GroupOrderRealtimeService {
 
   final puerta = Completer<void>();
 
+  // El oyente se registra YA —`_subscribe` hace `add` antes de esperar a la
+  // conexión— y lo único que se retrasa es el handle para cancelarlo. La
+  // versión anterior de este doble esperaba ANTES de `super`, así que cerraba
+  // con el oyente todavía inexistente: los casos pasaban sin ejercitar nada.
   @override
-  Future<RealtimeSubscription> watch(String orderUuid, {required VoidCallback onTouched}) async {
-    await puerta.future;
-    return super.watch(orderUuid, onTouched: onTouched);
+  Future<RealtimeSubscription> watch(String orderUuid, {required VoidCallback onTouched}) {
+    final real = super.watch(orderUuid, onTouched: onTouched);
+    return puerta.future.then((_) => real);
   }
 
   @override
   Future<RealtimeSubscription> watchBusiness(
     String businessUuid, {
     required VoidCallback onTouched,
-  }) async {
-    await puerta.future;
-    return super.watchBusiness(businessUuid, onTouched: onTouched);
+  }) {
+    final real = super.watchBusiness(businessUuid, onTouched: onTouched);
+    return puerta.future.then((_) => real);
   }
 }
 

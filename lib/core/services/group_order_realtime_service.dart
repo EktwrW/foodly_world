@@ -101,9 +101,6 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
   @visibleForTesting
   bool get reintentoProgramado => _retryTimer?.isActive ?? false;
 
-  /// Observa la orden [orderUuid]. [onTouched] se invoca ante cualquier
-  /// cambio (evento realtime, tick de polling o resume de la app); el caller
-  /// decide cómo refetchear. Cancelá la suscripción devuelta al salir.
   /// Cancela una suscripción que puede estar todavía NACIENDO.
   ///
   /// Los tres consumidores guardan el FUTURO y no la suscripción resuelta:
@@ -116,6 +113,9 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
     unawaited(pendiente.then((s) => s.cancel()).catchError((_) {}));
   }
 
+  /// Observa la orden [orderUuid]. [onTouched] se invoca ante cualquier
+  /// cambio (evento realtime, tick de polling o resume de la app); el caller
+  /// decide cómo refetchear. Cancelá la suscripción devuelta al salir.
   Future<RealtimeSubscription> watch(String orderUuid, {required VoidCallback onTouched}) =>
       _subscribe('private-group-order.$orderUuid', 'group-order.touched', onTouched);
 

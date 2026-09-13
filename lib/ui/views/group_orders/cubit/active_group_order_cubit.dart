@@ -393,7 +393,22 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     final pendiente = realtime.watch(objetivo, onTouched: () => refresh(coalesce: true));
     _sub = pendiente;
     GroupOrderRealtimeService.cancelarCuandoExista(anterior);
-    final sub = await pendiente;
+    final RealtimeSubscription sub;
+    try {
+      sub = await pendiente;
+    } catch (e) {
+      // La bandera vuelve a su sitio o el consumidor se queda sin canal PARA
+      // SIEMPRE: toda llamada posterior saldría por la guarda de idempotencia.
+      // Hoy no se alcanza —`_connect()` se traga sus errores— pero es el único
+      // modo de fallo permanente que introduce esto.
+      //
+      // NO se relanza: los tres se llaman en modo dispara-y-olvida
+      // (`unawaited`, `..load()`), así que relanzar sería un error asíncrono
+      // sin manejar. Se registra, como el resto de fallos de este cubit.
+      if (_watchedUuid == objetivo) _watchedUuid = null;
+      _logger.e(e);
+      return;
+    }
     // `end()` pudo limpiar el carrito mientras ésta nacía — y `end()` la llama
     // `refresh()` ante un 404/403, que es el propio callback de realtime.
     if (isClosed || _watchedUuid != objetivo) await sub.cancel();

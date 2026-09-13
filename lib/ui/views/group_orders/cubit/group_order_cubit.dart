@@ -102,7 +102,14 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
     );
     _sub = pendiente;
     GroupOrderRealtimeService.cancelarCuandoExista(anterior);
-    final sub = await pendiente;
+    final RealtimeSubscription sub;
+    try {
+      sub = await pendiente;
+    } catch (e) {
+      if (_observado == uuid) _observado = null; // o no vuelve a pedirlo jamás
+      _logger.e(e); // sin relanzar: esto se llama con `unawaited`
+      return;
+    }
     if (isClosed) {
       await sub.cancel();
       _observado = null;
