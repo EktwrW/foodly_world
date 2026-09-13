@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
@@ -82,9 +83,11 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
     required Logger logger,
     required this.businessUuid,
     GroupOrderRealtimeService? realtime,
+    Duration esperaEntreIntentos = esperaEntreIntentosPorDefecto,
   })  : _repo = repo,
         _logger = logger,
         _realtime = realtime,
+        _esperaEntreIntentos = esperaEntreIntentos,
         super(const ManagerOrdersState());
 
   /// Sube al LANZAR cada lectura. Nada más: no es un «algo cambió», es un
@@ -98,6 +101,11 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   /// Marcador SÓLO para los contadores: una lectura anterior a la última
   /// mutación no puede pisarlos, aunque sus filas sí valgan.
   int _ultimaAplicadaContadores = 0;
+
+  /// Cuántas lecturas TERMINARON BIEN. Es lo que distingue «falló» de «llegó
+  /// pero no traía la orden»: mirar sólo `lecturas` reintentaría para siempre
+  /// contra un backend que responde de maravilla.
+  int _lecturasConExito = 0;
 
   static bool _perteneceAlCubo(GroupOrderDM orden, String cubo) => switch (cubo) {
         'pending' => orden.fulfillmentStatus == null,
@@ -175,6 +183,30 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   /// un tick que falla no interrumpe al manager.
   Future<void> refetchSilently() => _fetch(silent: true);
 
+  static const int _maxIntentosDeRescate = 3;
+
+  Future<void> _traerLaOrdenQueFalta([int intento = 1]) async {
+    final antes = _lecturasConExito;
+    await _fetch(silent: true);
+
+    if (isClosed || _lecturasConExito != antes) return;
+    if (intento >= _maxIntentosDeRescate) return;
+
+    await Future<void>.delayed(_esperaEntreIntentos * intento);
+    if (!isClosed) await _traerLaOrdenQueFalta(intento + 1);
+  }
+
+  /// Espera entre intentos de rescate. Expuesta porque un valor mal puesto se
+  /// degrada en silencio —a cero es una tormenta, muy alta es no reintentar— y
+  /// los tests inyectan uno corto: sin fijarla, cambiarla pasa la suite entera.
+  /// Es la lección de la red anterior.
+  static const Duration esperaEntreIntentosPorDefecto = Duration(milliseconds: 800);
+
+  final Duration _esperaEntreIntentos;
+
+  @visibleForTesting
+  Duration get esperaEntreIntentos => _esperaEntreIntentos;
+
   Future<void> _fetch({bool silent = false}) async {
     final generacion = ++_generacion;
     final cubo = state.bucket;
@@ -190,6 +222,7 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
 
     res.when(
       success: (r) {
+        _lecturasConExito++;
         _ultimaAplicada = generacion;
         final contadoresAlDia = generacion > _ultimaAplicadaContadores;
         if (contadoresAlDia) _ultimaAplicadaContadores = generacion;
@@ -316,11 +349,23 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
           error: null,
         ));
 
-        // El único caso que NO se puede resolver aquí: la orden debería ENTRAR
-        // en el cubo que se está mirando y no está en la lista. Falta su sitio
-        // en el orden, así que hay que leer. Es la red de seguridad de la
-        // PR #82, reducida a este único caso.
-        if (!estaba && visible && cubo != null) refetchSilently();
+        // El único caso que NO se puede resolver aquí: la orden debería estar
+        // en la lista y no está. Falta su sitio en el orden, así que hay que
+        // leer. Es todo lo que queda de la red de seguridad de la PR #82.
+        //
+        // SIN `cubo != null`: la primera versión lo llevaba y dejaba fuera el
+        // caso sin chip —que es el 90 % del uso—, donde una orden que debía
+        // aparecer no se recuperaba NUNCA. Antes de la #85 la red era
+        // incondicional, así que era una regresión mía. Lo encontró la segunda
+        // revisión.
+        //
+        // Y con reintento: esta lectura es silenciosa, así que si falla deja
+        // el chip diciendo «1» y la lista diciendo «No hay órdenes», y ahí se
+        // queda. El evento no rescata —`BusinessOrdersTouched::safe` se traga
+        // los fallos de broadcast y el polling de 10 s sólo corre con el
+        // socket caído—. Con tope, que es la lección de la PR #87: un backend
+        // caído no puede volverse una tormenta de peticiones.
+        if (!estaba && visible) _traerLaOrdenQueFalta();
 
         return true;
       },

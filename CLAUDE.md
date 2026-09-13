@@ -2050,14 +2050,40 @@ traga los fallos, y el polling de 10 s **sólo corre con el socket caído**.
   y esto sí es legítimo: el mapeo cubo↔estado ya vive en la página y es
   `fulfillment_status == bucket`. Lo que no se replica es el predicado del
   panel, que es otra cosa.
-- **La orden debería ENTRAR en el cubo visible y no está en la lista.** Falta
-  su sitio en el orden, así que no hay forma local: ahí se lee. Es lo único que
-  queda de la red, reducido a ese caso.
+- **La orden debería estar en la lista y no está.** Falta su sitio en el
+  orden, así que no hay forma local: ahí se lee. Es lo único que queda de la
+  red.
+
+  **Y tiene dos condiciones que me comí en la primera versión**, las dos
+  encontradas por la segunda revisión:
+
+  1. **Sin `cubo != null`.** Lo llevaba, y eso dejaba fuera el caso SIN chip —
+     el 90 % del uso—, donde una orden que debía aparecer no se recuperaba
+     nunca. Antes de este cambio la red era incondicional: era una regresión
+     mía, no deuda heredada.
+  2. **Con reintento y con tope.** Esa lectura es silenciosa: si falla, el chip
+     dice «1» y la lista dice «No hay órdenes», y ahí se queda. Y hay que
+     distinguir «falló» de «llegó y no traía la orden» (`_lecturasConExito`):
+     sin esa distinción se reintentaría tres veces contra un backend que
+     responde perfectamente.
 
 **Y un tercero, de contadores**: una lectura anterior a la mutación que
 aterriza después los pisaba. Lleva marcador propio
 (`_ultimaAplicadaContadores`), separado del de la lista para no tocar la regla
 de la PR #87.
+
+**Los dos mapeos van fijados RAMA POR RAMA.** `_perteneceAlCubo` y
+`_totalDelCubo` se añadieron para arreglar dos fallos, y sus tests fijaban la
+FORMA (que no fueran constantes) pero no el MAPEO: cruzar `preparing` con
+`ready` pasaba la suite entera, y el test de «la orden sale del chip» pasaba
+igual con `'preparing' => false`, porque `false` también la saca. Es el mismo
+verde-por-razón-degenerada de siempre. Ahora hay un bucle sobre los cuatro
+pares (chip, estado) en las dos direcciones.
+
+**Trampa del fake**: `null` es un valor VÁLIDO de `fulfillment_status` —es el
+cubo de pendientes— así que `estadoDevuelto ?? loQuePidió` no puede expresar
+«devuelve nulo». Va envuelto en un record. Sin eso, el par (pending, pending)
+fallaba por culpa del fake y no del código.
 
 **El grupo de tests «la red de seguridad» se borra con ella**, pero su
 preocupación de fondo sigue fijada: la contra-revisión de la #87 midió 22
