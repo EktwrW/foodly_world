@@ -123,7 +123,7 @@ void main() {
   });
 
   test('advanceFulfillment: la orden devuelta reemplaza a la suya en la '
-      'lista al instante y luego re-sincroniza contadores', () async {
+      'lista al instante y los contadores vienen en la respuesta', () async {
     repo.managerOrdersOutcome = okList();
     await cubit.load();
 
@@ -139,13 +139,11 @@ void main() {
       cubit.state.orders.firstWhere((o) => o.uuid == 'a').fulfillmentStatus,
       GroupFulfillmentStatus.ready,
     );
-    // Sólo la carga: desde 2026-09-12 la acción NO lee la lista.
+    // Sólo la carga: la acción NO lee la lista.
     //
-    // Leía para re-sincronizar los contadores, y la misma mutación emite
-    // `BusinessOrdersTouched`, que llega por Pusher y lee otra vez: dos
-    // lecturas completas del panel por cada acción del manager, medidas en
-    // producción. Ahora la acción arma una red de seguridad y deja que lo
-    // haga el evento. Ver `panel_una_lectura_por_accion_test.dart`.
+    // Leía para re-sincronizar los contadores; desde be-foodly #148 vienen en
+    // la respuesta de la propia mutación. Ver
+    // `panel_una_lectura_por_accion_test.dart`.
     expect(repo.managerOrdersCalls, 1);
   });
 

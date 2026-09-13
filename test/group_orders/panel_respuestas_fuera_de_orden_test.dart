@@ -37,7 +37,6 @@ void main() {
       repo: repo,
       logger: _mudo,
       businessUuid: 'b1',
-      esperaDeResincronizacion: const Duration(milliseconds: 40),
     );
   });
 
@@ -334,7 +333,7 @@ void main() {
     /// Una lectura que falla SIN nada pendiente de resincronizar no puede
     /// re-armar la red: serían hasta tres GET de más cada dos segundos contra
     /// un backend que ya está fallando.
-    test('una lectura fallida sin resync pendiente no re-arma la red', () async {
+    test('una lectura fallida no dispara ninguna otra', () async {
       final carga = cubit.load();
       repo.fallar(0);
       await carga;
@@ -345,77 +344,36 @@ void main() {
     });
   });
 
-  group('la red de seguridad', () {
-    /// Una respuesta descartada no puede desarmar la red: sus contadores son
-    /// tan viejos como sus filas. Si la desarmara, los chips se quedarían con
-    /// números de antes de la acción y nadie volvería a pedirlos.
-    test('una lectura descartada NO desarma la red', () async {
+  /// El grupo «la red de seguridad» de la PR #87 vivía aquí y se borra con
+  /// ella: la red desaparece porque ya no hay ninguna lectura que rescatar.
+  /// Una acción trae sus propios contadores (be-foodly #148), así que no lee.
+  ///
+  /// Su preocupación de fondo sí sigue fijada, y es este test. La
+  /// contra-revisión de aquella PR midió 22 peticiones contra 4 de referencia
+  /// porque cada descarte reseteaba el tope de reintentos. Ahora esa clase de
+  /// fallo no necesita tope: no existe.
+  group('una acción no lee, y eso hace imposible la tormenta', () {
+    test('doce acciones seguidas no leen la lista ni una vez', () async {
       final carga = cubit.load();
       repo.responder(0, ['a']);
       await carga;
 
-      final lectura = cubit.refetchSilently(); // se queda en vuelo
+      final lecturasTrasLaCarga = repo.lecturas;
 
-      final accion = cubit.advanceFulfillment('a', 'ready'); // arma la red
-      repo.responderAccion(uuid: 'a', mesa: 'ya-lista');
-      await accion;
-
-      final antes = repo.lecturas;
-      repo.responder(1, ['a']); // descartada
-      await lectura;
-
-      await Future<void>.delayed(const Duration(milliseconds: 80));
-      expect(repo.lecturas, antes + 1, reason: 'la red tenía que saltar igual');
-    });
-
-    /// EL TOPE DE REINTENTOS TIENE QUE AGUANTAR CON LECTURAS CRUZADAS, y la
-    /// versión anterior de esta guarda lo rompía: pedía una resincronización al
-    /// descartar, y eso reseteaba `_reintentosDeRed`, así que cada descarte
-    /// devolvía la red a cero. Medido por la contra-revisión: 22 peticiones
-    /// contra las 4 de referencia. El comentario del propio cubit dice que «un
-    /// backend caído no puede convertirse en un GET cada dos segundos para
-    /// siempre» — y podía.
-    test('un backend caído no dispara una tormenta de peticiones', () async {
-      final carga = cubit.load();
-      repo.fallar(0);
-      await carga;
-
-      final accion = cubit.advanceFulfillment('a', 'ready'); // arma la red
-      repo.responderAccion(uuid: 'a', mesa: 'x');
-      await accion;
-
-      // Todo lo que salga a partir de aquí se cae, y encima cruzado.
       for (var i = 0; i < 12; i++) {
-        await Future<void>.delayed(const Duration(milliseconds: 25));
-        unawaited(cubit.refetchSilently());
-        for (var j = repo.respondidas; j < repo.lecturas; j++) {
-          repo.fallar(j);
-        }
+        final accion = cubit.advanceFulfillment('a', 'ready');
+        repo.responderAccion(uuid: 'a', mesa: 'x');
+        await accion;
       }
+
+      // Con margen para cualquier cosa diferida que alguien reintroduzca.
       await Future<void>.delayed(const Duration(milliseconds: 120));
 
-      expect(repo.lecturas, lessThanOrEqualTo(18),
-          reason: 'el tope de 3 reintentos tiene que seguir acotando');
-    });
-
-    /// El control: una lectura que SÍ se aplica sí la desarma. Sin esto, «no
-    /// desarmar nunca» pasaría el test de arriba.
-    test('pero una lectura que se aplica sí la desarma', () async {
-      final carga = cubit.load();
-      repo.responder(0, ['a']);
-      await carga;
-
-      final accion = cubit.advanceFulfillment('a', 'ready');
-      repo.responderAccion(uuid: 'a', mesa: 'ya-lista');
-      await accion;
-
-      final lectura = cubit.refetchSilently();
-      repo.responder(1, ['a']);
-      await lectura;
-
-      final antes = repo.lecturas;
-      await Future<void>.delayed(const Duration(milliseconds: 80));
-      expect(repo.lecturas, antes, reason: 'ya se resincronizó: la red sobra');
+      expect(
+        repo.lecturas,
+        lecturasTrasLaCarga,
+        reason: 'una acción volvió a leer la lista: vuelve el x2 y con él la tormenta',
+      );
     });
   });
 

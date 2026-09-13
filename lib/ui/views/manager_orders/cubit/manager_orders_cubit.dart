@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
@@ -83,39 +82,10 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
     required Logger logger,
     required this.businessUuid,
     GroupOrderRealtimeService? realtime,
-    Duration esperaDeResincronizacion = redPorDefecto,
   })  : _repo = repo,
         _logger = logger,
         _realtime = realtime,
-        _esperaDeResincronizacion = esperaDeResincronizacion,
         super(const ManagerOrdersState());
-
-  /// Cuánto se espera al evento antes de leer por nuestra cuenta.
-  ///
-  /// Dos segundos con margen: medido en producción, el `BusinessOrdersTouched`
-  /// de la propia mutación llegaba entre 52 ms y 1 s después de que la
-  /// mutación respondiera.
-  ///
-  /// Está expuesto porque es el valor del que cuelga TODO el ahorro de esta
-  /// pantalla, y los tests inyectan uno corto: sin fijarlo, ponerlo a cero
-  /// —que restaura la doble lectura— pasaba la suite entera sin que nadie se
-  /// enterara. Lo señaló la revisión.
-  static const Duration redPorDefecto = Duration(seconds: 2);
-
-  final Duration _esperaDeResincronizacion;
-
-  @visibleForTesting
-  Duration get esperaDeResincronizacion => _esperaDeResincronizacion;
-
-  /// Red de seguridad por si el evento no llega (socket caído, evento
-  /// perdido). La desarma una lectura con ÉXITO.
-  Timer? _redDeSeguridad;
-
-  /// Hay contadores por resincronizar: una lectura fallida re-arma la red.
-  bool _contadoresSucios = false;
-
-  int _reintentosDeRed = 0;
-  static const int _maxReintentosDeRed = 3;
 
   /// Sube al LANZAR cada lectura. Nada más: no es un «algo cambió», es un
   /// número de orden de salida (2026-09-12).
@@ -124,6 +94,26 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   /// La de la última lectura que SÍ se aplicó — y la de la acción que tocó una
   /// fila visible, que es la otra cosa que deja la pantalla al día.
   int _ultimaAplicada = 0;
+
+  /// Marcador SÓLO para los contadores: una lectura anterior a la última
+  /// mutación no puede pisarlos, aunque sus filas sí valgan.
+  int _ultimaAplicadaContadores = 0;
+
+  static bool _perteneceAlCubo(GroupOrderDM orden, String cubo) => switch (cubo) {
+        'pending' => orden.fulfillmentStatus == null,
+        'preparing' => orden.fulfillmentStatus == GroupFulfillmentStatus.preparing,
+        'ready' => orden.fulfillmentStatus == GroupFulfillmentStatus.ready,
+        'delivered' => orden.fulfillmentStatus == GroupFulfillmentStatus.delivered,
+        _ => true,
+      };
+
+  static int? _totalDelCubo(String? cubo, ManagerOrderCountsDM c) => switch (cubo) {
+        'pending' => c.pending,
+        'preparing' => c.preparing,
+        'ready' => c.ready,
+        'delivered' => c.delivered,
+        _ => null,
+      };
 
   Future<void> load() async {
     emit(state.copyWith(loading: true, error: null));
@@ -185,33 +175,6 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   /// un tick que falla no interrumpe al manager.
   Future<void> refetchSilently() => _fetch(silent: true);
 
-  /// Pide que los contadores se re-sincronicen, SIN leer ahora mismo.
-  ///
-  /// La mutación que acaba de responder emite `BusinessOrdersTouched`, y ese
-  /// evento ya dispara un `refetchSilently()`. Leer aquí además era pedir dos
-  /// veces lo mismo por cada acción del manager — medido en producción, con
-  /// 52 ms a 1 s entre las dos peticiones.
-  ///
-  /// La fila del manager NO espera a esto: la actualiza el `emit` optimista
-  /// con la respuesta de la propia mutación. Lo único que llega con la
-  /// latencia del socket son los contadores de los chips.
-  ///
-  /// Un solo temporizador para todas las acciones: tres acciones seguidas no
-  /// pueden dejar tres lecturas encoladas.
-  void _pedirResincronizacion() {
-    if (isClosed) return;
-    _contadoresSucios = true;
-    _reintentosDeRed = 0;
-    _armarRed();
-  }
-
-  void _armarRed() {
-    _redDeSeguridad?.cancel();
-    _redDeSeguridad = Timer(_esperaDeResincronizacion, () {
-      if (!isClosed) refetchSilently();
-    });
-  }
-
   Future<void> _fetch({bool silent = false}) async {
     final generacion = ++_generacion;
     final cubo = state.bucket;
@@ -227,42 +190,22 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
 
     res.when(
       success: (r) {
-        // Desarma el ÉXITO, no el intento.
-        //
-        // La primera versión cancelaba la red ANTES del `await`, y entonces
-        // una lectura que fallara dejaba los contadores viejos sin nadie que
-        // reintentara: antes de esta pantalla había DOS lecturas por acción y
-        // la segunda tapaba el fallo de la primera; ahora sólo hay una. Y no
-        // hay rescate: el polling de 10 s **sólo corre con el socket caído**,
-        // así que justo en el caso que esto optimiza —socket sano— los chips
-        // se quedaban congelados hasta el siguiente evento de otra orden. Lo
-        // encontró la revisión, con test.
         _ultimaAplicada = generacion;
-        _contadoresSucios = false;
-        _reintentosDeRed = 0;
-        _redDeSeguridad?.cancel();
-        _redDeSeguridad = null;
+        final contadoresAlDia = generacion > _ultimaAplicadaContadores;
+        if (contadoresAlDia) _ultimaAplicadaContadores = generacion;
 
         emit(state.copyWith(
           loading: false,
           orders: r.orders,
-          counts: r.counts,
+          counts: contadoresAlDia ? r.counts : state.counts,
           // Sin meta (respuesta vieja o test) el total es lo que llegó: así
           // `isTruncated` da false y la UI no inventa un aviso.
-          total: r.meta?.total ?? r.orders.length,
+          total: contadoresAlDia ? (r.meta?.total ?? r.orders.length) : state.total,
           error: null,
         ));
       },
       failure: (e) {
         _logger.e(e);
-
-        // Si había una resincronización pendiente, se vuelve a armar la red.
-        // Con tope: un backend caído no puede convertirse en un GET cada dos
-        // segundos para siempre.
-        if (_contadoresSucios && _reintentosDeRed < _maxReintentosDeRed) {
-          _reintentosDeRed++;
-          _armarRed();
-        }
 
         // Un refetch de FONDO que falla no se le cuenta al manager: en pantalla
         // siguen los últimos datos buenos y el próximo tick los corrige.
@@ -314,24 +257,71 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
     return res.when(
       success: (r) {
         final updated = r.groupOrder;
-        // La orden actualizada reemplaza a su versión en la lista en el acto.
-        // Los contadores los mueve el cambio de bucket de esa orden, y de eso
-        // se encarga el evento de la propia mutación (ver
-        // `_pedirResincronizacion`).
-        // La MISMA lista si la orden no está en ella (otro cubo, o el chip
-        // filtrando): construir una nueva subiría la generación y mataría una
-        // lectura buena en vuelo sin que hubiera cambiado nada de lo que se ve.
-        final enLaLista = state.orders.any((o) => o.uuid == updated.uuid);
-        // Si tocó una fila visible, la pantalla queda tan al día como una
-        // lectura: las que salieron antes ya no tienen nada que aportar.
-        if (enLaLista) _ultimaAplicada = _generacion;
+        // La respuesta de la mutación trae los contadores, el total y si la
+        // orden sigue perteneciendo al panel en vivo (be-foodly #148). Con eso
+        // la pantalla se pone al día sin releer.
+        //
+        // `stillInPanel` lo decide el BACKEND. El predicado de "está en el
+        // panel" se corrigió tres veces en agosto de 2026; replicarlo en Dart
+        // sería mantener dos copias de algo que ya costó caro con una.
+        //
+        // Sin el campo —un backend sin desplegar— la orden se queda: una
+        // respuesta vieja no puede vaciarle la lista al manager.
+        final sigue = r.stillInPanel ?? true;
+        final contadores = r.panelCounts ?? state.counts;
+
+        // Pertenecer al PANEL y pertenecer al CUBO QUE SE ESTÁ MIRANDO son dos
+        // preguntas distintas, y la primera versión sólo contestaba la
+        // primera: con un chip filtrando, una orden que cambiaba de cubo se
+        // quedaba visible bajo el chip equivocado. Lo encontró la revisión.
+        //
+        // Esto SÍ es del cliente y no contradice lo de arriba: el mapeo
+        // cubo<->estado ya vive en `manager_orders_page.dart` y es trivial
+        // (`fulfillment_status == bucket`, pendientes = null). Lo que no se
+        // replica es el predicado del panel, que es harina de otro costal.
+        final cubo = state.bucket;
+        final enSuCubo = cubo == null || _perteneceAlCubo(updated, cubo);
+        final visible = sigue && enSuCubo;
+
+        final estaba = state.orders.any((o) => o.uuid == updated.uuid);
+
+        // La regla de generación es la de la PR #87 y se conserva TAL CUAL:
+        // sólo se marca si cambió algo de lo que se VE en la lista, porque
+        // marcarla mata una lectura en vuelo que quizá sea la única que traiga
+        // las filas de las demás mesas.
+        if (estaba) _ultimaAplicada = _generacion;
+
+        // Los contadores llevan su PROPIO marcador. Sin él, una lectura que
+        // salió antes de esta mutación y aterriza después pisaba los chips con
+        // números viejos —medido por la revisión—, y el argumento de "ya lo
+        // corrige el evento" no se sostiene: `BusinessOrdersTouched::safe` se
+        // traga los fallos de broadcast, y el polling de 10 s sólo corre con el
+        // socket caído. Este marcador no toca la regla de la lista.
+        _ultimaAplicadaContadores = _generacion;
+
         emit(state.copyWith(
-          orders: enLaLista
-              ? [for (final o in state.orders) o.uuid == updated.uuid ? updated : o]
+          orders: estaba
+              ? [
+                  for (final o in state.orders)
+                    if (o.uuid != updated.uuid) o else if (visible) updated,
+                ]
               : state.orders,
+          counts: contadores,
+          // El total del listado es el del CUBO FILTRADO (el backend devuelve
+          // `meta.total` ya filtrado), y `counts_total` de la mutación es el
+          // GLOBAL. Meter uno en el campo del otro hacía que el pie dijera
+          // "Mostrando 2 de 9" en cuanto había un chip puesto. Con filtro, el
+          // total sale del contador de ese cubo, que es lo que hace el backend.
+          total: _totalDelCubo(cubo, contadores) ?? r.panelTotal ?? state.total,
           error: null,
         ));
-        _pedirResincronizacion();
+
+        // El único caso que NO se puede resolver aquí: la orden debería ENTRAR
+        // en el cubo que se está mirando y no está en la lista. Falta su sitio
+        // en el orden, así que hay que leer. Es la red de seguridad de la
+        // PR #82, reducida a este único caso.
+        if (!estaba && visible && cubo != null) refetchSilently();
+
         return true;
       },
       failure: (e) {
@@ -344,8 +334,6 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
 
   @override
   Future<void> close() async {
-    _redDeSeguridad?.cancel();
-    _redDeSeguridad = null;
     _suscrito = false;
     GroupOrderRealtimeService.cancelarCuandoExista(_sub);
     _sub = null;
