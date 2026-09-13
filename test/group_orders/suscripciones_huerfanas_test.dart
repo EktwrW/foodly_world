@@ -82,6 +82,39 @@ void main() {
       expect(realtime.pollingActivo, isTrue);
     });
 
+    /// EL CAMINO DEL 99 %, y no lo cubría NADA: la suscripción nace bien y
+    /// luego el manager sale de la pantalla, sin carrera ninguna.
+    ///
+    /// Las dos ventanas de aquí al lado las tapan la bandera `_suscrito` y la
+    /// comprobación posterior al `await` de `_suscribir`. Ésta sólo la corta
+    /// `cancelarCuandoExista(_sub)` en `close()` — LA garantía de la PR #88 —,
+    /// y quitar esa línea dejaba la suite entera en verde. Lo encontraron por
+    /// separado las dos revisiones del 2026-09-13.
+    test('salir de la pantalla con la suscripción YA viva no deja oyentes', () async {
+      final repo = _RepoFalso();
+      final cubit = ManagerOrdersCubit(
+        repo: repo,
+        logger: _mudo,
+        businessUuid: 'b1',
+        realtime: realtime,
+      );
+
+      final carga = cubit.load();
+      repo.responderLista(0);
+      await carga;
+      await _turno();
+      expect(realtime.pollingActivo, isTrue, reason: 'premisa: quedó suscrito');
+
+      await cubit.close(); // el manager se va, con el canal ya vivo
+      // `_asentar` y no `_turno`: `cancelarCuandoExista` es fire-and-forget
+      // (`unawaited`), así que el cancelado cae DESPUÉS de que `close()` haya
+      // vuelto. Con un solo turno esto sale rojo sin que nada esté mal.
+      await _asentar();
+
+      expect(realtime.pollingActivo, isFalse,
+          reason: 'oyente huérfano: una lectura por cada resume, sobre un cubit muerto');
+    });
+
     /// La ventana MÁS estrecha, y la que el primer arreglo dejó abierta:
     /// cerrar mientras la suscripción está NACIENDO. La comprobación de después
     /// del await es la única que la cubre.
@@ -176,6 +209,26 @@ void main() {
 
       expect(repo.lecturasDeOrden, antes + 1,
           reason: 'con dos oyentes vivos, el mismo evento pedía la orden dos veces');
+    });
+
+    /// Lo mismo en la página: cerrarla con el canal ya vivo.
+    test('salir de la página con la suscripción YA viva no deja oyentes', () async {
+      final repo = _RepoFalso();
+      final cubit = GroupOrderCubit(repo: repo, logger: _mudo, realtime: realtime);
+
+      final carga = cubit.load('o1');
+      repo.responderOrden(0);
+      await carga;
+      // `_asentar` en la PREMISA también: `watch` espera a `_connect()`, que
+      // sin socket falla y cae al polling, y un turno no alcanza. Con
+      // `_turno()` esto sale rojo aquí, antes de medir nada.
+      await _asentar();
+      expect(realtime.pollingActivo, isTrue, reason: 'premisa: quedó suscrito');
+
+      await cubit.close();
+      await _asentar();
+
+      expect(realtime.pollingActivo, isFalse, reason: 'oyente huérfano en la página');
     });
 
     /// Cambiar de orden SÍ tiene que cancelar la anterior: es el único camino
@@ -275,6 +328,41 @@ void main() {
       await cubit.watchActive('o1');
 
       expect(realtime.pollingActivo, isTrue);
+    });
+
+    /// Y lo mismo por la otra puerta: `end()` con el canal ya vivo. Es el
+    /// desenlace normal —se cerró, se pagó o se canceló la orden—, y su
+    /// cancelado tampoco lo sostenía nada: el test de `end()` de aquí arriba
+    /// mide la ventana del nacimiento, no ésta.
+    test('end() con la suscripción YA viva tampoco deja oyentes', () async {
+      final realtime = GroupOrderRealtimeService(authSession: _AuthFalso());
+      addTearDown(realtime.unwatchAll);
+      final cubit = ActiveGroupOrderCubit(repo: _RepoFalso(), logger: _mudo, realtime: realtime);
+      addTearDown(cubit.close);
+
+      await cubit.watchActive('o1');
+      expect(realtime.pollingActivo, isTrue, reason: 'premisa: quedó suscrito');
+
+      cubit.end();
+      await _asentar();
+
+      expect(realtime.pollingActivo, isFalse,
+          reason: 'la orden terminó y el chip se quedó oyendo su canal');
+    });
+
+    /// Y cerrarlo con el canal ya vivo tampoco puede dejarlo oyendo.
+    test('cerrar el chip con la suscripción YA viva no deja oyentes', () async {
+      final realtime = GroupOrderRealtimeService(authSession: _AuthFalso());
+      addTearDown(realtime.unwatchAll);
+      final cubit = ActiveGroupOrderCubit(repo: _RepoFalso(), logger: _mudo, realtime: realtime);
+
+      await cubit.watchActive('o1');
+      expect(realtime.pollingActivo, isTrue, reason: 'premisa: quedó suscrito');
+
+      await cubit.close();
+      await _asentar();
+
+      expect(realtime.pollingActivo, isFalse, reason: 'oyente huérfano en el chip');
     });
   });
 

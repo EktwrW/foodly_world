@@ -3044,6 +3044,39 @@ con su control positivo: con la pantalla abierta la suscripción SÍ tiene que
 quedar, porque «no suscribirse nunca» pasaría todo lo demás.
 
 
+### El camino del 99 % no lo cubría nada (2026-09-13, dos revisiones)
+
+Después de todo lo anterior, **el caso corriente se quedó sin test**: la
+suscripción nace bien y luego el usuario **sale de la pantalla**. Quitar
+`cancelarCuandoExista(_sub)` del `close()` de cualquiera de los tres cubits
+dejaba la suite **entera en verde**.
+
+Lo encontraron por separado las dos revisiones independientes del 13/09/2026, y
+se confirmó una tercera vez con un arnés validado con control positivo y
+negativo. O sea: el día entero que costó la #88 estaba sostenido sólo por
+revisión de código.
+
+Lo que cubrían los tests que ya había eran las **ventanas estrechas** —cerrar
+durante la primera lectura, cerrar mientras la suscripción nace, dos `load()`
+seguidos—, y ésas las tapan la bandera `_suscrito`/`_observado` y la
+comprobación posterior al `await`. El cierre normal sólo lo corta la línea de
+`close()`.
+
+Son **cuatro** guardas, no tres: el chip cancela también en `end()`, que es el
+desenlace normal —la orden se cerró, se pagó o se canceló— y lo llama
+`refresh()` ante un 404/403. Cada una tiene ahora su test, y mutarlas una a una
+pone en rojo exactamente uno.
+
+**Y las dos trampas de temporización, que me costaron dos rojos en falso:**
+
+- `cancelarCuandoExista` es *fire-and-forget* (`unawaited`), así que el
+  cancelado cae **después** de que `close()` haya vuelto. Con un solo turno el
+  test sale rojo sin que nada esté mal.
+- La **premisa** («quedó suscrito») necesita `_asentar()` igual: `watch` espera
+  a `_connect()`, que sin socket falla y cae al polling. Con `_turno()` el test
+  se cae en la premisa, antes de medir nada — y leerlo como «la garantía está
+  rota» habría sido el error.
+
 ## El modo «negocio visitado» (2026-04-12)
 
 ### Son dos páginas, no una
