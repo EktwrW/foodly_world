@@ -44,6 +44,7 @@ void main() {
   Widget toggleDeDosPestanas(BuildContext context) {
     anchoLeido = context.screenWidth;
     return ToggleSwitch(
+      // ignore: avoid_redundant_argument_values
       initialLabelIndex: 0,
       totalSwitches: 2,
       minHeight: 30,

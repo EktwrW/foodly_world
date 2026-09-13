@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:foodly_world/core/configs/base_config.dart';
 import 'package:foodly_world/core/configs/demo_config.dart';
 import 'package:foodly_world/core/configs/dev_config.dart';
 import 'package:foodly_world/core/configs/prod_config.dart';
