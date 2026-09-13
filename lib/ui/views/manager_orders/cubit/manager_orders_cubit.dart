@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -136,8 +137,22 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   /// Sin chip `meta.total` YA es el global: respaldo exacto. Con chip no hay
   /// sustituto, así que se conserva el último conocido — lo refrescan las
   /// lecturas sin chip y cada mutación.
-  int _totalDelPanel(ManagerOrdersResponseDM r, String? cubo) =>
-      r.countsTotal ?? (cubo == null ? (r.meta?.total ?? r.orders.length) : state.panelTotal);
+  ///
+  /// El suelo NO es cosmético, y lo encontró la revisión: «el último conocido»
+  /// es el 0 del constructor si la primera lectura APLICADA ya lleva chip, y
+  /// se llega ahí por un camino normal —el selector se pinta fuera de la rama
+  /// del spinner, así que el camarero puede tocar "Listas" mientras carga—.
+  /// Salía «Todas 0 · Listas 2», que además de falso es imposible: el filtro
+  /// es un subconjunto, así que el panel nunca puede tener menos que el cubo
+  /// que se está mirando. Y no se cura solo: los refetch del canal llevan el
+  /// mismo chip.
+  int _totalDelPanel(ManagerOrdersResponseDM r, String? cubo) {
+    final delListado = r.meta?.total ?? r.orders.length;
+    final global = r.countsTotal;
+    if (global != null) return global;
+
+    return cubo == null ? delListado : math.max(state.panelTotal, delListado);
+  }
 
   Future<void> load() async {
     emit(state.copyWith(loading: true, error: null));

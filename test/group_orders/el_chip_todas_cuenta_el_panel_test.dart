@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -29,6 +31,14 @@ class _FakeRepo implements GroupOrderRepo {
   ApiResult<GroupOrderResponseDM>? accion;
   String? ultimoBucket;
 
+  /// Retiene las N próximas lecturas: sin esto no hay forma de tener una
+  /// lectura vieja aterrizando DESPUÉS de una mutación, que es el caso que
+  /// pone a prueba la guarda de generación sobre los contadores.
+  int retenerLasProximas = 0;
+  final List<Completer<ApiResult<ManagerOrdersResponseDM>>> enVuelo = [];
+
+  void responder(ApiResult<ManagerOrdersResponseDM> r) => enVuelo.removeAt(0).complete(r);
+
   @override
   Future<ApiResult<ManagerOrdersResponseDM>> managerOrders(
     String businessUuid, {
@@ -36,6 +46,12 @@ class _FakeRepo implements GroupOrderRepo {
     int? page,
   }) async {
     ultimoBucket = bucket;
+    if (retenerLasProximas > 0) {
+      retenerLasProximas--;
+      final c = Completer<ApiResult<ManagerOrdersResponseDM>>();
+      enVuelo.add(c);
+      return c.future;
+    }
     return lista!;
   }
 
@@ -60,23 +76,30 @@ void main() {
   const lista2 = GroupOrderDM(
       uuid: 'b', status: GroupOrderStatus.confirmed, businessName: 'Best Sushi Lounge');
 
-  // 1 pendiente + 2 listas = 3 en el panel. Los cuatro cubos NO suman 3 por
-  // casualidad: suman 3 porque los tres números son reales.
+  // 1 pendiente + 2 listas + **1 con un `fulfillment_status` que no es ninguno
+  // de los cuatro cubos** = 4 en el panel.
+  //
+  // Esa cuarta es LA RAZÓN DE SER del fixture, y la primera versión no la
+  // tenía: con los cubos sumando exactamente el total, la implementación
+  // «suma los cuatro cubos» —la que esta PR argumenta durante tres párrafos
+  // que NO se puede hacer— pasaba la suite entera. Lo midió la revisión. Un
+  // comentario mío decía justo lo contrario, y era falso.
   const contadores = ManagerOrderCountsDM(pending: 1, ready: 2);
+  const enElPanel = 4;
 
   /// La respuesta del panel SIN chip: ahí `meta.total` y el global coinciden,
   /// y por eso el fallo no se veía hasta tocar un chip.
-  ApiResult<ManagerOrdersResponseDM> sinChip({int? global = 3}) =>
+  ApiResult<ManagerOrdersResponseDM> sinChip({int? global = enElPanel}) =>
       ApiResult.success(ManagerOrdersResponseDM(
         orders: const [lista1, lista2],
         counts: contadores,
         countsTotal: global,
-        meta: const ManagerOrdersMetaDM(total: 3),
+        meta: const ManagerOrdersMetaDM(total: enElPanel),
       ));
 
   /// Y CON el chip "Listas" puesto: `meta.total` es 2 —el del cubo— y el
   /// global sigue siendo 3.
-  ApiResult<ManagerOrdersResponseDM> conChipListas({int? global = 3}) =>
+  ApiResult<ManagerOrdersResponseDM> conChipListas({int? global = enElPanel}) =>
       ApiResult.success(ManagerOrdersResponseDM(
         orders: const [lista1, lista2],
         counts: contadores,
@@ -137,7 +160,7 @@ void main() {
       await cubit.load();
       await tester.pumpAndSettle();
 
-      expect(numeroDelChip(tester, S.current.managerBucketAll), '3');
+      expect(numeroDelChip(tester, S.current.managerBucketAll), '4');
 
       // Y ahora el chip "Listas", que es donde estaba el fallo.
       repo.lista = conChipListas();
@@ -147,8 +170,9 @@ void main() {
       expect(repo.ultimoBucket, 'ready', reason: 'el tap no llegó al cubit');
       expect(
         numeroDelChip(tester, S.current.managerBucketAll),
-        '3',
-        reason: '"Todas" se quedó con el total del cubo filtrado',
+        '4',
+        reason: '"Todas" se quedó con el total del cubo filtrado, o sumó los '
+            'cuatro cubos —que se queda corto con el estado desconocido',
       );
       expect(numeroDelChip(tester, S.current.managerBucketReady), '2');
       expect(numeroDelChip(tester, S.current.managerBucketPending), '1');
@@ -159,15 +183,15 @@ void main() {
     test('selectBucket: el listado pasa a contar el cubo, el panel no', () async {
       repo.lista = sinChip();
       await cubit.load();
-      expect(cubit.state.total, 3);
-      expect(cubit.state.panelTotal, 3);
+      expect(cubit.state.total, 4);
+      expect(cubit.state.panelTotal, 4);
 
       repo.lista = conChipListas();
       await cubit.selectBucket('ready');
 
       // Son DOS números, y aquí se separan.
       expect(cubit.state.total, 2, reason: 'el pie tiene que seguir hablando del cubo');
-      expect(cubit.state.panelTotal, 3, reason: 'el chip "Todas" cuenta el panel entero');
+      expect(cubit.state.panelTotal, 4, reason: 'el chip "Todas" cuenta el panel entero');
     });
 
     /// Lo que el cliente TIRABA: la mutación manda `counts_total` desde
@@ -176,7 +200,7 @@ void main() {
     test('una acción con chip puesto refresca el total del panel', () async {
       repo.lista = conChipListas();
       await cubit.selectBucket('ready');
-      expect(cubit.state.panelTotal, 3);
+      expect(cubit.state.panelTotal, 4);
 
       // Una mesa se cerró en otro sitio: el panel pasa a 2.
       repo.accion = ApiResult.success(GroupOrderResponseDM(
@@ -197,7 +221,7 @@ void main() {
       repo.lista = sinChip(global: null);
       await cubit.load();
 
-      expect(cubit.state.panelTotal, 3);
+      expect(cubit.state.panelTotal, 4);
     });
 
     /// Y CON chip no hay respaldo que valga: `meta.total` es el del cubo y
@@ -213,10 +237,66 @@ void main() {
       expect(cubit.state.total, 2);
       expect(
         cubit.state.panelTotal,
-        3,
+        4,
         reason: 'se quedó con el total del cubo, que es justo el fallo original',
       );
     });
+  });
+
+  /// «Conservar el último conocido» no puede degenerar en un CERO.
+  ///
+  /// Lo encontró la revisión: si la primera lectura APLICADA ya lleva chip
+  /// —el selector se pinta fuera de la rama del spinner, así que es tocable
+  /// mientras carga—, el último conocido es el 0 del constructor. Salía
+  /// «Todas 0 · Listas 2»: además de falso, imposible, porque el filtro es un
+  /// subconjunto. Y no se curaba con los refetch del canal, que llevan el
+  /// mismo chip.
+  test('backend sin counts_total: "Todas" nunca dice menos que el cubo activo', () async {
+    repo.lista = conChipListas(global: null);
+    await cubit.selectBucket('ready'); // la PRIMERA lectura aplicada ya va filtrada
+
+    expect(cubit.state.panelTotal, greaterThanOrEqualTo(cubit.state.total),
+        reason: '"Todas" diciendo menos que "Listas" es imposible por construcción');
+    expect(cubit.state.panelTotal, 2);
+
+    // Y sigue sin curarse solo si el canal refresca con el mismo chip.
+    await cubit.refetchSilently();
+    expect(cubit.state.panelTotal, 2);
+  });
+
+  /// El global va con el marcador de CONTADORES, no con el de la lista.
+  ///
+  /// Sin esa guarda, una lectura lanzada antes de la mutación y aterrizada
+  /// después le pisa el número al chip. No lo sostenía ningún test: quitarla
+  /// dejaba la suite entera en verde.
+  test('una lectura vieja no le pisa el total al chip', () async {
+    repo.lista = sinChip();
+    await cubit.load();
+    expect(cubit.state.panelTotal, 4);
+
+    // Sale una lectura y se queda en vuelo.
+    repo.retenerLasProximas = 1;
+    unawaited(cubit.refetchSilently());
+    await Future<void>.delayed(Duration.zero);
+
+    // Y mientras, una mutación sobre una orden que NO está en la lista y que
+    // ADEMÁS sale del panel: así no se marca `_ultimaAplicada` (la regla de
+    // la #87 se queda intacta) ni arranca ningún rescate.
+    repo.accion = const ApiResult.success(GroupOrderResponseDM(
+      groupOrder: GroupOrderDM(uuid: 'z', status: GroupOrderStatus.confirmed),
+      panelCounts: ManagerOrderCountsDM(ready: 1),
+      panelTotal: 2,
+      stillInPanel: false,
+    ));
+    await cubit.advanceFulfillment('z', 'ready');
+    expect(cubit.state.panelTotal, 2);
+
+    // Ahora aterriza la vieja, con el número rancio.
+    repo.responder(sinChip(global: 9));
+    await Future<void>.delayed(const Duration(milliseconds: 20));
+
+    expect(cubit.state.panelTotal, 2,
+        reason: 'una lectura anterior a la mutación le pisó el número al chip');
   });
 
   test('el DM lee counts_total del JSON', () {
@@ -224,11 +304,11 @@ void main() {
       'success': true,
       'orders': <Map<String, dynamic>>[],
       'counts': {'pending': 1, 'preparing': 0, 'ready': 2, 'delivered': 0},
-      'counts_total': 3,
+      'counts_total': 4,
       'meta': {'current_page': 1, 'last_page': 1, 'total': 2},
     });
 
-    expect(r.countsTotal, 3);
+    expect(r.countsTotal, 4);
     expect(r.meta?.total, 2, reason: 'y no es el mismo campo que el del listado');
   });
 }
