@@ -1883,6 +1883,54 @@ el repo—. Un test así se rompería cada vez que cambie cualquiera de esos
 constructores: sería un lastre, no una red. Verificado con `flutter analyze`
 limpio y por lectura de la cadena estado → wrapper, que es corta y cerrada.
 
+## Los contadores del panel salen de la mutación (2026-09-13)
+
+El panel leía la lista entera después de cada acción del manager, sólo para
+mover un cubo de los chips. La cadena hasta aquí:
+
+1. **Dos lecturas por acción**, medidas en producción: la local y la del evento
+   de Pusher de esa misma mutación.
+2. Se quitó la local y quedó una **red de seguridad de 2 s**. Una lectura menos,
+   pero la fila se quedaba a la vista hasta que llegara el evento — al cerrar
+   una cuenta o con un chip filtrando, hasta 2 s mostrando algo que el backend
+   ya no incluye.
+3. **Ahora la respuesta de la mutación trae `counts`, `counts_total` y
+   `still_in_panel`** (be-foodly #148). No hay nada que releer, y la red —con
+   su `Timer`, sus reintentos, su constante y su getter de test— desaparece.
+
+**`still_in_panel` lo decide el backend a propósito.** El predicado de "está en
+el panel en vivo" se corrigió tres veces en agosto de 2026; replicarlo en Dart
+sería mantener dos copias de algo que ya costó caro con una.
+
+**Los tres campos son opcionales y con fallback al estado anterior**: el mismo
+DM lo devuelven endpoints del comensal, que no saben nada de chips, y una
+respuesta de un backend sin desplegar no puede vaciar la lista ni poner los
+contadores a cero. Hay test de las dos cosas.
+
+**Cómo convive con el guardián de generación (PR #87)**, que es lo delicado:
+
+- La regla de `_ultimaAplicada` se conserva **tal cual**: sólo se marca si
+  cambió algo de lo que se VE en la lista. Marcarla mata una lectura en vuelo
+  que quizá sea la única que traiga las filas de las demás mesas.
+- Los contadores sí se aplican siempre. Si una lectura anterior a la mutación
+  aterriza después y los pisa, el refetch del evento —que viene detrás, en
+  menos de un segundo— los corrige. Se prefiere ese parpadeo a tirar una
+  lectura buena.
+
+**El grupo de tests «la red de seguridad» se borra con ella**, pero su
+preocupación de fondo sigue fijada: la contra-revisión de la #87 midió 22
+peticiones contra 4 porque cada descarte reseteaba el tope de reintentos. Ahora
+esa clase de fallo **no necesita tope, no existe** — una acción no lee. El test
+que lo fija son doce acciones seguidas con cero lecturas.
+
+**Trampa de proceso**: esta rama se escribió mientras OTRA sesión trabajaba en
+el mismo checkout. Se detectó porque la suite global daba un rojo
+(`set_session_group_order_sync_test`) que **pasaba en aislamiento**. Se commiteó
+por ruta explícita, nunca `git add -A`, y `CLAUDE.md` se dejó para después
+porque el otro lo tenía a medias. Si la suite falla en algo que no tocaste,
+mira `git status` antes de depurar.
+
+
 ## El panel del manager leía la lista DOS veces por acción (2026-09-12)
 
 **Medido en producción, no deducido.** Cuatro pares limpios en los logs de
