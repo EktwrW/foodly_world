@@ -103,6 +103,11 @@ class AppRequestException implements Exception {
             : S.current.tooManyAttempts;
       }
 
+      // Cualquier 401 dice lo mismo al usuario, venga del servidor o lo fabrique
+      // el interceptor. Va antes de leer el cuerpo: Laravel manda
+      // «Unauthenticated.» y esa rama lo pintaba tal cual, en inglés.
+      if (dio.response?.statusCode == 401) return S.current.sessionExpiredMessage;
+
       final data = dio.response?.data;
       if (data is Map) {
         // If there are field-level validation errors, surface them.
@@ -118,6 +123,11 @@ class AppRequestException implements Exception {
 
         final msg = data['message'] as String?;
         if (msg != null && msg.isNotEmpty) return msg;
+      }
+      // Sin respuesta, `statusMessage` y `statusCode` son null: la cadena de
+      // abajo se leía «null error code: null» en pantalla.
+      if (dio.response == null) {
+        return isOffline ? S.current.noConnection : S.current.genericErrorRetry;
       }
       return '${dio.response?.statusMessage} error code: ${dio.response?.statusCode}';
     }

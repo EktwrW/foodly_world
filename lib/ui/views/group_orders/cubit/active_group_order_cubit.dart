@@ -28,14 +28,13 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
 
   /// uuid observado ahora mismo, y su suscripción (para cancelar la NUESTRA).
   String? _watchedUuid;
-  RealtimeSubscription? _sub;
+  /// El FUTURO, no la suscripción resuelta: mientras `watch` viaja no hay nada
+  /// que cancelar, y quien se vaya en esa ventana dejaba el oyente huérfano.
+  Future<RealtimeSubscription>? _sub;
   bool _busy = false;
 
-  /// Sube en cada [end]. Un `syncAnyActive` que quedó en vuelo compara contra
-  /// este valor antes de emitir: si la sesión se limpió mientras la respuesta
-  /// viajaba, el resultado ya no corresponde a nadie y se descarta. Sin esto,
-  /// `_validateRestoredSession` podía invalidar la sesión y el sync repoblaba
-  /// el chip igual, resucitando la orden del usuario anterior.
+  /// Sube al lanzar una lectura y al emitir: la respuesta que vuelve con una
+  /// generación vieja llega tarde y se descarta (2026-09-12).
   int _generacion = 0;
 
   ActiveGroupOrderCubit({
@@ -82,6 +81,17 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     }
   }
 
+  /// El embudo de la generación. En `emit` y no en `onChange` porque bloc
+  /// deduplica los estados iguales y entonces `onChange` NO corre — y una
+  /// respuesta idéntica a la que ya hay sigue siendo una foto aplicada. Aquí
+  /// vale porque todo estado de este cubit es una foto o un vaciado; en la
+  /// página no valdría (ver `_applyResponse`).
+  @override
+  void emit(GroupOrderDM? state) {
+    _generacion++;
+    super.emit(state);
+  }
+
   /// ¿Hay una orden activa para este negocio?
   bool isActiveFor(String businessUuid) => state != null && state!.businessUuid == businessUuid;
 
@@ -91,7 +101,9 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   /// servidor tiene una orden activa para este negocio, se adopta.
   Future<void> syncForBusiness(String businessUuid) async {
     if (isActiveFor(businessUuid) || _busy) return;
+    final generacion = ++_generacion;
     final res = await _repo.getMyGroupOrders();
+    if (isClosed || generacion != _generacion) return; // llegó tarde
     res.when(
       success: (r) {
         // F4b: en cuenta abierta la orden CONFIRMADA sigue siendo el carrito
@@ -112,9 +124,9 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   /// sin entregar). No-op si ya hay estado o sin sesión (401 silencioso).
   Future<void> syncAnyActive() async {
     if (state != null || _busy) return;
-    final generacionAlPedir = _generacion;
+    final generacion = ++_generacion;
     final res = await _repo.getMyGroupOrders();
-    if (generacionAlPedir != _generacion) return; // la sesión se limpió mientras viajaba
+    if (isClosed || generacion != _generacion) return; // llegó tarde
     res.when(
       success: (r) {
         final cart = r.groupOrders.where((o) => o.isOpen || o.isPayable).toList();
@@ -298,12 +310,16 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   }
 
   /// Re-lee la orden activa desde el backend (p. ej. al volver del detalle).
-  Future<void> refresh({bool coalesce = false}) async {
+  Future<void> refresh({bool coalesce = false, bool esReintento = false}) async {
     final order = state;
     if (order == null) return;
+    final generacion = ++_generacion;
     final res = await _repo.getGroupOrder(order.uuid, coalesce: coalesce);
+    if (isClosed) return;
     res.when(
-      success: (r) => emit(r.groupOrder),
+      success: (r) {
+        if (generacion == _generacion) emit(r.groupOrder);
+      },
       failure: (e) {
         _logger.e(e);
         // La orden dejó de ser mía. El backend ya avisaba —`destroy` emite
@@ -322,7 +338,21 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
         // vaciarle el carrito a nadie: ahí la orden sigue existiendo y lo
         // correcto es conservarla hasta poder confirmarlo.
         final code = e.statusCode;
-        if (code == 404 || code == 403) end();
+        if (code != 404 && code != 403) return;
+
+        // El carrito ya es OTRA orden: este veredicto no habla de ella.
+        if (state?.uuid != order.uuid) return;
+
+        // Si nadie tocó el carrito mientras esto viajaba, es la última palabra.
+        // Si algo lo tocó, NO se cree a ciegas —pude RE-UNIRME a la misma orden
+        // en esa ventana— pero tampoco se tira: se vuelve a preguntar, una sola
+        // vez. Descartarlo sin más dejaba el chip con una orden borrada, y no
+        // hay segundo evento que lo repare: `deleted` se emite ANTES de borrar.
+        if (generacion == _generacion || esReintento) {
+          end();
+        } else {
+          unawaited(refresh(esReintento: true));
+        }
       },
     );
   }
@@ -348,13 +378,40 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   /// está asignado.
   Future<void> watchActive([String? uuid]) async {
     final objetivo = uuid ?? state?.uuid;
-    if (_realtime == null || objetivo == null || _watchedUuid == objetivo) return;
-    await _sub?.cancel();
+    final realtime = _realtime;
+    if (realtime == null || objetivo == null || _watchedUuid == objetivo) return;
+    // ANTES de cualquier await, o dos llamadas del mismo turno entran las dos.
     _watchedUuid = objetivo;
+    final anterior = _sub;
     // `coalesce: true`: este refresh nace de un evento y la página de la orden
     // oye el MISMO canal. Los `refresh()` de `group_order_page.dart`, que
     // siguen a una mutación del comensal, se quedan sin coalescer a propósito.
-    _sub = await _realtime.watch(objetivo, onTouched: () => refresh(coalesce: true));
+    //
+    // `watch` va ANTES de cancelar la anterior: registra el oyente de forma
+    // síncrona, y colar un `await` delante abre un hueco donde se pierde un
+    // evento.
+    final pendiente = realtime.watch(objetivo, onTouched: () => refresh(coalesce: true));
+    _sub = pendiente;
+    GroupOrderRealtimeService.cancelarCuandoExista(anterior);
+    final RealtimeSubscription sub;
+    try {
+      sub = await pendiente;
+    } catch (e) {
+      // La bandera vuelve a su sitio o el consumidor se queda sin canal PARA
+      // SIEMPRE: toda llamada posterior saldría por la guarda de idempotencia.
+      // Hoy no se alcanza —`_connect()` se traga sus errores— pero es el único
+      // modo de fallo permanente que introduce esto.
+      //
+      // NO se relanza: los tres se llaman en modo dispara-y-olvida
+      // (`unawaited`, `..load()`), así que relanzar sería un error asíncrono
+      // sin manejar. Se registra, como el resto de fallos de este cubit.
+      if (_watchedUuid == objetivo) _watchedUuid = null;
+      _logger.e(e);
+      return;
+    }
+    // `end()` pudo limpiar el carrito mientras ésta nacía — y `end()` la llama
+    // `refresh()` ante un 404/403, que es el propio callback de realtime.
+    if (isClosed || _watchedUuid != objetivo) await sub.cancel();
   }
 
   /// El singleton no se cierra en producción, pero los tests sí lo hacen y
@@ -362,7 +419,7 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   @override
   Future<void> close() {
     _watchedUuid = null;
-    _sub?.cancel();
+    GroupOrderRealtimeService.cancelarCuandoExista(_sub);
     _sub = null;
     return super.close();
   }
@@ -370,14 +427,13 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   /// Termina la orden activa (tras cerrar/pagar/cancelar): limpia el carrito.
   void end() {
     _watchedUuid = null;
-    _sub?.cancel();
+    GroupOrderRealtimeService.cancelarCuandoExista(_sub);
     _sub = null;
     // OJO: acá NO se toca `_busy`. `end()` no es solo el hook de logout —
     // `refresh()` la llama ante un 404/403 y `refresh` es el callback de
     // realtime, así que un evento de Pusher soltaría un cerrojo que sostiene
     // otra operación en vuelo y dos peticiones saldrían a la vez. Para el
     // caso de cierre de sesión existe `resetForLogout()`.
-    _generacion++;
     emit(null);
   }
 

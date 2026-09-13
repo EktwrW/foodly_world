@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
+import 'package:foodly_world/core/network/base/download_client.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -58,7 +58,7 @@ abstract class SharePromotionHelper {
     try {
       final dir = await getTemporaryDirectory();
       final file = File('${dir.path}/$filename');
-      await Dio().download(url, file.path);
+      await dioDeDescarga().download(url, file.path);
       return file;
     } catch (_) {
       return null;

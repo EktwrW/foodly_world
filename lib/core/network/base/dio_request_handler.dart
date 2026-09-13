@@ -42,6 +42,30 @@ abstract class DioRequestHandler {
     // completo ('pt-PT', 'es-AR'); el backend se queda con el primario.
     options.headers[FoodlyStrings.ACCEPT_LANGUAGE] = FoodlyLocales.deviceLocaleTag;
 
+    // Los endpoints con `@DioOptions()` no pasan por `Options.compose`, y
+    // `connectTimeout` ni siquiera es un campo de `Options`: salían sin límite.
+    // El interceptor es el único punto por el que pasan TODAS las peticiones.
+    options.connectTimeout ??= FoodlyApiProvider.connectTimeout;
+    options.receiveTimeout ??= FoodlyApiProvider.receiveTimeout;
+    options.sendTimeout ??= FoodlyApiProvider.sendTimeout;
+
+    // Con ficheros dentro: `@MultiPart()` también genera `FormData` para
+    // formularios de puro texto, y esos no necesitan el techo alto. Va antes
+    // del `return` de los endpoints de auth porque `/register` sube foto.
+    final cuerpo = options.data;
+    if (cuerpo is FormData && cuerpo.files.isNotEmpty) {
+      if (options.sendTimeout == FoodlyApiProvider.sendTimeout) {
+        options.sendTimeout = FoodlyApiProvider.uploadSendTimeout;
+      }
+      if (options.receiveTimeout == FoodlyApiProvider.receiveTimeout) {
+        options.receiveTimeout = FoodlyApiProvider.uploadReceiveTimeout;
+      }
+    }
+
+    if (_endpointsLentos.contains(options.path) && options.receiveTimeout == FoodlyApiProvider.receiveTimeout) {
+      options.receiveTimeout = FoodlyApiProvider.slowEndpointReceiveTimeout;
+    }
+
     await authSessionService.validateAccessToken();
 
     // Public auth endpoints must NEVER be blocked by stale token checks.
@@ -138,7 +162,7 @@ abstract class DioRequestHandler {
         final refreshed = await authSessionService.silentRefresh();
         if (!refreshed) {
           authSessionService.notifyTokenExpired();
-          return;
+          return handler.reject(_sesionMuerta(options));
         }
         // After refresh, fall through to use the new access token below.
         //
@@ -150,7 +174,7 @@ abstract class DioRequestHandler {
         options.extra[_kSessionGenerationKey] = authSessionService.sessionGeneration;
       } else {
         authSessionService.notifyTokenExpired();
-        return;
+        return handler.reject(_sesionMuerta(options));
       }
     }
 
@@ -177,6 +201,28 @@ abstract class DioRequestHandler {
 
     return handler.next(options);
   }
+
+  /// Corta una petición cuya sesión ya no vale y que no llegó a salir.
+  ///
+  /// Un `return` pelado aquí NO la cancela: deja el futuro de quien llamó
+  /// pendiente para siempre. El 401 es sintético porque la petición estaba sin
+  /// autenticar igualmente; `reject` sin segundo argumento no reentra en
+  /// `dioErrorHandler`, así que no realimenta otro ciclo de refresco.
+  static DioException _sesionMuerta(RequestOptions options) => DioException(
+        requestOptions: options,
+        type: DioExceptionType.badResponse,
+        response: Response<dynamic>(
+          requestOptions: options,
+          statusCode: 401,
+          statusMessage: 'Unauthenticated',
+        ),
+        error: 'la sesión ya no vale; la petición no llegó a salir',
+      );
+
+  /// Esperas legítimas que no caben en el techo global. Hace falta la lista
+  /// porque nada en la FORMA de la petición delata lo lenta que es:
+  /// `/promotions/ai-generate` proxea dos generaciones de Replicate.
+  static const _endpointsLentos = <String>{'/promotions/ai-generate'};
 
   /// Rutas que abren o renuevan una sesión, y por tanto crean una fila en la
   /// lista de sesiones activas del usuario.

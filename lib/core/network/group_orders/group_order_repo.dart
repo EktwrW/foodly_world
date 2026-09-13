@@ -33,9 +33,8 @@ class GroupOrderRepo {
   /// —recibiría una foto que por construcción no la contiene, y no hay nada
   /// que lo recupere: el polling de 10 s solo corre con el socket caído—.
   ///
-  /// De regalo, una petición que no termina nunca —móvil que pasa de WiFi a
-  /// datos, y este Dio no fija `receiveTimeout`— no puede dejar la orden muda
-  /// el resto de la sesión, y el mapa no puede crecer entre sesiones.
+  /// De regalo, una petición lenta no deja la orden muda el resto de la sesión
+  /// y el mapa no crece entre sesiones.
   ///
   /// No es una caché: nadie reusa nada fuera de ese turno.
   final Map<String, Future<ApiResult<GroupOrderResponseDM>>> _lecturasDelTurno = {};

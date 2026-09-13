@@ -147,7 +147,7 @@
       ]
     },
     {
-      "name": "Group Orders test — iPhone 16e (LOCAL backend)",
+      "name": "Group Orders test — iPhone 17 Pro Max (LOCAL backend)",
       "request": "launch",
       "type": "dart",
       "args": ["-d", "C18C309E-6F14-4106-94A1-6485C10D09F2"],

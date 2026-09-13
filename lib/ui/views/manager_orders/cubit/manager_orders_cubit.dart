@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
@@ -70,7 +72,9 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   /// Suscripción PROPIA al canal del negocio. Antes el servicio era
   /// mono-canal y cualquier otro consumidor (el chip del comensal) dejaba
   /// mudo este panel al suscribirse (2026-08-06).
-  RealtimeSubscription? _sub;
+  /// El FUTURO, no la suscripción resuelta: hasta que `watchBusiness` vuelve,
+  /// `_sub` era null y un segundo `load()` no tenía nada que cancelar.
+  Future<RealtimeSubscription>? _sub;
   final String businessUuid;
 
   ManagerOrdersCubit({
@@ -83,15 +87,87 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
         _realtime = realtime,
         super(const ManagerOrdersState());
 
+  /// Sube al LANZAR cada lectura. Nada más: no es un «algo cambió», es un
+  /// número de orden de salida (2026-09-12).
+  int _generacion = 0;
+
+  /// La de la última lectura que SÍ se aplicó — y la de la acción que tocó una
+  /// fila visible, que es la otra cosa que deja la pantalla al día.
+  int _ultimaAplicada = 0;
+
+  /// Marcador SÓLO para los contadores: una lectura anterior a la última
+  /// mutación no puede pisarlos, aunque sus filas sí valgan.
+  int _ultimaAplicadaContadores = 0;
+
+  static bool _perteneceAlCubo(GroupOrderDM orden, String cubo) => switch (cubo) {
+        'pending' => orden.fulfillmentStatus == null,
+        'preparing' => orden.fulfillmentStatus == GroupFulfillmentStatus.preparing,
+        'ready' => orden.fulfillmentStatus == GroupFulfillmentStatus.ready,
+        'delivered' => orden.fulfillmentStatus == GroupFulfillmentStatus.delivered,
+        _ => true,
+      };
+
+  static int? _totalDelCubo(String? cubo, ManagerOrderCountsDM c) => switch (cubo) {
+        'pending' => c.pending,
+        'preparing' => c.preparing,
+        'ready' => c.ready,
+        'delivered' => c.delivered,
+        _ => null,
+      };
+
   Future<void> load() async {
     emit(state.copyWith(loading: true, error: null));
     await _fetch();
-    // Canal live del panel: cualquier evento → refetch silencioso.
-    _sub = await _realtime?.watchBusiness(businessUuid, onTouched: refetchSilently);
+    await _suscribir();
+  }
+
+  /// Canal live del panel: cualquier evento → refetch silencioso.
+  ///
+  /// `_sub` se asignaba DESPUÉS de dos `await`, así que salir de la pantalla
+  /// mientras corría la primera lectura dejaba la suscripción naciendo sobre un
+  /// cubit ya cerrado: `close()` cancelaba un `_sub` todavía null y el oyente se
+  /// quedaba oyendo para siempre, con un GET por cada resume.
+  /// La bandera se marca ANTES del await: sin eso, dos `load()` seguidos entran
+  /// los dos con `_sub` todavía en null y ninguno cancela nada.
+  bool _suscrito = false;
+
+  Future<void> _suscribir() async {
+    final realtime = _realtime;
+    if (realtime == null || isClosed || _suscrito) return;
+    _suscrito = true;
+    // `watchBusiness` registra el oyente SINCRÓNICAMENTE: cancelar antes metería
+    // un microtask entre la carga y la suscripción, y ahí se pierde un evento.
+    final anterior = _sub;
+    final pendiente = realtime.watchBusiness(businessUuid, onTouched: refetchSilently);
+    _sub = pendiente;
+    GroupOrderRealtimeService.cancelarCuandoExista(anterior);
+    final RealtimeSubscription sub;
+    try {
+      sub = await pendiente;
+    } catch (e) {
+      _suscrito = false; // o el panel se queda sin canal el resto de la sesión
+      _logger.e(e); // sin relanzar: `load()` se llama con `..load()`
+      return;
+    }
+    if (isClosed) {
+      await sub.cancel();
+      _suscrito = false;
+    }
   }
 
   Future<void> selectBucket(String? bucket) async {
-    emit(state.copyWith(bucket: bucket, loading: true, error: null));
+    // La lista se VACÍA, y no es cosmético: el panel sólo pinta el spinner con
+    // `loading && orders.isEmpty`, así que conservando las filas del cubo
+    // anterior se veían bajo el chip nuevo durante todo el viaje, sin spinner
+    // y sin aviso. Es el síntoma que da nombre a esto, y pasaba en CADA cambio
+    // de chip, sin carrera ninguna. `total` va con ellas o el pie miente.
+    emit(state.copyWith(
+      bucket: bucket,
+      loading: true,
+      error: null,
+      orders: const [],
+      total: 0,
+    ));
     await _fetch();
   }
 
@@ -100,19 +176,37 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   Future<void> refetchSilently() => _fetch(silent: true);
 
   Future<void> _fetch({bool silent = false}) async {
-    final res = await _repo.managerOrders(businessUuid, bucket: state.bucket);
+    final generacion = ++_generacion;
+    final cubo = state.bucket;
+    final res = await _repo.managerOrders(businessUuid, bucket: cubo);
+    if (isClosed) return;
+
+    // SE DESCARTA SÓLO SI YA HAY ALGO MEJOR EN PANTALLA, O SI ESTAS FILAS SON
+    // DE OTRO CUBO. Que alguien haya lanzado después NO basta: esa otra lectura
+    // puede fallar en silencio —un refetch de fondo no le cuenta errores al
+    // manager— y entonces tirar ésta deja la pantalla con las filas viejas, sin
+    // spinner y sin aviso, que es justo lo que esto existe para borrar.
+    if (generacion <= _ultimaAplicada || cubo != state.bucket) return;
+
     res.when(
-      success: (r) => emit(state.copyWith(
-        loading: false,
-        orders: r.orders,
-        counts: r.counts,
-        // Sin meta (respuesta vieja o test) el total es lo que llegó: así
-        // `isTruncated` da false y la UI no inventa un aviso.
-        total: r.meta?.total ?? r.orders.length,
-        error: null,
-      )),
+      success: (r) {
+        _ultimaAplicada = generacion;
+        final contadoresAlDia = generacion > _ultimaAplicadaContadores;
+        if (contadoresAlDia) _ultimaAplicadaContadores = generacion;
+
+        emit(state.copyWith(
+          loading: false,
+          orders: r.orders,
+          counts: contadoresAlDia ? r.counts : state.counts,
+          // Sin meta (respuesta vieja o test) el total es lo que llegó: así
+          // `isTruncated` da false y la UI no inventa un aviso.
+          total: contadoresAlDia ? (r.meta?.total ?? r.orders.length) : state.total,
+          error: null,
+        ));
+      },
       failure: (e) {
         _logger.e(e);
+
         // Un refetch de FONDO que falla no se le cuenta al manager: en pantalla
         // siguen los últimos datos buenos y el próximo tick los corrige.
         // Emitirlo encolaba un snackbar por tick — con la pantalla apagada el
@@ -163,16 +257,71 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
     return res.when(
       success: (r) {
         final updated = r.groupOrder;
-        // La orden actualizada reemplaza a su versión en la lista; los
-        // contadores se re-sincronizan con un refetch silencioso (los mueve
-        // el cambio de bucket de esa orden).
+        // La respuesta de la mutación trae los contadores, el total y si la
+        // orden sigue perteneciendo al panel en vivo (be-foodly #148). Con eso
+        // la pantalla se pone al día sin releer.
+        //
+        // `stillInPanel` lo decide el BACKEND. El predicado de "está en el
+        // panel" se corrigió tres veces en agosto de 2026; replicarlo en Dart
+        // sería mantener dos copias de algo que ya costó caro con una.
+        //
+        // Sin el campo —un backend sin desplegar— la orden se queda: una
+        // respuesta vieja no puede vaciarle la lista al manager.
+        final sigue = r.stillInPanel ?? true;
+        final contadores = r.panelCounts ?? state.counts;
+
+        // Pertenecer al PANEL y pertenecer al CUBO QUE SE ESTÁ MIRANDO son dos
+        // preguntas distintas, y la primera versión sólo contestaba la
+        // primera: con un chip filtrando, una orden que cambiaba de cubo se
+        // quedaba visible bajo el chip equivocado. Lo encontró la revisión.
+        //
+        // Esto SÍ es del cliente y no contradice lo de arriba: el mapeo
+        // cubo<->estado ya vive en `manager_orders_page.dart` y es trivial
+        // (`fulfillment_status == bucket`, pendientes = null). Lo que no se
+        // replica es el predicado del panel, que es harina de otro costal.
+        final cubo = state.bucket;
+        final enSuCubo = cubo == null || _perteneceAlCubo(updated, cubo);
+        final visible = sigue && enSuCubo;
+
+        final estaba = state.orders.any((o) => o.uuid == updated.uuid);
+
+        // La regla de generación es la de la PR #87 y se conserva TAL CUAL:
+        // sólo se marca si cambió algo de lo que se VE en la lista, porque
+        // marcarla mata una lectura en vuelo que quizá sea la única que traiga
+        // las filas de las demás mesas.
+        if (estaba) _ultimaAplicada = _generacion;
+
+        // Los contadores llevan su PROPIO marcador. Sin él, una lectura que
+        // salió antes de esta mutación y aterriza después pisaba los chips con
+        // números viejos —medido por la revisión—, y el argumento de "ya lo
+        // corrige el evento" no se sostiene: `BusinessOrdersTouched::safe` se
+        // traga los fallos de broadcast, y el polling de 10 s sólo corre con el
+        // socket caído. Este marcador no toca la regla de la lista.
+        _ultimaAplicadaContadores = _generacion;
+
         emit(state.copyWith(
-          orders: [
-            for (final o in state.orders) o.uuid == updated.uuid ? updated : o,
-          ],
+          orders: estaba
+              ? [
+                  for (final o in state.orders)
+                    if (o.uuid != updated.uuid) o else if (visible) updated,
+                ]
+              : state.orders,
+          counts: contadores,
+          // El total del listado es el del CUBO FILTRADO (el backend devuelve
+          // `meta.total` ya filtrado), y `counts_total` de la mutación es el
+          // GLOBAL. Meter uno en el campo del otro hacía que el pie dijera
+          // "Mostrando 2 de 9" en cuanto había un chip puesto. Con filtro, el
+          // total sale del contador de ese cubo, que es lo que hace el backend.
+          total: _totalDelCubo(cubo, contadores) ?? r.panelTotal ?? state.total,
           error: null,
         ));
-        refetchSilently();
+
+        // El único caso que NO se puede resolver aquí: la orden debería ENTRAR
+        // en el cubo que se está mirando y no está en la lista. Falta su sitio
+        // en el orden, así que hay que leer. Es la red de seguridad de la
+        // PR #82, reducida a este único caso.
+        if (!estaba && visible && cubo != null) refetchSilently();
+
         return true;
       },
       failure: (e) {
@@ -185,7 +334,9 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
 
   @override
   Future<void> close() async {
-    await _sub?.cancel();
+    _suscrito = false;
+    GroupOrderRealtimeService.cancelarCuandoExista(_sub);
+    _sub = null;
     return super.close();
   }
 }

@@ -2000,6 +2000,175 @@ el repo—. Un test así se rompería cada vez que cambie cualquiera de esos
 constructores: sería un lastre, no una red. Verificado con `flutter analyze`
 limpio y por lectura de la cadena estado → wrapper, que es corta y cerrada.
 
+## Los contadores del panel salen de la mutación (2026-09-13)
+
+El panel leía la lista entera después de cada acción del manager, sólo para
+mover un cubo de los chips. La cadena hasta aquí:
+
+1. **Dos lecturas por acción**, medidas en producción: la local y la del evento
+   de Pusher de esa misma mutación.
+2. Se quitó la local y quedó una **red de seguridad de 2 s**. Una lectura menos,
+   pero la fila se quedaba a la vista hasta que llegara el evento — al cerrar
+   una cuenta o con un chip filtrando, hasta 2 s mostrando algo que el backend
+   ya no incluye.
+3. **Ahora la respuesta de la mutación trae `counts`, `counts_total` y
+   `still_in_panel`** (be-foodly #148). No hay nada que releer, y la red —con
+   su `Timer`, sus reintentos, su constante y su getter de test— desaparece.
+
+**`still_in_panel` lo decide el backend a propósito.** El predicado de "está en
+el panel en vivo" se corrigió tres veces en agosto de 2026; replicarlo en Dart
+sería mantener dos copias de algo que ya costó caro con una.
+
+**Las tres claves del JSON las cubre un test de `fromJson`.** Toda la pantalla
+cuelga de tres cadenas, y un error se degrada **en silencio** a los fallbacks —
+indistinguible de un backend sin desplegar. Mutando cualquiera de las tres, la
+suite entera seguía verde.
+
+**Los tres campos son opcionales y con fallback al estado anterior**: el mismo
+DM lo devuelven endpoints del comensal, que no saben nada de chips, y una
+respuesta de un backend sin desplegar no puede vaciar la lista ni poner los
+contadores a cero. Hay test de las dos cosas.
+
+**Cómo convive con el guardián de generación (PR #87)**, que es lo delicado:
+
+- La regla de `_ultimaAplicada` se conserva **tal cual**: sólo se marca si
+  cambió algo de lo que se VE en la lista. Marcarla mata una lectura en vuelo
+  que quizá sea la única que traiga las filas de las demás mesas.
+- Los contadores llevan su PROPIO marcador, no el de la lista. Así una lectura
+  anterior a la mutación no los pisa, y la regla de #87 se queda intacta.
+  **Ojo al escribir ese test**: si la acción es sobre una orden que SÍ está en
+  la lista, la regla de #87 ya descarta la lectura y el test pasa en verde sin
+  ejercitar nada. Hace falta una orden fuera de la lista visible.
+
+**La red NO sobraba entera, y decir que sí fue un error mío que desmontó la
+revisión.** Cubría dos casos que los contadores no resuelven, y que dependen de
+un broadcast que el backend admite perder: `BusinessOrdersTouched::safe` se
+traga los fallos, y el polling de 10 s **sólo corre con el socket caído**.
+
+- **La orden cambia de cubo con un chip filtrando.** `still_in_panel` contesta
+  "¿sigue en el panel?", no "¿sigue en ESTE cubo?". Se resuelve en el cliente,
+  y esto sí es legítimo: el mapeo cubo↔estado ya vive en la página y es
+  `fulfillment_status == bucket`. Lo que no se replica es el predicado del
+  panel, que es otra cosa.
+- **La orden debería ENTRAR en el cubo visible y no está en la lista.** Falta
+  su sitio en el orden, así que no hay forma local: ahí se lee. Es lo único que
+  queda de la red, reducido a ese caso.
+
+**Y un tercero, de contadores**: una lectura anterior a la mutación que
+aterriza después los pisaba. Lleva marcador propio
+(`_ultimaAplicadaContadores`), separado del de la lista para no tocar la regla
+de la PR #87.
+
+**El grupo de tests «la red de seguridad» se borra con ella**, pero su
+preocupación de fondo sigue fijada: la contra-revisión de la #87 midió 22
+peticiones contra 4 porque cada descarte reseteaba el tope de reintentos. Ahora
+esa clase de fallo **no necesita tope, no existe** — una acción no lee. El test
+que lo fija son doce acciones seguidas con cero lecturas.
+
+**Trampa de proceso**: esta rama se escribió mientras OTRA sesión trabajaba en
+el mismo checkout. Se detectó porque la suite global daba un rojo
+(`set_session_group_order_sync_test`) que **pasaba en aislamiento**. Se commiteó
+por ruta explícita, nunca `git add -A`, y `CLAUDE.md` se dejó para después
+porque el otro lo tenía a medias. Si la suite falla en algo que no tocaste,
+mira `git status` antes de depurar.
+
+
+## El panel del manager leía la lista DOS veces por acción (2026-09-12)
+
+**Medido en producción, no deducido.** Cuatro pares limpios en los logs de
+Cloud Run, con el mismo tamaño de respuesta y el mismo PoP de Cloudflare — o
+sea un solo dispositivo pidiendo dos veces:
+
+```
+17:23:06.606  y  17:23:06.806     (1178 bytes los dos)
+17:23:18.427  y  17:23:18.505     (1186 / 1186)
+17:23:32.475  y  17:23:33.546     (1179 / 1179)
+17:23:51.646  y  17:23:52.145     (1181 / 1181)
+```
+
+**Los dos disparadores:**
+
+1. `_applyAction()` llamaba a `refetchSilently()` en la rama de éxito, **sólo
+   para re-sincronizar los contadores de los chips** (lo decía su propio
+   comentario).
+2. Esa misma mutación emite `BusinessOrdersTouched`, que llega por Pusher
+   entre 52 ms y 1 s después y vuelve a llamar a `refetchSilently()`.
+
+**Por qué el coalescer de lecturas no lo tapaba**: aquel colapsa dos oyentes
+del MISMO evento en el MISMO turno. Esto son dos turnos distintos separados por
+la latencia del socket. Ningún coalescer por turno los junta.
+
+**Y por qué no lo vio la revisión**: el primer revisor descartó el panel porque
+`watchBusiness` tiene un solo oyente, y es verdad. El segundo disparador no es
+el canal, es la rama local del propio cubit. Sin los logs de producción no
+había forma de verlo — los tests no cuentan peticiones entre turnos.
+
+**La solución**: la acción ya no lee. Arma una **red de seguridad** y deja que
+resincronice el evento.
+
+```dart
+void _pedirResincronizacion() {
+  _redDeSeguridad?.cancel();
+  _redDeSeguridad = Timer(_esperaDeResincronizacion, () {
+    if (!isClosed) refetchSilently();
+  });
+}
+```
+
+- Socket sano: el evento llega en 52 ms – 1 s → **una** lectura.
+- Socket caído o evento perdido: salta la red a los 2 s → una lectura, un poco
+  más tarde. (Los 2 s salen de la medición de arriba, con margen.)
+- Cualquier lectura real desarma la red, la dispare quien la dispare.
+- Un solo temporizador para todas las acciones: tres acciones seguidas no
+  dejan tres lecturas encoladas.
+
+**La fila del manager no espera a nada de esto**: la actualiza el `emit`
+optimista con la respuesta de la propia mutación. Lo único que llega con la
+latencia del socket son los contadores de los chips.
+
+**Trampa al testear**: el temporizador de 2 s deja un *pending timer* al acabar
+el cuerpo de un `testWidgets`, y `addTearDown(cubit.close)` corre DESPUÉS de esa
+comprobación — así que cuatro tests de `manager_orders_page_test.dart` fallaban
+con «A Timer is still pending». Se arregla pasando una espera mínima al cubit
+en ese fichero; los `pump` que ya hacían esos tests la dejan correr.
+
+**Trampa de git, y me la comí**: ramé sin comprobar el HEAD y salí del commit de
+OTRA sesión que trabajaba en paralelo (los timeouts de Dio), no de `main`. Se
+ve con `git log --oneline origin/main..HEAD` — si sale vacío, la rama no aporta
+nada y está atrasada. **Comprobar el HEAD antes de `git checkout -b`** cuando
+hay más de una sesión en marcha.
+
+**Dos fallos de la primera versión, los dos encontrados por la revisión:**
+
+1. **La red se desarmaba con el INTENTO, no con el éxito.** `_fetch()`
+   cancelaba antes del `await`, así que una lectura fallida dejaba los
+   contadores viejos sin nadie que reintentara. Antes de este cambio había DOS
+   lecturas por acción y la segunda tapaba el fallo de la primera; ahora hay
+   una. Y **no hay rescate**: el polling de 10 s sólo corre con el socket
+   caído, o sea que justo en el caso que esto optimiza —socket sano— los chips
+   se quedaban congelados hasta que llegara un evento de otra orden. Ahora
+   desarma el éxito, y un fallo re-arma la red con un tope de 3 reintentos
+   para no martillear un backend caído.
+2. **Nada fijaba los 2 s de producción.** Los tests inyectan 60 ms, así que
+   poner el valor por defecto a cero —lo que **restaura la doble lectura que
+   este cambio existe para borrar**— pasaba las 1 181 pruebas sin que nadie se
+   enterara. La constante está expuesta y hay un test que la acota: por encima
+   del máximo medido del evento (1 s) y por debajo de 5 s.
+
+**Lo que este cambio empeora, y conviene tenerlo dicho**: el `emit` optimista
+actualiza la FILA pero no los contadores ni la pertenencia al panel. Así que
+al cerrar una cuenta, al liquidarla o al moverla de cubo con un chip filtrando,
+la fila tarda en desaparecer lo que tarde el evento (52 ms – 1 s típico, 2 s si
+se pierde) en vez del RTT de antes. Se cierra del todo cuando la respuesta de
+la mutación traiga los contadores — que con el `GROUP BY` del panel ya
+mergeado en el backend cuesta una consulta, no cinco.
+
+**Fijado en** `test/group_orders/panel_una_lectura_por_accion_test.dart`:
+10 casos. De las mutaciones mueren 6; las dos guardas del cierre (`close()`
+cancela el timer, y el `!isClosed` de dentro) son **redundantes entre sí** —
+quitar una sola no se nota, quitar las dos sí, y hay test.
+
+
 ## Un evento de realtime hacía DOS lecturas idénticas (2026-09-08)
 
 **El problema** (auditoría de escalabilidad). Dos cubits del MISMO cliente
@@ -2077,6 +2246,8 @@ distintos, y la respuesta del segundo llega antes que la del primero, así que
 la vieja pisa a la nueva—. Eso ya pasaba antes de esta PR y la PR lo estrecha
 (de 2 peticiones en vuelo por evento a 1), pero no lo cierra. Cerrarlo pide una
 guarda de generación: descartar una respuesta más vieja que la última aplicada.
+**Hecho el 2026-09-12**, en «Una respuesta que llegaba tarde dejaba la orden
+rancia», más abajo.
 
 **Trampa al medir esto**: mi primer barrido de mutaciones dio "M3 sobrevive" y
 era mentira del detector, no del test. Con esa mutación un test se queda
@@ -2113,6 +2284,696 @@ se registra después, la cola queda `borrar-o2, sonda, borrar-o1` — la sonda
 encuentra `o1` viva con `remove`, y borrada con `clear`. Que ningún test lo
 viera sólo significaba «no observable con las llamadas de hoy», que es mucho
 más débil que «equivalente».
+
+
+## El cliente HTTP no tenía techo: una petición podía no terminar nunca (2026-09-12)
+
+**El problema.** `FoodlyApiProvider` no fijaba ninguno de los tres timeouts de
+Dio, y en Dio 5.9.2 `connectTimeout`, `receiveTimeout` y `sendTimeout` son
+`null` por defecto —comprobado en `dio-5.9.2/lib/src/options.dart`—, que
+significa **sin límite**. No «el del sistema»: sin límite.
+
+En un móvil eso no es teórico. Un salto de WiFi a datos, o una red que se traga
+los paquetes, deja la petición en vuelo para siempre: la pantalla se queda
+girando, sin error y sin reintento, y sólo se destraba matando la app.
+
+Salió revisando la PR #69. Una versión anterior de aquel coalescer retenía la
+petición en vuelo hasta que terminara, y sin timeouts «una petición colgada» se
+convertía en «la orden queda muda toda la sesión». Aquella PR se arregló por
+otro lado —acotó la ventana a un turno síncrono— pero la falta de timeouts
+seguía ahí, afectando a la app entera.
+
+**Los números, y de dónde salen.** Medido contra `api.foodly.solutions` desde
+una conexión sana: handshake TCP+TLS 50 ms, TTFB 0,2 s.
+
+| | valor | por qué |
+|---|---|---|
+| `connectTimeout` | 10 s | 200× el handshake medido |
+| `receiveTimeout` | 30 s | tiene que caber un arranque en frío de Cloud Run |
+| `sendTimeout` | 30 s | de sobra para el JSON de unos KB que manda casi todo |
+
+**Treinta y no veinte** porque el backend vive en Cloud Run **sin ping que lo
+mantenga caliente** —el ping que hay es para el NLP, que es otro servicio— y un
+arranque en frío tiene que caber. Esto es una red de seguridad contra el cuelgue
+infinito, no una promesa de velocidad, y **una red de seguridad que salta sobre
+tráfico legítimo hace más daño que la que no está**.
+
+**Las subidas no pueden heredar el techo del JSON, y esa es la trampa.**
+`sendTimeout` acota la subida **entera** del cuerpo, no un tramo de ella:
+`io_adapter.dart:145` lo envuelve sobre el `request.addStream` de la 144. Con el global de
+30 s, el vídeo de una promo —hasta **80 MB**, `edit_promo_media.dart:203`— se
+cortaría a mitad de subida en cualquier red de móvil. Sería romper en nombre de
+arreglar.
+
+Así que el interceptor le sube el techo a las subidas, por petición: **10
+minutos** de envío y 60 s de recepción (el backend todavía tiene que mover el
+fichero a GCS antes de contestar).
+
+El número sale de los 80 MB, no de una cifra redonda: a 2 Mbps de subida —un 4G
+mediocre, que es la red de la que hay que preocuparse— son **320 s**. La primera
+versión puso cinco minutos, y su propio comentario ya decía 320 s: el vídeo
+máximo, en la red de referencia que yo mismo había elegido, se habría cortado al
+94 %. Lo cazó la revisión independiente, y es el error más tonto de la PR —tenía
+la aritmética escrita dos líneas encima del número—. Quien suba por una red peor
+va a fallar igual, y la diferencia sigue siendo que **falla con un error en vez
+de dejar la pantalla girando para siempre**.
+
+Dos decisiones dentro de ese bloque, las dos con test que las fija:
+
+1. **Se detecta por forma —`data is FormData` y con ficheros dentro—, no con una
+   lista de rutas.** Es la condición que hace cara la subida, y el endpoint
+   multipart que se añada mañana lo hereda solo. Lo de **«con ficheros dentro»**
+   es el matiz que se me escapó: `@MultiPart()` también genera `FormData` para
+   formularios de puro texto —`updateProfile` (`me_client.dart:104`) no manda ni
+   un `MultipartFile`—, y darle diez minutos a un cambio de nombre de usuario es
+   dejarlo colgado diez minutos. **Lo que hay que acotar es el peso, no el
+   `Content-Type`.**
+2. **Va antes del `return` de los endpoints de auth**, porque `/register` es
+   multipart: manda la foto de perfil. Colocarlo después lo dejaría con el techo
+   del JSON, y es el tipo de fallo que no da ningún error.
+
+Y sólo se toca el valor si sigue siendo el global, para no pisar a quien eligiera
+el suyo. Aquí las `BaseOptions` ya vienen fundidas en `RequestOptions`
+(`Options.compose`), así que comparar contra el global es la única manera de
+distinguir «nadie dijo nada» de «el llamante eligió esto». **Es una guarda
+defensiva, no la respuesta a un caso vivo**: hoy ningún llamante combina
+`Options` con `FormData` —los dos repos que pasan `Options` mandan JSON,
+`MenuImportRepo.parseImage` un DTO y `PlacesProxyRepo.reverse` otro—. La primera
+versión de esta entrada decía lo contrario, y era falso.
+
+**El cuelgue que ningún timeout arregla.** Los timeouts de Dio empiezan a contar
+**en el adaptador**, o sea después de los interceptores. Una petición que se
+queda dentro del interceptor no los ve nunca — y había dos sitios donde se
+quedaba. En el camino de `silentRefresh`, cuando el refresco fallaba o no había
+refresh token, el código hacía:
+
+```dart
+authSessionService.notifyTokenExpired();
+return;   // ← y aquí se acababa todo
+```
+
+En un interceptor de petición un `return` pelado **no cancela nada**. El futuro
+que espera quien llamó se completa cuando alguien invoca
+`handler.next/resolve/reject` y con nada más (`dio_mixin.dart:402`: el resultado
+del interceptor *es* `handler.future`). Sin esa llamada la petición se queda
+pendiente para siempre. Lo que veía el usuario: la redirección a /login con el
+spinner de la pantalla anterior girando debajo.
+
+Ahora se rechaza con un **401 sintético**, no con un tipo nuevo: desde el punto
+de vista de la app la petición **estaba** sin autenticar, el interceptor sólo se
+ahorró el viaje.
+
+**Y aquí va el error de razonamiento que cazó la revisión independiente.** Yo
+defendí ese 401 diciendo que `FoodlyErrorPresenter` lo clasificaría como `auth`
+y se callaría. **Ese presenter no tiene ni un llamante en `lib/`**: es código
+muerto que sólo usaban los tests. `grep -rn "classify(\|showGlobal(" lib/`
+devuelve únicamente su propia definición. La ruta real son los ~63
+`emit(_Error(e.errorMsg, ...))`, y por ahí salía a pantalla **«Unauthenticated
+error code: 401»**, en inglés, encima del aviso de sesión expirada — la misma
+forma de cadena que esta PR estaba arreglando dos ficheros más allá.
+
+La lección no es el bug, es el método: **«el presenter lo silencia» era una
+afirmación sobre el código, comprobable con un grep, y no la comprobé**. La
+revisión sí, y además lo ejecutó.
+
+El arreglo va en `errorMsg`, que ahora devuelve `sessionExpiredMessage` para
+cualquier 401 —el sintético y el de verdad—, y va **antes** de leer el cuerpo: un
+401 de Laravel trae `{"message": "Unauthenticated."}` y esa rama lo pintaba tal
+cual, en inglés, en una app en español. Y `reject` sin su segundo argumento **no** pasa por `dioErrorHandler`
+(`interceptor.dart:84`), así que este 401 no puede realimentar otro ciclo de
+refresco.
+
+**Que la petición termine no basta: lo que termina hay que poder pintarlo.**
+`AppRequestException.errorMsg` devolvía, para un error **sin respuesta**, la
+cadena `'${statusMessage} error code: ${statusCode}'` con los dos a null — o
+sea, literalmente **«null error code: null»**, en un snackbar, en producción.
+Hay **82 usos** de `errorMsg` en la app —19 dentro de un logger, los otros ~63
+camino de un snackbar— y **ninguno** pasa por `FoodlyErrorPresenter`, que no
+tiene llamantes. Tocar los 63 no era el trabajo: el arreglo va en el getter.
+(La primera versión de esta entrada decía «82 sitios que lo pintan», contando
+los logs como pantalla.)
+
+Esa rama era casi inalcanzable mientras no hubiera timeouts, porque la petición
+no terminaba. **Fijarlos es justo lo que la vuelve alcanzable**, y por eso el
+arreglo va en esta PR y no en otra: sin él, el cambio de los timeouts habría
+cambiado «pantalla colgada» por «pantalla con un mensaje absurdo».
+
+Sólo cambia el caso sin respuesta —`noConnection` si es de red, el genérico si
+no—; en cuanto hay respuesta, el mensaje del backend sigue mandando igual que
+antes.
+
+**Dónde NO estaba el problema.** El NLP de búsqueda **no** usa este cliente:
+tiene su propio `NlpApiProvider` con 15 s / 30 s ya puestos, así que sus 14 s de
+arranque en frío no obligan a subir nada aquí. Las analíticas
+(`AnalyticsApiProvider`) y el Dio de geocodificación de `LocationBloc` también
+traían los suyos. Lo llamativo es que el patrón ya existía en el repo y justo el
+Dio por el que pasa casi todo se lo había saltado.
+
+**Pero «el cliente principal era el único sin techo» es falso**, y así lo decía
+la primera versión de esta entrada. Quedan cuatro `Dio()` crudos, con los tres
+timeouts en null, que esta PR **no** toca porque no son el cliente de la API:
+
+| dónde | qué hace |
+|---|---|
+| `group_order_realtime_service.dart:255` | `/broadcasting/auth` — camino crítico del realtime |
+| `file_handler_mobile.dart:68` | baja el avatar del login social, justo antes de `/register` |
+| `post_card.dart:253` | descarga la foto de un post para compartirla |
+| `share_promotion_helper.dart:61` | ídem con la promo |
+
+El de `broadcasting/auth` es el que más pinta tiene de merecer su propia pasada.
+
+**Y el techo puesto en `BaseOptions` no llega a todas las peticiones.** Ésta es
+la que más duele, porque la PR original afirmaba haber cerrado el agujero y lo
+dejó abierto justo en la ruta que ya colgó una vez.
+
+Los endpoints con `@DioOptions()` —`/import/parse` y `/geocoding/reverse` hoy—
+**no pasan por `Options.compose`**. Retrofit les construye un `RequestOptions`
+**desde cero** (`newRequestOptions`, p.ej. `menu_import_client.g.dart:125`)
+copiando sólo lo que cabe en un `Options`… y **`connectTimeout` no es un campo de
+`Options`**. Las `BaseOptions` del cliente no se consultan en ningún momento.
+Resultado: esas dos rutas salían con `connectTimeout` en null —sin límite— en el
+escenario exacto del que va esta entrada, el salto de WiFi a datos durante el
+onboarding, que es el bug de prod que documenta `places_proxy_repo.dart:162`.
+
+El arreglo es estructural y va donde ya vivía el resto: **el interceptor es el
+único punto por el que pasan TODAS las peticiones**, las compuestas y las
+construidas a mano, así que el suelo se pone ahí con `??=` —rellena lo que venga
+sin poner, nunca pisa una decisión—.
+
+**Moraleja para la próxima vez que alguien toque `BaseOptions` en este repo:**
+fijar algo en `BaseOptions` **no** garantiza que llegue a la petición. Compruébalo
+en el adaptador, que es el único sitio donde se ve lo que salió de verdad.
+
+**Y el caso contrario: JSON diminuto, espera larguísima.**
+`/promotions/ai-generate` proxea síncronamente a Replicate —copy más dos artes—
+antes de contestar, así que los 30 s globales lo habrían cortado a media
+generación. Peor: la cuota mensual (3-6) la aplica el backend «en la misma
+transacción que genera» (`manage_promotions_cubit.dart:322`), o sea que el
+manager pagaba la generación y se quedaba sin ella. Y como `receiveTimeout`
+cuenta como `isOffline`, habría leído «sin conexión a internet» con la red
+perfecta.
+
+Ese endpoint lleva su propia espera (3 min) desde una lista de rutas en el
+interceptor. **Aquí sí hace falta una lista**, porque no hay nada en la *forma*
+de la petición que delate lo lenta que es — y que sea una lista y no un número
+más alto en el global es justo el punto: la espera es de UN endpoint y el resto
+de la app no tiene por qué heredarla.
+
+**Fijado en** `test/core/network/timeouts_de_dio_test.dart` (33 casos). De las
+once mutaciones probadas no sobrevive ninguna, incluidas las finas: mover el
+bloque de subidas **detrás** del `return` de los endpoints de auth mata el caso
+de `/register`; quitar `files.isNotEmpty` mata el del multipart de puro texto;
+quitar el `??=` del `connectTimeout` mata el de la ruta `@DioOptions`; y volver a
+poner cinco minutos de subida mata el que compara el techo contra los 80 MB del
+vídeo.
+
+**Lo que esta entrada NO puede afirmar**, porque no está medido: que el arranque
+en frío real de `api.foodly.solutions` cabe en 30 s. Toda la elección de
+`receiveTimeout` descansa en esa suposición y no hay ninguna medición de un frío
+en el repo — sólo la del caso caliente (0,2 s). Si alguna vez aparece un pico de
+`receiveTimeout` en Crashlytics sin que el usuario esté offline, empieza por
+ahí.
+
+
+## La orden se quedaba muda sin que nada fallara (2026-09-12)
+
+Cola de «El cliente HTTP no tenía techo», más arriba: aquella pasada dejó cinco
+`Dio()` crudos sin tocar, y uno estaba en el camino crítico del realtime.
+
+**El fallo.** `pusher.connect()` funciona → `_socketHealthy = true` →
+`_stopPolling()` («el socket manda, adiós fallback»). Pero la suscripción al
+canal privado pasa después por `_authorize`, que salía con un `Dio()` **sin
+ningún techo**. Si se colgaba: socket «conectado», canal nunca suscrito, polling
+apagado. Ni evento, ni fallback, ni error. La orden muda el resto de la sesión.
+
+**Y el techo solo NO lo arregla**, que es lo que casi hago. Al authorizer lo
+llama el PLUGIN, fuera del `try` de `_connect`, así que su excepción no llega a
+aquel `catch` — el que enciende el polling. Con timeout y sin nada más, la
+petición falla a los 15 s y la orden se queda igual de muda.
+
+Hacen falta las dos cosas: el techo, y que el fallo **degrade a polling desde el
+propio `authorize`**.
+
+**Y un tercer detalle que se rompe en silencio:** `_suscritosNativos.add(channel)`
+corre justo después de `subscribe()`, o sea ANTES de que la autorización falle. Y
+`_connect` salta los canales que ya están en ese set. Sin sacarlo al degradar, el
+reintento de 60 s no volvería a pedir ese canal nunca.
+
+**Los otros cuatro** son descargas de URLs arbitrarias (avatar del login social,
+foto de un post o de una promo para compartir) y van por `dioDeDescarga()`:
+10 s de conexión, 30 s de recepción. El daño ahí era un botón girando, no una
+orden muda.
+
+**El tropiezo que se repite:** `connectTimeout` **no es un campo de `Options`**,
+sólo se puede fijar en `BaseOptions`. Es la tercera vez en el día que me muerde.
+
+**Fijado en** `test/group_orders/autorizacion_de_canal_test.dart` (6 casos). Tres
+mutaciones, ninguna sobrevive: quitar el degradado, no sacar el canal del set, y
+volver al `Dio()` sin techo.
+
+**Lo que NO está medido:** con qué frecuencia se cuelga ese POST en producción.
+El argumento no es que pase mucho, es que cuando pasa no hay nada que lo
+recupere.
+
+## Una respuesta que llegaba tarde dejaba la orden rancia (2026-09-12)
+
+Cola de «Un evento de realtime hacía DOS lecturas idénticas», más arriba. Aquella
+entrada acaba diciendo que quedaba viva la ruta de **respuestas fuera de orden**
+y que cerrarla pedía una guarda de generación. Esto es esa guarda.
+
+**El fallo.** Llegan dos eventos de Pusher en turnos distintos. L1 (del evento
+viejo) y L2 (del nuevo, que trae la mutación) salen las dos — el coalescer no las
+junta, y hace bien: viven en turnos distintos, y colgar la segunda de la primera
+devolvería justo la foto que no contiene la mutación. Si **L2 responde antes que
+L1**, la respuesta de L1 se aplica después y pisa el estado nuevo.
+
+La orden se queda mostrando datos anteriores a la última mutación hasta el
+siguiente evento, un resume o abrir y cerrar la página. **El polling de 10 s no
+rescata nada**: sólo corre con el socket caído (`group_order_realtime_service.dart:237`
+lo apaga al conectar), o sea que justo con el socket sano no hay red debajo.
+
+No es una regresión de la #69: pasaba antes, y aquella PR lo estrecha (de 2
+peticiones en vuelo por evento a 1) sin cerrarlo. Verificado ejecutando los
+cubits reales, no deducido.
+
+**La guarda**: un contador monótono **por cubit**. Sube al lanzar una lectura
+silenciosa y con cada cambio de estado; una respuesta cuya generación ya no es la
+última salió antes de algo que ya se aplicó, así que se descarta.
+
+```dart
+final generacion = ++_generacion;
+final result = await _repo.getGroupOrder(uuid, coalesce: coalesce);
+if (isClosed || generacion != _generacion) return;
+```
+
+**POR QUÉ EL CONTADOR VA POR CUBIT Y NO EN UN PUNTO COMÚN.** Es la decisión de
+diseño de esta PR y el «punto común» —el repo, que es donde ya vive el
+coalescer— parece más limpio y está **mal**. El coalescer hace que los dos
+oyentes del mismo evento compartan UN Future; con un contador único, el
+lanzamiento del segundo cubit invalidaría la lectura del primero **sobre la misma
+petición**, y uno de los dos se quedaría sin aplicar nada. La página y el chip
+son cubits distintos, con estados distintos y lecturas propias (pull-to-refresh
+en una, `syncAnyActive` en el otro): lo que para uno es «viejo» para el otro no
+lo es. Hay un test que lo fija, y la mutación que mueve el contador al repo lo
+pone en rojo.
+
+**El bump NO cuelga de cada mutación**: olvidarlo en un método nuevo no daría
+ningún error —la misma trampa del `coalesce` con default `false` de la entrada
+anterior—, así que va en un embudo. Pero **el embudo no es el mismo en los dos
+cubits, y creer que sí era el fallo de la primera versión**:
+
+- **La página** lo sube en `_applyResponse`, que es por donde pasa toda
+  respuesta con foto del servidor.
+- **El chip** lo sube sobrescribiendo **`emit`**, porque ahí *todo* estado es una
+  foto o un vaciado: su estado ES la orden, no tiene `loading` ni `error`.
+
+**POR QUÉ NO VALE `onChange` EN LA PÁGINA, que es lo que yo había puesto.** Su
+estado tiene emisiones que NO traen foto —`loading`, `error`, el `isPaying` de
+`createPayIntent`— y con el bump ahí **mataban la lectura que traía la verdad**.
+Dos regresiones reales, las dos encontradas por la revisión independiente y
+reproducidas antes de tocar nada:
+
+1. **Una mutación que FALLA tapaba el cierre de la cuenta.** El host cierra; su
+   evento lanza L1. Dentro de esa ventana el comensal toca «compartir» un ítem y
+   el backend responde 409 porque la orden ya está cerrada. Ese `_onError` subía
+   el contador y L1 —la única lectura que traía el cierre— se descartaba. La
+   pantalla se quedaba ABIERTA, con sus botones, y cada toque repetía el 409 sin
+   explicar nada. **Era peor que antes de la PR**: sin guarda, L1 se aplicaba.
+2. **Abrir el pago tapaba el evento en vuelo.** `createPayIntent` emite
+   `isPaying` ANTES de pedir, y su rama de éxito sólo apaga el flag: nunca
+   vuelve a leer. Con el bump en `onChange`, pulsar «Pagar» descartaba la
+   lectura en vuelo, y si el PaymentSheet devuelve `failed` no hay recargue.
+
+La regla que queda, y es la que hay que conservar: **sólo una foto del servidor
+puede invalidar una lectura.** Un error no sabe nada de la orden; un spinner,
+tampoco.
+
+**La asimetría, deliberada: las lecturas COMPROBAN, las mutaciones sólo SUBEN.**
+Un refetch silencioso es mejor-esfuerzo y descartarlo no cuesta nada. Una
+mutación —y `load`— emite `loading` antes y el comensal espera esa respuesta
+concreta: descartarla colgaría el spinner o se tragaría el error.
+
+**Y hacen falta LAS DOS mitades: el bump al lanzar y el de al aplicar.** Sin el
+de lanzar, con dos lecturas en vuelo gana **la primera en volver** en vez de la
+última lanzada, que es justo lo contrario de lo que se busca. No estaba medido
+—lo señaló la revisión— y ahora hay un test con las respuestas EN ORDEN.
+
+**Y el embudo del chip es `emit`, NO `onChange`, por la deduplicación de bloc.**
+Ésta me costó dos correcciones seguidas y la lección es la misma las dos veces.
+
+Bloc no propaga un `emit` igual al estado actual: la condición es
+`state == _state && _emitted` (`bloc-9.2.0/lib/src/bloc_base.dart:102`). Con el
+contador colgado de `onChange`, **una mutación cuya respuesta es idéntica a lo
+que ya hay no subía nada**, y una lectura más vieja en vuelo la pisaba. Es el
+caso corriente de un refetch coalescido sin cambios. `emit` sí corre siempre, y
+una respuesta idéntica **sigue siendo una foto aplicada**.
+
+De paso desapareció el `_generacion++` explícito que `end()` llevaba desde
+antes: existía justamente porque `emit(null)` sobre un estado ya null no
+dispara `onChange`, y con el embudo en `emit` pasó a ser redundante de verdad.
+**Antes no lo era, y este fichero llegó a afirmar lo contrario dos veces**: en
+un cubit recién nacido `_emitted` es false y `emit(null)` sí propaga, así que un
+test que monte la carrera sobre un cubit sin estrenar pasa con la mutación
+puesta. Si vuelves a tocar esto: estrena el cubit antes de medir.
+
+**El 404 y el 403 NO se juzgan por generación, y tampoco basta el uuid.** Ésta
+fue la parte que costó tres intentos, así que la regla entera:
+
+`refresh()` trata el 404/403 como «esta orden dejó de ser mía» y llama a
+`end()`, que vacía el carrito. Pasarlos por la guarda de generación los perdía:
+el backend emite `deleted` **antes** de borrar, justo para que refetcheemos, así
+que **no viene un segundo evento** y el chip se quedaba con una orden borrada
+—monto, notificación ongoing, y al tocarlo una pantalla de error—. «El sistema
+se cura solo» no aplica ahí.
+
+El segundo intento fue juzgarlo por uuid, y la revisión **predijo el agujero
+antes de que el código existiera**: el uuid no distingue épocas de pertenencia.
+El host me saca de la mesa (su evento lanza R1, que dará 403) y dentro de esa
+ventana me vuelvo a unir con el código: **mismo uuid**, así que el 403 tardío me
+vaciaba el carrito al que acababa de volver. Verificado con una sonda antes de
+tocar nada. Por ese eje la regla de uuid es **más débil** que la de generación.
+
+Lo que hay ahora no elige entre las dos: **una respuesta que llegó tarde no se
+cree a ciegas, se vuelve a preguntar.**
+
+```
+el carrito ya es OTRA orden          -> este veredicto no habla de ella: nada
+nadie tocó el carrito mientras viajaba -> es la última palabra: end()
+algo lo tocó                          -> re-preguntar, UNA vez; su respuesta manda
+```
+
+El caso corriente —un 404 sin nada concurrente— no cuesta ninguna petición
+extra. Y el **tope** no es decorativo: sin él, el reintento vuelve a llegar
+«tarde» si algo emite mientras viaja, y pide otro, y otro, mientras siga habiendo
+actividad. Hay test, y sólo se distingue metiendo una emisión DURANTE el
+reintento — sin eso la mutación sobrevive.
+
+**`syncForBusiness` tenía la misma carrera y se quedó fuera de la primera
+versión.** Lo encontró la segunda revisión escribiendo el test gemelo del de
+`syncAnyActive`. Se llama al abrir el menú de un negocio, así que basta con
+cerrar sesión antes de que vuelva `/mine` para que el chip se repueble con la
+orden del usuario anterior.
+
+**Y la re-lectura tras el pago iba por `load()`, que no está guardado.**
+`group_order_page.dart` la llamaba al volver del Checkout y al completarse el
+pago. `load()` aplica sin comprobar nada, así que una respuesta suya llegando
+tarde **revertía «pagada» a «procesando»** — el momento más visible de la app.
+Ahora esos dos sitios llaman a `refetch()`, que es el camino guardado; de paso
+deja de meter un spinner sobre una pantalla que ya tiene datos.
+
+**LO QUE ESTO NO CIERRA, y conviene tenerlo dicho.** La guarda ordena por
+**momento de lanzamiento**, y eso no es lo mismo que el momento de la foto que
+devuelve el servidor: una petición lanzada antes puede traer un snapshot más
+nuevo. Lo cierto por construcción es la dirección que importa: L2 se lanza
+**después** del evento, que el backend emite **después** de que la mutación
+cuajara, así que L2 la contiene con seguridad y L1 sólo quizá. Y si L1 llevaba
+otra mutación que L2 no tiene, esa otra emitió su propio evento y llegará su
+lectura. **Pero «se cura solo» sólo vale cuando hay un evento posterior**: los
+tres casos de arriba —el 409, el `isPaying` y el 404— son secuencias donde la
+lectura que moría era la única portadora, y por eso hubo que tratarlos aparte.
+Cerrar el hueco del todo pediría una versión o un `updated_at` en la respuesta;
+comprobado que hoy no existe ninguno en `GroupOrderDM` (hay `confirmedAt`,
+`closedAt`, `billRequestedAt`, pero no un orden global).
+
+**Fijado en** `test/group_orders/respuestas_fuera_de_orden_test.dart` (24 casos).
+Varios son CONTROLES y están a propósito, porque una guarda que descarte SIEMPRE
+también pondría verde al resto: en orden normal la última respuesta se aplica; el
+pull-to-refresh sigue aplicando la suya; un 404 de la orden actual sigue vaciando
+el carrito; una mutación con ÉXITO sigue invalidando lo anterior; y `/mine`, sin
+nada que la invalide, SÍ adopta la orden. **Ese último faltaba** y sin él se
+podía apagar entera la recuperación en frío del carrito (F4a) sin que nada se
+pusiera rojo.
+
+**Tres residuos que se aceptan a sabiendas**, los tres medidos por la revisión:
+
+- **El relevo sólo funciona si el relevista llega.** La rama de fallo de
+  `createPayIntent` lanza un `_refetchSilently`, y ese lanzamiento sube el
+  contador y mata la lectura del evento en vuelo. Si el refetch interno también
+  falla —red mala, que es justo cuando falla un pay-intent— la pantalla se queda
+  rancia. Mismo patrón que el 404, pero aquí no se trata aparte.
+- **Re-unirse a la misma orden DURANTE el reintento** vuelve a vaciar el
+  carrito: el tope corta antes de mirar la generación. Es el agujero del 403 una
+  ventana más adentro, y pide dos re-uniones en dos RTT consecutivos. **El tope
+  es lo que hace que esto termine**, así que se queda.
+- **404 y luego 500 en el reintento**: el carrito conserva una orden borrada.
+  «Ante la duda no vacío» es defendible, pero conviene saber que aquí tampoco
+  hay segundo evento.
+
+**Sobre el barrido de mutaciones, y es la lección que más vale de esta PR.**
+Ninguna sobrevive, pero eso sólo es verdad **después de tres rondas**. Mi primer
+barrido dio «7 de 7 mueren» y era insuficiente: la revisión encontró **nueve**
+mutaciones más que sobrevivían —el control positivo de `syncAnyActive` (sin él
+se podía apagar entera la recuperación en frío del carrito, F4a, sin que nada se
+pusiera rojo), el bump de lanzamiento en las tres lecturas, el `isClosed` en dos,
+y las tres de la rama del 404—. **Un barrido mide lo que se te ocurre romper**;
+que salga limpio dice bastante menos de lo que parece. Tres avisos para la
+próxima:
+
+- Dos de esas nueve sólo se distinguen **contando peticiones**, no mirando el
+  estado final: el tope del reintento y el «esto no habla de mi orden». Si todas
+  tus aserciones miran el estado, hay una familia entera que no estás midiendo.
+
+
+- **Un fallo de compilación también da exit ≠ 0.** La mutación que mueve el
+  contador al repo hay que verificarla mirando QUÉ falla: compila, deja el resto
+  en verde y tumba exactamente los dos casos del coalescer.
+- El barrido lleva una **mutación de control que debe SOBREVIVIR** (renombrar una
+  local). Si saliera muerta, el harness estaría dando muertes de regalo y ninguna
+  de las demás valdría nada.
+
+
+## El panel del manager pintaba las filas del cubo anterior (2026-09-12)
+
+Cola de «Una respuesta que llegaba tarde dejaba la orden rancia». Aquella cerró
+la carrera en los dos cubits de la orden grupal; `ManagerOrdersCubit` tenía la
+misma. **Aquí se ve en pantalla**, que es lo que la hace peor.
+
+**Y son DOS fallos, no uno.** Tardé tres diseños en separarlos, y mezclarlos fue
+la causa de todo lo que salió mal por el camino.
+
+### 1. La ventana: en CADA cambio de chip, sin carrera ninguna
+
+`selectBucket` emitía el cubo nuevo y **no vaciaba `orders`**. El panel pinta el
+spinner sólo con `loading && orders.isEmpty` (`manager_orders_page.dart:196`), o
+sea que durante todo el viaje se veían las filas del cubo anterior bajo el chip
+nuevo, **sin spinner y sin aviso**. Lo encontró la contra-revisión, midiéndolo a
+nivel de widget, y es el síntoma que da nombre a esto.
+
+Se arregla vaciando la lista (y `total`, o el pie dice «N de M» del cubo viejo).
+Una línea. **La guarda de generación no lo tocaba**: aquélla evita que una
+respuesta se aplique TARDE, no que la ventana exista. Yo escribí una PR entera
+sobre «las filas del cubo anterior» sin arreglar el caso más común de eso.
+
+### 2. La carrera: respuestas fuera de orden
+
+`_fetch` leía `state.bucket` al lanzar y aplicaba al volver sin comprobar nada.
+Dos lecturas del mismo cubo —el evento de Pusher y la red de seguridad de 2 s—
+podían cruzarse y dejar la vieja encima.
+
+El coalescer no tapa nada de esto, y por una razón más simple de la que escribí
+primero: **`managerOrders` no pasa por el coalescer en absoluto** —
+`_lecturasDelTurno` sólo envuelve a `getGroupOrder`.
+
+**La regla, y es la tercera que probé:**
+
+```dart
+if (generacion <= _ultimaAplicada || cubo != state.bucket) return;
+```
+
+**Se descarta sólo si ya hay algo MEJOR en pantalla, o si estas filas son de otro
+cubo.** Dos campos: el número de orden de salida, y el de la última que se
+aplicó (que también pone una acción que toca una fila visible, porque eso deja
+la pantalla igual de al día).
+
+### Las dos reglas que probé antes, y por qué estaban mal
+
+**Primera: «sube el contador con cada emisión».** Es el error que ya había
+costado dos regresiones en la #86 y que yo creía traer aprendido. Aquí lo evité
+a medias con un embudo de tres cláusulas en `onChange`… y de las tres **sólo la
+de `orders` era portante**; las otras dos estaban muertas. Peor: la contra-revisión
+demostró que el embudo entero, con su `identical` y su trampa del `operator ==`,
+**existía para expresar una asignación en el único sitio que la necesitaba** —la
+acción que toca una fila visible—. Doce líneas para una.
+
+**Segunda: «descarto si alguien lanzó después de mí».** Suena bien y es
+demasiado agresiva: **la otra lectura puede fallar en silencio** —un refetch de
+fondo no le cuenta errores al manager, y eso es deliberado— y entonces tirar la
+mía deja la pantalla con las filas viejas, sin spinner y sin error. Medido por
+la revisión contra `main`: `main` mostraba las filas correctas y mi versión no.
+**Era peor que no hacer nada**, que es exactamente el mismo modo de fallo que la
+#86: «ya vendrá otra lectura» sólo vale si viene.
+
+Mi parche de aquello fue pedir una resincronización al descartar. **Y eso
+derrotaba el tope de 3 reintentos**, porque `_pedirResincronizacion()` resetea
+`_reintentosDeRed`: medido, 22 peticiones contra las 4 de referencia con el
+backend caído. El propio comentario del cubit promete que «un backend caído no
+puede convertirse en un GET cada dos segundos para siempre», y podía. Hay test
+que lo acota.
+
+Con la regla buena nada de eso hace falta: la lectura **no se descarta, se
+aplica**, y no se paga ninguna petición de rescate.
+
+### Lo que queda dicho, y no fingido
+
+- **Una lectura descartada no desarma la red ni consume reintento**: sus
+  contadores son tan viejos como sus filas.
+- **Una acción que no toca la lista no invalida nada.** `copyWith` construía la
+  lista nueva SIEMPRE, incluso cuando la orden no estaba en ella (otro cubo, o
+  el chip filtrando), y eso mataba lecturas buenas.
+- **De los tres `isClosed` del cubit sólo el de `_fetch` está fijado en
+  solitario**: los de `_pedirResincronizacion` y el del temporizador se tapan el
+  uno al otro.
+- **`managerOrders` ignora `page`**: el panel pide una sola página a propósito.
+
+**Fijado en** `test/group_orders/panel_respuestas_fuera_de_orden_test.dart`
+(20 casos). Varios son controles, y el que más sostiene es el que **cuenta
+peticiones**: ninguna otra aserción lo hace, y ahí es donde se esconden los
+fallos de esta familia.
+
+**De las mutaciones probadas no sobrevive ninguna**, con una de control que sí.
+Pero el número no significa nada por sí solo, y ésta es la tercera vez seguida
+que lo compruebo: **mi barrido dio «7 de 7 mueren» y luego aparecieron ocho
+fallos reales**, dos de ellos bloqueantes y uno introducido por mi propio
+arreglo. Lo que se me escapó, por si sirve de patrón:
+
+- **Miraba el flag y no las filas.** Mi test del spinner afirmaba
+  `loading == false` y el agujero estaba en `orders`.
+- **No pregunté qué pasa si el relevo falla.**
+- **Un test mío medía un escenario IMPOSIBLE**: lanzaba la lectura que falla
+  ANTES que otra, así que la guarda la descartaba y nunca llegaba a la rama de
+  fallo. Pasaba sin ejercitar nada.
+- **El fake mentía por omisión**: ignoraba el cubo, así que toda la historia del
+  «cubo anterior» estaba simulada con etiquetas.
+- **No medí a nivel de widget.** El fallo nº 1 de arriba es invisible mirando
+  sólo el estado del cubit: hace falta saber con qué condición pinta el spinner.
+- **Y afirmé en falso que los controles sostenían el banco.** La revisión los
+  saltó con `skip:` y el banco siguió muriendo.
+
+**Pendiente, en su propia PR**: `load()` hace `await _fetch()` y **después**
+asigna `_sub`, así que salir de la pantalla durante la primera lectura deja una
+suscripción que nadie cancela — y un GET por cada resume, para siempre. Es
+preexistente y lo midió la contra-revisión.
+
+
+## Las suscripciones de realtime se quedaban huérfanas (2026-09-13)
+
+Lo encontró la contra-revisión de la #87 mirando fuera del marco en el que
+estábamos los tres (generaciones, embudos, contar peticiones). Es preexistente y
+afecta a **los TRES consumidores de realtime**, no a dos: la página de la orden,
+el panel del negocio **y el chip flotante**. Yo escribí «los dos cubits que piden
+canal» y lo desmintió la revisión con el docstring del propio servicio delante.
+
+**El tercero era el peor, y mi arreglo lo citaba como MODELO A SEGUIR.** El chip
+es un `registerLazySingleton` que vive toda la sesión y `watchActive` cuelga de
+`onChange`, o sea de cada emisión. Encima `end()` lo llama `refresh()` ante un
+404/403, y `refresh` **es** el callback de realtime: el propio evento se
+disparaba el huérfano.
+
+**El fallo.** `load()` pedía la suscripción **después** de esperar la primera
+lectura, y guardaba el resultado en `_sub` al volver. Salir de la pantalla
+mientras esa lectura viajaba dejaba a `close()` cancelando un `_sub` todavía
+null, y al oyente naciendo sobre un cubit muerto: **nadie lo cancela nunca**.
+
+No es sólo memoria: el canal cuenta como vivo, así que el servicio mantiene el
+polling y **cada resume dispara una lectura por cada huérfano**, sobre un cubit
+que ya no pinta nada.
+
+Y en la página había un segundo camino: cada `load()` pedía otra suscripción y
+pisaba `_sub` sin cancelar la anterior. El botón de reintentar las acumulaba, y
+con N oyentes un evento dispara N refetch — justo el ×N que la #69 se dedicó a
+quitar.
+
+**SE GUARDA EL FUTURO, NO LA SUSCRIPCIÓN RESUELTA.** Es el detalle que costó dos
+intentos: `watch` tarda en volver —espera a la conexión— y hasta entonces `_sub`
+es null, así que un segundo `load()` **no encontraba nada que cancelar** y los
+dos oyentes quedaban vivos igual. Guardando el futuro, la anterior se cancela en
+cuanto exista.
+
+**Pero no es portante en ninguno de los tres por separado**, y llegar a esa
+frase costó dos correcciones. Primero dije que lo era en los tres; luego, tras la
+primera revisión, que «en la página sí». **También falso**, y lo desmontó la
+segunda pasada: el rojo de la página lo ponía un test de **camino imposible**
+—`load('o1')` seguido de `load('o2')` sobre el mismo cubit— y en producción `load`
+se llama siempre con `widget.orderUuid`, así que `anterior` es **SIEMPRE null**
+en los tres. Yo marqué la rama muerta del panel y no vi la idéntica de la página,
+y encima construí un argumento encima.
+
+Lo cierto es lo de siempre: son mecanismos **redundantes por pares**, y lo que se
+comprueba es que quitar los dos —que es el código original— sale rojo.
+
+**El comentario del panel sobre este orden no lo respalda ningún test**, y el de
+la página mata nueve: metiendo un microtask delante de `watchBusiness` la suite
+sigue verde. Está copiado del sitio donde sí se comprueba.
+
+**Y el orden importa: `watch` PRIMERO, cancelar después.** El servicio registra
+el oyente **sincrónicamente** y sólo luego espera a la conexión
+(`_subscribe` hace `sub.add(id, onTouched)` antes del `await _connect()`). Poner
+un `await` delante abre un hueco entre la carga y la suscripción en el que un
+evento se pierde. Lo cazó un test que ya existía, y **el control del barrido fue
+lo que me hizo mirarlo**: ocho tests estaban en rojo y yo lo habría leído como
+«todas las mutaciones mueren».
+
+**Cancelar nunca se espera.** `_cancelarCuandoExista` engancha un `then` y sigue:
+si la suscripción no llega nunca, un `await` en `close()` lo colgaría. `cancel()`
+es idempotente, así que cancelar dos veces no molesta.
+
+**Pares de guardas REDUNDANTES, comprobados por pares y no supuestos:**
+
+| par | quitar una | quitar las dos |
+|---|---|---|
+| idempotencia y cancelar la anterior **(panel)** | no se nota | rojo |
+| el `isClosed` de después del await y el cancelado de `close()` **(página y chip; en el panel NO: la primera sola ya sale roja)** | no se nota | rojo |
+| guardar el futuro y la guarda de después del await **(chip)** | no se nota | rojo |
+
+**Aquí llevo tres versiones y dos desmentidos**, así que conviene leer la tabla
+con desconfianza y volver a medirla antes de tocar nada. Las redundancias NO son
+las mismas en los tres consumidores, y ésa es justo la parte que se me escapó
+las dos veces.
+
+**Otra afirmación mía que nada sostiene:** que marcar la bandera ANTES del await
+«es lo que hace idempotente a esto». Moverla a después del await **no lo nota
+ningún test**, porque el camino de cancelar-la-anterior cubre el mismo caso. La
+razón para dejarla delante es de diseño, no de cobertura: ahorra una suscripción
+y su cancelación en el caso corriente.
+
+**Y una rama que hoy no puede correr:** en el panel, `anterior` es SIEMPRE null
+—`load()` se llama una sola vez, desde `app_router.dart`, y el reintento de la
+pantalla va por `refetchSilently`—. La revisión lo probó metiendo un `assert` y
+dejando la suite verde. Se queda porque deja de estar muerta en cuanto alguien
+llame a `load()` dos veces, que es justo el refactor que lo rompería en silencio.
+
+**Trampa al testear, y me pasó:** `_suscribir` de la **página** va `unawaited`,
+así que `await load()` **no** espera a que la suscripción nazca. Mi test de
+«cerrar mientras nace» pasaba porque el oyente todavía no existía, no porque se
+hubiera cancelado — verde por el motivo equivocado, y lo delató que la mutación
+de las dos guardas del cierre sobrevivía. Hay que esperar de verdad (`_asentar`,
+60 ms): `watch` espera a `_connect()`, que sin socket falla y cae al polling. El
+panel no tiene ese problema porque su `load()` sí espera a `_suscribir`.
+
+**`close()` perdió el `await` del cancelado** y eso es un cambio semántico que
+conviene saber: en producción es mejor —no se espera a una suscripción que puede
+no llegar— pero en test `await cubit.close(); expect(pollingActivo, isFalse)` ya
+**no** es determinista sin un turno extra.
+
+**«`cancel()` es idempotente» sostiene medio razonamiento y no lo prueba nada**:
+quitar su guarda `if (_cancelled) return` deja la suite entera verde. La
+propiedad se cumple —está comprobada aparte— pero no hay red debajo.
+
+**Si `watch` FALLA, la bandera de idempotencia se quedaba puesta para siempre** y
+ninguna llamada posterior volvía a pedir el canal: el consumidor mudo el resto de
+la sesión. Hoy no se alcanza —`_connect()` se traga sus errores— pero era el
+único modo de fallo PERMANENTE que introducía este arreglo. Ahora se devuelve la
+bandera a su sitio y se registra el error **sin relanzar**: los tres se llaman en
+modo dispara-y-olvida (`unawaited`, `..load()`), así que relanzar sería un error
+asíncrono sin manejar.
+
+**El testigo es `pollingActivo`**: el servicio suelta sus timers cuando se va el
+último oyente, así que si tras cerrar el cubit sigue encendido es que quedó
+alguien oyendo. No hay getter del número de oyentes, y éste sirve.
+
+**Fijado en** `test/group_orders/suscripciones_huerfanas_test.dart` (14 casos),
+con su control positivo: con la pantalla abierta la suscripción SÍ tiene que
+quedar, porque «no suscribirse nunca» pasaría todo lo demás.
 
 
 ## El modo «negocio visitado» (2026-04-12)

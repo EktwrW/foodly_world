@@ -4,6 +4,7 @@ import 'dart:typed_data' show Uint8List;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/consts/foodly_strings.dart';
+import 'package:foodly_world/core/network/base/download_client.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -65,7 +66,7 @@ class FileHandlerMobile implements FileHandler {
   Future<MultipartFile?> getMultipartFileFromUrl(String? imageUrl) async {
     if (imageUrl?.isEmpty ?? true) return null;
 
-    final dio = Dio();
+    final dio = dioDeDescarga();
 
     try {
       final response = await dio.get(
