@@ -2061,11 +2061,36 @@ traga los fallos, y el polling de 10 s **sólo corre con el socket caído**.
      el 90 % del uso—, donde una orden que debía aparecer no se recuperaba
      nunca. Antes de este cambio la red era incondicional: era una regresión
      mía, no deuda heredada.
-  2. **Con reintento y con tope.** Esa lectura es silenciosa: si falla, el chip
-     dice «1» y la lista dice «No hay órdenes», y ahí se queda. Y hay que
-     distinguir «falló» de «llegó y no traía la orden» (`_lecturasConExito`):
-     sin esa distinción se reintentaría tres veces contra un backend que
-     responde perfectamente.
+  2. **Con reintento, con tope y con UNA sola cadena.** Esa lectura es
+     silenciosa: si falla, el chip dice «1» y la lista dice «No hay órdenes».
+     Hay que distinguir «falló» de «llegó y no traía la orden», y eso lo dice
+     el `bool` que devuelve `_fetch` — **no un contador de lecturas con
+     éxito**: ése lo movía cualquier otra lectura (el evento, el polling, un
+     pull-to-refresh) y cancelaba un reintento que sí hacía falta.
+
+     Y **single-flight**: cada acción arrancando su propia cadena eran 6
+     peticiones con el backend sano y **18** con el caído, medido por la
+     revisión — del mismo orden que las 22 contra 4 que motivaron el tope de la
+     PR #87. La red anterior ya lo evitaba con un único `Timer`; al pasar a
+     recursión me lo llevé por delante.
+
+  3. **Agotados los intentos, se emite error.** Si no, el panel dice «No hay
+     órdenes» con el chip marcando 1 y sin botón de reintentar. Este feature ya
+     tenía escrito que «un dato falso es peor que un error»
+     (`manager_orders_page.dart`). Es UN error al final de la cadena, no uno
+     por tick — el bug de los diez snackbars del 2026-08-17 era lo contrario.
+
+**Y una corrección a lo que escribí aquí**: decía que sin rescate el panel se
+queda mal «hasta que otra mesa genere un evento». **Es falso en el caso
+normal.** `BusinessOrdersTouched` se emite sin `->toOthers()` y producción corre
+`QUEUE_CONNECTION=sync`, así que **el evento de la propia mutación vuelve al
+dispositivo que actuó** y repara la pantalla en unos cientos de ms. También
+reparan el resume de la app y el cambio de chip. El fallo necesita que ADEMÁS
+falle el broadcast o esté el socket caído — sigue mereciendo el arreglo, pero
+es un caso combinado, no el camino normal. Lo que sí es cierto: `::safe` se
+traga los fallos de broadcast, el polling sólo arranca con el socket caído, y
+el pull-to-refresh **no** rescata (con la lista vacía no se pinta el
+`RefreshIndicator`).
 
 **Y un tercero, de contadores**: una lectura anterior a la mutación que
 aterriza después los pisaba. Lleva marcador propio

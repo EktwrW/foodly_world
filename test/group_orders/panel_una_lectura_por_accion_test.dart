@@ -313,6 +313,90 @@ void main() {
     expect(cubit.state.total, 4, reason: 'el pie volvió al número de antes de la acción');
   });
 
+  /// N acciones encadenadas sobre una orden ausente NO son N cadenas de
+  /// rescate. La revisión midió 6 acciones = 6 peticiones con el backend sano
+  /// y 18 con el backend caído — del mismo orden que las 22 contra 4 que
+  /// motivaron el tope de la PR #87. La red anterior ya lo evitaba con un solo
+  /// `Timer`; al pasar a recursión me lo llevé por delante.
+  test('varias acciones encadenadas arman UNA sola cadena de rescate', () async {
+    repo.ordenEnLaLista = false;
+    await cubit.load();
+    repo.fallaLaLectura = true;
+    final antes = repo.lecturas;
+
+    for (var i = 0; i < 6; i++) {
+      await cubit.advanceFulfillment('a', 'ready');
+    }
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+
+    expect(repo.lecturas - antes, lessThanOrEqualTo(3),
+        reason: 'seis acciones dejaron seis cadenas de rescate encoladas');
+  });
+
+  /// Y la espera se USA, no sólo se declara. El test del getter no lo fijaba:
+  /// poniéndola a cero, las 23 pruebas seguían en verde — el mismo
+  /// verde-por-razón-degenerada que esta PR dice estar corrigiendo, en la
+  /// línea que esta PR añade.
+  test('entre intento e intento se espera de verdad', () async {
+    final lento = ManagerOrdersCubit(
+      businessUuid: 'b1',
+      repo: repo,
+      logger: Logger(level: Level.off),
+      esperaEntreIntentos: const Duration(milliseconds: 300),
+    );
+    addTearDown(lento.close);
+
+    repo.ordenEnLaLista = false;
+    await lento.load();
+    repo.fallaLaLectura = true;
+    final antes = repo.lecturas;
+
+    unawaited(lento.advanceFulfillment('a', 'ready'));
+    await Future<void>.delayed(const Duration(milliseconds: 100));
+
+    expect(repo.lecturas - antes, 1, reason: 'se reintentó sin esperar');
+
+    // Y la espera CRECE. La ventana hay que elegirla donde las dos formas
+    // difieran, que fue mi primer error aquí: a los 500 ms ambas llevan dos
+    // intentos y el test pasaba con la escalada quitada.
+    //
+    //   con escalada:  intentos en t=0, 300, 900
+    //   sin escalada:  intentos en t=0, 300, 600
+    //
+    // Así que a los 700 ms: dos con escalada, tres sin ella.
+    await Future<void>.delayed(const Duration(milliseconds: 600));
+    expect(repo.lecturas - antes, 2, reason: 'la espera no escala entre intentos');
+  });
+
+  /// Agotados los intentos, el manager tiene que ver un error con reintento y
+  /// no un «No hay órdenes» falso. Es la doctrina que ya está escrita en
+  /// `manager_orders_page.dart`: un dato falso es peor que un error.
+  test('agotados los intentos, la pantalla dice que falló', () async {
+    repo.ordenEnLaLista = false;
+    await cubit.load();
+    repo.fallaLaLectura = true;
+
+    await cubit.advanceFulfillment('a', 'ready');
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+
+    expect(cubit.state.error, isNotNull,
+        reason: 'el panel dice "No hay órdenes" con el chip marcando 1');
+    expect(cubit.state.orders, isEmpty);
+  });
+
+  /// Y una orden que SALIÓ del panel no dispara rescate: no hay nada que traer.
+  test('una orden que deja el panel no dispara rescate', () async {
+    repo.ordenEnLaLista = false;
+    await cubit.load();
+    repo.sigueEnElPanel = false;
+    final antes = repo.lecturas;
+
+    await cubit.advanceFulfillment('a', 'ready');
+    await Future<void>.delayed(const Duration(milliseconds: 120));
+
+    expect(repo.lecturas, antes, reason: 'se pidió la lista para traer algo que ya no está');
+  });
+
   /// Y el valor de PRODUCCIÓN, que los tests no ven porque inyectan 20 ms.
   test('la espera entre intentos ni martillea ni se duerme', () {
     final porDefecto = ManagerOrdersCubit(
