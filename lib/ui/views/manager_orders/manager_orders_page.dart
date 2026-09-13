@@ -217,18 +217,9 @@ class ManagerOrdersPage extends StatelessWidget {
                                 : RefreshIndicator(
                                     color: FoodlyThemes.primaryFoodly,
                                     onRefresh: cubit.refetchSilently,
-                                    // Tarjetas de pedido en columnas (2026-09-12):
-                                    // en tableta caben mas, del mismo tamaño.
-                                    //
-                                    // El pie de "mostrando N de M" deja de ser un
-                                    // elemento +1 de la lista y pasa al `pie` de
-                                    // [ListaAdaptativa]: con varias columnas, un
-                                    // elemento mas seria una CELDA suelta en la
-                                    // ultima fila, no una linea centrada debajo.
-                                    // El panel NO pagina (ver el comentario del
-                                    // cubit): si hay mas de las que caben, se dice
-                                    // — un contador que no cuadra con la lista es
-                                    // peor que una lista corta y honesta.
+                                    // El pie va en `pie` y no como elemento +1:
+                                    // con varias columnas seria una celda suelta
+                                    // en la ultima fila.
                                     child: ListaAdaptativa(
                                       padding: const EdgeInsets.fromLTRB(14, 8, 14, 20),
                                       separacion: 10,

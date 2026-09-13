@@ -5,16 +5,8 @@ import 'package:foodly_world/core/configs/dev_config.dart';
 import 'package:foodly_world/core/configs/prod_config.dart';
 import 'package:logger/logger.dart';
 
-/// El prefill del login solo existe en dev.
-///
-/// POR QUE HAY TEST (2026-09-12). El cableado —`LOG_EMAIL`, `LOG_PASS`,
-/// `REG_PREFILL`— llevaba tiempo escrito pero no lo leia nadie, asi que daba
-/// igual que `ProdConfig` tambien implementara `shouldPrefillLogin` a partir de
-/// `REG_PREFILL`. Al conectarlo deja de dar igual: un build de tienda con ese
-/// define puesto habria arrancado con credenciales en el formulario.
-///
-/// `ProdConfig` ya no recibe `regPrefill` y hereda `false`. Este test es lo que
-/// impide que alguien se lo devuelva «por simetria» con `DevConfig`.
+/// El prefill solo existe en dev. `ProdConfig` llego a implementar
+/// `shouldPrefillLogin` desde REG_PREFILL; esto impide que se lo devuelvan.
 void main() {
   DevConfig dev({String? email, String? pass, bool? prefill}) => DevConfig(
         envLogLevel: Level.off,
