@@ -1,6 +1,7 @@
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/main.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
+import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/widgets/greeting_widget.dart';
@@ -42,7 +43,8 @@ class Home369AppBarMobile extends StatelessWidget {
             // title un hueco justo de alto, asi que al `Align` no le sobra
             // espacio vertical y da igual como alinee. Medido en
             // content_column_en_flexible_space_test.dart.
-            title: ContentColumn.list(
+            title: ContentColumn(
+              maxWidth: UIDimens.HOME_APP_BAR_MAX_WIDTH,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

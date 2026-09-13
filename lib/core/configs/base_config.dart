@@ -9,7 +9,13 @@ abstract class BaseConfig {
   String get foodlyAppRoot => '';
   String get foodlyApiVersion => '';
 
+  /// Prerrellenar el login. SOLO dev: ver [DevConfig]. En prod y demo es
+  /// `false` y no hay define que lo cambie.
   bool get shouldPrefillLogin => false;
+
+  /// Credenciales del prefill de dev. Vacias en cualquier otro entorno.
+  String get prefillEmail => '';
+  String get prefillPassword => '';
   String get googlePlacesBaseUrl => '';
   String get googleDefaultApiKey => '';
   String get googleSignInClientId => '';
@@ -48,7 +54,6 @@ abstract class BaseConfig {
           envBaseUrl: baseUrl,
           envAppRoot: appRoot,
           envApiVersion: apiVersion,
-          regPrefill: regPrefill,
           envLogLevel: logLevel,
           envGooglePlacesBaseUrl: googlePlacesBaseUrl,
           envGoogleDefaultPublicToken: googleDefaultApiKey,

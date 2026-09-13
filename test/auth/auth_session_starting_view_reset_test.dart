@@ -107,6 +107,16 @@ class _FakeBaseConfig implements BaseConfig {
   @override
   String get googleSignInClientId => 'test-client-id';
 
+  // Lo mismo con el prefill del login (2026-09-12): `StartingCubit._prefill`
+  // lee los dos al construirse y los dos son `bool` no-nullable. Van los DOS
+  // aunque hoy `isDev` en false corte la evaluación por cortocircuito: si
+  // alguien invierte el orden de la guarda, el fake no tiene por qué romperse.
+  @override
+  bool get isDev => false;
+
+  @override
+  bool get shouldPrefillLogin => false;
+
   @override
   noSuchMethod(Invocation invocation) => null;
 }

@@ -5,6 +5,7 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/cards/promotion_card_view.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/lista_adaptativa.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/no_items_view_wdg.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
@@ -56,7 +57,10 @@ class PromotionsPage extends StatelessWidget {
                           final promos = vm.promotionsForRender(status);
 
                           if (promos.isEmpty && state.isLoaded) {
-                            return FadeIn(child: NoItemsViewWdg(text: S.current.noPromotionsInSection, intent: FoodlyEmptyIntent.filtro).paddingTop(120));
+                            return FadeIn(
+                                child: NoItemsViewWdg(
+                                        text: S.current.noPromotionsInSection, intent: FoodlyEmptyIntent.filtro)
+                                    .paddingTop(120));
                           }
 
                           final scrollController = {
@@ -65,15 +69,18 @@ class PromotionsPage extends StatelessWidget {
                           }[status];
 
                           return FadeIn(
-                            child: ListView.builder(
-                              key: ValueKey(status),
+                            // Tarjetas de promocion: en tableta se reparten
+                            // en columnas manteniendo su tamaño de telefono
+                            // (2026-09-12). Ver [ListaAdaptativa].
+                            child: ListaAdaptativa(
+                              claveDeLista: ValueKey(status),
                               controller: scrollController,
                               padding: const EdgeInsets.only(top: 180),
-                              itemBuilder: (_, i) => PromotionCard(
+                              elementos: promos.length,
+                              constructor: (_, i) => PromotionCard(
                                 key: ValueKey('promo-${promos[i].uuid}'),
                                 promo: promos[i],
                               ),
-                              itemCount: promos.length,
                             ),
                           );
                         },

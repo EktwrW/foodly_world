@@ -97,7 +97,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
                         padding: const EdgeInsets.symmetric(horizontal: 3),
                         decoration: BoxDecoration(
                           color: ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .36),
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,

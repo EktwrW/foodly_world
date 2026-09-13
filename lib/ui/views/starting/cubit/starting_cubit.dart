@@ -52,12 +52,23 @@ class StartingCubit extends Cubit<StartingState> {
         _logger = logger,
         _meRepo = meRepo,
         _vm = StartingVM(
-          emailController: TextEditingController(),
-          passwordController: TextEditingController(),
+          emailController: TextEditingController(text: _prefill.email),
+          passwordController: TextEditingController(text: _prefill.password),
         ),
         super(const StartingState.initial()) {
     if (kIsWeb) FlutterNativeSplash.remove();
     setView(StartingPageView.initial);
+  }
+
+  /// Prefill del login en dev, desde LOG_EMAIL / LOG_PASS.
+  ///
+  /// Guarda doble a proposito: solo [DevConfig] puede encender el flag, y aqui
+  /// ademas se comprueba `isDev`.
+  static ({String password, String email}) get _prefill {
+    final config = di<BaseConfig>();
+    if (!config.isDev || !config.shouldPrefillLogin) return (email: '', password: '');
+
+    return (email: config.prefillEmail, password: config.prefillPassword);
   }
 
   /// Modo invitado (App Store 5.1.1.v): el usuario explora el descubrimiento

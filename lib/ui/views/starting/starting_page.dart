@@ -5,6 +5,7 @@ import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/welcome_dialog.dart';
@@ -101,124 +102,132 @@ class StartingPage369 extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context, StartingVM vm) {
+    // Techo de ancho en tableta (2026-09-12). En un iPad de 13" los botones de
+    // "Iniciar sesion" y "Registrarse" se estiraban de borde a borde: el sello
+    // de un layout de telefono estirado, y es la primera pantalla que ve el
+    // revisor de App Store. El logo ya se habia ajustado (ver [LogoDeArranque]);
+    // faltaba el resto del contenido. El degradado del fondo sigue a sangre
+    // porque el techo va por dentro, no alrededor del `DecoratedBox`.
     return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          AnimatedSize(
-            duration: Durations.medium4,
-            child: SizedBox(
-              height: context.screenLongestSide * .12,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Visibility(
-                  visible: vm.currentView.isLogin,
-                  replacement: _topTextWidget(S.current.welcomeTo),
-                  child: _topTextWidget(S.current.loginTo),
+      child: ContentColumn(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            AnimatedSize(
+              duration: Durations.medium4,
+              child: SizedBox(
+                height: context.screenLongestSide * .12,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Visibility(
+                    visible: vm.currentView.isLogin,
+                    replacement: _topTextWidget(S.current.welcomeTo),
+                    child: _topTextWidget(S.current.loginTo),
+                  ),
                 ),
               ),
             ),
-          ),
-          AnimatedSize(
-            duration: Durations.medium4,
-            child: SizedBox(
-              height: vm.currentView.isLogin ? context.screenLongestSide * .19 : context.screenLongestSide * .30,
-              child: Center(
-                child: AnimatedPadding(
-                  padding: EdgeInsets.symmetric(horizontal: vm.currentView.isLogin ? 80 : 50),
-                  duration: Durations.medium4,
-                  child: const LogoDeArranque(),
+            AnimatedSize(
+              duration: Durations.medium4,
+              child: SizedBox(
+                height: vm.currentView.isLogin ? context.screenLongestSide * .19 : context.screenLongestSide * .30,
+                child: Center(
+                  child: AnimatedPadding(
+                    padding: EdgeInsets.symmetric(horizontal: vm.currentView.isLogin ? 80 : 50),
+                    duration: Durations.medium4,
+                    child: const LogoDeArranque(),
+                  ),
                 ),
-              ),
-            ).paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
-          ),
-          AnimatedSize(
-            duration: Durations.medium4,
-            child: SizedBox(
-              height: vm.currentView.isLogin ? context.screenLongestSide * .38 : context.screenLongestSide * .33,
-              child: const AppLoginWidgets(),
+              ).paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
             ),
-          ),
-          AnimatedSize(
-            duration: Durations.medium4,
-            child: SizedBox(
-              height: vm.currentView.isLogin ? context.screenLongestSide * .19 : context.screenLongestSide * .13,
+            AnimatedSize(
+              duration: Durations.medium4,
+              child: SizedBox(
+                height: vm.currentView.isLogin ? context.screenLongestSide * .38 : context.screenLongestSide * .33,
+                child: const AppLoginWidgets(),
+              ),
+            ),
+            AnimatedSize(
+              duration: Durations.medium4,
+              child: SizedBox(
+                height: vm.currentView.isLogin ? context.screenLongestSide * .19 : context.screenLongestSide * .13,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    if (!vm.currentView.isLogin)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 9),
+                              height: 1,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: FoodlyThemes.primaryFoodly, borderRadius: BorderRadius.circular(10)),
+                            ),
+                          ),
+                          Flexible(
+                            flex: 2,
+                            child: CustomNeumorphicButton(
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                // Modo invitado (App Store 5.1.1.v): entra al home
+                                // sin sesión. Ver StartingCubit.enterAsGuest().
+                                context.read<StartingCubit>().enterAsGuest();
+                              },
+                              type: CustomNeumorphicBtnType.outlined,
+                              disabled: false,
+                              leading: const Asset(FoodlyAssets.isoFoodly, height: 14.3),
+                              text: S.current.exploreAsGuest,
+                              padding: const EdgeInsets.all(6),
+                              margin: const EdgeInsets.all(6),
+                            ),
+                          ),
+                          Flexible(
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 9),
+                              height: 1,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: FoodlyThemes.primaryFoodly, borderRadius: BorderRadius.circular(10)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    const SizedBox.shrink(),
+                  ],
+                ),
+              ).paddingAll(UIDimens.SCREEN_PADDING_MOB),
+            ),
+            SizedBox(
+              height: context.screenLongestSide * .09,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                spacing: 3,
                 children: [
-                  if (!vm.currentView.isLogin)
-                    Row(
+                  Text(S.current.copyrightText(DateTime.now().year), style: FoodlyTextStyles.copyrightText),
+                  Flexible(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: 9,
                       children: [
-                        Flexible(
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 9),
-                            height: 1,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: FoodlyThemes.primaryFoodly, borderRadius: BorderRadius.circular(10)),
-                          ),
+                        InkWell(
+                          onTap: () => di<AppRouter>().appRouter.goNamed(AppRoutes.termsConditions.name),
+                          child: Text(S.current.termsConditionsShort, style: FoodlyTextStyles.captionPurpleBold),
                         ),
-                        Flexible(
-                          flex: 2,
-                          child: CustomNeumorphicButton(
-                            onPressed: () {
-                              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                              // Modo invitado (App Store 5.1.1.v): entra al home
-                              // sin sesión. Ver StartingCubit.enterAsGuest().
-                              context.read<StartingCubit>().enterAsGuest();
-                            },
-                            type: CustomNeumorphicBtnType.outlined,
-                            disabled: false,
-                            leading: const Asset(FoodlyAssets.isoFoodly, height: 14.3),
-                            text: S.current.exploreAsGuest,
-                            padding: const EdgeInsets.all(6),
-                            margin: const EdgeInsets.all(6),
-                          ),
-                        ),
-                        Flexible(
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 9),
-                            height: 1,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: FoodlyThemes.primaryFoodly, borderRadius: BorderRadius.circular(10)),
-                          ),
+                        const Text('-', style: FoodlyTextStyles.captionPurpleBold),
+                        InkWell(
+                          onTap: () => di<AppRouter>().appRouter.goNamed(AppRoutes.privacyPolicy.name),
+                          child: Text(S.current.termsPrivacyTextSpan4, style: FoodlyTextStyles.captionPurpleBold),
                         ),
                       ],
-                    ),
-                  const SizedBox.shrink(),
+                    ).paddingBottom(16),
+                  ),
                 ],
               ),
-            ).paddingAll(UIDimens.SCREEN_PADDING_MOB),
-          ),
-          SizedBox(
-            height: context.screenLongestSide * .09,
-            child: Column(
-              spacing: 3,
-              children: [
-                Text(S.current.copyrightText(DateTime.now().year), style: FoodlyTextStyles.copyrightText),
-                Flexible(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    spacing: 9,
-                    children: [
-                      InkWell(
-                        onTap: () => di<AppRouter>().appRouter.goNamed(AppRoutes.termsConditions.name),
-                        child: Text(S.current.termsConditionsShort, style: FoodlyTextStyles.captionPurpleBold),
-                      ),
-                      const Text('-', style: FoodlyTextStyles.captionPurpleBold),
-                      InkWell(
-                        onTap: () => di<AppRouter>().appRouter.goNamed(AppRoutes.privacyPolicy.name),
-                        child: Text(S.current.termsPrivacyTextSpan4, style: FoodlyTextStyles.captionPurpleBold),
-                      ),
-                    ],
-                  ).paddingBottom(16),
-                ),
-              ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

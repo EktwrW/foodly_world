@@ -37,7 +37,13 @@ class DevConfig extends BaseConfig {
   String get foodlyApiVersion => envApiVersion;
 
   @override
-  bool get shouldPrefillLogin => regPrefill ?? false;
+  bool get shouldPrefillLogin => (regPrefill ?? false) && (testUserEmail?.isNotEmpty ?? false);
+
+  @override
+  String get prefillEmail => testUserEmail ?? '';
+
+  @override
+  String get prefillPassword => testUserPassword ?? '';
 
   @override
   Level get logLevel => envLogLevel;
@@ -50,5 +56,4 @@ class DevConfig extends BaseConfig {
 
   @override
   String get googleSignInClientId => envGoogleSignInClientId;
-
 }

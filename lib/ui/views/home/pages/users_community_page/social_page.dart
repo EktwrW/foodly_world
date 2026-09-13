@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart' show BlocConsumer, ReadContext;
 import 'package:foodly_world/core/core_exports.dart'
     show FoodlyThemes, PaddingExtension, ScreenSizeExtension, di, DialogService, S;
 import 'package:foodly_world/core/services/event_tracking_service.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/view_model/social_vm.dart';
@@ -78,61 +79,66 @@ class _SocialPageState extends State<SocialPage> {
                 _ => const SizedBox.shrink(),
               },
             ),
-            body: Column(
-              spacing: 8,
-              children: [
-                const CurrentLocationButton(
-                  isSocialFeature: true,
-                ).paddingOnly(
-                  top: 16,
-                  bottom: 12,
-                  left: 14,
-                  right: 12,
-                ),
-                ToggleSwitch(
-                  labels: SocialPageViews.values.map((e) => e.title).toList(),
-                  initialLabelIndex: vm.currentView.index,
-                  animate: true,
-                  animationDuration: 500,
-                  minHeight: 30,
-                  minWidth: (context.screenWidth - 40) / 3,
-                  cornerRadius: 6.0,
-                  activeFgColor: Colors.white,
-                  inactiveBgColor: Colors.white,
-                  totalSwitches: SocialPageViews.values.length,
-                  customTextStyles: const [
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
-                  ],
-                  borderColor: const [
-                    FoodlyThemes.tertiaryFoodly,
-                    FoodlyThemes.secondaryFoodly,
-                    FoodlyThemes.primaryFoodly,
-                  ],
-                  dividerColor: FoodlyThemes.secondaryFoodly,
-                  activeBgColors: const [
-                    [FoodlyThemes.primaryFoodly],
-                    [FoodlyThemes.primaryFoodly],
-                    [FoodlyThemes.primaryFoodly],
-                  ],
-                  onToggle: (index) {
-                    if (index != null) {
-                      context.read<SocialCubit>().changeView(SocialPageViews.values[index]);
-                    }
-                  },
-                ),
-                Expanded(
-                  child: IndexedStack(
-                    index: vm.currentView.index,
-                    children: const [
-                      PostsFeedWidget(),
-                      UsersDiscoveryWidget(),
-                      BuzzFeedWidget(),
-                    ],
+            // Feed social: techo de lista (2026-09-12). Son tarjetas de
+            // publicacion y de usuario, no texto, asi que va el techo de
+            // LISTA y no el de lectura. Ver [ContentColumn].
+            body: ContentColumn.list(
+              child: Column(
+                spacing: 8,
+                children: [
+                  const CurrentLocationButton(
+                    isSocialFeature: true,
+                  ).paddingOnly(
+                    top: 16,
+                    bottom: 12,
+                    left: 14,
+                    right: 12,
                   ),
-                ),
-              ],
+                  ToggleSwitch(
+                    labels: SocialPageViews.values.map((e) => e.title).toList(),
+                    initialLabelIndex: vm.currentView.index,
+                    animate: true,
+                    animationDuration: 500,
+                    minHeight: 30,
+                    minWidth: (context.screenWidth - 40) / 3,
+                    cornerRadius: 6.0,
+                    activeFgColor: Colors.white,
+                    inactiveBgColor: Colors.white,
+                    totalSwitches: SocialPageViews.values.length,
+                    customTextStyles: const [
+                      TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+                      TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+                      TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+                    ],
+                    borderColor: const [
+                      FoodlyThemes.tertiaryFoodly,
+                      FoodlyThemes.secondaryFoodly,
+                      FoodlyThemes.primaryFoodly,
+                    ],
+                    dividerColor: FoodlyThemes.secondaryFoodly,
+                    activeBgColors: const [
+                      [FoodlyThemes.primaryFoodly],
+                      [FoodlyThemes.primaryFoodly],
+                      [FoodlyThemes.primaryFoodly],
+                    ],
+                    onToggle: (index) {
+                      if (index != null) {
+                        context.read<SocialCubit>().changeView(SocialPageViews.values[index]);
+                      }
+                    },
+                  ),
+                  Expanded(
+                    child: IndexedStack(
+                      index: vm.currentView.index,
+                      children: const [
+                        PostsFeedWidget(),
+                        UsersDiscoveryWidget(),
+                        BuzzFeedWidget(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },
