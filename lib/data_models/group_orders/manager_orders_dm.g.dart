@@ -36,6 +36,7 @@ _ManagerOrdersResponseDM _$ManagerOrdersResponseDMFromJson(
           ? const ManagerOrderCountsDM()
           : ManagerOrderCountsDM.fromJson(
               json['counts'] as Map<String, dynamic>),
+      countsTotal: (json['counts_total'] as num?)?.toInt(),
       meta: json['meta'] == null
           ? null
           : ManagerOrdersMetaDM.fromJson(json['meta'] as Map<String, dynamic>),
@@ -47,6 +48,7 @@ Map<String, dynamic> _$ManagerOrdersResponseDMToJson(
       'success': instance.success,
       'orders': instance.orders.map((e) => e.toJson()).toList(),
       'counts': instance.counts.toJson(),
+      if (instance.countsTotal case final value?) 'counts_total': value,
       if (instance.meta?.toJson() case final value?) 'meta': value,
     };
 

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +30,13 @@ class ManagerOrdersState {
   /// pantalla en vez de mostrar 50 tarjetas como si fueran todas.
   final int total;
 
+  /// Cuántas hay en el PANEL ENTERO, filtre lo que filtre. NO es [total], que
+  /// es el del cubo: coinciden sin chip puesto, y confundirlos hacía que el
+  /// chip "Todas" contara el cubo filtrado. Lo manda el backend en
+  /// `counts_total`; sumar los cuatro cubos se queda corto en silencio con un
+  /// `fulfillment_status` que no sea ninguno de ellos.
+  final int panelTotal;
+
   const ManagerOrdersState({
     this.loading = false,
     this.orders = const [],
@@ -36,6 +44,7 @@ class ManagerOrdersState {
     this.bucket,
     this.error,
     this.total = 0,
+    this.panelTotal = 0,
   });
 
   /// Hay más de las que caben en la página que pedimos.
@@ -48,6 +57,7 @@ class ManagerOrdersState {
     Object? bucket = _sentinel,
     Object? error = _sentinel,
     int? total,
+    int? panelTotal,
   }) =>
       ManagerOrdersState(
         loading: loading ?? this.loading,
@@ -56,6 +66,9 @@ class ManagerOrdersState {
         bucket: bucket == _sentinel ? this.bucket : bucket as String?,
         error: error == _sentinel ? this.error : error as String?,
         total: total ?? this.total,
+        // Sin caso propio en `selectBucket`: el global SOBREVIVE al cambio de
+        // chip a propósito — es justo lo que `total` no hace.
+        panelTotal: panelTotal ?? this.panelTotal,
       );
 
   static const _sentinel = Object();
@@ -117,6 +130,29 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
         'delivered' => c.delivered,
         _ => null,
       };
+
+  /// El total del panel de una lectura, con respaldo para un backend anterior
+  /// a be-foodly #149.
+  ///
+  /// Sin chip `meta.total` YA es el global: respaldo exacto. Con chip no hay
+  /// sustituto, así que se conserva el último conocido — lo refrescan las
+  /// lecturas sin chip y cada mutación.
+  ///
+  /// El suelo NO es cosmético, y lo encontró la revisión: «el último conocido»
+  /// es el 0 del constructor si la primera lectura APLICADA ya lleva chip, y
+  /// se llega ahí por un camino normal —el selector se pinta fuera de la rama
+  /// del spinner, así que el camarero puede tocar "Listas" mientras carga—.
+  /// Salía «Todas 0 · Listas 2», que además de falso es imposible: el filtro
+  /// es un subconjunto, así que el panel nunca puede tener menos que el cubo
+  /// que se está mirando. Y no se cura solo: los refetch del canal llevan el
+  /// mismo chip.
+  int _totalDelPanel(ManagerOrdersResponseDM r, String? cubo) {
+    final delListado = r.meta?.total ?? r.orders.length;
+    final global = r.countsTotal;
+    if (global != null) return global;
+
+    return cubo == null ? delListado : math.max(state.panelTotal, delListado);
+  }
 
   Future<void> load() async {
     emit(state.copyWith(loading: true, error: null));
@@ -325,6 +361,7 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
           // Sin meta (respuesta vieja o test) el total es lo que llegó: así
           // `isTruncated` da false y la UI no inventa un aviso.
           total: contadoresAlDia ? (r.meta?.total ?? r.orders.length) : state.total,
+          panelTotal: contadoresAlDia ? _totalDelPanel(r, cubo) : state.panelTotal,
           error: null,
         ));
 
@@ -448,6 +485,9 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
           // "Mostrando 2 de 9" en cuanto había un chip puesto. Con filtro, el
           // total sale del contador de ese cubo, que es lo que hace el backend.
           total: _totalDelCubo(cubo, contadores) ?? r.panelTotal ?? state.total,
+          // El global va aparte y SIEMPRE: la mutación lo manda filtre lo que
+          // filtre, y el cliente lo tiraba.
+          panelTotal: r.panelTotal ?? state.panelTotal,
           error: null,
         ));
 
