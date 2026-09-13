@@ -8,6 +8,7 @@ import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/group_order_realtime_service.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/data_models/group_orders/manager_orders_dm.dart';
+import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/group_order_cubit.dart';
 import 'package:foodly_world/ui/views/manager_orders/cubit/manager_orders_cubit.dart';
 import 'package:logger/logger.dart';
@@ -54,8 +55,11 @@ void main() {
       await carga;
       await _turno();
 
+      // Ojo con lo que mide ESTE: el `close()` cae antes de que responda el
+      // repo, así que lo que corta es la comprobación PREVIA y aquí no se llega
+      // a pedir ningún canal. El caso de cancelar de verdad es el de abajo.
       expect(realtime.pollingActivo, isFalse,
-          reason: 'el canal sigue vivo: quedó un oyente que nadie va a cancelar');
+          reason: 'ni siquiera debería haberse pedido el canal');
     });
 
     /// El control: con la pantalla abierta, la suscripción SÍ tiene que quedar.
@@ -220,6 +224,56 @@ void main() {
 
       expect(lento.pollingActivo, isFalse,
           reason: 'el oyente nació sin dueño y nadie lo canceló');
+    });
+  });
+
+  /// EL TERCER CONSUMIDOR, y el peor: lo señaló la revisión. El chip es un
+  /// singleton que vive toda la sesión y `watchActive` cuelga de `onChange`, o
+  /// sea de CADA emisión. Encima `end()` lo llama `refresh()` ante un 404/403,
+  /// y `refresh` ES el callback de realtime: el propio evento se disparaba el
+  /// huérfano. Y el comentario del arreglo anterior citaba este código como
+  /// modelo a seguir.
+  group('el chip flotante', () {
+    test('cerrar mientras nace la suscripción no deja oyentes', () async {
+      final lento = _RealtimeLento();
+      addTearDown(lento.unwatchAll);
+      final cubit = ActiveGroupOrderCubit(repo: _RepoFalso(), logger: _mudo, realtime: lento);
+
+      final observando = cubit.watchActive('o1');
+      await cubit.close();
+      lento.puerta.complete();
+      await observando;
+      await _asentar();
+
+      expect(lento.pollingActivo, isFalse);
+    });
+
+    /// `end()` vacía el carrito, y puede caer mientras la suscripción nace.
+    test('end() mientras nace la suscripción tampoco', () async {
+      final lento = _RealtimeLento();
+      addTearDown(lento.unwatchAll);
+      final cubit = ActiveGroupOrderCubit(repo: _RepoFalso(), logger: _mudo, realtime: lento);
+      addTearDown(cubit.close);
+
+      final observando = cubit.watchActive('o1');
+      cubit.end();
+      lento.puerta.complete();
+      await observando;
+      await _asentar();
+
+      expect(lento.pollingActivo, isFalse);
+    });
+
+    /// El control: observando de verdad, la suscripción SÍ tiene que quedar.
+    test('pero observando sí queda suscrito', () async {
+      final realtime = GroupOrderRealtimeService(authSession: _AuthFalso());
+      addTearDown(realtime.unwatchAll);
+      final cubit = ActiveGroupOrderCubit(repo: _RepoFalso(), logger: _mudo, realtime: realtime);
+      addTearDown(cubit.close);
+
+      await cubit.watchActive('o1');
+
+      expect(realtime.pollingActivo, isTrue);
     });
   });
 }

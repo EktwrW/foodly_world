@@ -2669,7 +2669,15 @@ preexistente y lo midió la contra-revisión.
 
 Lo encontró la contra-revisión de la #87 mirando fuera del marco en el que
 estábamos los tres (generaciones, embudos, contar peticiones). Es preexistente y
-afecta a los dos cubits que piden canal.
+afecta a **los TRES consumidores de realtime**, no a dos: la página de la orden,
+el panel del negocio **y el chip flotante**. Yo escribí «los dos cubits que piden
+canal» y lo desmintió la revisión con el docstring del propio servicio delante.
+
+**El tercero era el peor, y mi arreglo lo citaba como MODELO A SEGUIR.** El chip
+es un `registerLazySingleton` que vive toda la sesión y `watchActive` cuelga de
+`onChange`, o sea de cada emisión. Encima `end()` lo llama `refresh()` ante un
+404/403, y `refresh` **es** el callback de realtime: el propio evento se
+disparaba el huérfano.
 
 **El fallo.** `load()` pedía la suscripción **después** de esperar la primera
 lectura, y guardaba el resultado en `_sub` al volver. Salir de la pantalla
@@ -2691,6 +2699,12 @@ es null, así que un segundo `load()` **no encontraba nada que cancelar** y los
 dos oyentes quedaban vivos igual. Guardando el futuro, la anterior se cancela en
 cuanto exista.
 
+**Pero no es portante en los tres sitios, y eso también hay que decirlo.** En la
+página sí (quitarlo pone el banco en rojo). En el chip y en el panel es
+**redundante** con la comprobación de después del await: quitarlo solo no se
+nota, y hace falta quitar los dos —que es exactamente el código original— para
+que salga rojo. Lo midió la revisión y lo confirmé por pares.
+
 **Y el orden importa: `watch` PRIMERO, cancelar después.** El servicio registra
 el oyente **sincrónicamente** y sólo luego espera a la conexión
 (`_subscribe` hace `sub.add(id, onTouched)` antes del `await _connect()`). Poner
@@ -2703,15 +2717,30 @@ lo que me hizo mirarlo**: ocho tests estaban en rojo y yo lo habría leído como
 si la suscripción no llega nunca, un `await` en `close()` lo colgaría. `cancel()`
 es idempotente, así que cancelar dos veces no molesta.
 
-**Tres pares de guardas REDUNDANTES, comprobados por pares y no supuestos:**
+**Pares de guardas REDUNDANTES, comprobados por pares y no supuestos:**
 
 | par | quitar una | quitar las dos |
 |---|---|---|
-| idempotencia (`_observado`/`_suscrito`) y cancelar la anterior | no se nota | rojo |
+| idempotencia y cancelar la anterior **(panel)** | no se nota | rojo |
 | el `isClosed` de después del await y el cancelado de `close()` | no se nota | rojo |
+| guardar el futuro y la guarda de después del await **(chip)** | no se nota | rojo |
 
-La idempotencia se queda porque además ahorra una suscripción y su cancelación
-en el caso corriente, no sólo por defensa.
+**Y aquí escribí dos cosas que la revisión desmintió.** Decía «tres pares» con
+una tabla de dos filas. Y decía que en la primera fila quitar cualquiera de las
+dos no se nota: **en la página es falso** — quitar «cancelar la anterior» sola sí
+pone el banco en rojo; la simétrica es verde sólo en el panel.
+
+**Otra afirmación mía que nada sostiene:** que marcar la bandera ANTES del await
+«es lo que hace idempotente a esto». Moverla a después del await **no lo nota
+ningún test**, porque el camino de cancelar-la-anterior cubre el mismo caso. La
+razón para dejarla delante es de diseño, no de cobertura: ahorra una suscripción
+y su cancelación en el caso corriente.
+
+**Y una rama que hoy no puede correr:** en el panel, `anterior` es SIEMPRE null
+—`load()` se llama una sola vez, desde `app_router.dart`, y el reintento de la
+pantalla va por `refetchSilently`—. La revisión lo probó metiendo un `assert` y
+dejando la suite verde. Se queda porque deja de estar muerta en cuanto alguien
+llame a `load()` dos veces, que es justo el refactor que lo rompería en silencio.
 
 **Trampa al testear, y me pasó:** `_suscribir` de la **página** va `unawaited`,
 así que `await load()` **no** espera a que la suscripción nazca. Mi test de

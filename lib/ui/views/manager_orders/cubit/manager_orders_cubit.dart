@@ -150,19 +150,12 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
     final anterior = _sub;
     final pendiente = realtime.watchBusiness(businessUuid, onTouched: refetchSilently);
     _sub = pendiente;
-    _cancelarCuandoExista(anterior);
+    GroupOrderRealtimeService.cancelarCuandoExista(anterior);
     final sub = await pendiente;
     if (isClosed) {
       await sub.cancel();
       _suscrito = false;
     }
-  }
-
-  /// No se puede ESPERAR a cancelar: si la suscripción no llega nunca, `close()`
-  /// se quedaría colgado. `cancel()` es idempotente.
-  static void _cancelarCuandoExista(Future<RealtimeSubscription>? pendiente) {
-    if (pendiente == null) return;
-    unawaited(pendiente.then((s) => s.cancel()).catchError((_) {}));
   }
 
   Future<void> selectBucket(String? bucket) async {
@@ -347,7 +340,7 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
     _redDeSeguridad?.cancel();
     _redDeSeguridad = null;
     _suscrito = false;
-    _cancelarCuandoExista(_sub);
+    GroupOrderRealtimeService.cancelarCuandoExista(_sub);
     _sub = null;
     return super.close();
   }

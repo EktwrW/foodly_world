@@ -101,20 +101,12 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
       onTouched: () => _refetchSilently(uuid, coalesce: true),
     );
     _sub = pendiente;
-    _cancelarCuandoExista(anterior);
+    GroupOrderRealtimeService.cancelarCuandoExista(anterior);
     final sub = await pendiente;
     if (isClosed) {
       await sub.cancel();
       _observado = null;
     }
-  }
-
-  /// `cancel()` es idempotente, así que cancelar dos veces no molesta; lo que
-  /// no se puede es ESPERAR aquí: si la suscripción no llega nunca, `close()`
-  /// se quedaría colgado.
-  static void _cancelarCuandoExista(Future<RealtimeSubscription>? pendiente) {
-    if (pendiente == null) return;
-    unawaited(pendiente.then((s) => s.cancel()).catchError((_) {}));
   }
 
   Future<void> _refetchSilently(String uuid, {bool coalesce = false}) async {
@@ -128,7 +120,7 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
   @override
   Future<void> close() async {
     _observado = null;
-    _cancelarCuandoExista(_sub);
+    GroupOrderRealtimeService.cancelarCuandoExista(_sub);
     _sub = null;
     return super.close();
   }
