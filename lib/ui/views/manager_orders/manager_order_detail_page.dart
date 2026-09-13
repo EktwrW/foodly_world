@@ -154,7 +154,8 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
             ],
           ),
           body: SafeArea(
-            top: false,
+            top: false, 
+            bottom: false,
             // Detalle de pedido: techo de LISTA (2026-09-12). Lleva el
             // stepper de estado, las lineas agrupadas por comensal y los
             // totales — es una coleccion, no un texto largo.

@@ -75,7 +75,7 @@ class _ManagePromotionsHeader extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                width: anchoDelCromo,
+                width: context.screenWidth,
                 child: Center(
                   child: AbsorbPointer(
                     absorbing: vm.isEditing,

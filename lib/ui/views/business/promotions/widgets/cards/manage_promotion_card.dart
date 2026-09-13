@@ -17,7 +17,6 @@ class PromotionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return PromotionCardView(
       promo: promo,
-      placeholderFit: BoxFit.none,
       trailingAction: _LikeOrEditWidget(key: Key('like-or-edit-promo: ${promo.uuid}'), promo: promo),
     );
   }

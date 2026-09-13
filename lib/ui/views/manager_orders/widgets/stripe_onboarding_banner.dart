@@ -149,7 +149,7 @@ class _StripeOnboardingBannerState extends State<StripeOnboardingBanner> with Wi
                     ),
                   ),
                   // Afordance del setting: tocar el banner abre el selector.
-                  const Icon(Icons.tune_rounded, color: FoodlyThemes.secondaryFoodly),
+                  const Icon(Icons.tune_rounded, color: FoodlyThemes.primaryFoodly),
                 ],
               ),
             ),

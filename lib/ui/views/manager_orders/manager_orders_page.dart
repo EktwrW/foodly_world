@@ -166,96 +166,97 @@ class ManagerOrdersPage extends StatelessWidget {
             ),
             body: SafeArea(
               top: false,
+              bottom: false,
               // Cromo y contenido al mismo techo: el conmutador de cubos y las
               // tarjetas de pedido comparten ancho.
               child: ContentColumn.list(
                 child: Column(
-                children: [
-                  // F4a-6: banner de onboarding de pagos (dos estados).
-                  const StripeOnboardingBanner().paddingVertical(4),
-                  ToggleSwitch(
-                    initialLabelIndex: _buckets.indexOf(state.bucket),
-                    onToggle: (i) => cubit.selectBucket(_buckets[i ?? 0]),
-                    totalSwitches: _buckets.length,
-                    animate: true,
-                    animationDuration: 500,
-                    minWidth: MediaQuery.sizeOf(context).width,
-                    minHeight: 42,
-                    cornerRadius: 16.0,
-                    radiusStyle: true,
-                    inactiveBgColor: Colors.white,
-                    borderWidth: 1.5,
-                    borderColor: const [
-                      FoodlyThemes.primaryFoodly,
-                      FoodlyThemes.primaryFoodly,
-                      FoodlyThemes.tertiaryFoodly,
-                      FoodlyThemes.primaryFoodly,
-                      FoodlyThemes.primaryFoodly,
-                    ],
-                    dividerColor: FoodlyThemes.secondaryFoodly,
-                    activeBgColors: List.filled(
-                      _buckets.length,
-                      const [FoodlyThemes.primaryFoodly],
-                    ),
-                    customWidgets: [
-                      for (final b in _buckets) _bucketSegment(state, b),
-                    ],
-                  ).paddingVertical(10),
-                  Expanded(
-                    child: state.loading && state.orders.isEmpty
-                        ? const Center(child: CircularProgressIndicator(color: FoodlyThemes.primaryFoodly))
-                        // "No hay órdenes" y "falló la llamada" NO son lo mismo.
-                        // Antes se pintaban igual: el camarero leía que no había
-                        // mesas mientras las tenía vivas esperando, y el único
-                        // aviso era un snackbar de 4 segundos sin reintento
-                        // (auditoría 2026-08-12). Para quien atiende una sala,
-                        // un dato falso es peor que un error.
-                        : state.error != null && state.orders.isEmpty
-                            ? LoadFailureView(onRetry: cubit.refetchSilently)
-                            : state.orders.isEmpty
-                                ? Center(
-                                    child: Column(
-                                      spacing: 12,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(Iconsax.receipt_minus_outline, color: FoodlyThemes.primaryFoodly),
-                                        Text(S.current.managerNoOrders, style: FoodlyTextStyles.caption),
-                                      ],
-                                    ),
-                                  )
-                                : RefreshIndicator(
-                                    color: FoodlyThemes.primaryFoodly,
-                                    onRefresh: cubit.refetchSilently,
-                                    // El pie va en `pie` y no como elemento +1:
-                                    // con varias columnas seria una celda suelta
-                                    // en la ultima fila.
-                                    child: ListaAdaptativa(
-                                      padding: const EdgeInsets.fromLTRB(14, 8, 14, 20),
-                                      separacion: 10,
-                                      elementos: state.orders.length,
-                                      pie: state.isTruncated
-                                          ? Padding(
-                                              padding: const EdgeInsets.only(top: 6),
-                                              child: Text(
-                                                S.current.managerOrdersTruncated(
-                                                  state.orders.length,
-                                                  state.total,
+                  children: [
+                    // F4a-6: banner de onboarding de pagos (dos estados).
+                    const StripeOnboardingBanner().paddingVertical(4),
+                    ToggleSwitch(
+                      initialLabelIndex: _buckets.indexOf(state.bucket),
+                      onToggle: (i) => cubit.selectBucket(_buckets[i ?? 0]),
+                      totalSwitches: _buckets.length,
+                      animate: true,
+                      animationDuration: 500,
+                      minWidth: MediaQuery.sizeOf(context).width,
+                      minHeight: 42,
+                      cornerRadius: 24.0,
+                      radiusStyle: true,
+                      inactiveBgColor: Colors.white,
+                      borderWidth: 1.5,
+                      borderColor: const [
+                        FoodlyThemes.primaryFoodly,
+                        FoodlyThemes.primaryFoodly,
+                        FoodlyThemes.tertiaryFoodly,
+                        FoodlyThemes.primaryFoodly,
+                        FoodlyThemes.primaryFoodly,
+                      ],
+                      dividerColor: FoodlyThemes.secondaryFoodly,
+                      activeBgColors: List.filled(
+                        _buckets.length,
+                        const [FoodlyThemes.primaryFoodly],
+                      ),
+                      customWidgets: [
+                        for (final b in _buckets) _bucketSegment(state, b),
+                      ],
+                    ).paddingVertical(context.isMobile ? 10 : 24),
+                    Expanded(
+                      child: state.loading && state.orders.isEmpty
+                          ? const Center(child: CircularProgressIndicator(color: FoodlyThemes.primaryFoodly))
+                          // "No hay órdenes" y "falló la llamada" NO son lo mismo.
+                          // Antes se pintaban igual: el camarero leía que no había
+                          // mesas mientras las tenía vivas esperando, y el único
+                          // aviso era un snackbar de 4 segundos sin reintento
+                          // (auditoría 2026-08-12). Para quien atiende una sala,
+                          // un dato falso es peor que un error.
+                          : state.error != null && state.orders.isEmpty
+                              ? LoadFailureView(onRetry: cubit.refetchSilently)
+                              : state.orders.isEmpty
+                                  ? Center(
+                                      child: Column(
+                                        spacing: 12,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          const Icon(Iconsax.receipt_minus_outline, color: FoodlyThemes.primaryFoodly),
+                                          Text(S.current.managerNoOrders, style: FoodlyTextStyles.caption),
+                                        ],
+                                      ),
+                                    )
+                                  : RefreshIndicator(
+                                      color: FoodlyThemes.primaryFoodly,
+                                      onRefresh: cubit.refetchSilently,
+                                      // El pie va en `pie` y no como elemento +1:
+                                      // con varias columnas seria una celda suelta
+                                      // en la ultima fila.
+                                      child: ListaAdaptativa(
+                                        padding: const EdgeInsets.fromLTRB(14, 8, 14, 0),
+                                        separacion: 10,
+                                        elementos: state.orders.length,
+                                        pie: state.isTruncated
+                                            ? Padding(
+                                                padding: const EdgeInsets.only(top: 6),
+                                                child: Text(
+                                                  S.current.managerOrdersTruncated(
+                                                    state.orders.length,
+                                                    state.total,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                  style: FoodlyTextStyles.caption,
                                                 ),
-                                                textAlign: TextAlign.center,
-                                                style: FoodlyTextStyles.caption,
-                                              ),
-                                            )
-                                          : null,
-                                      constructor: (context, i) {
-                                        final order = state.orders[i];
-                                        return ManagerOrderCard(
-                                          order: order,
-                                          onTap: () => _pushDetail(context, cubit, order.uuid),
-                                        );
-                                      },
+                                              )
+                                            : null,
+                                        constructor: (context, i) {
+                                          final order = state.orders[i];
+                                          return ManagerOrderCard(
+                                            order: order,
+                                            onTap: () => _pushDetail(context, cubit, order.uuid),
+                                          ).paddingBottom(context.isMobile ? 16 : 24);
+                                        },
+                                      ),
                                     ),
-                                  ),
-                  ),
+                    ),
                   ],
                 ),
               ),
