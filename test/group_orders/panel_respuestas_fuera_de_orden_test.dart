@@ -333,7 +333,7 @@ void main() {
     /// Una lectura que falla SIN nada pendiente de resincronizar no puede
     /// re-armar la red: serían hasta tres GET de más cada dos segundos contra
     /// un backend que ya está fallando.
-    test('una lectura fallida sin resync pendiente no re-arma la red', () async {
+    test('una lectura fallida no dispara ninguna otra', () async {
       final carga = cubit.load();
       repo.fallar(0);
       await carga;

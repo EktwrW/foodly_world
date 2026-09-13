@@ -1,3 +1,5 @@
+import 'dart:async';
+
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -145,6 +147,121 @@ void main() {
     expect(cubit.state.counts.pending, 7);
   });
 
+  // ── Lo que encontró la revisión ──────────────────────────────────────
+
+  /// El pie del panel decía "Mostrando 2 de 9" en cuanto había un chip puesto.
+  ///
+  /// `meta.total` del listado es el del CUBO FILTRADO; `counts_total` de la
+  /// mutación es el GLOBAL. Meter uno en el campo del otro hacía saltar el
+  /// contador de "Todas" tras cada acción y encendía el aviso de lista
+  /// truncada sin que hubiera nada truncado.
+  test('con un chip puesto, el total es el de ESE cubo', () async {
+    await cubit.load();
+    await cubit.selectBucket('ready');
+    // Una sola fila en el cubo, para que el pie no tenga nada que truncar.
+    repo.contadores = const ManagerOrderCountsDM(pending: 5, preparing: 2, ready: 1);
+    repo.total = 8; // el global
+
+    await cubit.advanceFulfillment('a', 'ready');
+
+    expect(cubit.state.total, 1, reason: 'el pie diría "Mostrando 1 de 8"');
+    expect(cubit.state.isTruncated, isFalse);
+  });
+
+  test('y sin chip, el total es el global', () async {
+    await cubit.load();
+    repo.contadores = const ManagerOrderCountsDM(pending: 1);
+    repo.total = 9;
+
+    await cubit.advanceFulfillment('a', 'ready');
+
+    expect(cubit.state.total, 9);
+  });
+
+  /// Con un chip filtrando, una orden que cambia de cubo se iba de la lista
+  /// — antes se quedaba visible bajo el chip equivocado, porque
+  /// `still_in_panel` contesta "¿sigue en el panel?", no "¿sigue en ESTE cubo?".
+  test('una orden que cambia de cubo sale del chip que se está mirando', () async {
+    await cubit.load();
+    await cubit.selectBucket('preparing');
+    repo.estadoDevuelto = GroupFulfillmentStatus.ready;
+
+    await cubit.advanceFulfillment('a', 'ready');
+
+    expect(
+      cubit.state.orders.where((o) => o.uuid == 'a'),
+      isEmpty,
+      reason: 'bajo el chip PREPARANDO hay una orden que ya está LISTA',
+    );
+  });
+
+  /// Y si la orden debería ENTRAR en el cubo visible y no está en la lista, no
+  /// se puede resolver localmente —falta su sitio en el orden—, así que se lee.
+  /// Es el único resto de la red de seguridad.
+  test('si la orden debería entrar en el cubo visible, se lee', () async {
+    await cubit.load();
+    // La palanca ANTES del cambio de chip: si no, `selectBucket` trae la orden
+    // y entonces ya está en la lista, que es el caso contrario al que se prueba.
+    repo.ordenEnLaLista = false;
+    await cubit.selectBucket('ready');
+    final antes = repo.lecturas;
+    repo.estadoDevuelto = GroupFulfillmentStatus.ready;
+
+    await cubit.advanceFulfillment('a', 'ready');
+    await Future<void>.delayed(Duration.zero);
+
+    expect(repo.lecturas, antes + 1, reason: 'la orden entra en el cubo y nadie la trae');
+  });
+
+  /// Una lectura que salió ANTES de la mutación no puede pisar los contadores
+  /// frescos. El argumento de "ya lo corrige el evento" no vale:
+  /// `BusinessOrdersTouched::safe` se traga los fallos de broadcast y el
+  /// polling de 10 s sólo corre con el socket caído.
+  test('una lectura vieja no pisa los contadores de la mutación', () async {
+    // La acción tiene que ser sobre una orden que NO esté en la lista visible.
+    //
+    // Si estuviera, la regla de descarte de la PR #87 ya tira esa lectura
+    // —marca `_ultimaAplicada`— y este test pasaría sin ejercitar nada. Es lo
+    // que me pasó en el primer intento: verde con la guarda quitada. Con la
+    // orden fuera de la lista, `_ultimaAplicada` NO se marca (esa es su regla,
+    // y se conserva), la lectura vieja sí se aplica, y lo único que protege
+    // los contadores es su marcador propio.
+    repo.ordenEnLaLista = false;
+    await cubit.load();
+
+    repo.retenerLecturas = true;
+    repo.contadoresDeLaLista = const ManagerOrderCountsDM(pending: 5);
+    final lecturaVieja = cubit.refetchSilently();
+
+    repo.contadores = const ManagerOrderCountsDM(pending: 4, ready: 1);
+    await cubit.advanceFulfillment('a', 'ready');
+
+    repo.responderLectura();
+    await lecturaVieja;
+
+    expect(cubit.state.counts.pending, 4, reason: 'los chips volvieron a los números de antes');
+    expect(cubit.state.counts.ready, 1);
+  });
+
+  // ── El cable: las tres claves del JSON ───────────────────────────────
+
+  /// Toda la PR cuelga de tres cadenas, y un error se degrada EN SILENCIO a
+  /// los fallbacks — indistinguible de un backend sin desplegar. Mutando
+  /// cualquiera de las tres, la suite entera seguía verde.
+  test('las tres claves del backend se parsean', () {
+    final dm = GroupOrderResponseDM.fromJson(const {
+      'group_order': {'uuid': 'a', 'business_uuid': 'b1'},
+      'counts': {'pending': 1, 'preparing': 2, 'ready': 3, 'delivered': 4},
+      'counts_total': 11,
+      'still_in_panel': false,
+    });
+
+    expect(dm.panelCounts?.pending, 1);
+    expect(dm.panelCounts?.delivered, 4);
+    expect(dm.panelTotal, 11);
+    expect(dm.stillInPanel, isFalse);
+  });
+
   test('el evento de realtime sigue leyendo, que es lo que NO hay que romper', () async {
     await cubit.load();
 
@@ -158,8 +275,26 @@ void main() {
 class _RepoEspia implements GroupOrderRepo {
   int lecturas = 0;
   ManagerOrderCountsDM? contadores = const ManagerOrderCountsDM();
+  ManagerOrderCountsDM? contadoresDeLaLista;
   int? total;
   bool? sigueEnElPanel = true;
+  bool ordenEnLaLista = true;
+  GroupFulfillmentStatus? estadoDevuelto;
+
+  /// Con esto puesto, las lecturas se quedan EN VUELO hasta que el test las
+  /// responda. Sin ello no hay forma de tener una lectura vieja aterrizando
+  /// después de la mutación: el fake resolvía al instante y el test pasaba
+  /// por no medir nada.
+  bool retenerLecturas = false;
+  final List<Completer<ApiResult<ManagerOrdersResponseDM>>> pendientes = [];
+
+  void responderLectura() => pendientes.removeAt(0).complete(_respuestaDeLista());
+
+  ApiResult<ManagerOrdersResponseDM> _respuestaDeLista() =>
+      ApiResult.success(ManagerOrdersResponseDM(
+        orders: ordenEnLaLista ? const [_orden] : const [],
+        counts: contadoresDeLaLista ?? contadores ?? const ManagerOrderCountsDM(),
+      ));
 
   static const _orden = GroupOrderDM(uuid: 'a', businessUuid: 'b1');
 
@@ -170,10 +305,12 @@ class _RepoEspia implements GroupOrderRepo {
     int? page,
   }) async {
     lecturas++;
-    return ApiResult.success(ManagerOrdersResponseDM(
-      orders: const [_orden],
-      counts: contadores ?? const ManagerOrderCountsDM(),
-    ));
+    if (retenerLecturas) {
+      final c = Completer<ApiResult<ManagerOrdersResponseDM>>();
+      pendientes.add(c);
+      return c.future;
+    }
+    return _respuestaDeLista();
   }
 
   @override
@@ -183,7 +320,7 @@ class _RepoEspia implements GroupOrderRepo {
   }) async =>
       ApiResult.success(GroupOrderResponseDM(
         groupOrder: _orden.copyWith(
-          fulfillmentStatus: GroupFulfillmentStatus.values.byName(status),
+          fulfillmentStatus: estadoDevuelto ?? GroupFulfillmentStatus.values.byName(status),
         ),
         panelCounts: contadores,
         panelTotal: total,

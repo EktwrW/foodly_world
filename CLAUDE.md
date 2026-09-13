@@ -1902,6 +1902,11 @@ mover un cubo de los chips. La cadena hasta aquí:
 el panel en vivo" se corrigió tres veces en agosto de 2026; replicarlo en Dart
 sería mantener dos copias de algo que ya costó caro con una.
 
+**Las tres claves del JSON las cubre un test de `fromJson`.** Toda la pantalla
+cuelga de tres cadenas, y un error se degrada **en silencio** a los fallbacks —
+indistinguible de un backend sin desplegar. Mutando cualquiera de las tres, la
+suite entera seguía verde.
+
 **Los tres campos son opcionales y con fallback al estado anterior**: el mismo
 DM lo devuelven endpoints del comensal, que no saben nada de chips, y una
 respuesta de un backend sin desplegar no puede vaciar la lista ni poner los
@@ -1912,10 +1917,30 @@ contadores a cero. Hay test de las dos cosas.
 - La regla de `_ultimaAplicada` se conserva **tal cual**: sólo se marca si
   cambió algo de lo que se VE en la lista. Marcarla mata una lectura en vuelo
   que quizá sea la única que traiga las filas de las demás mesas.
-- Los contadores sí se aplican siempre. Si una lectura anterior a la mutación
-  aterriza después y los pisa, el refetch del evento —que viene detrás, en
-  menos de un segundo— los corrige. Se prefiere ese parpadeo a tirar una
-  lectura buena.
+- Los contadores llevan su PROPIO marcador, no el de la lista. Así una lectura
+  anterior a la mutación no los pisa, y la regla de #87 se queda intacta.
+  **Ojo al escribir ese test**: si la acción es sobre una orden que SÍ está en
+  la lista, la regla de #87 ya descarta la lectura y el test pasa en verde sin
+  ejercitar nada. Hace falta una orden fuera de la lista visible.
+
+**La red NO sobraba entera, y decir que sí fue un error mío que desmontó la
+revisión.** Cubría dos casos que los contadores no resuelven, y que dependen de
+un broadcast que el backend admite perder: `BusinessOrdersTouched::safe` se
+traga los fallos, y el polling de 10 s **sólo corre con el socket caído**.
+
+- **La orden cambia de cubo con un chip filtrando.** `still_in_panel` contesta
+  "¿sigue en el panel?", no "¿sigue en ESTE cubo?". Se resuelve en el cliente,
+  y esto sí es legítimo: el mapeo cubo↔estado ya vive en la página y es
+  `fulfillment_status == bucket`. Lo que no se replica es el predicado del
+  panel, que es otra cosa.
+- **La orden debería ENTRAR en el cubo visible y no está en la lista.** Falta
+  su sitio en el orden, así que no hay forma local: ahí se lee. Es lo único que
+  queda de la red, reducido a ese caso.
+
+**Y un tercero, de contadores**: una lectura anterior a la mutación que
+aterriza después los pisaba. Lleva marcador propio
+(`_ultimaAplicadaContadores`), separado del de la lista para no tocar la regla
+de la PR #87.
 
 **El grupo de tests «la red de seguridad» se borra con ella**, pero su
 preocupación de fondo sigue fijada: la contra-revisión de la #87 midió 22
