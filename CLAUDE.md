@@ -2068,13 +2068,30 @@ traga los fallos, y el polling de 10 s **sólo corre con el socket caído**.
      éxito**: ése lo movía cualquier otra lectura (el evento, el polling, un
      pull-to-refresh) y cancelaba un reintento que sí hacía falta.
 
-     Y **single-flight**: cada acción arrancando su propia cadena eran 6
-     peticiones con el backend sano y **18** con el caído, medido por la
-     revisión — del mismo orden que las 22 contra 4 que motivaron el tope de la
-     PR #87. La red anterior ya lo evitaba con un único `Timer`; al pasar a
-     recursión me lo llevé por delante.
+     Y **una cadena en vuelo más UNA encolada**, que no es lo mismo que
+     single-flight a secas. Cada acción arrancando su propia cadena eran 6
+     peticiones con el backend sano y **18** con el caído — del mismo orden que
+     las 22 contra 4 que motivaron el tope de la PR #87. Pero **unirse** a la
+     cadena en vuelo, que fue mi primer arreglo, tiene un fallo sutil: la
+     acción B queda satisfecha por una lectura lanzada ANTES de la mutación de
+     B, así que si esa lectura sale bien la cadena termina y **B no se relee
+     nunca, sin error y sin reintento**. Es la misma rancidez que el rescate
+     viene a cerrar. La red vieja no lo tenía porque `_armarRed()` cancelaba y
+     re-armaba: una petición tardía conseguía siempre una lectura FRESCA. Así
+     que se marca y se encadena una más al terminar — sigue siendo constante,
+     seis acciones o sesenta dan lo mismo.
 
-  3. **Agotados los intentos, se emite error.** Si no, el panel dice «No hay
+     **Y «descartada» no es «fallida».** `_fetch` devuelve tres desenlaces, no
+     un booleano: con `false` para las dos, un descarte —hay algo más nuevo en
+     marcha— se reintentaba, y tres seguidos acababan emitiendo un error que la
+     página convierte en snackbar. Un aviso de fallo por lecturas que estaban
+     bien. El commit anterior afirmaba que el booleano ya lo arreglaba y era
+     falso.
+
+  3. **Agotados los intentos, se emite error — con `loading: false`.** Sin
+     apagar el spinner, una cadena que se agota con un cambio de chip en vuelo
+     deja la página en la rama `loading && orders.isEmpty` y el aviso no llega
+     a pintarse: spinner eterno en vez del botón de reintentar. Si no, el panel dice «No hay
      órdenes» con el chip marcando 1 y sin botón de reintentar. Este feature ya
      tenía escrito que «un dato falso es peor que un error»
      (`manager_orders_page.dart`). Es UN error al final de la cadena, no uno

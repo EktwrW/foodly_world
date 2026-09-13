@@ -329,8 +329,68 @@ void main() {
     }
     await Future<void>.delayed(const Duration(milliseconds: 300));
 
-    expect(repo.lecturas - antes, lessThanOrEqualTo(3),
-        reason: 'seis acciones dejaron seis cadenas de rescate encoladas');
+    // DOS cadenas como mucho (3 intentos cada una), no seis.
+    //
+    // El tope no es «una cadena» sino «una en vuelo más una encolada»: unirse
+    // a la cadena en vuelo dejaba a las acciones posteriores satisfechas por
+    // una lectura ANTERIOR a su propia mutación —el fallo que encontró la
+    // revisión—, así que hay que encadenar una más. Sigue siendo constante:
+    // seis acciones o sesenta dan lo mismo.
+    expect(repo.lecturas - antes, lessThanOrEqualTo(6),
+        reason: 'seis acciones dejaron una cadena de rescate cada una');
+  });
+
+  /// Y la acción que llega DURANTE un rescate consigue una lectura posterior a
+  /// su propia mutación, no la que ya estaba en vuelo.
+  ///
+  /// Unirse a la cadena en vuelo parecía lo barato y era el mismo fallo de
+  /// rancidez que este rescate viene a arreglar: si esa lectura salía bien, la
+  /// cadena terminaba y la segunda acción no se releía NUNCA, sin error y sin
+  /// reintento.
+  test('una acción que llega durante un rescate consigue lectura fresca', () async {
+    repo.ordenEnLaLista = false;
+    await cubit.load();
+
+    repo.retenerLecturas = true;
+    await cubit.advanceFulfillment('a', 'ready'); // arranca la cadena A
+    final lecturasDeA = repo.lecturas;
+
+    // Llega la segunda acción con la lectura de A todavía en vuelo.
+    await cubit.advanceFulfillment('a', 'ready');
+
+    // A responde BIEN: con la versión que se unía, aquí se acababa todo.
+    repo.retenerLecturas = false;
+    repo.responderLectura();
+    await Future<void>.delayed(const Duration(milliseconds: 120));
+
+    expect(repo.lecturas, greaterThan(lecturasDeA),
+        reason: 'la segunda acción se quedó con una lectura anterior a su propia mutación');
+  });
+
+  /// Una lectura DESCARTADA no es una lectura fallida: no se reintenta y, sobre
+  /// todo, no se avisa de un fallo que no existe. El commit anterior decía que
+  /// el `bool` ya lo arreglaba y no era verdad — `false` mezclaba las dos.
+  test('los descartes no acaban en un aviso de error', () async {
+    repo.ordenEnLaLista = false;
+    await cubit.load();
+
+    repo.retenerLecturas = true;
+    await cubit.advanceFulfillment('a', 'ready');
+
+    // Cambiar de chip hace que la lectura en vuelo se descarte al volver.
+    unawaited(cubit.selectBucket('ready'));
+    repo.retenerLecturas = false;
+    repo.responderLectura();
+    await Future<void>.delayed(const Duration(milliseconds: 150));
+
+    expect(cubit.state.error, isNull,
+        reason: 'una lectura descartada acabó pintando un snackbar de fallo');
+
+    // Y sobre todo: NO se reintenta. Son tres lecturas —la carga, el rescate
+    // que se descarta, y la del cambio de chip— y ni una más. Tratar el
+    // descarte como fallo añade una cuarta, y con tres descartes seguidos
+    // acabaría emitiendo un error que la página convierte en snackbar.
+    expect(repo.lecturas, 3, reason: 'se reintentó una lectura que no había fallado');
   });
 
   /// Y la espera se USA, no sólo se declara. El test del getter no lo fijaba:
@@ -382,6 +442,9 @@ void main() {
     expect(cubit.state.error, isNotNull,
         reason: 'el panel dice "No hay órdenes" con el chip marcando 1');
     expect(cubit.state.orders, isEmpty);
+    // Y sin spinner: si la cadena se agota con un `selectBucket` en vuelo, la
+    // página se queda en la rama del spinner y el aviso no llega a pintarse.
+    expect(cubit.state.loading, isFalse, reason: 'el aviso queda tapado por el spinner');
   });
 
   /// Y una orden que SALIÓ del panel no dispara rescate: no hay nada que traer.
@@ -395,6 +458,29 @@ void main() {
     await Future<void>.delayed(const Duration(milliseconds: 120));
 
     expect(repo.lecturas, antes, reason: 'se pidió la lista para traer algo que ya no está');
+  });
+
+  /// Y el aviso tiene que APAGAR el spinner. Si la cadena se agota con un
+  /// cambio de chip en vuelo, la página se queda en la rama
+  /// `loading && orders.isEmpty` y el `LoadFailureView` no llega a pintarse:
+  /// el manager ve un spinner eterno en vez del botón de reintentar.
+  test('el aviso apaga el spinner de una lectura en vuelo', () async {
+    repo.ordenEnLaLista = false;
+    await cubit.load();
+
+    // El cambio de chip deja `loading` en true y su lectura colgada.
+    repo.retenerLasProximas = 1;
+    unawaited(cubit.selectBucket('ready'));
+    await Future<void>.delayed(Duration.zero);
+    expect(cubit.state.loading, isTrue, reason: 'guarda: el escenario necesita el spinner puesto');
+
+    // Y mientras, el rescate agota sus intentos contra un backend caído.
+    repo.fallaLaLectura = true;
+    await cubit.advanceFulfillment('a', 'ready');
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+
+    expect(cubit.state.error, isNotNull);
+    expect(cubit.state.loading, isFalse, reason: 'el aviso quedó tapado por el spinner');
   });
 
   /// Y el valor de PRODUCCIÓN, que los tests no ven porque inyectan 20 ms.
@@ -556,6 +642,12 @@ class _RepoEspia implements GroupOrderRepo {
   /// después de la mutación: el fake resolvía al instante y el test pasaba
   /// por no medir nada.
   bool retenerLecturas = false;
+
+  /// Retiene sólo las N próximas lecturas. Hace falta para montar el caso en
+  /// que una lectura se queda en vuelo —dejando `loading` en true— mientras
+  /// OTRAS fallan: con el interruptor global no se puede, porque retendría
+  /// también las que tienen que fallar.
+  int retenerLasProximas = 0;
   final List<Completer<ApiResult<ManagerOrdersResponseDM>>> pendientes = [];
 
   void responderLectura() => pendientes.removeAt(0).complete(_respuestaDeLista());
@@ -579,6 +671,12 @@ class _RepoEspia implements GroupOrderRepo {
       return ApiResult.failure(
         AppRequestException(error: StateError('sin red'), stackTrace: StackTrace.current),
       );
+    }
+    if (retenerLasProximas > 0) {
+      retenerLasProximas--;
+      final c = Completer<ApiResult<ManagerOrdersResponseDM>>();
+      pendientes.add(c);
+      return c.future;
     }
     if (retenerLecturas) {
       final c = Completer<ApiResult<ManagerOrdersResponseDM>>();

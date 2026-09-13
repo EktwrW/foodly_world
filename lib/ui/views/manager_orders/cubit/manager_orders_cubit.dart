@@ -190,23 +190,56 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   /// pueden dejar tres lecturas encoladas»), y al pasar a recursión me lo
   /// llevé por delante.
   Future<void>? _rescateEnVuelo;
+  bool _otroRescatePendiente = false;
 
-  Future<void> _traerLaOrdenQueFalta() {
-    return _rescateEnVuelo ??= _rescatar().whenComplete(() => _rescateEnVuelo = null);
+  /// Una cadena a la vez, pero **sin unirse a la que ya está en vuelo**.
+  ///
+  /// Unirse era un fallo sutil y lo encontró la revisión: la acción B quedaba
+  /// satisfecha por una lectura lanzada ANTES de la mutación de B, así que si
+  /// esa lectura salía bien la cadena terminaba y B no se releía nunca — sin
+  /// error y sin reintento. Es la misma clase de rancidez que este rescate
+  /// viene a arreglar. La red vieja no lo tenía porque `_armarRed()` cancelaba
+  /// y re-armaba: una petición tardía conseguía siempre una lectura FRESCA.
+  ///
+  /// Así que se marca y se encadena UNA más al terminar. Sigue habiendo una
+  /// sola cadena viva —no hay tormenta— y toda acción acaba teniendo una
+  /// lectura posterior a su propia mutación.
+  void _traerLaOrdenQueFalta() {
+    if (_rescateEnVuelo != null) {
+      _otroRescatePendiente = true;
+      return;
+    }
+
+    _rescateEnVuelo = _rescatar().whenComplete(() {
+      _rescateEnVuelo = null;
+      if (_otroRescatePendiente && !isClosed) {
+        _otroRescatePendiente = false;
+        _traerLaOrdenQueFalta();
+      }
+    });
   }
 
   Future<void> _rescatar([int intento = 1]) async {
-    if (await _fetch(silent: true)) return; // se aplicó: no hay nada que reintentar
-    if (isClosed || intento >= _maxIntentosDeRescate) {
+    final desenlace = await _fetch(silent: true);
+
+    // Aplicada: ya está. Descartada: hay algo más nuevo en marcha y ESO es lo
+    // que manda; ni se reintenta ni se avisa de nada, porque no ha fallado.
+    if (desenlace != _Lectura.fallida) return;
+
+    if (isClosed) return;
+
+    if (intento >= _maxIntentosDeRescate) {
       // Agotados los intentos, el panel diría «No hay órdenes» con el chip
       // marcando 1. Este fichero ya decidió que «un dato falso es peor que un
       // error» (ver `manager_orders_page.dart`), así que se emite para que
       // salga el reintento en vez de una mentira. Es UN error al final de la
       // cadena, no uno por tick: el bug de los diez snackbars del 2026-08-17
       // era lo contrario.
-      if (!isClosed && intento >= _maxIntentosDeRescate) {
-        emit(state.copyWith(error: ''));
-      }
+      //
+      // Con `loading: false`: si la cadena se agota con un `selectBucket` en
+      // vuelo, la página se queda en la rama del spinner y el aviso de fallo
+      // no llega a pintarse.
+      emit(state.copyWith(loading: false, error: ''));
 
       return;
     }
@@ -226,23 +259,25 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   @visibleForTesting
   Duration get esperaEntreIntentos => _esperaEntreIntentos;
 
-  /// Devuelve si ESTA lectura se aplicó. Un booleano propio y no un contador
-  /// compartido: con el contador, cualquier otra lectura con éxito —el evento,
-  /// el polling, un pull-to-refresh— cancelaba un reintento que sí hacía
-  /// falta, y una lectura descartada por el cambio de chip lo disparaba sin
-  /// falta ninguna. Lo midió la revisión.
-  Future<bool> _fetch({bool silent = false}) async {
+  /// Cómo acabó ESTA lectura, en tres desenlaces y no dos.
+  ///
+  /// Un booleano no bastaba —y el commit anterior decía que sí—: `false`
+  /// mezclaba «falló» con «se descartó porque hay algo más nuevo», y el
+  /// rescate trataba las dos igual. Tres descartes seguidos acababan emitiendo
+  /// un error que la página convierte en snackbar: un aviso de fallo por
+  /// lecturas que estaban perfectamente bien. Lo señaló la revisión.
+  Future<_Lectura> _fetch({bool silent = false}) async {
     final generacion = ++_generacion;
     final cubo = state.bucket;
     final res = await _repo.managerOrders(businessUuid, bucket: cubo);
-    if (isClosed) return false;
+    if (isClosed) return _Lectura.descartada;
 
     // SE DESCARTA SÓLO SI YA HAY ALGO MEJOR EN PANTALLA, O SI ESTAS FILAS SON
     // DE OTRO CUBO. Que alguien haya lanzado después NO basta: esa otra lectura
     // puede fallar en silencio —un refetch de fondo no le cuenta errores al
     // manager— y entonces tirar ésta deja la pantalla con las filas viejas, sin
     // spinner y sin aviso, que es justo lo que esto existe para borrar.
-    if (generacion <= _ultimaAplicada || cubo != state.bucket) return false;
+    if (generacion <= _ultimaAplicada || cubo != state.bucket) return _Lectura.descartada;
 
     return res.when(
       success: (r) {
@@ -260,7 +295,7 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
           error: null,
         ));
 
-        return true;
+        return _Lectura.aplicada;
       },
       failure: (e) {
         _logger.e(e);
@@ -271,12 +306,12 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
         // manager veía diez seguidos al encenderla (bug 2026-08-17). Los
         // errores que sí se muestran son los de `load`, `selectBucket` y las
         // acciones, que son los que el manager provocó.
-        if (silent) return false;
+        if (silent) return _Lectura.fallida;
         // '' = error sin detalle (la UI muestra el genérico i18n). Nunca
         // e.toString(): resuelve DI por dentro y explota fuera de la app.
         emit(state.copyWith(loading: false, error: e.serverMessage ?? ''));
 
-        return false;
+        return _Lectura.fallida;
       },
     );
   }
@@ -415,3 +450,8 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
     return super.close();
   }
 }
+
+
+/// Cómo acabó una lectura del panel. Tres desenlaces, no dos: «descartada» no
+/// es «fallida», y tratarlas igual acababa avisando de un fallo inexistente.
+enum _Lectura { aplicada, descartada, fallida }
