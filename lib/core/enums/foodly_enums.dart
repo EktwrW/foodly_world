@@ -144,7 +144,10 @@ enum ImageResourceType { vector, raster }
 enum AssetType { icon, image }
 
 extension AssetTypeExtension on AssetType {
-  Function get pathMethod {
+  /// Tipada, y no `Function` a secas: con `Function` la llamada de
+  /// `AssetData.assetPath` es DINÁMICA, así que un cambio de firma de
+  /// `AssetUtils` no lo vería el analizador — reventaría al pintar el icono.
+  String Function(String) get pathMethod {
     switch (this) {
       case AssetType.icon:
         return AssetUtils.getIconPath;

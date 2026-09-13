@@ -53,7 +53,7 @@ class ManagePromotionsCubit extends Cubit<ManagePromotionsState> {
             if (business != null) {
               _vm = _vm.copyWith(businessDM: business);
             } else {
-              business = itr.IterableExtension(_authSessionService.userSessionDM?.user.business ?? []).firstWhereOrNull(
+              business = itr.IterableExtension(_authSessionService.userSessionDM?.user.business ?? const <BusinessDM>[]).firstWhereOrNull(
                 (b) => b.uuid == _businessUuid,
               );
               _vm = _vm.copyWith(businessDM: business);
@@ -571,11 +571,14 @@ class ManagePromotionsCubit extends Cubit<ManagePromotionsState> {
 
   Future<void> _handleSuccessfulMediaUpdate({
     required PromotionDM promotion,
-    required dynamic response,
+    // `Object` y no `dynamic`: son sólo dos tipos —los de `updatePromotionMedia`
+    // y `storePromotionMedia`— y con `dynamic` la lectura de `.promoMedia` era
+    // una llamada dinámica que el analizador no comprueba.
+    required Object response,
   }) async {
     if (!promotion.mediaFileIsExternalLink) {
       final updatedPromotion = promotion.copyWith(
-        promoMedia: response is PromoMediaDM ? [response] : response.promoMedia,
+        promoMedia: response is PromoMediaDM ? [response] : (response as PromoMediaResponse).promoMedia,
       );
 
       _updateStateAfterSuccess(updatedPromotion);
