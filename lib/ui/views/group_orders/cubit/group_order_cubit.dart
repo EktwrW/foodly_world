@@ -1,3 +1,5 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
@@ -23,7 +25,11 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
 
   /// Suscripción PROPIA: se cancela solo la nuestra, nunca la de
   /// otro consumidor del servicio (2026-08-06).
-  RealtimeSubscription? _sub;
+  /// Se guarda el FUTURO, no la suscripción resuelta. `watch` tarda en volver
+  /// —espera a la conexión— y hasta entonces `_sub` era null: un segundo
+  /// `load()` no encontraba nada que cancelar y los dos oyentes quedaban vivos.
+  /// Con el futuro, la anterior se cancela en cuanto exista.
+  Future<RealtimeSubscription>? _sub;
   GroupOrderVM _vm;
 
   /// Sube al lanzar un refetch silencioso y al APLICAR una respuesta: el que
@@ -46,6 +52,7 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
   Future<void> load(String uuid) async {
     emit(GroupOrderState.loading(_vm));
     final result = await _repo.getGroupOrder(uuid);
+    if (isClosed) return; // la pantalla se fue mientras la lectura viajaba
     result.when(
       success: (r) {
         _applyResponse(r);
@@ -56,9 +63,7 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
         // flotante está oyendo el mismo canal y pidiendo la misma orden en el
         // mismo tick. Las lecturas que siguen a una mutación propia NO pueden
         // coalescer (ver `getGroupOrder`).
-        _realtime
-            ?.watch(uuid, onTouched: () => _refetchSilently(uuid, coalesce: true))
-            .then((sub) => _sub = sub);
+        unawaited(_suscribir(uuid));
       },
       failure: _onError,
     );
@@ -72,6 +77,38 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
     if (uuid != null) await _refetchSilently(uuid);
   }
 
+  /// `_sub` se asignaba en un `.then`, así que cerrar la página mientras la
+  /// suscripción nacía dejaba un oyente que nadie cancelaba. Y cada `load()`
+  /// pedía otra pisando la anterior sin cancelarla: el botón de reintentar
+  /// acumulaba oyentes, y con N el mismo evento dispara N refetch.
+  /// [_observado] se marca ANTES del await, que es lo que hace idempotente a
+  /// esto: sin eso, dos `load()` seguidos entran los dos con `_sub` todavía en
+  /// null —la primera suscripción aún naciendo— y ninguno cancela nada. Mismo
+  /// idioma que `ActiveGroupOrderCubit.watchActive`.
+  String? _observado;
+
+  Future<void> _suscribir(String uuid) async {
+    final realtime = _realtime;
+    if (realtime == null || isClosed || _observado == uuid) return;
+    _observado = uuid;
+    // `watch` registra el oyente SINCRÓNICAMENTE y sólo después espera a la
+    // conexión, así que se llama ANTES de cancelar la anterior: colar un
+    // `await` delante abre un hueco entre la carga y la suscripción en el que
+    // un evento se pierde. Lo cazó un test que ya existía.
+    final anterior = _sub;
+    final pendiente = realtime.watch(
+      uuid,
+      onTouched: () => _refetchSilently(uuid, coalesce: true),
+    );
+    _sub = pendiente;
+    GroupOrderRealtimeService.cancelarCuandoExista(anterior);
+    final sub = await pendiente;
+    if (isClosed) {
+      await sub.cancel();
+      _observado = null;
+    }
+  }
+
   Future<void> _refetchSilently(String uuid, {bool coalesce = false}) async {
     if (isClosed) return;
     final generacion = ++_generacion;
@@ -82,7 +119,9 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
 
   @override
   Future<void> close() async {
-    await _sub?.cancel();
+    _observado = null;
+    GroupOrderRealtimeService.cancelarCuandoExista(_sub);
+    _sub = null;
     return super.close();
   }
 

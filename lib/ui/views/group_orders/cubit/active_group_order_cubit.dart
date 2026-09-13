@@ -28,7 +28,9 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
 
   /// uuid observado ahora mismo, y su suscripción (para cancelar la NUESTRA).
   String? _watchedUuid;
-  RealtimeSubscription? _sub;
+  /// El FUTURO, no la suscripción resuelta: mientras `watch` viaja no hay nada
+  /// que cancelar, y quien se vaya en esa ventana dejaba el oyente huérfano.
+  Future<RealtimeSubscription>? _sub;
   bool _busy = false;
 
   /// Sube al lanzar una lectura y al emitir: la respuesta que vuelve con una
@@ -376,13 +378,25 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   /// está asignado.
   Future<void> watchActive([String? uuid]) async {
     final objetivo = uuid ?? state?.uuid;
-    if (_realtime == null || objetivo == null || _watchedUuid == objetivo) return;
-    await _sub?.cancel();
+    final realtime = _realtime;
+    if (realtime == null || objetivo == null || _watchedUuid == objetivo) return;
+    // ANTES de cualquier await, o dos llamadas del mismo turno entran las dos.
     _watchedUuid = objetivo;
+    final anterior = _sub;
     // `coalesce: true`: este refresh nace de un evento y la página de la orden
     // oye el MISMO canal. Los `refresh()` de `group_order_page.dart`, que
     // siguen a una mutación del comensal, se quedan sin coalescer a propósito.
-    _sub = await _realtime.watch(objetivo, onTouched: () => refresh(coalesce: true));
+    //
+    // `watch` va ANTES de cancelar la anterior: registra el oyente de forma
+    // síncrona, y colar un `await` delante abre un hueco donde se pierde un
+    // evento.
+    final pendiente = realtime.watch(objetivo, onTouched: () => refresh(coalesce: true));
+    _sub = pendiente;
+    GroupOrderRealtimeService.cancelarCuandoExista(anterior);
+    final sub = await pendiente;
+    // `end()` pudo limpiar el carrito mientras ésta nacía — y `end()` la llama
+    // `refresh()` ante un 404/403, que es el propio callback de realtime.
+    if (isClosed || _watchedUuid != objetivo) await sub.cancel();
   }
 
   /// El singleton no se cierra en producción, pero los tests sí lo hacen y
@@ -390,7 +404,7 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   @override
   Future<void> close() {
     _watchedUuid = null;
-    _sub?.cancel();
+    GroupOrderRealtimeService.cancelarCuandoExista(_sub);
     _sub = null;
     return super.close();
   }
@@ -398,7 +412,7 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   /// Termina la orden activa (tras cerrar/pagar/cancelar): limpia el carrito.
   void end() {
     _watchedUuid = null;
-    _sub?.cancel();
+    GroupOrderRealtimeService.cancelarCuandoExista(_sub);
     _sub = null;
     // OJO: acá NO se toca `_busy`. `end()` no es solo el hook de logout —
     // `refresh()` la llama ante un 404/403 y `refresh` es el callback de

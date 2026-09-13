@@ -104,6 +104,18 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
   /// Observa la orden [orderUuid]. [onTouched] se invoca ante cualquier
   /// cambio (evento realtime, tick de polling o resume de la app); el caller
   /// decide cómo refetchear. Cancelá la suscripción devuelta al salir.
+  /// Cancela una suscripción que puede estar todavía NACIENDO.
+  ///
+  /// Los tres consumidores guardan el FUTURO y no la suscripción resuelta:
+  /// `watch` tarda en volver —espera a la conexión— y hasta entonces no hay
+  /// nada que cancelar, así que quien se vaya en esa ventana dejaba el oyente
+  /// huérfano. Y NO se puede esperar aquí: si el futuro no llega nunca, un
+  /// `await` en `close()` lo colgaría. `cancel()` es idempotente.
+  static void cancelarCuandoExista(Future<RealtimeSubscription>? pendiente) {
+    if (pendiente == null) return;
+    unawaited(pendiente.then((s) => s.cancel()).catchError((_) {}));
+  }
+
   Future<RealtimeSubscription> watch(String orderUuid, {required VoidCallback onTouched}) =>
       _subscribe('private-group-order.$orderUuid', 'group-order.touched', onTouched);
 
