@@ -2000,6 +2000,44 @@ el repo—. Un test así se rompería cada vez que cambie cualquiera de esos
 constructores: sería un lastre, no una red. Verificado con `flutter analyze`
 limpio y por lectura de la cadena estado → wrapper, que es corta y cerrada.
 
+## Aprobar una reserva reventaba, y las seis acciones con ella (2026-09-14)
+
+```
+NoSuchMethodError: Class '_Success<ReservationActionResponseDM>'
+has no instance method 'when'.
+```
+
+**`when` NO es un método de instancia de `ApiResult`.** freezed 3 lo genera en
+una **extensión** (`extension ApiResultPatterns<T> on ApiResult<T>`), y en Dart
+**las extensiones se resuelven de forma ESTÁTICA**: sobre un receptor `dynamic`
+no se encuentran y la llamada acaba en `noSuchMethod`.
+
+`ManageReservationsCubit._performAction` declaraba su callback como
+`Future<dynamic> Function(String)`, así que `result` era `dynamic`. Las **seis**
+acciones del manager pasan por ahí: confirmar, rechazar, cancelar, no-show,
+completar y enviar presupuesto.
+
+**Y la pantalla se quedaba en el esqueleto para siempre**, porque la excepción
+salta DESPUÉS de `emit(loading)` y antes de cualquier otro `emit`.
+
+**Roto desde el 2026-07-22**, en `be690c2` — la migración a freezed 3. Ese
+commit **no tocó ni un fichero de reservas**: rompió a distancia, cambiando la
+forma de `api_result.freezed.dart`. Bajo freezed 2, `when` era método de
+instancia y el `dynamic` daba igual.
+
+**El analizador no lo ve**: una llamada dinámica es legal. `flutter analyze`
+salía limpio con el fallo dentro.
+
+**Lo que sí lo vería**: el lint `avoid_dynamic_calls`. Hoy daría **~30 avisos en
+`lib/`** (la mayoría parseo de JSON en `location_bloc` y `public_menu_cubit`,
+que son inofensivos), así que activarlo es una limpieza aparte, no un hotfix.
+
+**Comprobado que era el único**: `Future<dynamic> Function` aparecía una sola
+vez en todo `lib/`, y ningún otro `.when(`/`.map(` cuelga de un receptor
+`dynamic`. El `response.promoMedia` de `manage_promotions_cubit` sí es
+dinámico, pero `promoMedia` es un getter de instancia y ésos sí se resuelven en
+tiempo de ejecución.
+
 ## El chip "Todas" contaba el cubo filtrado (2026-09-13)
 
 `ManagerOrdersState.total` llevaba **dos cantidades distintas** que sólo

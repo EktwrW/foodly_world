@@ -159,9 +159,21 @@ class ManageReservationsCubit extends Cubit<ManageReservationsState> {
     );
   }
 
+  /// El tipo del callback NO es decorativo, y con `dynamic` esto reventaba en
+  /// producción: `when` no es un método de instancia de `ApiResult`, freezed 3
+  /// lo genera en una EXTENSIÓN (`extension ApiResultPatterns<T>`), y las
+  /// extensiones se resuelven de forma ESTÁTICA. Sobre un receptor `dynamic`
+  /// no se encuentran, así que la llamada acababa en `noSuchMethod`:
+  ///
+  ///     NoSuchMethodError: Class '_Success<ReservationActionResponseDM>'
+  ///     has no instance method 'when'.
+  ///
+  /// El analizador no lo ve —una llamada dinámica es legal— y la excepción
+  /// salta DESPUÉS de `emit(loading)`, así que la pantalla se quedaba en el
+  /// esqueleto para siempre. Las seis acciones del manager pasan por aquí.
   Future<bool> _performAction(
     String uuid,
-    Future<dynamic> Function(String) action,
+    Future<ApiResult<ReservationActionResponseDM>> Function(String) action,
   ) async {
     emit(ManageReservationsState.loading(_vm));
 
