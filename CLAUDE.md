@@ -2000,6 +2000,58 @@ el repo—. Un test así se rompería cada vez que cambie cualquiera de esos
 constructores: sería un lastre, no una red. Verificado con `flutter analyze`
 limpio y por lectura de la cadena estado → wrapper, que es corta y cerrada.
 
+## El chip "Todas" contaba el cubo filtrado (2026-09-13)
+
+`ManagerOrdersState.total` llevaba **dos cantidades distintas** que sólo
+coinciden sin chip puesto:
+
+| cantidad | de dónde sale | quién la pinta |
+|---|---|---|
+| las del **cubo filtrado** | `meta.total` (el backend lo devuelve ya filtrado) | el pie "mostrando N de M" y `isTruncated` |
+| las del **panel entero** | `counts_total` | el chip "Todas" |
+
+Con 1 pendiente y 2 listas y el chip "Listas" marcado, el chip "Todas" decía
+**2**. No es una carrera ni un parpadeo: mientras hubiera un chip puesto el
+número era falso y se quedaba falso, en la pantalla que la cocina mira de un
+vistazo.
+
+**Lo peor es que el dato ya estaba llegando.** La mutación manda `counts_total`
+desde be-foodly #148 y el cliente lo tiraba, porque no tenía campo donde
+ponerlo. En la LISTA no lo mandaba nadie hasta be-foodly #149.
+
+Ahora el estado tiene `panelTotal` aparte de `total`, y **sobrevive al cambio
+de chip a propósito** — es justo lo que `total` no hace (`selectBucket` lo pone
+a 0 con la lista, ver más abajo).
+
+**El cliente no puede sumar los cuatro cubos, y no es purismo**: un
+`fulfillment_status` que no sea ninguno de los cuatro deja la suma corta **en
+silencio**, y hay un test en be-foodly
+(`test_un_estado_desconocido_cuenta_en_el_total`) que prohíbe esa suma en el
+servidor precisamente para no tenerla en ningún lado. Por eso el campo viaja.
+
+**El respaldo, para un backend anterior a #149**, tiene dos ramas y las dos
+importan:
+
+- **Sin chip**, `meta.total` YA es el global: respaldo exacto.
+- **Con chip** no hay nada que sustituya al campo, así que se conserva el
+  último global conocido. No se queda viejo mucho rato: lo refresca cualquier
+  lectura sin chip y **cada mutación**.
+
+**Trampa de la UI que conviene no repetir**: `_bucketCount` devolvía `int?` con
+`null` para "Todas", y quien lo llamaba resolvía ese `null` con
+`?? state.total`. El fallo entero vivía en ese `??`. Ahora la función es
+**total** —devuelve `state.panelTotal` para "Todas"— y no hay `??` fuera donde
+meter el campo equivocado.
+
+**Trampa al testear el chip**: `find.text('3')` suelto no vale. El pie y las
+tarjetas también pintan números, y el test pasaría por la razón equivocada en
+cuanto alguno coincidiera. Hay que leer el número del segmento CONCRETO
+(`find.ancestor` hasta su `Column`, primer `Text` descendiente).
+
+**Y una del fixture**: `ManagerOrderCard` cae en `order.uuid.substring(0, 8)`
+cuando `businessName` viene vacío, así que un uuid de una letra revienta el
+`pumpWidget` antes de llegar a lo que se quería medir.
+
 ## Los contadores del panel salen de la mutación (2026-09-13)
 
 El panel leía la lista entera después de cada acción del manager, sólo para

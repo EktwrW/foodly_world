@@ -27,6 +27,11 @@ abstract class ManagerOrdersResponseDM with _$ManagerOrdersResponseDM {
     @Default(true) bool success,
     @Default(<GroupOrderDM>[]) List<GroupOrderDM> orders,
     @Default(ManagerOrderCountsDM()) ManagerOrderCountsDM counts,
+
+    /// Cuántas hay en el PANEL ENTERO, filtre lo que filtre. NO es
+    /// `meta.total`, que es el del cubo. Nullable: un backend anterior a
+    /// be-foodly #149 no lo manda.
+    @JsonKey(name: 'counts_total') int? countsTotal,
     ManagerOrdersMetaDM? meta,
   }) = _ManagerOrdersResponseDM;
 

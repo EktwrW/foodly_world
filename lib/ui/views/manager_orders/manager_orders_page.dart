@@ -36,19 +36,23 @@ class ManagerOrdersPage extends StatelessWidget {
         _ => S.current.managerBucketAll,
       };
 
-  int? _bucketCount(ManagerOrdersState state, String? b) => switch (b) {
+  /// Total a propósito: el `null` de antes obligaba a un `?? state.total`
+  /// fuera, y ahí —el total del cubo FILTRADO— estaba el fallo del chip
+  /// "Todas".
+  int _bucketCount(ManagerOrdersState state, String? b) => switch (b) {
         'pending' => state.counts.pending,
         'preparing' => state.counts.preparing,
         'ready' => state.counts.ready,
         'delivered' => state.counts.delivered,
-        _ => null,
+        _ => state.panelTotal,
       };
 
   /// Un segmento del selector: el número arriba —que es lo que la cocina
   /// escanea de un vistazo— y el nombre del bucket debajo.
   ///
-  /// En "Todas" el número es el total que reporta el backend, que puede ser
-  /// mayor que las tarjetas en pantalla (el panel pide una sola página).
+  /// En "Todas" el número es el del PANEL ENTERO (`counts_total`), que puede
+  /// ser mayor que las tarjetas en pantalla: el panel pide una sola página, y
+  /// además el chip no filtra lo que cuenta.
   Widget _bucketSegment(ManagerOrdersState state, String? b) {
     final activo = state.bucket == b;
     final color = activo ? Colors.white : FoodlyThemes.primaryFoodly;
@@ -58,7 +62,7 @@ class ManagerOrdersPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          '${_bucketCount(state, b) ?? state.total}',
+          '${_bucketCount(state, b)}',
           style: FoodlyTextStyles.captionBold.copyWith(color: color, fontSize: 15, height: 1.1),
         ),
         FittedBox(

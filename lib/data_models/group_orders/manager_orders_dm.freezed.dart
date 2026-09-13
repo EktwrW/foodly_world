@@ -384,6 +384,14 @@ mixin _$ManagerOrdersResponseDM {
   bool get success;
   List<GroupOrderDM> get orders;
   ManagerOrderCountsDM get counts;
+
+  /// Cuántas hay en el PANEL ENTERO, filtre lo que filtre. NO es
+  /// `meta.total`, que es el del cubo filtrado: sin chip coinciden y con
+  /// chip no, y esa confusión es la que hacía mentir al chip "Todas".
+  ///
+  /// Nullable porque un backend anterior a be-foodly #149 no lo manda.
+  @JsonKey(name: 'counts_total')
+  int? get countsTotal;
   ManagerOrdersMetaDM? get meta;
 
   /// Create a copy of ManagerOrdersResponseDM
@@ -405,17 +413,19 @@ mixin _$ManagerOrdersResponseDM {
             (identical(other.success, success) || other.success == success) &&
             const DeepCollectionEquality().equals(other.orders, orders) &&
             (identical(other.counts, counts) || other.counts == counts) &&
+            (identical(other.countsTotal, countsTotal) ||
+                other.countsTotal == countsTotal) &&
             (identical(other.meta, meta) || other.meta == meta));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, success,
-      const DeepCollectionEquality().hash(orders), counts, meta);
+      const DeepCollectionEquality().hash(orders), counts, countsTotal, meta);
 
   @override
   String toString() {
-    return 'ManagerOrdersResponseDM(success: $success, orders: $orders, counts: $counts, meta: $meta)';
+    return 'ManagerOrdersResponseDM(success: $success, orders: $orders, counts: $counts, countsTotal: $countsTotal, meta: $meta)';
   }
 }
 
@@ -429,6 +439,7 @@ abstract mixin class $ManagerOrdersResponseDMCopyWith<$Res> {
       {bool success,
       List<GroupOrderDM> orders,
       ManagerOrderCountsDM counts,
+      @JsonKey(name: 'counts_total') int? countsTotal,
       ManagerOrdersMetaDM? meta});
 
   $ManagerOrderCountsDMCopyWith<$Res> get counts;
@@ -451,6 +462,7 @@ class _$ManagerOrdersResponseDMCopyWithImpl<$Res>
     Object? success = null,
     Object? orders = null,
     Object? counts = null,
+    Object? countsTotal = freezed,
     Object? meta = freezed,
   }) {
     return _then(_self.copyWith(
@@ -466,6 +478,10 @@ class _$ManagerOrdersResponseDMCopyWithImpl<$Res>
           ? _self.counts
           : counts // ignore: cast_nullable_to_non_nullable
               as ManagerOrderCountsDM,
+      countsTotal: freezed == countsTotal
+          ? _self.countsTotal
+          : countsTotal // ignore: cast_nullable_to_non_nullable
+              as int?,
       meta: freezed == meta
           ? _self.meta
           : meta // ignore: cast_nullable_to_non_nullable
@@ -591,15 +607,20 @@ extension ManagerOrdersResponseDMPatterns on ManagerOrdersResponseDM {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(bool success, List<GroupOrderDM> orders,
-            ManagerOrderCountsDM counts, ManagerOrdersMetaDM? meta)?
+    TResult Function(
+            bool success,
+            List<GroupOrderDM> orders,
+            ManagerOrderCountsDM counts,
+            @JsonKey(name: 'counts_total') int? countsTotal,
+            ManagerOrdersMetaDM? meta)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _ManagerOrdersResponseDM() when $default != null:
-        return $default(_that.success, _that.orders, _that.counts, _that.meta);
+        return $default(_that.success, _that.orders, _that.counts,
+            _that.countsTotal, _that.meta);
       case _:
         return orElse();
     }
@@ -620,14 +641,19 @@ extension ManagerOrdersResponseDMPatterns on ManagerOrdersResponseDM {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(bool success, List<GroupOrderDM> orders,
-            ManagerOrderCountsDM counts, ManagerOrdersMetaDM? meta)
+    TResult Function(
+            bool success,
+            List<GroupOrderDM> orders,
+            ManagerOrderCountsDM counts,
+            @JsonKey(name: 'counts_total') int? countsTotal,
+            ManagerOrdersMetaDM? meta)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ManagerOrdersResponseDM():
-        return $default(_that.success, _that.orders, _that.counts, _that.meta);
+        return $default(_that.success, _that.orders, _that.counts,
+            _that.countsTotal, _that.meta);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -647,14 +673,19 @@ extension ManagerOrdersResponseDMPatterns on ManagerOrdersResponseDM {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(bool success, List<GroupOrderDM> orders,
-            ManagerOrderCountsDM counts, ManagerOrdersMetaDM? meta)?
+    TResult? Function(
+            bool success,
+            List<GroupOrderDM> orders,
+            ManagerOrderCountsDM counts,
+            @JsonKey(name: 'counts_total') int? countsTotal,
+            ManagerOrdersMetaDM? meta)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ManagerOrdersResponseDM() when $default != null:
-        return $default(_that.success, _that.orders, _that.counts, _that.meta);
+        return $default(_that.success, _that.orders, _that.counts,
+            _that.countsTotal, _that.meta);
       case _:
         return null;
     }
@@ -668,6 +699,7 @@ class _ManagerOrdersResponseDM implements ManagerOrdersResponseDM {
       {this.success = true,
       final List<GroupOrderDM> orders = const <GroupOrderDM>[],
       this.counts = const ManagerOrderCountsDM(),
+      @JsonKey(name: 'counts_total') this.countsTotal,
       this.meta})
       : _orders = orders;
   factory _ManagerOrdersResponseDM.fromJson(Map<String, dynamic> json) =>
@@ -688,6 +720,15 @@ class _ManagerOrdersResponseDM implements ManagerOrdersResponseDM {
   @override
   @JsonKey()
   final ManagerOrderCountsDM counts;
+
+  /// Cuántas hay en el PANEL ENTERO, filtre lo que filtre. NO es
+  /// `meta.total`, que es el del cubo filtrado: sin chip coinciden y con
+  /// chip no, y esa confusión es la que hacía mentir al chip "Todas".
+  ///
+  /// Nullable porque un backend anterior a be-foodly #149 no lo manda.
+  @override
+  @JsonKey(name: 'counts_total')
+  final int? countsTotal;
   @override
   final ManagerOrdersMetaDM? meta;
 
@@ -715,17 +756,19 @@ class _ManagerOrdersResponseDM implements ManagerOrdersResponseDM {
             (identical(other.success, success) || other.success == success) &&
             const DeepCollectionEquality().equals(other._orders, _orders) &&
             (identical(other.counts, counts) || other.counts == counts) &&
+            (identical(other.countsTotal, countsTotal) ||
+                other.countsTotal == countsTotal) &&
             (identical(other.meta, meta) || other.meta == meta));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, success,
-      const DeepCollectionEquality().hash(_orders), counts, meta);
+      const DeepCollectionEquality().hash(_orders), counts, countsTotal, meta);
 
   @override
   String toString() {
-    return 'ManagerOrdersResponseDM(success: $success, orders: $orders, counts: $counts, meta: $meta)';
+    return 'ManagerOrdersResponseDM(success: $success, orders: $orders, counts: $counts, countsTotal: $countsTotal, meta: $meta)';
   }
 }
 
@@ -741,6 +784,7 @@ abstract mixin class _$ManagerOrdersResponseDMCopyWith<$Res>
       {bool success,
       List<GroupOrderDM> orders,
       ManagerOrderCountsDM counts,
+      @JsonKey(name: 'counts_total') int? countsTotal,
       ManagerOrdersMetaDM? meta});
 
   @override
@@ -765,6 +809,7 @@ class __$ManagerOrdersResponseDMCopyWithImpl<$Res>
     Object? success = null,
     Object? orders = null,
     Object? counts = null,
+    Object? countsTotal = freezed,
     Object? meta = freezed,
   }) {
     return _then(_ManagerOrdersResponseDM(
@@ -780,6 +825,10 @@ class __$ManagerOrdersResponseDMCopyWithImpl<$Res>
           ? _self.counts
           : counts // ignore: cast_nullable_to_non_nullable
               as ManagerOrderCountsDM,
+      countsTotal: freezed == countsTotal
+          ? _self.countsTotal
+          : countsTotal // ignore: cast_nullable_to_non_nullable
+              as int?,
       meta: freezed == meta
           ? _self.meta
           : meta // ignore: cast_nullable_to_non_nullable
