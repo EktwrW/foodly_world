@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
@@ -13,6 +14,7 @@ import 'package:foodly_world/ui/views/manager_orders/manager_order_detail_page.d
 import 'package:foodly_world/ui/views/manager_orders/manager_orders_page.dart';
 import 'package:foodly_world/ui/views/manager_orders/widgets/manager_widgets.dart';
 import 'package:logger/logger.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 /// F4a-5 — widget tests del panel "Órdenes en vivo": selector con contadores,
@@ -103,6 +105,15 @@ void main() {
     addTearDown(stripeCubit.close);
 
     return MaterialApp(
+      // `ResponsiveBreakpoints` y no un `MaterialApp` pelado: desde 3f7da31 la
+      // página llama a `context.isMobile`, y `ResponsiveBreakpoints.of()`
+      // LANZA si no encuentra ancestro. En la app real lo pone `main.dart`
+      // (`MaterialApp.builder`), así que la dependencia es legítima; lo que
+      // faltaba era el ancestro aquí.
+      builder: (context, child) => ResponsiveBreakpoints.builder(
+        child: child ?? const SizedBox.shrink(),
+        breakpoints: DeviceSize.breakpoints,
+      ),
       home: MultiBlocProvider(
         providers: [
           BlocProvider.value(value: cubit),
