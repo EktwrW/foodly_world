@@ -199,7 +199,7 @@ class ManagePromotionsSnackbars {
                 ).paddingVertical(10),
                 if (value.generate)
                   Text(
-                    'Tiempo de procesamiento ~25s',
+                    S.current.aiPromoProcessingTime,
                     style: FoodlyTextStyles.caption.copyWith(fontSize: 10, color: Colors.black),
                   ),
               ],

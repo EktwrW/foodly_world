@@ -146,6 +146,7 @@
   },
   "aiPromoGenerate": "Generar",
   "aiPromoImageLabel": "Incluir imagen promocional (16:9)",
+  "aiPromoProcessingTime": "Tiempo de procesamiento ~25s",
   "aiPromoPickImage": "Elige la imagen que más te guste",
   "aiPromoContextProduct": "Producto",
   "aiPromoContextScene": "Mesa",

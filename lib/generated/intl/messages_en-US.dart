@@ -500,6 +500,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "aiPromoPickImage": MessageLookupByLibrary.simpleMessage(
       "Choose the image you like best",
     ),
+    "aiPromoProcessingTime": MessageLookupByLibrary.simpleMessage(
+      "Processing time ~25s",
+    ),
     "aiPromoQuotaExhaustedContent": m14,
     "aiPromoQuotaExhaustedTitle": MessageLookupByLibrary.simpleMessage(
       "Monthly Quota Reached",

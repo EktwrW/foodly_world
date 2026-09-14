@@ -692,6 +692,16 @@ class S {
     );
   }
 
+  /// `Processing time ~25s`
+  String get aiPromoProcessingTime {
+    return Intl.message(
+      'Processing time ~25s',
+      name: 'aiPromoProcessingTime',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Choose the image you like best`
   String get aiPromoPickImage {
     return Intl.message(
