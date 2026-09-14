@@ -447,6 +447,66 @@ class S {
     );
   }
 
+  /// `We couldn't open the photo picker. Please try again.`
+  String get aiMenuImportErrorPicker {
+    return Intl.message(
+      'We couldn\'t open the photo picker. Please try again.',
+      name: 'aiMenuImportErrorPicker',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select at least one photo of your menu.`
+  String get aiMenuImportErrorNoPhotos {
+    return Intl.message(
+      'Select at least one photo of your menu.',
+      name: 'aiMenuImportErrorNoPhotos',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We couldn't upload the photos. Check your connection and try again.`
+  String get aiMenuImportErrorUpload {
+    return Intl.message(
+      'We couldn\'t upload the photos. Check your connection and try again.',
+      name: 'aiMenuImportErrorUpload',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We couldn't find any items in the photos. Try sharper photos or better lighting.`
+  String get aiMenuImportErrorNoContent {
+    return Intl.message(
+      'We couldn\'t find any items in the photos. Try sharper photos or better lighting.',
+      name: 'aiMenuImportErrorNoContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There are no items to import. Add at least one before confirming.`
+  String get aiMenuImportErrorNothingToImport {
+    return Intl.message(
+      'There are no items to import. Add at least one before confirming.',
+      name: 'aiMenuImportErrorNothingToImport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We couldn't save the menu. Please try again in a few seconds.`
+  String get aiMenuImportErrorSave {
+    return Intl.message(
+      'We couldn\'t save the menu. Please try again in a few seconds.',
+      name: 'aiMenuImportErrorSave',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Enable digital menu`
   String get enableDigitalMenu {
     return Intl.message(

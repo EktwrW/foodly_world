@@ -411,6 +411,24 @@ class MessageLookup extends MessageLookupByLibrary {
     "aiMenuImportEmptyStateTitle": MessageLookupByLibrary.simpleMessage(
       "Digitize your menu",
     ),
+    "aiMenuImportErrorNoContent": MessageLookupByLibrary.simpleMessage(
+      "We couldn\'t find any items in the photos. Try sharper photos or better lighting.",
+    ),
+    "aiMenuImportErrorNoPhotos": MessageLookupByLibrary.simpleMessage(
+      "Select at least one photo of your menu.",
+    ),
+    "aiMenuImportErrorNothingToImport": MessageLookupByLibrary.simpleMessage(
+      "There are no items to import. Add at least one before confirming.",
+    ),
+    "aiMenuImportErrorPicker": MessageLookupByLibrary.simpleMessage(
+      "We couldn\'t open the photo picker. Please try again.",
+    ),
+    "aiMenuImportErrorSave": MessageLookupByLibrary.simpleMessage(
+      "We couldn\'t save the menu. Please try again in a few seconds.",
+    ),
+    "aiMenuImportErrorUpload": MessageLookupByLibrary.simpleMessage(
+      "We couldn\'t upload the photos. Check your connection and try again.",
+    ),
     "aiMenuImportGallery": MessageLookupByLibrary.simpleMessage("Gallery"),
     "aiMenuImportHeroSubtitle": MessageLookupByLibrary.simpleMessage(
       "Upload photos of your menu and AI extracts items, categories and prices automatically.",
