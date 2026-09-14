@@ -35,6 +35,13 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
+    # Una llamada sobre `dynamic` es legal en Dart y `flutter analyze` la deja
+    # pasar — pero los métodos de EXTENSIÓN se resuelven de forma estática, así
+    # que sobre un receptor dinámico no se encuentran y revientan en tiempo de
+    # ejecución. Es lo que dejó las SEIS acciones del manager de reservas
+    # muertas desde el 2026-07-22 (freezed 3 movió `ApiResult.when` a una
+    # extensión) sin que el analizador dijera una palabra.
+    avoid_dynamic_calls: true
     prefer_const_constructors: true
     constant_identifier_names: false
     prefer_single_quotes: true

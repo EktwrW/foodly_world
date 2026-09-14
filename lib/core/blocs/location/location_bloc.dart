@@ -451,29 +451,37 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       final response = await dio.get(url);
 
       if (response.statusCode == 200) {
-        final results = response.data['results'] as List;
+        // El JSON de Google es dinámico de verdad, pero se comprueba la forma
+        // UNA vez y el resto del recorrido ya lo puede verificar el
+        // analizador. Un `as` que falle revienta dentro del mismo `try` que ya
+        // envolvía esto, igual que reventaba antes el acceso dinámico.
+        final datos = response.data as Map<String, dynamic>;
+        final results = datos['results'] as List;
 
         if (results.isNotEmpty) {
           // Google Maps puede retornar múltiples resultados; normalmente, el primero es el más relevante
-          final addressComponents = results[0][FoodlyStrings.ADDRESS_COMPONENTS] as List;
+          final primero = results.first as Map<String, dynamic>;
+          final addressComponents = primero[FoodlyStrings.ADDRESS_COMPONENTS] as List;
 
-          for (final component in addressComponents) {
+          for (final crudo in addressComponents) {
+            final component = crudo as Map<String, dynamic>;
             final types = component[FoodlyStrings.TYPES] as List;
+            final nombreLargo = component[FoodlyStrings.LONG_NAME] as String?;
             if (types.contains(FoodlyStrings.COUNTRY)) {
               _locationDM = _locationDM.copyWith(
-                  country: component[FoodlyStrings.LONG_NAME], countryCode: component[FoodlyStrings.SHORT_NAME]);
+                  country: nombreLargo, countryCode: component[FoodlyStrings.SHORT_NAME] as String?);
             }
             if (types.contains(FoodlyStrings.ADMIN_AREA_LEVEL_1)) {
-              _locationDM = _locationDM.copyWith(state: component[FoodlyStrings.LONG_NAME]);
+              _locationDM = _locationDM.copyWith(state: nombreLargo);
             }
             if (types.contains(FoodlyStrings.LOCALITY)) {
-              _locationDM = _locationDM.copyWith(city: component[FoodlyStrings.LONG_NAME]);
+              _locationDM = _locationDM.copyWith(city: nombreLargo);
             }
             if (types.contains(FoodlyStrings.ROUTE)) {
-              _locationDM = _locationDM.copyWith(address: component[FoodlyStrings.LONG_NAME]);
+              _locationDM = _locationDM.copyWith(address: nombreLargo);
             }
             if (types.contains(FoodlyStrings.POSTAL_CODE)) {
-              _locationDM = _locationDM.copyWith(zipCode: component[FoodlyStrings.LONG_NAME]);
+              _locationDM = _locationDM.copyWith(zipCode: nombreLargo);
             }
           }
         }

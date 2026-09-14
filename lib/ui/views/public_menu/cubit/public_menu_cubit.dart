@@ -7,6 +7,7 @@ import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/public_menu/public_menu_repo.dart';
 import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/data_models/business/business_dm.dart';
+import 'package:foodly_world/data_models/business/business_item_photo_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/ui/views/public_menu/cubit/public_menu_state.dart';
 
@@ -44,14 +45,14 @@ class PublicMenuCubit extends Cubit<PublicMenuState> {
       ...business.coverImageUrls,
       for (final cat in menu.foodCategories)
         for (final item in cat.items)
-          for (final p in item.foodPhotos ?? [])
+          for (final p in item.foodPhotos ?? const <MenuItemPhotoDM>[])
             if (p.businessFoodPhotoUrl != null) p.businessFoodPhotoUrl!,
       for (final cat in menu.drinkCategories)
         for (final item in cat.items)
-          for (final p in item.drinkPhotos ?? [])
+          for (final p in item.drinkPhotos ?? const <MenuItemPhotoDM>[])
             if (p.businessDrinkPhotoUrl != null) p.businessDrinkPhotoUrl!,
       for (final item in menu.combos)
-        for (final p in item.comboPhotos ?? [])
+        for (final p in item.comboPhotos ?? const <MenuItemPhotoDM>[])
           if (p.businessComboPhotoUrl != null) p.businessComboPhotoUrl!,
     ];
 

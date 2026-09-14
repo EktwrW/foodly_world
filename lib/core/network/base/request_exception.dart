@@ -57,7 +57,7 @@ class AppRequestException implements Exception {
           return {
             for (final e in raw.entries)
               '${e.key}': e.value is List
-                  ? List<String>.from(e.value.map((v) => '$v'))
+                  ? List<String>.from((e.value as List).map((v) => '$v'))
                   : ['${e.value}'],
           };
         }

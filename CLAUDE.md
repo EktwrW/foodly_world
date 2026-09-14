@@ -2028,9 +2028,24 @@ instancia y el `dynamic` daba igual.
 **El analizador no lo ve**: una llamada dinámica es legal. `flutter analyze`
 salía limpio con el fallo dentro.
 
-**Lo que sí lo vería**: el lint `avoid_dynamic_calls`. Hoy daría **~30 avisos en
-`lib/`** (la mayoría parseo de JSON en `location_bloc` y `public_menu_cubit`,
-que son inofensivos), así que activarlo es una limpieza aparte, no un hotfix.
+**Lo que sí lo vería**: el lint `avoid_dynamic_calls`, **ya activado**. Cuando
+se encendió marcaba **39 sitios**; se tiparon todos (ni un `// ignore`) y
+`flutter analyze` queda limpio con el lint puesto.
+
+De esos 39, **casi todos eran inofensivos** —parseo de JSON en `location_bloc`,
+recorridos de mapas en un test— y la causa más repetida era la misma y
+sorprendente: **un `?? []` sin tipo**. El literal vacío no tiene argumento de
+tipo, así que `item.foodPhotos ?? []` da `List<dynamic>` y todo lo que salga
+del bucle es dinámico. La cura es `?? const <MenuItemPhotoDM>[]`.
+
+Los tres que sí tenían algo que ganar:
+
+- `AssetTypeExtension.pathMethod` devolvía `Function` a secas, así que
+  `AssetData.assetPath` llamaba **dinámicamente**: un cambio de firma en
+  `AssetUtils` no lo habría visto nadie hasta pintar el icono.
+- `_ProfileSummaryCard` recibía el VM como `dynamic`.
+- `_handleSuccessfulMediaUpdate` leía `.promoMedia` de un `dynamic` que sólo
+  puede ser uno de dos tipos concretos.
 
 **Comprobado que era el único**: `Future<dynamic> Function` aparecía una sola
 vez en todo `lib/`, y ningún otro `.when(`/`.map(` cuelga de un receptor

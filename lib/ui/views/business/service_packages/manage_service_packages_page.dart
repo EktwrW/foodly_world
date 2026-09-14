@@ -7,6 +7,7 @@ import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.da
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/business/service_packages/cubit/service_packages_cubit.dart';
+import 'package:foodly_world/ui/views/business/service_packages/cubit/service_packages_vm.dart';
 import 'package:foodly_world/ui/views/business/service_packages/widgets/professional_profile_form_sheet.dart';
 import 'package:foodly_world/ui/views/business/service_packages/widgets/service_package_card.dart';
 import 'package:foodly_world/ui/views/business/service_packages/widgets/service_package_form_sheet.dart';
@@ -244,7 +245,7 @@ class _ServicePackagesBody extends StatelessWidget {
 }
 
 class _ProfileSummaryCard extends StatelessWidget {
-  final dynamic vm;
+  final ServicePackagesVM vm;
 
   const _ProfileSummaryCard({required this.vm});
 

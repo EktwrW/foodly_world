@@ -26,8 +26,8 @@ class SignUpBusinessPage extends StatefulWidget {
 }
 
 class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
-  final GlobalKey _tooltipKey = GlobalKey();
-  late dynamic tooltip;
+  final GlobalKey<TooltipState> _tooltipKey = GlobalKey<TooltipState>();
+  TooltipState? tooltip;
   late final LocalStorageService _localStorageService;
   late final DialogService _dialogService;
   bool _userIsMigratingToManager = false;

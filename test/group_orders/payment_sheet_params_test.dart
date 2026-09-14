@@ -32,7 +32,7 @@ void main() {
 
     final decodificado = json.decode(utf8.decode(mensaje.buffer.asUint8List())) as Map<String, dynamic>;
 
-    return decodificado['args']['params'] as Map<String, dynamic>;
+    return decodificado.mapa('args').mapa('params');
   }
 
   SetupPaymentSheetParameters conPais(
@@ -99,7 +99,7 @@ void main() {
     /// dentro de `address`, en iPhone el país deja de pre-rellenarse y nadie se
     /// entera hasta que alguien mire una hoja de pago en un iPhone.
     test('la dirección no lleva ni un solo null', () {
-      final address = comoLlegaAlNativo(conPais('ES'))['defaultBillingDetails']['address'] as Map;
+      final address = comoLlegaAlNativo(conPais('ES')).mapa('defaultBillingDetails').mapa('address');
 
       expect(address.values, isNot(contains(null)));
       expect(address, {'country': 'ES'}, reason: 'solo lo que sabemos, nada relleno con null');
@@ -136,14 +136,14 @@ void main() {
   group('qué se pre-rellena', () {
     test('el país del comensal llega a defaultBillingDetails', () {
       expect(
-        comoLlegaAlNativo(conPais('PT'))['defaultBillingDetails']['address']['country'],
+        comoLlegaAlNativo(conPais('PT')).mapa('defaultBillingDetails').mapa('address')['country'],
         'PT',
       );
     });
 
     test('el email llega para que Link no lo pida', () {
       expect(
-        comoLlegaAlNativo(conPais('ES', email: 'comensal@foodly.solutions'))['defaultBillingDetails']['email'],
+        comoLlegaAlNativo(conPais('ES', email: 'comensal@foodly.solutions')).mapa('defaultBillingDetails')['email'],
         'comensal@foodly.solutions',
       );
     });
@@ -182,8 +182,8 @@ void main() {
     test('el país de facturación no pisa el del comercio', () {
       final json = comoLlegaAlNativo(conPais('ES'));
 
-      expect(json['defaultBillingDetails']['address']['country'], 'ES');
-      expect(json['googlePay']['merchantCountryCode'], 'PT');
+      expect(json.mapa('defaultBillingDetails').mapa('address')['country'], 'ES');
+      expect(json.mapa('googlePay')['merchantCountryCode'], 'PT');
     });
   });
 
@@ -197,14 +197,14 @@ void main() {
       final json = comoLlegaAlNativo(conPais('ES', platform: TargetPlatform.android));
 
       expect(json['applePay'], isNull);
-      expect(json['googlePay']['merchantCountryCode'], 'PT');
+      expect(json.mapa('googlePay')['merchantCountryCode'], 'PT');
     });
 
     test('en iOS no se declara Google Pay', () {
       final json = comoLlegaAlNativo(conPais('ES', platform: TargetPlatform.iOS));
 
       expect(json['googlePay'], isNull);
-      expect(json['applePay']['merchantCountryCode'], 'PT');
+      expect(json.mapa('applePay')['merchantCountryCode'], 'PT');
     });
   });
 
@@ -221,7 +221,7 @@ void main() {
       expect(json['googlePay'], isNull);
       expect(json['applePay'], isNull);
       expect(
-        json['defaultBillingDetails']['address']['country'],
+        json.mapa('defaultBillingDetails').mapa('address')['country'],
         'ES',
         reason: 'y aun así el formulario de tarjeta sí sabe de dónde es',
       );
@@ -234,4 +234,14 @@ void main() {
       expect(json['merchantDisplayName'], 'Foodly');
     });
   });
+}
+
+/// Baja un nivel del JSON sin llamadas dinámicas.
+///
+/// Indexar un `Map<String, dynamic>` devuelve `dynamic`, así que encadenar
+/// `[..][..]` es una llamada DINÁMICA: el analizador no la comprueba y sólo
+/// revienta en ejecución. Es la misma forma de fallo que dejó muertas las seis
+/// acciones de reservas, y la que `avoid_dynamic_calls` marca.
+extension _Bajar on Map<String, dynamic> {
+  Map<String, dynamic> mapa(String clave) => this[clave] as Map<String, dynamic>;
 }
