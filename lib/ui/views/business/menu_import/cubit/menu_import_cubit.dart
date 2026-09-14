@@ -8,6 +8,7 @@ import 'package:foodly_world/core/network/menu_import/menu_import_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
 import 'package:foodly_world/data_models/menu_import/menu_import_parse_response_dm.dart';
 import 'package:foodly_world/data_transfer_objects/menu_import/menu_import_bulk_dto.dart';
+import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/views/business/menu_import/view_model/menu_import_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
@@ -331,15 +332,13 @@ class MenuImportCubit extends Cubit<MenuImportState> {
     return str.length <= max ? str : '${str.substring(0, max)}…[+${str.length - max}]';
   }
 
-  // ─── Mensajes de error (i18n keys provisionales) ──────────────────────
-  // Las strings reales se reemplazan por `S.current.foo` en Pantalla 1
-  // (FE Fase 1B) cuando agregamos las keys al .arb. Las dejo hardcoded
-  // por ahora para no bloquear el state machine; el cubit las emite y la
-  // UI las pinta — al portear a S.current no toca el cubit.
-  static const _genericPickerError = 'No pudimos abrir el selector de fotos. Intentá de nuevo.';
-  static const _noPhotosSelected = 'Seleccioná al menos una foto del menú.';
-  static const _uploadError = 'No pudimos subir las fotos. Verificá tu conexión y volvé a intentarlo.';
-  static const _noContentParsed = 'No pudimos detectar items en las fotos. Probá con fotos más nítidas o con mejor iluminación.';
-  static const _nothingToImport = 'No hay items para importar. Agregá al menos uno antes de confirmar.';
-  static const _bulkImportError = 'No pudimos guardar el menú. Intentá de nuevo en unos segundos.';
+  // ─── Mensajes de error ────────────────────────────────────────────────
+  // Getters y no constantes: `S.current` se resuelve al emitir, con el idioma
+  // que haya puesto entonces.
+  static String get _genericPickerError => S.current.aiMenuImportErrorPicker;
+  static String get _noPhotosSelected => S.current.aiMenuImportErrorNoPhotos;
+  static String get _uploadError => S.current.aiMenuImportErrorUpload;
+  static String get _noContentParsed => S.current.aiMenuImportErrorNoContent;
+  static String get _nothingToImport => S.current.aiMenuImportErrorNothingToImport;
+  static String get _bulkImportError => S.current.aiMenuImportErrorSave;
 }
