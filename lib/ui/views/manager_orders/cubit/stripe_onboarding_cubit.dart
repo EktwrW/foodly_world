@@ -74,6 +74,7 @@ class StripeOnboardingCubit extends Cubit<StripeOnboardingState> {
   Future<void> load() async {
     emit(state.copyWith(loading: true));
     final res = await _repo.stripeStatus(businessUuid);
+    if (isClosed) return; // la pantalla se fue mientras la consulta viajaba
     res.when(
       success: (s) => emit(StripeOnboardingState(
         chargesEnabled: s.chargesEnabled,

@@ -29,6 +29,31 @@ class StartingPage369 extends StatelessWidget {
 
   const StartingPage369({super.key, this.currentView = StartingPageView.initial});
 
+  /// El VM que hay que pintar para [state], o null si no hay nada que pintar.
+  ///
+  /// Todo estado que trae VM se pinta, incluidos `userAuthenticated` e
+  /// `isNewUser`: son transitorios —el listener navega o abre un diálogo— pero
+  /// el listener sólo corre en un CAMBIO de estado. Si el router aterriza acá
+  /// con el cubit ya en uno de los dos, no hay cambio, no dispara nada, y antes
+  /// no quedaba nada que pintar ni forma de salir.
+  ///
+  /// Es el blanco de 2026-05-24 volviendo por otra puerta: aquella vez se cerró
+  /// garantizando el estado desde `clearInvalidSession`, y basta que otro sitio
+  /// navegue a /login sin pasar por ahí —el back sin sesión, p. ej.— para
+  /// reabrirlo. Acá no depende de quién navegue.
+  ///
+  /// Sólo `initial` queda sin pintar: no trae VM y es el estado del arranque.
+  /// Público a propósito: el test lo mira a ÉL y no a una copia de su lógica,
+  /// que es como la primera vez se quedó mirando el sitio equivocado.
+  static StartingVM? vmPintable(StartingState state) => state.maybeWhen(
+        loading: (vm) => vm,
+        welcome: (vm) => vm,
+        error: (_, vm) => vm,
+        isNewUser: (vm) => vm,
+        userAuthenticated: (vm) => vm,
+        orElse: () => null,
+      );
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<StartingCubit, StartingState>(
@@ -90,12 +115,11 @@ class StartingPage369 extends StatelessWidget {
       builder: (context, state) {
         return DecoratedBox(
           decoration: UIDecorations.BACKGROUND_GRADIENT_1,
-          child: state.maybeWhen(
-            loading: (vm) => _buildContent(context, vm),
-            welcome: (vm) => _buildContent(context, vm),
-            error: (e, vm) => _buildContent(context, vm),
-            orElse: () => const SizedBox.expand(),
-          ),
+          child: () {
+            final vm = vmPintable(state);
+
+            return vm == null ? const SizedBox.expand() : _buildContent(context, vm);
+          }(),
         );
       },
     );
