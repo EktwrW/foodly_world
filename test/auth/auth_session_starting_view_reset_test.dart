@@ -121,15 +121,13 @@ class _FakeBaseConfig implements BaseConfig {
   noSuchMethod(Invocation invocation) => null;
 }
 
-/// True si `state` es uno de los estados para los que `StartingPage369.build()`
-/// pinta contenido real (ver el `maybeWhen` de starting_page.dart). Cualquier
-/// otro estado renderiza `SizedBox.expand()` → pantalla en blanco.
-bool _rendersContent(StartingState state) => state.maybeWhen(
-      loading: (_) => true,
-      welcome: (_) => true,
-      error: (_, __) => true,
-      orElse: () => false,
-    );
+/// Le pregunta a la PANTALLA, no a una copia de su lógica.
+///
+/// Este helper era un `maybeWhen` calcado del de `starting_page.dart`. Mientras
+/// la copia y el original coincidían daba igual; el día que la pantalla cambió,
+/// el test habría seguido en verde afirmando lo contrario de lo que pasa.
+/// `vmPintable` es la decisión de verdad y vive junto al widget (2026-09-15).
+bool _rendersContent(StartingState state) => StartingPage369.vmPintable(state) != null;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -187,10 +185,13 @@ void main() {
           orElse: () => false,
         );
         expect(reproducedBlank, true,
-            reason: 'Precondición: el login deja al cubit en _UserAuthenticated, '
-                'el estado que StartingPage369 renderiza en blanco');
-        expect(_rendersContent(startingCubit.state), false,
-            reason: 'Sin el fix, la starting page sería SizedBox.expand()');
+            reason: 'Precondición: el login deja al cubit en _UserAuthenticated');
+        // Antes se comprobaba acá que ese estado renderizaba EN BLANCO. Ya no
+        // es cierto y es mejor así: la pantalla pinta todo estado con VM desde
+        // 2026-09-15, de modo que ningún camino de navegación puede volver a
+        // dejarla vacía. Lo que este test sigue guardando es lo otro que hace
+        // `clearInvalidSession`: devolver la VISTA a `initial`, o el usuario se
+        // quedaría mirando el formulario de una sesión que ya no existe.
 
         // Una sesión se invalida en runtime (401 multi-dispositivo).
         service.clearInvalidSession();

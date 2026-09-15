@@ -83,6 +83,7 @@ class ManagerHistoryCubit extends Cubit<ManagerHistoryState> {
   Future<void> load() async {
     emit(const ManagerHistoryState(loading: true));
     final res = await _repo.managerOrderHistory(businessUuid);
+    if (isClosed) return; // la pantalla se fue mientras la lectura viajaba
     res.when(
       success: (r) => emit(ManagerHistoryState(
         orders: r.orders,
@@ -102,6 +103,7 @@ class ManagerHistoryCubit extends Cubit<ManagerHistoryState> {
     emit(state.copyWith(loadingMore: true, error: null));
 
     final res = await _repo.managerOrderHistory(businessUuid, before: state.nextBefore);
+    if (isClosed) return; // la pantalla se fue mientras la página viajaba
     res.when(
       success: (r) => emit(state.copyWith(
         loadingMore: false,
@@ -124,6 +126,9 @@ class ManagerHistoryCubit extends Cubit<ManagerHistoryState> {
   /// perdiendo lo que había bajado a buscar.
   Future<bool> amendClosure(String orderUuid, String reason) async {
     final res = await _repo.managerAmendClosure(orderUuid, reason: reason);
+    // La corrección SÍ se guardó en el servidor; lo único que se pierde es
+    // pintarla, porque ya no hay pantalla que pintar.
+    if (isClosed) return false;
 
     return res.when(
       success: (r) {
